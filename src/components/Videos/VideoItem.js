@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography, Card, CardMedia, CardActionArea, Box } from "@mui/material";
 import YouTube from 'react-youtube';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import { useState } from "react";
+import youtubeIcon from '../../assets/yt_icon_rgb.png'
 
 const VideoItem = ({ video }) => {
 
@@ -33,8 +33,8 @@ const VideoItem = ({ video }) => {
                                     alt="video image"
                                     sx={{ position: 'relative', zIndex: '1' }}
                                 />
-                                <Box position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
-                                    <YouTubeIcon sx={{ fontSize: 70, color: '#ff0000', background:'#ffffff' }} />
+                                <Box width={'16%'} position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
+                                    <img src={youtubeIcon} width={'100%'}/>
                                 </Box>
                             </CardActionArea>}
                     </Card>

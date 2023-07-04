@@ -9,7 +9,7 @@ const Home = () => {
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const theme = useTheme();
-    const xs = useMediaQuery(theme.breakpoints.down('sm'));
+    const sm = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -19,8 +19,7 @@ const Home = () => {
         <>
             <Header handler={handleDrawerToggle} />
             <AppDrawer children={<DrawerContent />} handler={handleDrawerToggle} mobileOpen={mobileOpen} />
-            <Box ml={xs ? '0px' : '240px'}>
-                {/* {xs} */}
+            <Box ml={sm ? '0px' : '240px'}>
                 <Outlet />
             </Box>
         </>

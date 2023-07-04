@@ -8,6 +8,10 @@ import Videos from './components/Videos/Videos';
 import videoLoader from './components/Videos/loader';
 import Musicians from './components/Musicians/Musicians';
 import musicianLoader from './components/Musicians/loader';
+import Texts from './components/Texts/Texts';
+import textLoader from './components/Texts/loader';
+import Events from './components/Events/Events';
+import eventLoader from './components/Events/loader';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +25,9 @@ const router = createBrowserRouter([
         loader: videoLoader
       },
       {
-        path: 'texts'
+        path: 'texts',
+        element: <Texts />,
+        loader: textLoader
       },
       {
         path: 'musicians',
@@ -29,7 +35,9 @@ const router = createBrowserRouter([
         loader: musicianLoader
       },
       {
-        path: 'events'
+        path: 'events',
+        element: <Events />,
+        loader: eventLoader
       },
     ]
   },

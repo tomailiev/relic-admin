@@ -7,8 +7,8 @@ const Header = ({ handler }) => {
         <AppBar
             position="sticky"
             sx={{
-                width: { sm: `calc(100% - ${240}px)` },
-                ml: { sm: `${240}px` },
+                width: { md: `calc(100% - ${240}px)` },
+                ml: { md: `${240}px` },
             }}
         >
             <Toolbar>
@@ -17,7 +17,7 @@ const Header = ({ handler }) => {
                     aria-label="open drawer"
                     edge="start"
                     onClick={handler}
-                    sx={{ mr: 2, display: { sm: 'none' } }}
+                    sx={{ mr: 2, display: { md: 'none' } }}
                 >
                     <MenuIcon />
                 </IconButton>

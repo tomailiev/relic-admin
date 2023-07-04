@@ -1,13 +1,17 @@
-import { ListItem, ListItemAvatar, Skeleton, Typography, Avatar, Accordion, AccordionSummary, AccordionDetails } from "@mui/material"
+import { ListItem, ListItemAvatar, Skeleton, Typography, Avatar, Accordion, AccordionSummary, AccordionDetails, ListItemIcon } from "@mui/material"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MusicianItem from "../Musicians/MusicianItem";
 import VideoItem from "../Videos/VideoItem";
+import TextItem from "../Texts/TextItem";
+import EventItem from "../Events/EventItem";
 
 
-const ItemList = ({ title, avatar, data, type }) => {
+const ItemList = ({ title, avatar, icon, data, type }) => {
     const children = {
         musician: <MusicianItem musician={data} />,
-        video: <VideoItem video={data} />
+        video: <VideoItem video={data} />,
+        text: <TextItem text={data} />,
+        event: <EventItem event={data} />
 
     }
 
@@ -23,10 +27,12 @@ const ItemList = ({ title, avatar, data, type }) => {
                     <ListItemAvatar>
                         {avatar
                             ? <Avatar src={avatar} alt={data.name || data.title} />
-                            : <Skeleton variant="circular" width={40} height={40} />
+                            : icon
+                                ? <ListItemIcon>{icon}</ListItemIcon>
+                                : <Skeleton variant="circular" width={40} height={40} />
                         }
                     </ListItemAvatar>
-                    <Typography width={'70%'} sx={{verticalAlign: 'center'}}>
+                    <Typography width={'70%'} sx={{ verticalAlign: 'center' }}>
                         {title
                             ? title
                             : <Skeleton variant="text" />

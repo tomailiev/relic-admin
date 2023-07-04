@@ -26,8 +26,8 @@ function downloadDocs(col, condition, sorting) {
             });
             return docs;
         })
-        .catch(_e => {
-            console.error('firebase failed to load');
+        .catch(e => {
+            console.error(e);
         })
 }
 
@@ -36,7 +36,7 @@ function downloadOneDoc(col, id) {
     return getDoc(doc(db, col, id))
         .then(item => {
             if (!item) console.log('Problem loading');
-            return Object.assign({ id: item.id }, item.data());
+            return item.data();
         })
         .catch(_e => console.error('no data'));
 }
