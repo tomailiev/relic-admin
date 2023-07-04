@@ -1,9 +1,14 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, Paper, Typography, Card, CardMedia, CardActionArea, Box } from "@mui/material";
 import YouTube from 'react-youtube';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import { useState } from "react";
 
 const VideoItem = ({ video }) => {
+
+    const [videoPlayer, setVideoPlayer] = useState(false);
+
     return (
-        <Paper sx={{mx: 4, my: 2, p: 5}}>
+        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Grid key={video.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
                 // left: `${(position < 0 && position !== -(length - 1)) || isShifting ? 150 : position === 1 || position === -(length - 1) ? -150 : 0}%`,
@@ -13,12 +18,26 @@ const VideoItem = ({ video }) => {
                 // visibility: position ? 'hidden' : 'visible',
             }}>
                 <Grid item md={6} sm={8} xs={12}>
-                    <YouTube
-                        videoId={video.youtubeId}
-                        opts={{ height: '300px', width: '100%', }}
-                    // onPlay={playVideo}
-                    // onStateChange={cueUpVideo}
-                    />
+                    <Card sx={{ textDecoration: 'none', position: 'relative' }}>
+                        {videoPlayer
+                            ? <YouTube
+                                videoId={video.youtubeId}
+                                opts={{ height: '300px', width: '100%', }}
+                            />
+                            : <CardActionArea onClick={() => setVideoPlayer(true)}>
+                                <CardMedia
+                                    component="img"
+                                    // width="70%"
+                                    // height={300}
+                                    image={video.thumbnail}
+                                    alt="video image"
+                                    sx={{ position: 'relative', zIndex: '1' }}
+                                />
+                                <Box position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
+                                    <YouTubeIcon sx={{ fontSize: 70, color: '#ff0000', background:'#ffffff' }} />
+                                </Box>
+                            </CardActionArea>}
+                    </Card>
                 </Grid>
                 <Grid item md={6}>
                     <Typography variant="h6">

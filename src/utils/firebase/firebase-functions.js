@@ -1,6 +1,6 @@
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
-import { db, storage, analytics } from './firebase-init';
+import { db, storage } from './firebase-init';
 
 function uploadDoc(doc, col) {
     return addDoc(collection(db, col), doc)
