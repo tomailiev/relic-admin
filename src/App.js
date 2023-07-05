@@ -12,6 +12,7 @@ import Texts from './components/Texts/Texts';
 import textLoader from './components/Texts/loader';
 import Events from './components/Events/Events';
 import eventLoader from './components/Events/loader';
+import textAction from './components/Texts/action';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
       {
         path: 'texts',
         element: <Texts />,
-        loader: textLoader
+        loader: textLoader,
+        action: textAction
       },
       {
         path: 'musicians',

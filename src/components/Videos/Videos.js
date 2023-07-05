@@ -1,6 +1,8 @@
-import { Typography, Container, List } from "@mui/material";
+import { Typography, Container, List, Button } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
+import AddIcon from '@mui/icons-material/Add';
+
 
 const Videos = () => {
 
@@ -8,9 +10,14 @@ const Videos = () => {
 
     return (
         <>
-            <Typography variant="h3" m={5}>
-                Videos
-            </Typography>
+            <Container maxWidth="lg">
+                <Typography variant="h3" my={5}>
+                    Videos
+                </Typography>
+                <Button variant="contained" endIcon={<AddIcon />}>
+                    Add
+                </Button>
+            </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
                     {videos?.length

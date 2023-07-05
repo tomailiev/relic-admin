@@ -1,11 +1,14 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
-function uploadDoc(doc, col) {
-    return addDoc(collection(db, col), doc)
-        .then(docRef => console.log("Document written with ID: ", docRef.id))
-        .catch(e => console.error("Error adding document: ", e));
+function uploadDoc(data, col, id) {
+    console.log(id);
+    return id
+        ? setDoc(doc(db, col, id), data)
+            // .then(docRef => console.log("Document written with ID: ", docRef.id))
+            // .catch(e => console.error("Error adding document: ", e))
+        : addDoc(collection(db, col), data)
 }
 
 function getLink(url) {

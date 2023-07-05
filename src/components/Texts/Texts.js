@@ -1,18 +1,30 @@
-import { Typography, List, Container } from "@mui/material";
+import { Typography, List, Container, Button } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import AddIcon from '@mui/icons-material/Add';
+import { useState } from "react";
+import AddForm from "./AddForm";
 
 const Texts = () => {
 
     const texts = useLoaderData();
+    const [formOpen, setFormOpen] = useState(false);
 
     return (
         <>
-            <Typography variant="h3" m={5}>
-                Texts
-            </Typography>
             <Container maxWidth="lg">
+                <Typography variant="h3" my={5}>
+                    Texts
+                </Typography>
+                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
+                    Add
+                </Button>
+                {formOpen && <AddForm />}
+            </Container>
+
+            <Container maxWidth="lg">
+
                 <List sx={{ width: '100%' }}>
                     {texts?.length
                         ? texts.map((m) => <ItemList key={m.title} title={m.title} icon={<TextSnippetIcon />} data={m} type={'text'} />)
