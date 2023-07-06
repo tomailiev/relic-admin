@@ -24,7 +24,7 @@ const eventSchema = object({
 
 const musicianSchema = object({
     bio: string().required('bio required'),
-    featured: bool().required('featured required'),
+    featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
     pic: string().required('pic url required')
@@ -59,9 +59,10 @@ const textContentSchema = object({
 });
 
 const videoSchema = object({
-    featured: number().required('featured required'),
+    featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
     title: string().required('title required'),
-    youtubeId: string().required('youtubeId required')
+    youtubeId: string().required('youtubeId required'),
+    thumbnail: string().url('valid url required').required('thumbnail is required')
 })
 
 export { eventSchema, musicianSchema, textContentSchema, videoSchema };

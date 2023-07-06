@@ -4,7 +4,7 @@ import ItemList from "../Common/ItemList";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
-import AddForm from "./AddForm";
+import AddForm from "../Common/AddForm";
 
 const Texts = () => {
 
@@ -17,7 +17,7 @@ const Texts = () => {
                 <Typography variant="h3" my={5}>
                     Texts
                 </Typography>
-                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(true)}>
+                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
                 {formOpen && <AddForm />}

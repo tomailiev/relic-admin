@@ -13,6 +13,8 @@ import textLoader from './components/Texts/loader';
 import Events from './components/Events/Events';
 import eventLoader from './components/Events/loader';
 import textAction from './components/Texts/action';
+import videoAction from './components/Videos/action';
+import musicianAction from './components/Musicians/action';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,8 @@ const router = createBrowserRouter([
       {
         path: 'videos',
         element: <Videos />,
-        loader: videoLoader
+        loader: videoLoader,
+        action: videoAction
       },
       {
         path: 'texts',
@@ -34,7 +37,8 @@ const router = createBrowserRouter([
       {
         path: 'musicians',
         element: <Musicians />,
-        loader: musicianLoader
+        loader: musicianLoader,
+        action: musicianAction
       },
       {
         path: 'events',
