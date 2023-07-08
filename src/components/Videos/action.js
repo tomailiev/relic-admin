@@ -10,7 +10,7 @@ export default function videoAction({ request, params }) {
             return videoSchema.validate(updates, { abortEarly: false })
         })
         .then(val => {
-            return uploadDoc(val, 'videos')
+            return uploadDoc(val, 'mock-videos')
         })
         .then(doc => {
             console.log(doc);

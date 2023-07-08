@@ -1,8 +1,8 @@
 import { Typography, Container, List, Button } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddForm from "../Common/AddForm";
 
 const fields = {
@@ -23,6 +23,11 @@ const fieldsArray = [
 const Videos = () => {
 
     const videos = useLoaderData();
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        console.log(navigation.location);
+    })
 
     const [formOpen, setFormOpen] = useState(false);
 

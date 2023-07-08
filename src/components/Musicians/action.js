@@ -10,7 +10,7 @@ export default function musicianAction({ request, params }) {
             return musicianSchema.validate(updates, { abortEarly: false })
         })
         .then(val => {
-            return uploadDoc(val, 'musicians')
+            return uploadDoc(val, 'mock-musicians')
         })
         .then(doc => {
             console.log(doc);

@@ -38,6 +38,13 @@ const textContentSchema = object({
     actionCenterDonate: string().required(),
     actionCenterSubscribe: string().required(),
     actionCenterTitle: string().required(),
+    contentSections: array().of(object({
+        cardImage: string().required(),
+        cardTitle: string().required(),
+        infoTitle: string().required(),
+        infoText: string().required(),
+        route: string().required()
+    })),
     footerGemsNote: string().required(),
     mapText: string().required(),
     siteSubtitle: string().required(),

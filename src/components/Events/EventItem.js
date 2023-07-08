@@ -38,7 +38,7 @@ const EventItem = ({ event }) => {
                         Performances:
                     </Typography>
                     {event.performances.sort((a, b) => a.id - b.id).map(({ date, day, id, location, venue, time, url }) => {
-                        return <Accordion>
+                        return <Accordion key={url}>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon />}
                                 aria-controls="panel2a-content"

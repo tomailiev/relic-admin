@@ -2,12 +2,12 @@ import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timest
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
-function uploadDoc(data, col, id) {
+function uploadDoc(data, col, id, merge) {
     console.log(id);
     return id
-        ? setDoc(doc(db, col, id), data)
-            // .then(docRef => console.log("Document written with ID: ", docRef.id))
-            // .catch(e => console.error("Error adding document: ", e))
+        ? setDoc(doc(db, col, id), data, { merge })
+        // .then(docRef => console.log("Document written with ID: ", docRef.id))
+        // .catch(e => console.error("Error adding document: ", e))
         : addDoc(collection(db, col), data)
 }
 

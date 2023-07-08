@@ -1,19 +1,32 @@
 import { Button, Paper, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Form, useActionData } from "react-router-dom";
+import { Form, useActionData, useNavigation } from "react-router-dom";
 
 
 const AddForm = ({ fields, fieldsArray }) => {
     const errorData = useActionData();
+    const navigation = useNavigation();
+
+
 
     const [hasError, setHasError] = useState(fields);
     const [userFields, setUserFields] = useState(fields);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if (errorData) {
             setHasError(errorData);
         }
-    }, [errorData])
+    }, [errorData]);
+
+    useEffect(() => {
+        const submissionStates = {
+            submitting: true,
+            loading: true,
+            idle: false
+        }
+        setIsSubmitting(submissionStates[navigation.state]);
+    }, [navigation.state])
 
     function handleInputChange(e) {
         setUserFields(prev => {
@@ -47,7 +60,7 @@ const AddForm = ({ fields, fieldsArray }) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        // disabled={isSubmitting}
+                        disabled={isSubmitting}
                         type="submit"
                     >
                         Send
