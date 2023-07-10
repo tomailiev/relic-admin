@@ -11,7 +11,7 @@ const TextItem = ({ text }) => {
                 ? <Typography> {text.value} </Typography>
                 : text.value.map(({ cardImage, cardTitle, infoTitle, infoText, route }) => {
                     return (
-                        <Accordion>
+                        <Accordion key={cardTitle}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <Typography variant="h6">
                                     Title: {cardTitle}

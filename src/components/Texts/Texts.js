@@ -6,6 +6,16 @@ import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import AddForm from "../Common/AddForm";
 
+const fields = {
+    title: '',
+    value: ''
+};
+
+const fieldsArray = [
+    { label: 'Title', id: 'key' },
+    { label: 'Value', id: 'value' }
+];
+
 const Texts = () => {
 
     const texts = useLoaderData();
@@ -20,7 +30,7 @@ const Texts = () => {
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
-                {formOpen && <AddForm />}
+                {formOpen && <AddForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
 
             <Container maxWidth="lg">
