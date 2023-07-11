@@ -8,10 +8,8 @@ const performanceSchema = object({
     location: string().required('location required'),
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
-    geocode: object({
-        lat: number().required('latitude required'),
-        lng: number().required('longitude required')
-    })
+    lat: number().required('latitude required'),
+    lng: number().required('longitude required')
 });
 
 const eventSchema = object({
@@ -72,4 +70,4 @@ const videoSchema = object({
     thumbnail: string().url('valid url required').required('thumbnail is required')
 })
 
-export { eventSchema, musicianSchema, textContentSchema, videoSchema };
+export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema };

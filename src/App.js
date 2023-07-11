@@ -15,6 +15,7 @@ import eventLoader from './components/Events/loader';
 import textAction from './components/Texts/action';
 import videoAction from './components/Videos/action';
 import musicianAction from './components/Musicians/action';
+import eventAction from './components/Events/action';
 
 const router = createBrowserRouter([
   {
@@ -43,7 +44,8 @@ const router = createBrowserRouter([
       {
         path: 'events',
         element: <Events />,
-        loader: eventLoader
+        loader: eventLoader,
+        action: eventAction
       },
     ]
   },

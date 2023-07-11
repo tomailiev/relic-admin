@@ -6,20 +6,25 @@ import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
 import AddForm from "../Common/AddForm";
+import AddDynamicForm from "../Common/AddDynamicForm";
 
-const fields = {
+const eventFields = {
     dateDone: '',
     description: '',
     imageUrl: '',
     title: '',
-    performances: []
+    // performances: []
 };
 
-const fieldsArray = [
-
+const eventFieldsArray = [
+    { label: '', id: 'dateDone', type: 'date' },
+    { label: 'Description', id: 'description' },
+    { label: 'Image Url', id: 'imageUrl' },
+    { label: 'Title', id: 'title' },
+    // { label: 'Performances', id: 'performances', type: 'array' }
 ];
 
-const nestedFields = {
+const performanceFields = {
     date: '',
     day: '',
     time: '',
@@ -29,7 +34,20 @@ const nestedFields = {
     venue: '',
     lat: '',
     lng: '',
-}
+};
+
+const performanceFieldArray = [
+    { label: '', id: 'date', type: 'date' },
+    { label: 'Day of week', id: 'day' },
+    { label: '', id: 'time', type: 'time' },
+    { label: 'Order id', id: 'id', },
+    { label: 'Location (Portland, OR)', id: 'location' },
+    { label: 'Url', id: 'url' },
+    { label: 'Venue', id: 'venue' },
+    { label: 'Latitude', id: 'lat', },
+    { label: 'Longitude', id: 'lng', },
+];
+
 
 
 const Events = () => {
@@ -42,12 +60,12 @@ const Events = () => {
         <>
             <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
-                    Videos
+                    Events
                 </Typography>
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
-                {formOpen && <AddForm fields={fields} fieldsArray={fieldsArray} />}
+                {formOpen && <AddDynamicForm fields={eventFields} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray} nestedFields={performanceFields} nestedName={'performances'} />}
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
