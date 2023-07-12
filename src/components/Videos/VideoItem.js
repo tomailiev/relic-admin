@@ -34,7 +34,7 @@ const VideoItem = ({ video }) => {
                                     sx={{ position: 'relative', zIndex: '1' }}
                                 />
                                 <Box width={'16%'} position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
-                                    <img src={youtubeIcon} width={'100%'}/>
+                                    <img src={youtubeIcon} width={'100%'} alt="youtube thumb" />
                                 </Box>
                             </CardActionArea>}
                     </Card>

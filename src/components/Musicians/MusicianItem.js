@@ -1,6 +1,4 @@
-import { Card, CardActionArea, CardMedia, Grid, Paper, Typography } from "@mui/material";
-import YouTube from 'react-youtube';
-
+import { Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 
 const MusicianItem = ({ musician }) => {
     return (
