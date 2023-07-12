@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "relic-admin-app",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
