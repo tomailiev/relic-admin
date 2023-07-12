@@ -1,4 +1,4 @@
-import { boolean, object, string, date, array, number, bool } from 'yup'
+import { object, string, date, array, number } from 'yup'
 
 const performanceSchema = object({
     date: string().required('date required'),
@@ -63,6 +63,11 @@ const textContentSchema = object({
     supportVolunteersTitle: string().required()
 });
 
+const newTextSchema = object({
+    key: string().required('title/key required'),
+    value: string().required('value required')
+})
+
 const videoSchema = object({
     featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
     title: string().required('title required'),
@@ -70,4 +75,4 @@ const videoSchema = object({
     thumbnail: string().url('valid url required').required('thumbnail is required')
 })
 
-export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema };
+export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema, newTextSchema };

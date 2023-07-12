@@ -3,7 +3,7 @@ import { useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
-import AddForm from "../Common/AddForm";
+import AddSimpleForm from "../Forms/AddSimpleForm";
 
 const fields = {
     featured: '',
@@ -35,7 +35,7 @@ const Videos = () => {
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
-                {formOpen && <AddForm fields={fields} fieldsArray={fieldsArray} />}
+                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

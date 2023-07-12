@@ -4,10 +4,10 @@ import ItemList from "../Common/ItemList";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
-import AddForm from "../Common/AddForm";
+import AddSimpleForm from "../Forms/AddSimpleForm";
 
 const fields = {
-    title: '',
+    key: '',
     value: ''
 };
 
@@ -30,7 +30,7 @@ const Texts = () => {
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
-                {formOpen && <AddForm fields={fields} fieldsArray={fieldsArray} />}
+                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
 
             <Container maxWidth="lg">

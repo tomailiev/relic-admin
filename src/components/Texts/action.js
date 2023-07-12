@@ -1,15 +1,15 @@
 import { redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import { textContentSchema } from "../../utils/yup/yup-schemas";
+import { newTextSchema } from "../../utils/yup/yup-schemas";
 
 export default function textAction({ request, params }) {
     return request.formData()
         .then(doc => {
             const updates = Object.fromEntries(doc);
-            return textContentSchema.validate(updates, { abortEarly: false })
+            return newTextSchema.validate(updates, { abortEarly: false })
         })
-        .then(val => {
-            return uploadDoc(val, 'mock-text', 'new-doc')
+        .then(({ key, value }) => {
+            return uploadDoc({ [key]: value }, 'mock-text', 'allTexts', true)
         })
         .then(doc => {
             console.log(doc);

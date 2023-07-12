@@ -1,11 +1,11 @@
 import { Typography, List, Container, Button } from "@mui/material";
 import { useLoaderData } from "react-router-dom";
-import MusicianItem from "./MusicianItem";
+// import MusicianItem from "./MusicianItem";
 import ItemList from "../Common/ItemList";
-import ItemListSkeleton from "../Common/ItemList";
+// import ItemListSkeleton from "../Common/ItemList";
 import { useState } from "react";
-import AddForm from "../Common/AddForm";
 import AddIcon from '@mui/icons-material/Add';
+import AddSimpleForm from "../Forms/AddSimpleForm";
 
 
 const fields = {
@@ -39,7 +39,7 @@ const Musicians = () => {
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
                 </Button>
-                {formOpen && <AddForm fields={fields} fieldsArray={fieldsArray} />}
+                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

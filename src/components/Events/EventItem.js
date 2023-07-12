@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Card, CardActionArea, CardMedia, Grid, Paper, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 

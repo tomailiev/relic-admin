@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 
 
-const AddForm = ({ fields, fieldsArray }) => {
+const AddSimpleForm = ({ fields, fieldsArray }) => {
     const errorData = useActionData();
     const navigation = useNavigation();
 
@@ -71,4 +71,4 @@ const AddForm = ({ fields, fieldsArray }) => {
     );
 };
 
-export default AddForm;
+export default AddSimpleForm;

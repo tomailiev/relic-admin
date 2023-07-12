@@ -9,7 +9,6 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
 
 
     const [nestedItems, setNestedItems] = useState([]);
-    const [nestedItemFields, setNestedItemFields] = useState({});
     const [hasError, setHasError] = useState(fields);
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,9 +34,9 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
         })
     }
 
-    function handleNestedInpitChange(e) {
-        setNestedItemFields(prev => ({ ...prev, [e.target.id]: e.target.value }))
-    }
+    // function handleNestedInpitChange(e) {
+    //     setNestedItemFields(prev => ({ ...prev, [e.target.id]: e.target.value }))
+    // }
 
     function addNestedItem() {
         setNestedItems(prev => prev.concat(nestedFields));
@@ -68,7 +67,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                     <Button onClick={addNestedItem}>
                         Add {nestedName}
                     </Button>
-                    {nestedItems?.map((item, index) => {
+                    {nestedItems?.map((_item, index) => {
                         return <Container key={index}>
                             <Typography variant="h5">{nestedName} {index}</Typography>
                             <Stack spacing={2}>
@@ -80,7 +79,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                                         type={type || 'text'}
                                         step={'any'}
                                         error={!!hasError[`${nestedName}[${index}].${id}`]}
-                                        value={nestedItemFields[`${nestedName}[${index}].${id}}`]}
+                                        value={userFields[`${nestedName}[${index}].${id}}`]}
                                         onFocus={() => setHasError(prev => ({ ...prev, [`${nestedName}[${index}].${id}`]: '' }))}
                                         onChange={handleInputChange}
                                         helperText={hasError[`${nestedName}[${index}].${id}`]}
