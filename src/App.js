@@ -16,6 +16,10 @@ import textAction from './components/Texts/action';
 import videoAction from './components/Videos/action';
 import musicianAction from './components/Musicians/action';
 import eventAction from './components/Events/action';
+import { useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './utils/firebase/firebase-init';
+import UserContext from './context/UserContext';
 
 const router = createBrowserRouter([
   {
@@ -53,9 +57,23 @@ const router = createBrowserRouter([
 
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  })
+
+
   return (
     <CssBaseline>
-      <RouterProvider router={router} />
+      <UserContext.Provider value={currentUser} >
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </CssBaseline>
   );
 }
