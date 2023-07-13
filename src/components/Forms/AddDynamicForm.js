@@ -15,7 +15,10 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
 
     useEffect(() => {
         if (errorData) {
-            setHasError(errorData);
+            if (errorData.errorType === 'Validation error')
+                setHasError(errorData);
+            else
+                console.log(errorData.code);
         }
     }, [errorData]);
 

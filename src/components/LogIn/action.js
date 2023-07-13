@@ -1,16 +1,16 @@
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import { musicianSchema } from "../../utils/yup/yup-schemas";
+import { userSchema } from "../../utils/yup/yup-schemas";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase/firebase-init";
 
-export default function musicianAction({ request, params }) {
-    console.log(params);
+export default function signInAction({ request, params }) {
     return request.formData()
         .then(doc => {
             const updates = Object.fromEntries(doc);
-            return musicianSchema.validate(updates, { abortEarly: false })
+            return userSchema.validate(updates, { abortEarly: false })
         })
-        .then(val => {
-            return uploadDoc(val, 'mock-musicians')
+        .then(({email, password}) => {
+            return signInWithEmailAndPassword(auth, email, password)
         })
         .then(doc => {
             console.log(doc);
@@ -24,5 +24,6 @@ export default function musicianAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
+            return e;
         })
 }
