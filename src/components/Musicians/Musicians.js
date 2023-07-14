@@ -34,7 +34,7 @@ const Musicians = () => {
         <>
              <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
-                    Videos
+                    Musicians
                 </Typography>
                 <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
                     Add
@@ -44,7 +44,7 @@ const Musicians = () => {
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
                     {musicians?.length
-                        ? musicians.map((m) => <ItemList key={m.id} title={m.name} avatar={m.imgSrc} data={m} type={'musician'} />)
+                        ? musicians.map((m) => <ItemList key={m.id} title={m.name} avatar={m.imgSrc} data={m} type={'musicians'} />)
                         : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
                 </List>
             </Container>

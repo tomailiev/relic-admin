@@ -39,7 +39,7 @@ function downloadOneDoc(col, id) {
     return getDoc(doc(db, col, id))
         .then(item => {
             if (!item) console.log('Problem loading');
-            return item.data();
+            return Object.assign({ id: item.id }, item.data());
         })
         .catch(_e => console.error('no data'));
 }

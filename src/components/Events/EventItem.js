@@ -1,9 +1,13 @@
 import { Accordion, AccordionDetails, AccordionSummary, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useLoaderData } from "react-router-dom";
 
 
 
-const EventItem = ({ event }) => {
+const EventItem = () => {
+
+    const event = useLoaderData();
+    
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Grid key={event.id} container spacing={2} justifyContent="center" sx={{

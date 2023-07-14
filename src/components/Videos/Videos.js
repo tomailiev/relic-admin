@@ -40,7 +40,7 @@ const Videos = () => {
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
                     {videos?.length
-                        ? videos.map((v) => <ItemList key={v.id} title={v.title} avatar={v.thumbnail} data={v} type={'video'} />)
+                        ? videos.map((v) => <ItemList key={v.id} title={v.title} avatar={v.thumbnail} data={v} type={'videos'} />)
                         : Array(10).fill(null).map((v, i) => <ItemList key={i} />)}
                 </List>
             </Container>
