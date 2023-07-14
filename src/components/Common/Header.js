@@ -1,8 +1,8 @@
-import { AppBar, Button, IconButton, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
-import { Logout } from "@mui/icons-material";
+import { Email, Login, Logout } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
 import { Form, NavLink } from "react-router-dom";
 
@@ -51,19 +51,34 @@ const Header = ({ handler }) => {
                     }}
                 >
                     {currentUser && <MenuItem>
-                        {currentUser.email}
+                        <ListItemIcon>
+                            <Email />
+                        </ListItemIcon>
+                        <ListItemText>
+                            {currentUser.email}
+                        </ListItemText>
                     </MenuItem>}
                     {currentUser && <MenuItem>
                         <Form method="POST" action="logout">
-                            <Button type="submit" endIcon={<Logout />}>
-                                Logout
+                            <Button type="submit" sx={{ textTransform: 'none', py: 0, }}>
+                                <ListItemIcon>
+                                    <Logout />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    Log out
+                                </ListItemText>
                             </Button>
                         </Form>
                     </MenuItem>}
                     {!currentUser && (
                         <NavLink to={'login'}>
                             <MenuItem>
-                                Login
+                                <ListItemIcon>
+                                    <Login />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    Log in
+                                </ListItemText>
                             </MenuItem>
                         </NavLink>
                     )}
