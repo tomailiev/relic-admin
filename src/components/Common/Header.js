@@ -1,7 +1,24 @@
-import { AppBar, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useContext, useState } from "react";
+import { Email, Login, Logout } from "@mui/icons-material";
+import UserContext from "../../context/UserContext";
+import { Form, NavLink } from "react-router-dom";
 
 const Header = ({ handler }) => {
+
+    const { currentUser } = useContext(UserContext);
+
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <AppBar
@@ -11,7 +28,7 @@ const Header = ({ handler }) => {
                 ml: { md: `${240}px` },
             }}
         >
-            <Toolbar>
+            <Toolbar sx={{ position: 'relative' }}>
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
@@ -21,6 +38,51 @@ const Header = ({ handler }) => {
                 >
                     <MenuIcon />
                 </IconButton>
+                <IconButton sx={{ position: 'absolute', right: '0', height: '64px', width: '64px', p: 0 }} onClick={handleClick}>
+                    <AccountCircleIcon fontSize="large" />
+                </IconButton>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={!!anchorEl}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    {currentUser && <MenuItem>
+                        <ListItemIcon>
+                            <Email />
+                        </ListItemIcon>
+                        <ListItemText>
+                            {currentUser.email}
+                        </ListItemText>
+                    </MenuItem>}
+                    {currentUser && <MenuItem>
+                        <Form method="POST" action="logout">
+                            <Button type="submit" sx={{ textTransform: 'none', py: 0, }}>
+                                <ListItemIcon>
+                                    <Logout />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    Log out
+                                </ListItemText>
+                            </Button>
+                        </Form>
+                    </MenuItem>}
+                    {!currentUser && (
+                        <NavLink to={'login'}>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <Login />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    Log in
+                                </ListItemText>
+                            </MenuItem>
+                        </NavLink>
+                    )}
+                </Menu>
             </Toolbar>
         </AppBar>
     );

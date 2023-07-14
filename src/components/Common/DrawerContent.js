@@ -1,5 +1,7 @@
 import { Divider, List, Toolbar } from "@mui/material";
 import ExpandableLI from "./ExpandableLI";
+import HomeIcon from '@mui/icons-material/Home';
+import { NavLink } from "react-router-dom";
 
 const DrawerContent = () => {
 
@@ -11,7 +13,11 @@ const DrawerContent = () => {
     ]
     return (
         <>
-            <Toolbar />
+            <Toolbar sx={{display: 'flex', justifyContent: 'center'}}>
+                <NavLink to={'/'}>
+                    <HomeIcon fontSize="large" />
+                </NavLink>
+            </Toolbar>
             <Divider />
             <List
                 component="nav"

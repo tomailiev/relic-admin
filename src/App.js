@@ -16,6 +16,16 @@ import textAction from './components/Texts/action';
 import videoAction from './components/Videos/action';
 import musicianAction from './components/Musicians/action';
 import eventAction from './components/Events/action';
+import { useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './utils/firebase/firebase-init';
+import UserContext from './context/UserContext';
+import Index from './components/Index/Index';
+import LogIn from './components/LogIn/LogIn';
+import signInAction from './components/LogIn/action';
+import signOutAction from './components/LogOut/action';
+import LoggedIn from './components/Common/LoggedIn';
+import LoggedOut from './components/Common/LoggedOut';
 
 const router = createBrowserRouter([
   {
@@ -24,38 +34,65 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        index: true,
+        element: <Index />,
+      },
+      {
         path: 'videos',
-        element: <Videos />,
+        element: <LoggedIn component={<Videos />} />,
         loader: videoLoader,
         action: videoAction
       },
       {
         path: 'texts',
-        element: <Texts />,
+        element: <LoggedIn component={<Texts />} />,
         loader: textLoader,
         action: textAction
       },
       {
         path: 'musicians',
-        element: <Musicians />,
+        element: <LoggedIn component={<Musicians />} />,
         loader: musicianLoader,
         action: musicianAction
       },
       {
         path: 'events',
-        element: <Events />,
+        element: <LoggedIn component={<Events />} />,
         loader: eventLoader,
         action: eventAction
       },
+      {
+        path: 'login',
+        element: <LoggedOut component={<LogIn />} />,
+        action: signInAction
+      },
+      {
+        path: 'logout',
+        action: signOutAction
+      }
     ]
   },
 ]);
 
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState(null);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  })
+
+
   return (
     <CssBaseline>
-      <RouterProvider router={router} />
+      <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+        <RouterProvider router={router} />
+      </UserContext.Provider>
     </CssBaseline>
   );
 }

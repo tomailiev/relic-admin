@@ -19,7 +19,7 @@ export default function videoAction({ request, params }) {
         .catch(e => {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
-                    return { ...p, [c.path]: c.message };
+                    return { ...p, [c.path]: c.message, errorType: 'Validation error' };
                 }, {});
                 console.log(errors);
                 return errors

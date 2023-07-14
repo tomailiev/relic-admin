@@ -28,6 +28,11 @@ const musicianSchema = object({
     pic: string().required('pic url required')
 });
 
+const userSchema = object({
+    email: string().required().email(),
+    password: string().required()
+});
+
 const textContentSchema = object({
     aboutBio: string().required(),
     aboutMission: string().required(),
@@ -75,4 +80,4 @@ const videoSchema = object({
     thumbnail: string().url('valid url required').required('thumbnail is required')
 })
 
-export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema, newTextSchema };
+export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema, newTextSchema, userSchema };
