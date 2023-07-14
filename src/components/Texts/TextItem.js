@@ -1,15 +1,19 @@
 import { Paper, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useLoaderData } from "react-router-dom";
 
 
 
-const TextItem = ({ text }) => {
+const TextItem = () => {
+
+    const text = useLoaderData();
+
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
 
-            {typeof text.value === 'string'
-                ? <Typography> {text.value} </Typography>
-                : text.value.map(({ cardImage, cardTitle, infoTitle, infoText, route }) => {
+            {typeof text === 'string'
+                ? <Typography> {text} </Typography>
+                : text.map(({ cardImage, cardTitle, infoTitle, infoText, route }) => {
                     return (
                         <Accordion key={cardTitle}>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>

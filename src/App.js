@@ -32,6 +32,8 @@ import MusicianItem from './components/Musicians/MusicianItem';
 import EventItem from './components/Events/EventItem';
 import musicianItemLoader from './components/Musicians/itemLoader';
 import eventItemLoader from './components/Events/itemLoader';
+import TextItem from './components/Texts/TextItem';
+import textItemLoader from './components/Texts/itemLoader';
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,11 @@ const router = createBrowserRouter([
         element: <LoggedIn component={<Texts />} />,
         loader: textLoader,
         action: textAction
+      },
+      {
+        path: 'texts/:textId',
+        element: <LoggedIn component={<TextItem />} />,
+        loader: textItemLoader,
       },
       {
         path: 'musicians',

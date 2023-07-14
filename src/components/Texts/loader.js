@@ -8,7 +8,8 @@ export default function textLoader() {
                 .reduce((acc, curr) => {
                     acc.push({
                         title: curr[0],
-                        value: curr[1]
+                        value: curr[1],
+                        id: curr[0]
                     });
                     return acc;
                 }, []);
