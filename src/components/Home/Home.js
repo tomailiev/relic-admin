@@ -3,7 +3,7 @@ import AppDrawer from "../Common/AppDrawer";
 import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Box, Breadcrumbs, Link, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Breadcrumbs, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const Home = () => {
 
@@ -34,8 +34,8 @@ const Home = () => {
                     {locationList.map((name, i, arr) => {
                         return (
                             i === arr.length - 1
-                                ? <Typography variant="body1">{name}</Typography>
-                                : <NavLink to={name}>
+                                ? <Typography variant="body1">{name || 'home'}</Typography>
+                                : <NavLink to={arr.slice(0, i + 1).join('/')}>
                                     {name || 'home'}
                                 </NavLink>)
                     })}
