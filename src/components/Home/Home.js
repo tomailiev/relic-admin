@@ -14,7 +14,6 @@ const Home = () => {
     const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
-        console.log(location.pathname);
         setLocationList(location.pathname === '/'
             ? ['']
             : location.pathname.split('/'));
