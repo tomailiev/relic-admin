@@ -26,6 +26,14 @@ import signInAction from './components/LogIn/action';
 import signOutAction from './components/LogOut/action';
 import LoggedIn from './components/Common/LoggedIn';
 import LoggedOut from './components/Common/LoggedOut';
+import VideoItem from './components/Videos/VideoItem';
+import videoItemLoader from './components/Videos/itemLoader';
+import MusicianItem from './components/Musicians/MusicianItem';
+import EventItem from './components/Events/EventItem';
+import musicianItemLoader from './components/Musicians/itemLoader';
+import eventItemLoader from './components/Events/itemLoader';
+import TextItem from './components/Texts/TextItem';
+import textItemLoader from './components/Texts/itemLoader';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +49,12 @@ const router = createBrowserRouter([
         path: 'videos',
         element: <LoggedIn component={<Videos />} />,
         loader: videoLoader,
-        action: videoAction
+        action: videoAction,
+      },
+      {
+        path: 'videos/:videoId',
+        element: <LoggedIn component={<VideoItem />} />,
+        loader: videoItemLoader
       },
       {
         path: 'texts',
@@ -50,16 +63,31 @@ const router = createBrowserRouter([
         action: textAction
       },
       {
+        path: 'texts/:textId',
+        element: <LoggedIn component={<TextItem />} />,
+        loader: textItemLoader,
+      },
+      {
         path: 'musicians',
         element: <LoggedIn component={<Musicians />} />,
         loader: musicianLoader,
         action: musicianAction
       },
       {
+        path: 'musicians/:musicianId',
+        element: <LoggedIn component={<MusicianItem />} />,
+        loader: musicianItemLoader
+      },
+      {
         path: 'events',
         element: <LoggedIn component={<Events />} />,
         loader: eventLoader,
         action: eventAction
+      },
+      {
+        path: 'events/:eventId',
+        element: <LoggedIn component={<EventItem />} />,
+        loader: eventItemLoader
       },
       {
         path: 'login',

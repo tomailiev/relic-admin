@@ -37,7 +37,7 @@ const Texts = () => {
 
                 <List sx={{ width: '100%' }}>
                     {texts?.length
-                        ? texts.map((m) => <ItemList key={m.title} title={m.title} icon={<TextSnippetIcon />} data={m} type={'text'} />)
+                        ? texts.map((m) => <ItemList key={m.title} title={m.title} icon={<TextSnippetIcon />} data={m} type={'texts'} />)
                         : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
                 </List>
             </Container>

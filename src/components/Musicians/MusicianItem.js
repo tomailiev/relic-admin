@@ -1,6 +1,9 @@
 import { Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
+import { useLoaderData } from "react-router-dom";
 
-const MusicianItem = ({ musician }) => {
+const MusicianItem = () => {
+
+    const musician = useLoaderData();
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Grid key={musician.id} container spacing={2} justifyContent="center" sx={{
@@ -25,14 +28,14 @@ const MusicianItem = ({ musician }) => {
                     </Card>
                 </Grid>
                 <Grid item md={6}>
+                    <Typography variant="h4">
+                        {musician.name}
+                    </Typography>
                     <Typography variant="h6">
-                        Name: {musician.name}
+                        {musician.newTitle}
                     </Typography>
                     <Typography variant="body1">
-                        Title: {musician.newTitle}
-                    </Typography>
-                    <Typography variant="body1">
-                        Bio: {musician.bio}
+                        {musician.bio}
                     </Typography>
                 </Grid>
             </Grid>

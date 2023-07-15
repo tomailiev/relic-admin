@@ -69,7 +69,7 @@ const Events = () => {
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
                     {events?.length
-                        ? events.map((m) => <ItemList key={m.id} title={m.title} avatar={m.imgSrc} data={m} type={'event'} />)
+                        ? events.map((m) => <ItemList key={m.id} title={m.title} avatar={m.imgSrc} data={m} type={'events'} />)
                         : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
                 </List>
             </Container>
