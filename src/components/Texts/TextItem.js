@@ -10,9 +10,9 @@ const TextItem = () => {
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
-
-            {typeof text === 'string'
-                ? <Typography> {text} </Typography>
+            <Typography variant="h5">{text.id}</Typography>
+            {typeof text.value === 'string'
+                ? <Typography> {text.value} </Typography>
                 : text.map(({ cardImage, cardTitle, infoTitle, infoText, route }) => {
                     return (
                         <Accordion key={cardTitle}>

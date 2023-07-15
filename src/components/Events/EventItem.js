@@ -1,5 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
+import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import { useLoaderData } from "react-router-dom";
 
 
@@ -7,16 +7,11 @@ import { useLoaderData } from "react-router-dom";
 const EventItem = () => {
 
     const event = useLoaderData();
-    
+
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Grid key={event.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
-                // left: `${(position < 0 && position !== -(length - 1)) || isShifting ? 150 : position === 1 || position === -(length - 1) ? -150 : 0}%`,
-                // top: 0,
-                // width: position ? '0px' : 'calc(100% + 16px)',
-                // transition: Math.abs(position) === 1 || Math.abs(position) === length - 1? 'width 7s ease-in, visibility 5s ease-in, left 1s ease-in' : !position ? 'left 1s ease-in, width 100ms ease-in' : 'none',
-                // visibility: position ? 'hidden' : 'visible',
             }}>
                 <Grid item md={6} sm={8} xs={12} p={6}>
                     <Card sx={{ textDecoration: 'none' }}>
@@ -32,37 +27,33 @@ const EventItem = () => {
                     </Card>
                 </Grid>
                 <Grid item md={6}>
-                    <Typography variant="h6">
-                        Title: {event.title}
+                    <Typography variant="h4" mb={2}>
+                        {event.title}
                     </Typography>
                     <Typography variant="body1">
-                        Description: {event.description}
+                        {event.description}
                     </Typography>
-                    <Typography variant="body1">
-                        Performances:
-                    </Typography>
-                    {event.performances.sort((a, b) => a.id - b.id).map(({ date, day, id, location, venue, time, url }) => {
-                        return <Accordion key={id}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel2a-content"
-                                id="panel2a-header"
-                                sx={{ width: '100%' }}
-                            >
-                                <Typography variant="body1">
-                                    {day}, {date} - {time}
-                                </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography variant="body1">
-                                    Id: {id}
-                                </Typography>
-                                <Typography variant="body1">
-                                    Venue & Location: {venue}, {location}
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    })}
+                    <Container disableGutters>
+                        <Typography variant="h6" mt={2}>
+                            Performances:
+                        </Typography>
+                        <List>
+                            {event.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
+                                return (
+                                    <Link key={id} href={url} target={'_blank'} underline={'none'}>
+                                        <ListItem button>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <ConfirmationNumberOutlinedIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={`${venue} - ${location}`} secondary={`${day}, ${date} - ${time}`} />
+                                        </ListItem>
+                                    </Link>
+                                )
+                            })}
+                        </List>
+                    </Container>
                 </Grid>
             </Grid>
         </Paper>

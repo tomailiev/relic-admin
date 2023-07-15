@@ -28,14 +28,14 @@ const MusicianItem = () => {
                     </Card>
                 </Grid>
                 <Grid item md={6}>
+                    <Typography variant="h4">
+                        {musician.name}
+                    </Typography>
                     <Typography variant="h6">
-                        Name: {musician.name}
+                        {musician.newTitle}
                     </Typography>
                     <Typography variant="body1">
-                        Title: {musician.newTitle}
-                    </Typography>
-                    <Typography variant="body1">
-                        Bio: {musician.bio}
+                        {musician.bio}
                     </Typography>
                 </Grid>
             </Grid>

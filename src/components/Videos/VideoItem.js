@@ -1,6 +1,6 @@
-import { Grid, Paper, Typography, Card, Box } from "@mui/material";
+import { Grid, Paper, Typography, } from "@mui/material";
 import YouTube from 'react-youtube';
-import youtubeIcon from '../../assets/yt_icon_rgb.png'
+// import youtubeIcon from '../../assets/yt_icon_rgb.png'
 import { useLoaderData } from "react-router-dom";
 
 const VideoItem = () => {
@@ -14,7 +14,7 @@ const VideoItem = () => {
                 position: 'relative',
             }}>
                 <Grid item md={6} sm={8} xs={12}>
-                    <Card sx={{ textDecoration: 'none', position: 'relative' }}>
+                    {/* <Card sx={{ textDecoration: 'none', position: 'relative' }}> */}
                         <YouTube
                             videoId={video.youtubeId}
                             opts={{ height: '300px', width: '100%', }}
@@ -27,14 +27,14 @@ const VideoItem = () => {
                             alt="video image"
                             sx={{ position: 'relative', zIndex: '1' }}
                         /> */}
-                        <Box width={'16%'} position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
+                        {/* <Box width={'16%'} position={'absolute'} left={'50%'} top={'50%'} zIndex={100} sx={{ transform: 'translate(-50%,-50%)' }}>
                             <img src={youtubeIcon} width={'100%'} alt="youtube thumb" />
-                        </Box>
-                </Card>
+                        </Box> */}
+                {/* </Card> */}
             </Grid>
             <Grid item md={6}>
                 <Typography variant="h6">
-                    Title: {video.title}
+                    {video.title}
                 </Typography>
                 <Typography variant="body1">
                     Priority: {video.featured}
