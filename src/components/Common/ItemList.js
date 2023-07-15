@@ -1,4 +1,4 @@
-import { ListItem, ListItemAvatar, Skeleton, Typography, Avatar, Accordion, AccordionSummary, AccordionDetails, ListItemIcon, Divider, Button } from "@mui/material"
+import { ListItem, ListItemAvatar, Skeleton, Typography, Avatar, ListItemIcon, Divider, Button } from "@mui/material"
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 // import MusicianItem from "../Musicians/MusicianItem";
 // import VideoItem from "../Videos/VideoItem";
