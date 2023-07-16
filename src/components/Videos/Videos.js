@@ -1,5 +1,5 @@
 import { Typography, Container, List, Button } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { useState } from "react";
@@ -32,9 +32,11 @@ const Videos = () => {
                 <Typography variant="h3" my={5}>
                     Videos
                 </Typography>
-                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
-                    Add
-                </Button>
+                <NavLink to={'/videos/add'} >
+                    <Button variant="contained" endIcon={<AddIcon />}>
+                        Add
+                    </Button>
+                </NavLink>
                 {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
             <Container maxWidth="lg">

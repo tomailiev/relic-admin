@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 
 
-const AddSimpleForm = ({ fields, fieldsArray }) => {
-    const errorData = useActionData();
+const AddSimpleForm = ({ fields, fieldsArray, handleSubmission }) => {
+    const actionData = useActionData();
     const navigation = useNavigation();
 
 
@@ -14,13 +14,17 @@ const AddSimpleForm = ({ fields, fieldsArray }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        if (errorData) {
-            if (errorData.errorType === 'Validation error')
-                setHasError(errorData);
-            else
-                console.log(errorData.code);
+        if (actionData) {
+            if (actionData.errorType === 'Validation error') {
+                setHasError(actionData);
+            }
+            else if(actionData.id){
+                handleSubmission(actionData);
+            } else {
+                console.log(actionData);
+            }
         }
-    }, [errorData]);
+    }, [actionData]);
 
     useEffect(() => {
         const submissionStates = {
@@ -47,11 +51,11 @@ const AddSimpleForm = ({ fields, fieldsArray }) => {
                             id={id}
                             name={id}
                             type={type || 'text'}
-                            error={!!hasError[id]}
+                            error={!!hasError[id] && hasError[id] !== userFields[id]}
                             value={userFields[id]}
                             onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
                             onChange={handleInputChange}
-                            helperText={hasError[id]}
+                            helperText={hasError[id] !== userFields[id] && hasError[id]}
                             label={label}
                             variant="outlined"
                             size="small"
@@ -66,7 +70,7 @@ const AddSimpleForm = ({ fields, fieldsArray }) => {
                         disabled={isSubmitting}
                         type="submit"
                     >
-                        Send
+                        Submit
                     </Button>
                 </Stack>
             </Form>
