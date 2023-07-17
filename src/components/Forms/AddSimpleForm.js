@@ -24,7 +24,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleSubmission }) => {
                 console.log(actionData);
             }
         }
-    }, [actionData]);
+    }, [actionData, handleSubmission]);
 
     useEffect(() => {
         const submissionStates = {
@@ -51,11 +51,11 @@ const AddSimpleForm = ({ fields, fieldsArray, handleSubmission }) => {
                             id={id}
                             name={id}
                             type={type || 'text'}
-                            error={!!hasError[id] && hasError[id] !== userFields[id]}
+                            error={!!hasError[id] && (hasError[id] !== userFields[id])}
                             value={userFields[id]}
                             onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
                             onChange={handleInputChange}
-                            helperText={hasError[id] !== userFields[id] && hasError[id]}
+                            helperText={(hasError[id] !== userFields[id]) && hasError[id]}
                             label={label}
                             variant="outlined"
                             size="small"
@@ -69,6 +69,8 @@ const AddSimpleForm = ({ fields, fieldsArray, handleSubmission }) => {
                         color="primary"
                         disabled={isSubmitting}
                         type="submit"
+                        name="intent"
+                        value="preflight"
                     >
                         Submit
                     </Button>

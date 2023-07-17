@@ -2,6 +2,7 @@ import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
+import { useSubmit } from "react-router-dom";
 
 const fields = {
     featured: '',
@@ -17,23 +18,26 @@ const fieldsArray = [
     { label: 'Thumbail Url', id: 'thumbnail' },
 ];
 
+const steps = [
+    'Add doc',
+    'Preview'
+];
 
 const AddVideo = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
+    const submit = useSubmit();
 
-    const steps = [
-        'Add doc',
-        'Preview'
-    ];
-
-    const changeActiveStep = (num) => {
-        setActiveStep(prev => prev + num);
-    }
 
     function handleSubmission(data) {
-        console.log(data);
         setSubmission(data);
+        console.log(data);
+    }
+
+    function finishSubmission() {
+        const formData = new FormData();
+        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'id').forEach(([key, value]) => formData.append(key, value))
+        submit(formData, { method: 'POST', action: '/videos/add' })
     }
 
     return (
@@ -53,15 +57,20 @@ const AddVideo = () => {
                 <Button
                     color="inherit"
                     disabled={activeStep === 0}
-                    onClick={() => changeActiveStep(-1)}
+                    onClick={() => setActiveStep(prev => prev - 1)}
                     sx={{ mr: 1 }}
                 >
                     Back
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button variant="contained" onClick={() => changeActiveStep(1)} disabled={!submission}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                </Button>
+                {activeStep === 1
+                    ? <Button variant="contained" onClick={finishSubmission}>
+                        Finish
+                    </Button>
+                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev + 1)} disabled={!submission}>
+                        Next
+                    </Button>
+                }
             </Box>
         </Box>
     );
