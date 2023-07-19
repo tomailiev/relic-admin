@@ -45,6 +45,6 @@ export default function eventAction({ request, params }) {
                 return errors
             }
             console.error(e)
-            return e;
+            return Object.assign(e, { errorType: 'Error' });
         })
 }

@@ -8,7 +8,7 @@ export default async function videoAction({ request, params }) {
     if (doc.get('intent') === 'preflight') {
         try {
             const validatedData = await videoSchema.validate(updates, { abortEarly: false })
-            return Object.assign(validatedData, { id: 1 });
+            return validatedData;
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
@@ -17,14 +17,15 @@ export default async function videoAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
+            return Object.assign(e, { errorType: 'Error' });
         }
     }
     try {
-        const upload = uploadDoc(updates, 'mock-videos');
+        const upload = await uploadDoc(updates, 'mock-videos');
         console.log(upload);
         return redirect('/videos');
     } catch (e) {
         console.log(e);
-        return e
+        return Object.assign(e, { errorType: 'Error' });
     }
 }

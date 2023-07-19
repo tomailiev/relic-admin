@@ -23,6 +23,7 @@ export default function textAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
+            return Object.assign(e, { errorType: 'Error' });
         })
     // uploadDoc('textContent', 'new-doc')
     //     .then(doc => console.log(doc.id));

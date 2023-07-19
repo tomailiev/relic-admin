@@ -27,7 +27,6 @@ import signOutAction from './components/LogOut/action';
 import LoggedIn from './components/Common/LoggedIn';
 import LoggedOut from './components/Common/LoggedOut';
 import videoItemLoader from './components/Videos/itemLoader';
-import MusicianItem from './components/Musicians/MusicianItem';
 import EventItem from './components/Events/EventItem';
 import musicianItemLoader from './components/Musicians/itemLoader';
 import eventItemLoader from './components/Events/itemLoader';
@@ -35,6 +34,8 @@ import TextItem from './components/Texts/TextItem';
 import textItemLoader from './components/Texts/itemLoader';
 import AddVideo from './components/Videos/AddVideo';
 import VideoItemRoute from './components/Videos/VideoItemRoute';
+import MusicianItemRoute from './components/Musicians/MusicianItemRoute';
+import AddMusician from './components/Musicians/AddMusician';
 
 const router = createBrowserRouter([
   {
@@ -76,12 +77,16 @@ const router = createBrowserRouter([
         path: 'musicians',
         element: <LoggedIn component={<Musicians />} />,
         loader: musicianLoader,
-        action: musicianAction
       },
       {
         path: 'musicians/:musicianId',
-        element: <LoggedIn component={<MusicianItem />} />,
+        element: <LoggedIn component={<MusicianItemRoute />} />,
         loader: musicianItemLoader
+      },
+      {
+        path: 'musicians/add',
+        element: <LoggedIn component={<AddMusician />} />,
+        action: musicianAction,
       },
       {
         path: 'events',

@@ -1,31 +1,33 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import VideoItem from "./VideoItem";
+import MusicianItem from "./MusicianItem";
 import { useSubmit } from "react-router-dom";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
 const fields = {
+    bio: '',
     featured: '',
-    title: '',
-    youtubeId: '',
-    thumbnail: '',
+    name: '',
+    newTitle: '',
+    pic: ''
 };
 
 const fieldsArray = [
-    { label: 'Featured priority', id: 'featured', type: 'number' },
-    { label: 'Title', id: 'title' },
-    { label: 'YouTube Id', id: 'youtubeId' },
-    { label: 'Thumbail Url', id: 'thumbnail' },
-];
+    { label: 'Bio', id: 'bio', },
+    { label: 'Name', id: 'name' },
+    { label: 'Featured in season', id: 'featured', type: 'number' },
+    { label: 'Title/Instrument', id: 'newTitle' },
+    { label: 'Avatar', id: 'pic', type: 'file'}
+]
 
 const steps = [
     'Add doc',
     'Preview'
 ];
 
-const AddVideo = () => {
+const AddMusician = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
@@ -39,7 +41,7 @@ const AddVideo = () => {
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: '/videos/add' })
+        submit(formData, { method: 'POST', action: '/musicians/add' })
     }
 
     return (
@@ -55,7 +57,7 @@ const AddVideo = () => {
             </Stepper>
             {activeStep === 0 &&
                 <AddSimpleForm fields={submission || fields} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
-            {activeStep === 1 && submission && <VideoItem item={submission} />}
+            {activeStep === 1 && submission && <MusicianItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -79,4 +81,4 @@ const AddVideo = () => {
     );
 };
 
-export default AddVideo;
+export default AddMusician;

@@ -33,8 +33,8 @@ const Home = () => {
                     {locationList.map((name, i, arr) => {
                         return (
                             i === arr.length - 1
-                                ? <Typography variant="body1">{name || 'home'}</Typography>
-                                : <NavLink to={arr.slice(0, i + 1).join('/')}>
+                                ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
+                                : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
                                     {name || 'home'}
                                 </NavLink>)
                     })}

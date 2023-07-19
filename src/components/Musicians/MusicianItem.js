@@ -1,12 +1,21 @@
 import { Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { useEffect } from "react";
+import { useState } from "react";
+import { getLink } from "../../utils/firebase/firebase-functions";
 
-const MusicianItem = () => {
+const MusicianItem = ({ item }) => {
+    const [imgSrc, setImgSrc] = useState(null);
 
-    const musician = useLoaderData();
+    useEffect(() => {
+        if (!item.imgSrc) {
+            getLink(item.pic)
+                .then(url => setImgSrc(url));
+        }
+    }, [item])
+
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
-            <Grid key={musician.id} container spacing={2} justifyContent="center" sx={{
+            <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
                 // left: `${(position < 0 && position !== -(length - 1)) || isShifting ? 150 : position === 1 || position === -(length - 1) ? -150 : 0}%`,
                 // top: 0,
@@ -21,7 +30,7 @@ const MusicianItem = () => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={musician.imgSrc}
+                            image={item.imgSrc || imgSrc}
                             alt="musician dmage"
                         ></CardMedia>
                         {/* </CardActionArea> */}
@@ -29,13 +38,13 @@ const MusicianItem = () => {
                 </Grid>
                 <Grid item md={6}>
                     <Typography variant="h4">
-                        {musician.name}
+                        {item.name}
                     </Typography>
                     <Typography variant="h6">
-                        {musician.newTitle}
+                        {item.newTitle}
                     </Typography>
                     <Typography variant="body1">
-                        {musician.bio}
+                        {item.bio}
                     </Typography>
                 </Grid>
             </Grid>

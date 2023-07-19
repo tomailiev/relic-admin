@@ -4,9 +4,9 @@ import VideoItem from "./VideoItem";
 const VideoItemRoute = () => {
 
     const video = useLoaderData();
-
+    console.log(video);
     return (
-        <VideoItem video={video} />
+        <VideoItem item={video} />
     );
 };
 

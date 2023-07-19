@@ -2,25 +2,25 @@ import { Grid, Paper, Typography, } from "@mui/material";
 import YouTube from 'react-youtube';
 // import youtubeIcon from '../../assets/yt_icon_rgb.png'
 
-const VideoItem = ({ video }) => {
+const VideoItem = ({ item }) => {
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
-            <Grid key={video.youtubeId} container spacing={2} justifyContent="center" sx={{
+            <Grid key={item.youtubeId} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
                 <Grid item md={6} sm={8} xs={12}>
                     <YouTube
-                        videoId={video.youtubeId}
+                        videoId={item.youtubeId}
                         opts={{ height: '300px', width: '100%', }}
                     />
                 </Grid>
                 <Grid item md={6}>
                     <Typography variant="h6">
-                        {video.title}
+                        {item.title}
                     </Typography>
                     <Typography variant="body1">
-                        Priority: {video.featured}
+                        Priority: {item.featured}
                     </Typography>
                 </Grid>
             </Grid>
