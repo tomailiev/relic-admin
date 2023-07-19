@@ -2,29 +2,11 @@ import { Typography, Container, List, Button } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
-
-const fields = {
-    featured: '',
-    title: '',
-    youtubeId: '',
-    thumbnail: '',
-};
-
-const fieldsArray = [
-    { label: 'Featured priority', id: 'featured', type: 'number' },
-    { label: 'Title', id: 'title' },
-    { label: 'YouTube Id', id: 'youtubeId' },
-    { label: 'Thumbail Url', id: 'thumbnail' },
-];
 
 
 const Videos = () => {
 
     const videos = useLoaderData();
-
-    const [formOpen, setFormOpen] = useState(false);
 
     return (
         <>
@@ -37,7 +19,6 @@ const Videos = () => {
                         Add
                     </Button>
                 </NavLink>
-                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

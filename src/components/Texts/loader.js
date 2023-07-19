@@ -1,7 +1,7 @@
 import { downloadOneDoc } from "../../utils/firebase/firebase-functions";
 
 export default function textLoader() {
-    return downloadOneDoc('textContent', 'allTexts')
+    return downloadOneDoc('mock-text', 'allTexts')
         .then(allTexts => {
             return Object.entries(allTexts)
                 .sort(([a,], [b,]) => a.localeCompare(b))
