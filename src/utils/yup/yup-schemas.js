@@ -1,8 +1,7 @@
-import { object, string, date, array, number } from 'yup'
+import { object, string, array, number } from 'yup'
 
 const performanceSchema = object({
     date: string().required('date required'),
-    day: string().required('day of week required'),
     time: string().required('time required'),
     id: number().required('id required'),
     location: string().required('location required'),
@@ -13,11 +12,11 @@ const performanceSchema = object({
 });
 
 const eventSchema = object({
-    dateDone: date().required('date required'),
+    dateDone: string().required('date required'),
     description: string().required('description required'),
     imageUrl: string().required('imageUrl required'),
     title: string().required('title required'),
-    performances: array().of(performanceSchema)
+    performances: array().of(performanceSchema).min(1)
 });
 
 const musicianSchema = object({

@@ -1,6 +1,17 @@
 import { redirect } from "react-router-dom";
 import { Timestamp, uploadDoc } from "../../utils/firebase/firebase-functions";
 import { eventSchema } from "../../utils/yup/yup-schemas";
+import collections from "../../vars/collections";
+
+const daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+];
 
 const schematify = (prev, [key, value]) => {
     if (key.startsWith('performances')) {
@@ -11,6 +22,10 @@ const schematify = (prev, [key, value]) => {
         if (!prev.performances[index]) {
             prev.performances[index] = {};
         }
+        if (updatedKey === 'date') {
+            const day = daysOfWeek[new Date(value).getDay()];
+            prev.performances[index].day = day;
+        }
         prev.performances[index][updatedKey] = value;
         return prev;
     }
@@ -18,25 +33,14 @@ const schematify = (prev, [key, value]) => {
     return prev;
 }
 
-export default function eventAction({ request, params }) {
-    return request.formData()
-        .then(doc => {
-            const entries = Object.fromEntries(doc);
-            const schema = Object.entries(entries).reduce(schematify, { performances: [] });
-            return eventSchema.validate(schema, { abortEarly: false })
-        })
-        .then(val => {
-            const update = {
-                ...val,
-                dateDone: Timestamp.fromDate(val.dateDone)
-            };
-            return uploadDoc(update, 'mock-events');
-        })
-        .then(doc => {
-            console.log(doc);
-            return redirect('/')
-        })
-        .catch(e => {
+export default async function eventAction({ request, params }) {
+    const doc = await request.formData();
+    const updates = Object.fromEntries(doc);
+    if (doc.get('intent') === 'preflight') {
+        const schema = Object.entries(updates).reduce(schematify, { performances: [] });
+        try {
+            return await eventSchema.validate(schema, { abortEarly: false });
+        } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
                     return { ...p, [c.path]: c.message, errorType: 'Validation error' };
@@ -46,5 +50,27 @@ export default function eventAction({ request, params }) {
             }
             console.error(e)
             return Object.assign(e, { errorType: 'Error' });
-        })
+        }
+    }
+
+    try {
+        const update = {
+            ...updates,
+            dateDone: Timestamp.fromDate(updates.dateDone)
+        };
+        const upload = await uploadDoc(update, collections.events);
+        console.log(upload);
+        return redirect('/events')
+    } catch (e) {
+        if (e.inner) {
+            const errors = e.inner.reduce((p, c) => {
+                return { ...p, [c.path]: c.message, errorType: 'Validation error' };
+            }, {});
+            console.log(errors);
+            return errors
+        }
+        console.error(e)
+        return Object.assign(e, { errorType: 'Error' });
+
+    }
 }

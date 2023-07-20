@@ -1,16 +1,14 @@
 import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
-import { useLoaderData } from "react-router-dom";
 
 
 
-const EventItem = () => {
+const EventItem = ({ item }) => {
 
-    const event = useLoaderData();
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
-            <Grid key={event.id} container spacing={2} justifyContent="center" sx={{
+            <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
                 <Grid item md={6} sm={8} xs={12} p={6}>
@@ -20,7 +18,7 @@ const EventItem = () => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={event.imgSrc}
+                            image={item.imgSrc}
                             alt="event dmage"
                         ></CardMedia>
                         {/* </CardActionArea> */}
@@ -28,17 +26,17 @@ const EventItem = () => {
                 </Grid>
                 <Grid item md={6}>
                     <Typography variant="h4" mb={2}>
-                        {event.title}
+                        {item.title}
                     </Typography>
                     <Typography variant="body1">
-                        {event.description}
+                        {item.description}
                     </Typography>
                     <Container disableGutters>
                         <Typography variant="h6" mt={2}>
                             Performances:
                         </Typography>
                         <List>
-                            {event.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
+                            {item.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
                                 return (
                                     <Link key={id} href={url} target={'_blank'} underline={'none'}>
                                         <ListItem button>

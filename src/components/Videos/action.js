@@ -1,6 +1,7 @@
 import { redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import { videoSchema } from "../../utils/yup/yup-schemas";
+import collections from "../../vars/collections";
 
 export default async function videoAction({ request, params }) {
     const doc = await request.formData();
@@ -21,7 +22,7 @@ export default async function videoAction({ request, params }) {
         }
     }
     try {
-        const upload = await uploadDoc(updates, 'mock-videos');
+        const upload = await uploadDoc(updates, collections.videos);
         console.log(upload);
         return redirect('/videos');
     } catch (e) {

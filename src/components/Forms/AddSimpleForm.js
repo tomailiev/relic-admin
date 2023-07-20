@@ -61,7 +61,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         const fileUpload = fieldsArray.find(item => item.type === 'file');
         if (fileUpload && fileValue) {
             if (!filePath) {
-                uploadFile(fileValue, `mock-images/${fileValue.name}`)
+                uploadFile(fileValue, `${fileUpload.path}/${fileValue.name}`)
                     .then(path => {
                         setFilePath(path);
                         submitForm(Object.assign(userFields, { [fileUpload.id]: path }));

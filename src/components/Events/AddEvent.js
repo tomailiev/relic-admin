@@ -1,25 +1,47 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
-import MusicianItem from "./MusicianItem";
 import { useSubmit } from "react-router-dom";
+import AddDynamicForm from "../Forms/AddDynamicForm";
+import EventItem from "./EventItem";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
-const fields = {
-    bio: '',
-    featured: '',
-    name: '',
-    newTitle: '',
-    pic: ''
+const eventFields = {
+    dateDone: '',
+    description: '',
+    imageUrl: '',
+    title: '',
+    // performances: []
 };
 
-const fieldsArray = [
-    { label: 'Bio', id: 'bio', },
-    { label: 'Name', id: 'name' },
-    { label: 'Featured in season', id: 'featured', type: 'number' },
-    { label: 'Title/Instrument', id: 'newTitle' },
-    { label: 'Avatar', id: 'pic', type: 'file', path: 'mock-images/musicians'}
+const eventFieldsArray = [
+    { label: 'Date done', id: 'dateDone', type: 'date' },
+    { label: 'Description', id: 'description' },
+    { label: 'Image Url', id: 'imageUrl', type: 'file', path: 'mock-images/events' },
+    { label: 'Title', id: 'title' },
+    // { label: 'Performances', id: 'performances', type: 'array' }
+];
+
+const performanceFields = {
+    date: '',
+    time: '',
+    id: '',
+    location: '',
+    url: '',
+    venue: '',
+    lat: '',
+    lng: '',
+};
+
+const performanceFieldArray = [
+    { label: 'Date', id: 'date', type: 'date' },
+    { label: 'Time', id: 'time', type: 'time' },
+    { label: 'Order #', id: 'id', },
+    { label: 'Location (Portland, OR)', id: 'location' },
+    { label: 'Url', id: 'url' },
+    { label: 'Venue', id: 'venue' },
+    { label: 'Latitude', id: 'lat', },
+    { label: 'Longitude', id: 'lng', },
 ];
 
 const steps = [
@@ -27,7 +49,7 @@ const steps = [
     'Preview'
 ];
 
-const AddMusician = () => {
+const AddEvent = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
@@ -41,7 +63,7 @@ const AddMusician = () => {
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: '/musicians/add' })
+        submit(formData, { method: 'POST', action: '/events/add' })
     }
 
     return (
@@ -56,8 +78,8 @@ const AddMusician = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
-            {activeStep === 1 && submission && <MusicianItem item={submission} />}
+                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} /> }          
+                {activeStep === 1 && submission && <EventItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -81,4 +103,4 @@ const AddMusician = () => {
     );
 };
 
-export default AddMusician;
+export default AddEvent;

@@ -37,6 +37,7 @@ import MusicianItemRoute from './components/Musicians/MusicianItemRoute';
 import AddMusician from './components/Musicians/AddMusician';
 import AddText from './components/Texts/AddText';
 import TextItemRoute from './components/Texts/TextItemRoute';
+import AddEvent from './components/Events/AddEvent';
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
         path: 'events',
         element: <LoggedIn component={<Events />} />,
         loader: eventLoader,
+      },
+      {
+        path: 'events/add',
+        element: <LoggedIn component={<AddEvent />} />,
         action: eventAction
       },
       {

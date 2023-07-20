@@ -1,4 +1,5 @@
 import { downloadDocs, getLink } from "../../utils/firebase/firebase-functions";
+import collections from "../../vars/collections";
 
 // const date = new Date();
 // const month = date.getMonth();
@@ -7,7 +8,7 @@ import { downloadDocs, getLink } from "../../utils/firebase/firebase-functions";
 // , ['featured', '==', season], ['name']
 
 export default function musicianLoader() {
-    return downloadDocs('mock-musicians')
+    return downloadDocs(collections.musicians)
         .then(items => {
             const modifiedItems = items.map((item) => {
                 return getLink(item.pic)

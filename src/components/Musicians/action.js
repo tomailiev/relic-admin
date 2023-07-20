@@ -1,6 +1,7 @@
 import { redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import { musicianSchema } from "../../utils/yup/yup-schemas";
+import collections from "../../vars/collections";
 
 export default async function musicianAction({ request, params }) {
     const doc = await request.formData();
@@ -21,7 +22,7 @@ export default async function musicianAction({ request, params }) {
         }
     }
     try {
-        const upload = await uploadDoc(updates, 'mock-musicians');
+        const upload = await uploadDoc(updates, collections.musicians);
         console.log(upload);
         return redirect('/musicians');
     } catch (e) {
