@@ -2,24 +2,18 @@ import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvata
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import { useEffect, useState } from "react";
 import { getLink } from "../../utils/firebase/firebase-functions";
-import { schematify } from "../../vars/schemaFunctions";
 
 
 
 const EventItem = ({ item }) => {
 
     const [imgSrc, setImgSrc] = useState(null);
-    const [p, setP] = useState([]);
 
 
     useEffect(() => {
         if (!item.imgSrc) {
             getLink(item.imageUrl)
                 .then(url => setImgSrc(url));
-        }
-        if (!item?.performances) {
-            const { performances } = schematify(item, 'performances');
-            setP(performances);
         }
     }, [item])
 
@@ -68,21 +62,6 @@ const EventItem = ({ item }) => {
                                     </Link>
                                 )
                             })}
-                            {p && p.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
-                                return (
-                                    <Link key={id} href={url} target={'_blank'} underline={'none'}>
-                                        <ListItem button>
-                                            <ListItemAvatar>
-                                                <Avatar>
-                                                    <ConfirmationNumberOutlinedIcon />
-                                                </Avatar>
-                                            </ListItemAvatar>
-                                            <ListItemText primary={`${venue} - ${location}`} secondary={`${day}, ${date} - ${time}`} />
-                                        </ListItem>
-                                    </Link>
-                                )
-                            })}
-
                         </List>
                     </Container>
                 </Grid>

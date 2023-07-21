@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
+import schematifyEvent from "../../vars/schematifyEvent";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
@@ -49,6 +50,7 @@ const steps = [
     'Preview'
 ];
 
+
 const AddEvent = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
@@ -78,8 +80,8 @@ const AddEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} /> }          
-                {activeStep === 1 && submission && <EventItem item={submission} />}
+                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+            {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"

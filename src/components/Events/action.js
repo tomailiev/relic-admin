@@ -3,16 +3,8 @@ import { Timestamp, uploadDoc } from "../../utils/firebase/firebase-functions";
 import { eventSchema } from "../../utils/yup/yup-schemas";
 import collections from "../../vars/collections";
 import { schematify } from "../../vars/schemaFunctions";
+import schematifyEvent from "../../vars/schematifyEvent";
 
-// const daysOfWeek = [
-//     'Monday',
-//     'Tuesday',
-//     'Wednesday',
-//     'Thursday',
-//     'Friday',
-//     'Saturday',
-//     'Sunday'
-// ];
 
 
 export default async function eventAction({ request, params }) {
@@ -36,10 +28,10 @@ export default async function eventAction({ request, params }) {
     }
 
     try {
-        const update = schematify({
+        const update = schematifyEvent({
             ...updates,
             dateDone: Timestamp.fromDate(new Date(updates.dateDone))
-        }, 'performances');
+        });
         const upload = await uploadDoc(update, collections.events);
         console.log(upload);
         return redirect('/events')
