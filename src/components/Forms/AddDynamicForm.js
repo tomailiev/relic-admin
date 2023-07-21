@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import { MuiFileInput } from "mui-file-input";
-
+import { deschematify } from "../../vars/schemaFunctions";
 
 const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nestedName, handleFormCompletion }) => {
     const actionData = useActionData();
@@ -28,10 +28,10 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                 }
             }
             else {
-                handleFormCompletion(actionData);
+                handleFormCompletion(deschematify(actionData, nestedName));
             }
         }
-    }, [actionData, handleFormCompletion]);
+    }, [actionData, nestedName, handleFormCompletion]);
 
     useEffect(() => {
         const submissionStates = {
@@ -101,6 +101,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                                 size="small"
                             />
                             : <TextField
+                                focused
                                 key={id}
                                 id={id}
                                 name={id}
@@ -120,56 +121,31 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                     <Button onClick={addNestedItem}>
                         Add {nestedName}
                     </Button>
-                    {userFields[nestedName]?.map((_item, index) => {
+                    {nestedItems?.map((_item, index) => {
                         return <Container key={index}>
                             <Typography variant="h5">{nestedName} {index}</Typography>
                             <Stack spacing={2}>
-                                {nestedArray.map(({ id, label, type, }) => (
-                                    <TextField
+                                {nestedArray.map(({ id, label, type, }) => {
+                                    const itemId = `${nestedName}[${index}].${id}`;
+                                    return <TextField
+                                    focused
                                         key={id}
-                                        id={`${nestedName}[${index}].${id}`}
-                                        name={`${nestedName}[${index}].${id}`}
+                                        id={itemId}
+                                        name={itemId}
                                         type={type || 'text'}
                                         step={'any'}
-                                        error={!!hasError[`${nestedName}[${index}].${id}`]}
-                                        value={userFields[`${nestedName}[${index}].${id}}`]}
-                                        onFocus={() => setHasError(prev => ({ ...prev, [`${nestedName}[${index}].${id}`]: '' }))}
+                                        error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
+                                        value={userFields[itemId]}
+                                        onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
                                         onChange={handleInputChange}
-                                        helperText={hasError[`${nestedName}[${index}].${id}`]}
+                                        helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
                                         label={label}
                                         variant="outlined"
                                         size="small"
                                         // multiline={id === 'message'}
                                         rows={4}
                                     />
-                                ))}
-                            </Stack>
-                        </Container>
-                    })}
-                    {nestedItems?.map((_item, i) => {
-                        const index = i + (userFields[nestedName]?.length || 0);
-                        return <Container key={index}>
-                            <Typography variant="h5">{nestedName} {index}</Typography>
-                            <Stack spacing={2}>
-                                {nestedArray.map(({ id, label, type, }) => (
-                                    <TextField
-                                        key={id}
-                                        id={`${nestedName}[${index}].${id}`}
-                                        name={`${nestedName}[${index}].${id}`}
-                                        type={type || 'text'}
-                                        step={'any'}
-                                        error={!!hasError[`${nestedName}[${index}].${id}`]}
-                                        value={userFields[`${nestedName}[${index}].${id}}`]}
-                                        onFocus={() => setHasError(prev => ({ ...prev, [`${nestedName}[${index}].${id}`]: '' }))}
-                                        onChange={handleInputChange}
-                                        helperText={hasError[`${nestedName}[${index}].${id}`]}
-                                        label={label}
-                                        variant="outlined"
-                                        size="small"
-                                        // multiline={id === 'message'}
-                                        rows={4}
-                                    />
-                                ))}
+                                })}
                             </Stack>
                         </Container>
                     })}

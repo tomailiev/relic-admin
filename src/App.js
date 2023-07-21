@@ -27,7 +27,6 @@ import signOutAction from './components/LogOut/action';
 import LoggedIn from './components/Common/LoggedIn';
 import LoggedOut from './components/Common/LoggedOut';
 import videoItemLoader from './components/Videos/itemLoader';
-import EventItem from './components/Events/EventItem';
 import musicianItemLoader from './components/Musicians/itemLoader';
 import eventItemLoader from './components/Events/itemLoader';
 import textItemLoader from './components/Texts/itemLoader';
@@ -38,6 +37,7 @@ import AddMusician from './components/Musicians/AddMusician';
 import AddText from './components/Texts/AddText';
 import TextItemRoute from './components/Texts/TextItemRoute';
 import AddEvent from './components/Events/AddEvent';
+import EventItemRoute from './components/Events/EventItemRoute';
 
 const router = createBrowserRouter([
   {
@@ -106,7 +106,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/:eventId',
-        element: <LoggedIn component={<EventItem />} />,
+        element: <LoggedIn component={<EventItemRoute />} />,
         loader: eventItemLoader
       },
       {

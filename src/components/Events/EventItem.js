@@ -1,9 +1,27 @@
 import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
+import { useEffect, useState } from "react";
+import { getLink } from "../../utils/firebase/firebase-functions";
+import { schematify } from "../../vars/schemaFunctions";
 
 
 
 const EventItem = ({ item }) => {
+
+    const [imgSrc, setImgSrc] = useState(null);
+    const [p, setP] = useState([]);
+
+
+    useEffect(() => {
+        if (!item.imgSrc) {
+            getLink(item.imageUrl)
+                .then(url => setImgSrc(url));
+        }
+        if (!item?.performances) {
+            const { performances } = schematify(item, 'performances');
+            setP(performances);
+        }
+    }, [item])
 
 
     return (
@@ -18,8 +36,8 @@ const EventItem = ({ item }) => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={item.imgSrc}
-                            alt="event dmage"
+                            image={item.imgSrc || imgSrc}
+                            alt="event image"
                         ></CardMedia>
                         {/* </CardActionArea> */}
                     </Card>
@@ -36,7 +54,7 @@ const EventItem = ({ item }) => {
                             Performances:
                         </Typography>
                         <List>
-                            {item.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
+                            {item.performances && item.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
                                 return (
                                     <Link key={id} href={url} target={'_blank'} underline={'none'}>
                                         <ListItem button>
@@ -50,6 +68,21 @@ const EventItem = ({ item }) => {
                                     </Link>
                                 )
                             })}
+                            {p && p.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
+                                return (
+                                    <Link key={id} href={url} target={'_blank'} underline={'none'}>
+                                        <ListItem button>
+                                            <ListItemAvatar>
+                                                <Avatar>
+                                                    <ConfirmationNumberOutlinedIcon />
+                                                </Avatar>
+                                            </ListItemAvatar>
+                                            <ListItemText primary={`${venue} - ${location}`} secondary={`${day}, ${date} - ${time}`} />
+                                        </ListItem>
+                                    </Link>
+                                )
+                            })}
+
                         </List>
                     </Container>
                 </Grid>
