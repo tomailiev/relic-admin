@@ -1,25 +1,13 @@
 import { Typography, List, Container, Button } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import AddIcon from '@mui/icons-material/Add';
-import { useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
 
-const fields = {
-    key: '',
-    value: ''
-};
-
-const fieldsArray = [
-    { label: 'Title', id: 'key' },
-    { label: 'Value', id: 'value' }
-];
 
 const Texts = () => {
 
     const texts = useLoaderData();
-    const [formOpen, setFormOpen] = useState(false);
 
     return (
         <>
@@ -27,10 +15,11 @@ const Texts = () => {
                 <Typography variant="h3" my={5}>
                     Texts
                 </Typography>
-                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
-                    Add
-                </Button>
-                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
+                <NavLink to={'/texts/add'}>
+                    <Button variant="contained" endIcon={<AddIcon />}>
+                        Add
+                    </Button>
+                </NavLink>
             </Container>
 
             <Container maxWidth="lg">

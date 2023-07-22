@@ -1,10 +1,12 @@
 import { downloadOneDoc } from "../../utils/firebase/firebase-functions";
+import collections from "../../vars/collections";
 
 export default function textItemLoader({ params }) {
-    return downloadOneDoc('textContent', 'allTexts')
+    return downloadOneDoc(collections.texts, 'allTexts')
         .then(allTexts => {
             return {
                 id: params.textId,
+                key: params.textId,
                 value: allTexts[params.textId]
             };
         });

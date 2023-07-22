@@ -1,45 +1,27 @@
 import { Typography, List, Container, Button } from "@mui/material";
-import { useLoaderData } from "react-router-dom";
+import { NavLink, useLoaderData } from "react-router-dom";
 // import MusicianItem from "./MusicianItem";
 import ItemList from "../Common/ItemList";
 // import ItemListSkeleton from "../Common/ItemList";
-import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
-import AddSimpleForm from "../Forms/AddSimpleForm";
 
 
-const fields = {
-    bio: '',
-    featured: '',
-    name: '',
-    newTitle: '',
-    pic: ''
-};
-
-const fieldsArray = [
-    { label: 'Bio', id: 'bio', },
-    { label: 'Name', id: 'name' },
-    { label: 'Featured in season', id: 'featured', type: 'number' },
-    { label: 'Title/Instrument', id: 'newTitle' },
-    { label: 'Avatar location', id: 'pic'}
-]
 
 const Musicians = () => {
-
-    const [formOpen, setFormOpen] = useState(false);
 
     const musicians = useLoaderData();
 
     return (
         <>
-             <Container maxWidth="lg">
+            <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
                     Musicians
                 </Typography>
-                <Button variant="contained" endIcon={<AddIcon />} onClick={() => setFormOpen(prev => !prev)}>
-                    Add
-                </Button>
-                {formOpen && <AddSimpleForm fields={fields} fieldsArray={fieldsArray} />}
+                <NavLink to={'/musicians/add'}>
+                    <Button variant="contained" endIcon={<AddIcon />}>
+                        Add
+                    </Button>
+                </NavLink>
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

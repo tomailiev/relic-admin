@@ -24,6 +24,6 @@ export default function signInAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
-            return e;
+            return Object.assign(e, { errorType: 'Error' });
         })
 }

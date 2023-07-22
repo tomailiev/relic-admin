@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, } from "firebase/firestore";
-import { ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
 function uploadDoc(data, col, id, merge) {
@@ -13,6 +13,15 @@ function uploadDoc(data, col, id, merge) {
 
 function getLink(url) {
     return getDownloadURL(ref(storage, url));
+}
+
+function uploadFile(file, path) {
+    const pathRef = ref(storage, path)
+    return uploadBytes(pathRef, file)
+        .then(snap => {
+            console.log(snap);
+            return pathRef.fullPath;
+        })
 }
 
 function downloadDocs(col, condition, sorting) {
@@ -48,4 +57,4 @@ function downloadOneDoc(col, id) {
 //     logEvent(analytics, eventType, eventParams);
 // }
 
-export { uploadDoc, getLink, downloadDocs, downloadOneDoc, Timestamp };
+export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, Timestamp };
