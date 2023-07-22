@@ -1,5 +1,5 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
@@ -57,10 +57,10 @@ const AddEvent = () => {
     const submit = useSubmit();
 
 
-    function handleSubmission(data) {
+    const handleSubmission = useCallback((data) => {
         setSubmission(data);
         console.log(data);
-    }
+    }, []);
 
     function finishSubmission() {
         const formData = new FormData();

@@ -29,7 +29,6 @@ function schematifyEvent(event) {
     const withPerformances = schematify(event, 'performances');
     const performances = withPerformances.performances.map((p) => {
         const fullDate = new Date(p.date);
-        console.log(fullDate);
         const day = daysOfWeek[fullDate.getUTCDay()];
         const month = months[fullDate.getUTCMonth()];
         const date = fullDate.getUTCDate();
@@ -43,7 +42,7 @@ function schematifyEvent(event) {
         const [hours, minutes] = p.time.split(':');
         const timeSuffix = hours > 11 ? 'pm' : 'am';
         const time = `${hours === '12' ? 12 : hours % 12}:${minutes}${timeSuffix}`;
-        const geocode = { lng: p.lng, lat: p.lat };
+        const geocode = { lng: Number(p.lng), lat: Number(p.lat) };
         let rest = (({ lng, lat, date, time, ...object }) => object)(p);
         return Object.assign(rest, { time, geocode, day, date: `${month} ${date}${dateSuffix}, ${fullDate.getFullYear()}` });
     });
