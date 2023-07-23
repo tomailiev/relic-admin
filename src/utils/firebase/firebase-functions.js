@@ -3,7 +3,6 @@ import { ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage
 import { db, storage } from './firebase-init';
 
 function uploadDoc(data, col, id, merge) {
-    console.log(id);
     return id
         ? setDoc(doc(db, col, id), data, { merge })
         // .then(docRef => console.log("Document written with ID: ", docRef.id))
