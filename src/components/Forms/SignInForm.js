@@ -51,7 +51,7 @@ const SignInForm = () => {
     }
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={{ mx: 4, my: 2, p: 8 }}>
             <Collapse in={!!alertMessage}>
                 <Alert
                     severity="error"
@@ -73,7 +73,7 @@ const SignInForm = () => {
                 </Alert>
             </Collapse>
             <Form method="post" id="contact-form">
-                <Stack spacing={2}>
+                <Stack spacing={3}>
                     {fieldsArray.map(({ id, label, type }) => (
                         <TextField
                             key={id}

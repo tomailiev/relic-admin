@@ -19,7 +19,7 @@ const EventItem = ({ item }) => {
 
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={{ mx: 4, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>

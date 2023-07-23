@@ -38,6 +38,10 @@ import AddText from './components/Texts/AddText';
 import TextItemRoute from './components/Texts/TextItemRoute';
 import AddEvent from './components/Events/AddEvent';
 import EventItemRoute from './components/Events/EventItemRoute';
+import eventDeleteAction from './components/Events/deleteAction';
+import videoDeleteAction from './components/Videos/deleteAction';
+import musicianDeleteAction from './components/Musicians/deleteAction';
+import textDeleteAction from './components/Texts/deleteAction';
 
 const router = createBrowserRouter([
   {
@@ -65,6 +69,10 @@ const router = createBrowserRouter([
         loader: videoItemLoader
       },
       {
+        path: 'videos/:videoId/delete',
+        action: videoDeleteAction
+      },
+      {
         path: 'texts',
         element: <LoggedIn component={<Texts />} />,
         loader: textLoader,
@@ -78,6 +86,10 @@ const router = createBrowserRouter([
         path: 'texts/:textId',
         element: <LoggedIn component={<TextItemRoute />} />,
         loader: textItemLoader,
+      },
+      {
+        path: 'texts/:textId/delete',
+        action: textDeleteAction
       },
       {
         path: 'musicians',
@@ -95,6 +107,10 @@ const router = createBrowserRouter([
         loader: musicianItemLoader
       },
       {
+        path: 'musicians/:musicianId/delete',
+        action: musicianDeleteAction
+      },
+      {
         path: 'events',
         element: <LoggedIn component={<Events />} />,
         loader: eventLoader,
@@ -107,7 +123,11 @@ const router = createBrowserRouter([
       {
         path: 'events/:eventId',
         element: <LoggedIn component={<EventItemRoute />} />,
-        loader: eventItemLoader
+        loader: eventItemLoader,
+      },
+      {
+        path: 'events/:eventId/delete',
+        action: eventDeleteAction
       },
       {
         path: 'login',

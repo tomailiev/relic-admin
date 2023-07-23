@@ -5,6 +5,7 @@ export default function textLoader() {
     return downloadOneDoc(collections.texts, 'allTexts')
         .then(allTexts => {
             return Object.entries(allTexts)
+                .filter(([key,]) => key !== 'id')
                 .sort(([a,], [b,]) => a.localeCompare(b))
                 .reduce((acc, curr) => {
                     acc.push({
