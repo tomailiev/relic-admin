@@ -26,7 +26,7 @@ const Musicians = () => {
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
                     {musicians?.length
-                        ? musicians.map((m) => <ItemList key={m.id} title={m.name} avatar={m.imgSrc} data={m} type={'musicians'} />)
+                        ? musicians.map((m) => <ItemList key={m.id} title={m.name} avatar={URL.createObjectURL(m.imgSrc)} data={m} type={'musicians'} />)
                         : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
                 </List>
             </Container>

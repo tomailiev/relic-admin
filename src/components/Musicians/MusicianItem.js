@@ -30,7 +30,7 @@ const MusicianItem = ({ item }) => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={item.imgSrc || imgSrc}
+                            image={URL.createObjectURL(item.imgSrc)}
                             alt="musician dmage"
                         ></CardMedia>
                         {/* </CardActionArea> */}

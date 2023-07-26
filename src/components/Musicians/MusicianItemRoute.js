@@ -29,7 +29,7 @@ const MusicianItemRoute = () => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <NavLink to={'edit'}>
-                    <Button variant="contained" disabled>
+                    <Button variant="contained">
                         Edit
                     </Button>
                 </NavLink>

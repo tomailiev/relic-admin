@@ -26,10 +26,10 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 }
             }
             else {
-                handleFormCompletion(actionData);
+                handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
             }
         }
-    }, [actionData, handleFormCompletion]);
+    }, [actionData, handleFormCompletion, fileValue]);
 
     useEffect(() => {
         const submissionStates = {
@@ -38,7 +38,14 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
             idle: false
         }
         setIsSubmitting(submissionStates[navigation.state]);
-    }, [navigation.state])
+    }, [navigation.state]);
+
+    useEffect(() => {
+        if (fields.imgSrc) {
+            console.log(fields.imgSrc);
+            setFileValue(fields.imgSrc);
+        }
+    }, [fields.imgSrc]);
 
     function handleInputChange(e) {
         setUserFields(prev => {

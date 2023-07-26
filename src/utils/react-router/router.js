@@ -37,111 +37,119 @@ import textDeleteAction from '../../components/Texts/deleteAction';
 import { createBrowserRouter } from 'react-router-dom';
 import EditVideo from '../../components/Videos/EditVideo';
 import videoEditAction from '../../components/Videos/editAction';
+import EditMusician from '../../components/Musicians/EditMusician';
+import musicianEditAction from '../../components/Musicians/editAction';
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home />,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          index: true,
-          element: <Index />,
-        },
-        {
-          path: 'videos',
-          element: <LoggedIn component={<Videos />} />,
-          loader: videoLoader,
-        },
-        {
-          path: 'videos/add',
-          element: <LoggedIn component={<AddVideo />} />,
-          action: videoAction,
-        },
-        {
-          path: 'videos/:videoId',
-          element: <LoggedIn component={<VideoItemRoute />} />,
-          loader: videoItemLoader
-        },
-        {
-          path: 'videos/:videoId/delete',
-          action: videoDeleteAction
-        },
-        {
-            path: 'videos/:videoId/edit',
-            element: <LoggedIn component={<EditVideo />} />,
-            loader: videoItemLoader,
-            action: videoEditAction
-          },
-        {
-          path: 'texts',
-          element: <LoggedIn component={<Texts />} />,
-          loader: textLoader,
-        },
-        {
-          path: 'texts/add',
-          element: <LoggedIn component={<AddText />} />,
-          action: textAction
-        },
-        {
-          path: 'texts/:textId',
-          element: <LoggedIn component={<TextItemRoute />} />,
-          loader: textItemLoader,
-        },
-        {
-          path: 'texts/:textId/delete',
-          action: textDeleteAction
-        },
-        {
-          path: 'musicians',
-          element: <LoggedIn component={<Musicians />} />,
-          loader: musicianLoader,
-        },
-        {
-          path: 'musicians/add',
-          element: <LoggedIn component={<AddMusician />} />,
-          action: musicianAction,
-        },
-        {
-          path: 'musicians/:musicianId',
-          element: <LoggedIn component={<MusicianItemRoute />} />,
-          loader: musicianItemLoader
-        },
-        {
-          path: 'musicians/:musicianId/delete',
-          action: musicianDeleteAction
-        },
-        {
-          path: 'events',
-          element: <LoggedIn component={<Events />} />,
-          loader: eventLoader,
-        },
-        {
-          path: 'events/add',
-          element: <LoggedIn component={<AddEvent />} />,
-          action: eventAction
-        },
-        {
-          path: 'events/:eventId',
-          element: <LoggedIn component={<EventItemRoute />} />,
-          loader: eventItemLoader,
-        },
-        {
-          path: 'events/:eventId/delete',
-          action: eventDeleteAction
-        },
-        {
-          path: 'login',
-          element: <LoggedOut component={<LogIn />} />,
-          action: signInAction
-        },
-        {
-          path: 'logout',
-          action: signOutAction
-        }
-      ]
-    },
-  ]);
-  
+  {
+    path: "/",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Index />,
+      },
+      {
+        path: 'videos',
+        element: <LoggedIn component={<Videos />} />,
+        loader: videoLoader,
+      },
+      {
+        path: 'videos/add',
+        element: <LoggedIn component={<AddVideo />} />,
+        action: videoAction,
+      },
+      {
+        path: 'videos/:videoId',
+        element: <LoggedIn component={<VideoItemRoute />} />,
+        loader: videoItemLoader
+      },
+      {
+        path: 'videos/:videoId/delete',
+        action: videoDeleteAction
+      },
+      {
+        path: 'videos/:videoId/edit',
+        element: <LoggedIn component={<EditVideo />} />,
+        loader: videoItemLoader,
+        action: videoEditAction
+      },
+      {
+        path: 'texts',
+        element: <LoggedIn component={<Texts />} />,
+        loader: textLoader,
+      },
+      {
+        path: 'texts/add',
+        element: <LoggedIn component={<AddText />} />,
+        action: textAction
+      },
+      {
+        path: 'texts/:textId',
+        element: <LoggedIn component={<TextItemRoute />} />,
+        loader: textItemLoader,
+      },
+      {
+        path: 'texts/:textId/delete',
+        action: textDeleteAction
+      },
+      {
+        path: 'musicians',
+        element: <LoggedIn component={<Musicians />} />,
+        loader: musicianLoader,
+      },
+      {
+        path: 'musicians/add',
+        element: <LoggedIn component={<AddMusician />} />,
+        action: musicianAction,
+      },
+      {
+        path: 'musicians/:musicianId',
+        element: <LoggedIn component={<MusicianItemRoute />} />,
+        loader: musicianItemLoader
+      },
+      {
+        path: 'musicians/:musicianId/delete',
+        action: musicianDeleteAction
+      },
+      {
+        path: 'musicians/:musicianId/edit',
+        element: <LoggedIn component={<EditMusician />} />,
+        loader: musicianItemLoader,
+        action: musicianEditAction
+      },
+      {
+        path: 'events',
+        element: <LoggedIn component={<Events />} />,
+        loader: eventLoader,
+      },
+      {
+        path: 'events/add',
+        element: <LoggedIn component={<AddEvent />} />,
+        action: eventAction
+      },
+      {
+        path: 'events/:eventId',
+        element: <LoggedIn component={<EventItemRoute />} />,
+        loader: eventItemLoader,
+      },
+      {
+        path: 'events/:eventId/delete',
+        action: eventDeleteAction
+      },
+      {
+        path: 'login',
+        element: <LoggedOut component={<LogIn />} />,
+        action: signInAction
+      },
+      {
+        path: 'logout',
+        action: signOutAction
+      }
+    ]
+  },
+]);
 
-  export default router;
+
+export default router;

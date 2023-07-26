@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { ref, getDownloadURL, uploadBytes, deleteObject, getBlob } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
 function uploadDoc(data, col, id, merge) {
@@ -11,7 +11,8 @@ function uploadDoc(data, col, id, merge) {
 }
 
 function getLink(url) {
-    return getDownloadURL(ref(storage, url));
+    // return getDownloadURL(ref(storage, url));
+    return getBlob(ref(storage, url));
 }
 
 function uploadFile(file, path) {

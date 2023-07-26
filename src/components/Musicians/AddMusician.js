@@ -40,7 +40,7 @@ const AddMusician = () => {
 
     function finishSubmission() {
         const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
+        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: '/musicians/add' })
     }
 
