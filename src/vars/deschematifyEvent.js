@@ -38,9 +38,7 @@ function deschematifyEvent(item) {
         return Object.assign(rest, { time, date: completeDate, lng: p.geocode.lng, lat: p.geocode.lat });
     }));
 
-    const e = deschematify({...item, performances, dateDone}, 'performances');
-    console.log(e);
-    return e;
+    return deschematify({...item, performances, dateDone}, 'performances');
 }
 
 export default deschematifyEvent;

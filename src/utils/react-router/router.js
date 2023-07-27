@@ -41,6 +41,8 @@ import EditMusician from '../../components/Musicians/EditMusician';
 import musicianEditAction from '../../components/Musicians/editAction';
 import EditEvent from '../../components/Events/EditEvent';
 import eventEditAction from '../../components/Events/editAction';
+import EditText from '../../components/Texts/EditText';
+import textEditAction from '../../components/Texts/editAction';
 
 const router = createBrowserRouter([
   {
@@ -95,6 +97,12 @@ const router = createBrowserRouter([
       {
         path: 'texts/:textId/delete',
         action: textDeleteAction
+      },
+      {
+        path: 'texts/:textId/edit',
+        element: <LoggedIn component={<EditText />} />,
+        loader: textItemLoader,
+        action: textEditAction
       },
       {
         path: 'musicians',
