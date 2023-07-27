@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytes, deleteObject, getBlob } from "firebase/storage";
+import { ref, uploadBytes, deleteObject, getBlob } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
 function uploadDoc(data, col, id, merge) {

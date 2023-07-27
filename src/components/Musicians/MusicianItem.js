@@ -1,17 +1,6 @@
 import { Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useState } from "react";
-import { getLink } from "../../utils/firebase/firebase-functions";
 
 const MusicianItem = ({ item }) => {
-    const [imgSrc, setImgSrc] = useState(null);
-
-    useEffect(() => {
-        if (!item.imgSrc) {
-            getLink(item.pic)
-                .then(url => setImgSrc(url));
-        }
-    }, [item])
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
