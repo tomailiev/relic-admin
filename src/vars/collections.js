@@ -1,8 +1,8 @@
 const collections = {
-    videos: 'mock-videos',
-    events: 'mock-events',
-    musicians: 'mock-musicians',
-    texts: 'mock-text'
+    videos: 'videos',
+    events: 'events',
+    musicians: 'musicians',
+    texts: 'textContent'
 };
 
 export default collections;

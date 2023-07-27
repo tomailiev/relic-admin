@@ -3,6 +3,7 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
 import { useSubmit } from "react-router-dom";
+import { videoFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
@@ -12,13 +13,6 @@ const fields = {
     youtubeId: '',
     thumbnail: '',
 };
-
-const fieldsArray = [
-    { label: 'Featured priority', id: 'featured', type: 'number' },
-    { label: 'Title', id: 'title' },
-    { label: 'YouTube Id', id: 'youtubeId' },
-    { label: 'Thumbail Url', id: 'thumbnail' },
-];
 
 const steps = [
     'Add doc',
@@ -54,7 +48,7 @@ const AddVideo = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || fields} fieldsArray={videoFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <VideoItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

@@ -4,6 +4,7 @@ import { useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
+import { eventFA, performanceFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
@@ -15,14 +16,6 @@ const eventFields = {
     // performances: []
 };
 
-const eventFieldsArray = [
-    { label: 'Date done', id: 'dateDone', type: 'date' },
-    { label: 'Description', id: 'description' },
-    { label: 'Image Url', id: 'imageUrl', type: 'file', path: 'mock-images/events' },
-    { label: 'Title', id: 'title' },
-    // { label: 'Performances', id: 'performances', type: 'array' }
-];
-
 const performanceFields = {
     date: '',
     time: '',
@@ -33,17 +26,6 @@ const performanceFields = {
     lat: '',
     lng: '',
 };
-
-const performanceFieldArray = [
-    { label: 'Date', id: 'date', type: 'date' },
-    { label: 'Time', id: 'time', type: 'time' },
-    { label: 'Order #', id: 'id', },
-    { label: 'Location (Portland, OR)', id: 'location' },
-    { label: 'Url', id: 'url' },
-    { label: 'Venue', id: 'venue' },
-    { label: 'Latitude', id: 'lat', },
-    { label: 'Longitude', id: 'lng', },
-];
 
 const steps = [
     'Add doc',
@@ -80,7 +62,7 @@ const AddEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFA} nestedArray={performanceFA} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

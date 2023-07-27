@@ -3,6 +3,7 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useSubmit } from "react-router-dom";
 import TextItem from "./TextItem";
+import { textFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
@@ -10,11 +11,6 @@ const fields = {
     key: '',
     value: ''
 };
-
-const fieldsArray = [
-    { label: 'Title', id: 'key' },
-    { label: 'Value', id: 'value' }
-];
 
 const steps = [
     'Add doc',
@@ -50,7 +46,7 @@ const AddText = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || fields} fieldsArray={textFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <TextItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

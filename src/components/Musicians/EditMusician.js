@@ -3,17 +3,10 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import MusicianItem from "./MusicianItem";
 import { useLoaderData, useSubmit } from "react-router-dom";
+import { musicianFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
-
-const fieldsArray = [
-    { label: 'Bio', id: 'bio', },
-    { label: 'Name', id: 'name' },
-    { label: 'Featured in season', id: 'featured', type: 'number' },
-    { label: 'Title/Instrument', id: 'newTitle' },
-    { label: 'Avatar', id: 'pic', type: 'file', path: 'mock-images/musicians'}
-];
 
 const steps = [
     'Edit doc',
@@ -49,7 +42,7 @@ const EditMusician = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddSimpleForm fields={submission || item} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={musicianFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <MusicianItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

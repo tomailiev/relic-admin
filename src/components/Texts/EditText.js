@@ -3,14 +3,9 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useLoaderData, useSubmit } from "react-router-dom";
 import TextItem from "./TextItem";
+import { textFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
-
-
-const fieldsArray = [
-    { label: 'Title', id: 'key' },
-    { label: 'Value', id: 'value' }
-];
 
 const steps = [
     'Edit doc',
@@ -48,7 +43,7 @@ const EditText = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddSimpleForm fields={submission || item} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={textFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <TextItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

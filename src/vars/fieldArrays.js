@@ -7,11 +7,11 @@ const videoFA = [
 
 const textFA = [
     { label: 'Title', id: 'key' },
-    { label: 'Value', id: 'value' }
+    { label: 'Value', id: 'value', multiline: true }
 ];
 
 const musicianFA = [
-    { label: 'Bio', id: 'bio', },
+    { label: 'Bio', id: 'bio', multiline: true},
     { label: 'Name', id: 'name' },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
@@ -20,12 +20,12 @@ const musicianFA = [
 
 const eventFA = [
     { label: 'Date done', id: 'dateDone', type: 'date' },
-    { label: 'Description', id: 'description' },
+    { label: 'Description', id: 'description', multiline: true },
     { label: 'Image Url', id: 'imageUrl', type: 'file', path: 'mock-images/events' },
     { label: 'Title', id: 'title' },
 ];
 
-const performaneFA = [
+const performanceFA = [
     { label: 'Date', id: 'date', type: 'date' },
     { label: 'Time', id: 'time', type: 'time' },
     { label: 'Order #', id: 'id', },
@@ -42,5 +42,5 @@ const userLoginFA = [
 ];
 
 export {
-    videoFA, musicianFA, eventFA, performaneFA, textFA, userLoginFA
+    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA
 }

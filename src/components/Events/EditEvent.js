@@ -5,28 +5,10 @@ import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
 import deschematifyEvent from "../../vars/deschematifyEvent";
+import { eventFA, performanceFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
-
-const eventFieldsArray = [
-    { label: 'Date done', id: 'dateDone', type: 'date' },
-    { label: 'Description', id: 'description' },
-    { label: 'Image Url', id: 'imageUrl', type: 'file', path: 'mock-images/events' },
-    { label: 'Title', id: 'title' },
-    // { label: 'Performances', id: 'performances', type: 'array' }
-];
-
-const performanceFieldArray = [
-    { label: 'Date', id: 'date', type: 'date' },
-    { label: 'Time', id: 'time', type: 'time' },
-    { label: 'Order #', id: 'id', },
-    { label: 'Location (Portland, OR)', id: 'location' },
-    { label: 'Url', id: 'url' },
-    { label: 'Venue', id: 'venue' },
-    { label: 'Latitude', id: 'lat', },
-    { label: 'Longitude', id: 'lng', },
-];
 
 const steps = [
     'Edit doc',
@@ -64,7 +46,7 @@ const EditEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFieldsArray} nestedArray={performanceFieldArray}  nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA}  nestedName={'performances'} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

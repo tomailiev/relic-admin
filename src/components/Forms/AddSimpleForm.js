@@ -87,7 +87,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type }) => (
+                    {fieldsArray.map(({ id, label, type, multiline }) => (
                         type === 'file'
                             ? <MuiFileInput
                                 key={id}
@@ -114,7 +114,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                                 label={label}
                                 variant="outlined"
                                 size="small"
-                                multiline={id === 'message'}
+                                multiline={multiline}
                                 rows={4}
                             />
                     ))}

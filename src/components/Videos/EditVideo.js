@@ -3,16 +3,9 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
 import { useLoaderData, useSubmit } from "react-router-dom";
+import { videoFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
-
-
-const fieldsArray = [
-    { label: 'Featured priority', id: 'featured', type: 'number' },
-    { label: 'Title', id: 'title' },
-    { label: 'YouTube Id', id: 'youtubeId' },
-    { label: 'Thumbail Url', id: 'thumbnail' },
-];
 
 const steps = [
     'Edit doc',
@@ -49,7 +42,7 @@ const EditVideo = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item && //!!
-                <AddSimpleForm fields={submission || item} fieldsArray={fieldsArray} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={videoFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <VideoItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
