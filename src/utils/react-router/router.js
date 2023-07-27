@@ -39,6 +39,8 @@ import EditVideo from '../../components/Videos/EditVideo';
 import videoEditAction from '../../components/Videos/editAction';
 import EditMusician from '../../components/Musicians/EditMusician';
 import musicianEditAction from '../../components/Musicians/editAction';
+import EditEvent from '../../components/Events/EditEvent';
+import eventEditAction from '../../components/Events/editAction';
 
 const router = createBrowserRouter([
   {
@@ -137,6 +139,12 @@ const router = createBrowserRouter([
       {
         path: 'events/:eventId/delete',
         action: eventDeleteAction
+      },
+      {
+        path: 'events/:eventId/edit',
+        element: <LoggedIn component={<EditEvent />} />,
+        loader: eventItemLoader,
+        action: eventEditAction
       },
       {
         path: 'login',
