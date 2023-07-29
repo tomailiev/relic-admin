@@ -28,10 +28,12 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                 }
             }
             else {
-                handleFormCompletion(deschematify(actionData, nestedName));
+                handleFormCompletion(fileValue
+                    ? Object.assign(deschematify(actionData, nestedName), { imgSrc: fileValue })
+                    : deschematify(actionData, nestedName));
             }
         }
-    }, [actionData, nestedName, handleFormCompletion]);
+    }, [actionData, nestedName, handleFormCompletion, fileValue]);
 
     useEffect(() => {
         const submissionStates = {
@@ -40,7 +42,13 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
             idle: false
         }
         setIsSubmitting(submissionStates[navigation.state]);
-    }, [navigation.state])
+    }, [navigation.state]);
+
+    useEffect(() => {
+        if (fields.imgSrc) {
+            setFileValue(fields.imgSrc);
+        }
+    }, [fields.imgSrc]);
 
     function handleInputChange(e) {
         setUserFields(prev => {
@@ -128,7 +136,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                                 {nestedArray.map(({ id, label, type, }) => {
                                     const itemId = `${nestedName}[${index}].${id}`;
                                     return <TextField
-                                    focused
+                                        focused
                                         key={id}
                                         id={itemId}
                                         name={itemId}

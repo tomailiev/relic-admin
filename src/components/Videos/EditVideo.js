@@ -1,29 +1,22 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import MusicianItem from "./MusicianItem";
-import { useSubmit } from "react-router-dom";
-import { musicianFA } from "../../vars/fieldArrays";
+import VideoItem from "./VideoItem";
+import { useLoaderData, useSubmit } from "react-router-dom";
+import { videoFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
-const fields = {
-    bio: '',
-    featured: '',
-    name: '',
-    newTitle: '',
-    pic: ''
-};
-
 const steps = [
-    'Add doc',
+    'Edit doc',
     'Preview'
 ];
 
-const AddMusician = () => {
+const EditVideo = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
+    const item = useLoaderData(); //!!
 
 
     function handleSubmission(data) {
@@ -33,8 +26,8 @@ const AddMusician = () => {
 
     function finishSubmission() {
         const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: '/musicians/add' })
+        Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
+        submit(formData, { method: 'POST', action: `/videos/${item.id}/edit` }) //!!
     }
 
     return (
@@ -48,9 +41,9 @@ const AddMusician = () => {
                     )
                 })}
             </Stepper>
-            {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={musicianFA} handleFormCompletion={handleSubmission} />}
-            {activeStep === 1 && submission && <MusicianItem item={submission} />}
+            {activeStep === 0 && item && //!!
+                <AddSimpleForm fields={submission || item} fieldsArray={videoFA} handleFormCompletion={handleSubmission} />}
+            {activeStep === 1 && submission && <VideoItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -74,4 +67,4 @@ const AddMusician = () => {
     );
 };
 
-export default AddMusician;
+export default EditVideo;

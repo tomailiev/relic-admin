@@ -26,10 +26,10 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 }
             }
             else {
-                handleFormCompletion(actionData);
+                handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
             }
         }
-    }, [actionData, handleFormCompletion]);
+    }, [actionData, handleFormCompletion, fileValue]);
 
     useEffect(() => {
         const submissionStates = {
@@ -38,7 +38,14 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
             idle: false
         }
         setIsSubmitting(submissionStates[navigation.state]);
-    }, [navigation.state])
+    }, [navigation.state]);
+
+    useEffect(() => {
+        if (fields.imgSrc) {
+            console.log(fields.imgSrc);
+            setFileValue(fields.imgSrc);
+        }
+    }, [fields.imgSrc]);
 
     function handleInputChange(e) {
         setUserFields(prev => {
@@ -80,7 +87,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type }) => (
+                    {fieldsArray.map(({ id, label, type, multiline }) => (
                         type === 'file'
                             ? <MuiFileInput
                                 key={id}
@@ -107,7 +114,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                                 label={label}
                                 variant="outlined"
                                 size="small"
-                                multiline={id === 'message'}
+                                multiline={multiline}
                                 rows={4}
                             />
                     ))}

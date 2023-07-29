@@ -1,40 +1,37 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
-import { useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
-import MusicianItem from "./MusicianItem";
-import { useSubmit } from "react-router-dom";
-import { musicianFA } from "../../vars/fieldArrays";
+import { useCallback, useState } from "react";
+import { useLoaderData, useSubmit } from "react-router-dom";
+import AddDynamicForm from "../Forms/AddDynamicForm";
+import EventItem from "./EventItem";
+import schematifyEvent from "../../vars/schematifyEvent";
+import deschematifyEvent from "../../vars/deschematifyEvent";
+import { eventFA, performanceFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
-const fields = {
-    bio: '',
-    featured: '',
-    name: '',
-    newTitle: '',
-    pic: ''
-};
 
 const steps = [
-    'Add doc',
+    'Edit doc',
     'Preview'
 ];
 
-const AddMusician = () => {
+
+const EditEvent = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
+    const item = useLoaderData();
 
 
-    function handleSubmission(data) {
+    const handleSubmission = useCallback((data) => {
         setSubmission(data);
         console.log(data);
-    }
+    }, []);
 
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: '/musicians/add' })
+        submit(formData, { method: 'POST', action: `/events/${item.id}/edit` })
     }
 
     return (
@@ -48,9 +45,9 @@ const AddMusician = () => {
                     )
                 })}
             </Stepper>
-            {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={musicianFA} handleFormCompletion={handleSubmission} />}
-            {activeStep === 1 && submission && <MusicianItem item={submission} />}
+            {activeStep === 0 && item &&
+                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA}  nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+            {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -74,4 +71,4 @@ const AddMusician = () => {
     );
 };
 
-export default AddMusician;
+export default EditEvent;

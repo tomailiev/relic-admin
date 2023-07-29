@@ -3,7 +3,7 @@ import AppDrawer from "../Common/AppDrawer";
 import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Box, Breadcrumbs, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Breadcrumbs, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 const Home = () => {
 
@@ -29,16 +29,18 @@ const Home = () => {
             <Header handler={handleDrawerToggle} />
             <AppDrawer children={<DrawerContent />} handler={handleDrawerToggle} mobileOpen={mobileOpen} />
             <Box ml={sm ? '0px' : '240px'}>
-                <Breadcrumbs>
-                    {locationList.map((name, i, arr) => {
-                        return (
-                            i === arr.length - 1
-                                ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
-                                : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
-                                    {name || 'home'}
-                                </NavLink>)
-                    })}
-                </Breadcrumbs>
+                <Container>
+                    <Breadcrumbs>
+                        {locationList.map((name, i, arr) => {
+                            return (
+                                i === arr.length - 1
+                                    ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
+                                    : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
+                                        {name || 'home'}
+                                    </NavLink>)
+                        })}
+                    </Breadcrumbs>
+                </Container>
                 <Outlet />
             </Box>
         </>

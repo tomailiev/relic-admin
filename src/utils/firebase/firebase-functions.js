@@ -1,9 +1,8 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
+import { ref, uploadBytes, deleteObject, getBlob } from "firebase/storage";
 import { db, storage } from './firebase-init';
 
 function uploadDoc(data, col, id, merge) {
-    console.log(id);
     return id
         ? setDoc(doc(db, col, id), data, { merge })
         // .then(docRef => console.log("Document written with ID: ", docRef.id))
@@ -12,7 +11,8 @@ function uploadDoc(data, col, id, merge) {
 }
 
 function getLink(url) {
-    return getDownloadURL(ref(storage, url));
+    // return getDownloadURL(ref(storage, url));
+    return getBlob(ref(storage, url));
 }
 
 function uploadFile(file, path) {
@@ -53,8 +53,22 @@ function downloadOneDoc(col, id) {
         .catch(_e => console.error('no data'));
 }
 
+function deleteOneDoc(collection, docId) {
+    return deleteDoc(doc(db, collection, docId))
+}
+
+function deleteOneField(collection, docId, field) {
+    return updateDoc(doc(db, collection, docId), {
+        [field]: deleteField()
+    });
+}
+
+function deleteFile(path) {
+    return deleteObject(ref(storage, path));
+}
+
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
 
-export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, Timestamp };
+export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, Timestamp };

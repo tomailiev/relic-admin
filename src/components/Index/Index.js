@@ -8,11 +8,11 @@ const Index = () => {
         <>
             <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
-                    Welcome
+                    Welcome to Relic admin
                 </Typography>
-                <Container maxWidth="sm">
+                {/* <Container maxWidth="sm">
                     this is the home page
-                </Container>
+                </Container> */}
             </Container>
         </>
     );

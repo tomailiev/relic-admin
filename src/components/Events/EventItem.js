@@ -1,25 +1,13 @@
 import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
-import { useEffect, useState } from "react";
-import { getLink } from "../../utils/firebase/firebase-functions";
 
 
 
 const EventItem = ({ item }) => {
 
-    const [imgSrc, setImgSrc] = useState(null);
-
-
-    useEffect(() => {
-        if (!item.imgSrc) {
-            getLink(item.imageUrl)
-                .then(url => setImgSrc(url));
-        }
-    }, [item])
-
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
@@ -30,7 +18,7 @@ const EventItem = ({ item }) => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={item.imgSrc || imgSrc}
+                            image={URL.createObjectURL(item.imgSrc)}
                             alt="event image"
                         ></CardMedia>
                         {/* </CardActionArea> */}

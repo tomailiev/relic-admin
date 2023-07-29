@@ -1,4 +1,4 @@
-import { AppBar, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
@@ -38,7 +38,8 @@ const Header = ({ handler }) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <IconButton sx={{ position: 'absolute', right: '0', height: '64px', width: '64px', p: 0 }} onClick={handleClick}>
+                <Box sx={{ flex: '1 1 auto' }} />
+                <IconButton onClick={handleClick}>
                     <AccountCircleIcon fontSize="large" />
                 </IconButton>
                 <Menu
