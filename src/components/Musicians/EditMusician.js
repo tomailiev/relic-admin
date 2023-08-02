@@ -21,7 +21,6 @@ const EditMusician = () => {
 
     function handleSubmission(data) {
         setSubmission(data);
-        console.log(data);
     }
 
     function finishSubmission() {

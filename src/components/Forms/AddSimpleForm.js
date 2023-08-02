@@ -42,7 +42,6 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     useEffect(() => {
         if (fields.imgSrc) {
-            console.log(fields.imgSrc);
             setFileValue(fields.imgSrc);
         }
     }, [fields.imgSrc]);

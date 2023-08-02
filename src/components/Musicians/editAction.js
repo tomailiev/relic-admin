@@ -23,7 +23,8 @@ export default async function musicianEditAction({ request, params }) {
     }
     try {
         const { id: _, ...rest } = updates;
-        await uploadDoc(rest, collections.musicians, updates.id, true);
+        const featured = Number(updates.featured);
+        await uploadDoc({ ...rest, featured }, collections.musicians, updates.id, true);
         return redirect(`/musicians/${updates.id}`);
     } catch (e) {
         if (e.inner) {

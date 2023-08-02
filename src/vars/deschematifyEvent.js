@@ -30,12 +30,12 @@ function deschematifyEvent(item) {
         let [hours, mins_meridiem] = p.time.split(':');
         const mins = mins_meridiem.substring(0, 2);
         const meridiem = mins_meridiem.substring(2);
-        if (meridiem === 'pm') {
+        if (meridiem === 'pm' && hours !== '12') {
             hours = (Number(hours) + 12).toString();
         }
         const time = hours.length > 1 ? `${hours}:${mins}` : `0${hours}:${mins}`;
         let rest = (({ day, date, time, geocode, ...object }) => object)(p);
-        return Object.assign(rest, { time, date: completeDate, lng: p.geocode.lng, lat: p.geocode.lat });
+        return Object.assign(rest, { time, date: completeDate, lng: p.geocode?.lng, lat: p.geocode?.lat });
     }));
 
     return deschematify({...item, performances, dateDone}, 'performances');
