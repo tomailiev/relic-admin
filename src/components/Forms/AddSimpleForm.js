@@ -26,6 +26,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 }
             }
             else {
+                setUserFields(actionData);
                 handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
             }
         }

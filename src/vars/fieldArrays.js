@@ -5,6 +5,11 @@ const videoFA = [
     { label: 'Thumbail Url', id: 'thumbnail' },
 ];
 
+const initialVideoFA = [
+    { label: 'Featured priority', id: 'featured', type: 'number' },
+    { label: 'YouTube link', id: 'youtubeLink' },
+]
+
 const textFA = [
     { label: 'Title', id: 'key' },
     { label: 'Value', id: 'value', multiline: true }
@@ -42,5 +47,5 @@ const userLoginFA = [
 ];
 
 export {
-    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA
+    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA, initialVideoFA
 }

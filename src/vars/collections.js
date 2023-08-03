@@ -2,7 +2,7 @@ const collections = {
     videos: 'videos',
     events: 'events',
     musicians: 'musicians',
-    texts: 'textContent'
+    texts: 'text'
 };
 
 export default collections;
