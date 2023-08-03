@@ -1,6 +1,6 @@
 const collections = {
     videos: 'videos',
-    events: 'events',
+    events: 'mock-events',
     musicians: 'musicians',
     texts: 'textContent'
 };

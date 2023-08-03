@@ -5,13 +5,13 @@ import { uploadFile } from "../../utils/firebase/firebase-functions";
 import { MuiFileInput } from "mui-file-input";
 import { deschematify } from "../../vars/schemaFunctions";
 
-const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nestedName, handleFormCompletion }) => {
+const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength }) => {
     const actionData = useActionData();
     const navigation = useNavigation();
     const submit = useSubmit();
 
 
-    const [nestedItems, setNestedItems] = useState([]);
+    const [nestedItems, setNestedItems] = useState(Array(nestedLength).fill(nestedFields));
     const [hasError, setHasError] = useState(fields);
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,6 +90,18 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
         setNestedItems(prev => prev.concat(nestedFields));
     }
 
+    function removeNestedItem() {
+        Object.entries(userFields).forEach(([key,]) => {
+            if (key.match(nestedName && key.match(nestedItems.length - 1))) {
+                setUserFields(o => {
+                    const { [key]: _, ...rest } = o;
+                    return rest;
+                })
+            }
+        })
+        setNestedItems(prev => prev.slice(0, prev.length - 1));
+    }
+
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
@@ -157,6 +169,9 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                             </Stack>
                         </Container>
                     })}
+                    <Button onClick={removeNestedItem}>
+                        Remove {nestedName}
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"

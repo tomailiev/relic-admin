@@ -46,7 +46,7 @@ const EditEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA}  nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA} nestedLength={item?.performances.length} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

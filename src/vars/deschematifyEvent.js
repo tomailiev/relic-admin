@@ -24,7 +24,7 @@ function deschematifyEvent(item) {
         const [month, date, year] = p.date.split(' ');
         const index = months.findIndex(m => m === month);
         const modifiedMonth = index >= 9 ? index + 1 : `0${index + 1}`;
-        const dateString = date.replace(/\D/g,'');
+        const dateString = date.replace(/\D/g, '');
         const modifiedDate = dateString.length > 1 ? dateString : `0${dateString}`;
         const completeDate = `${year}-${modifiedMonth}-${modifiedDate}`;
         let [hours, mins_meridiem] = p.time.split(':');
@@ -35,10 +35,14 @@ function deschematifyEvent(item) {
         }
         const time = hours.length > 1 ? `${hours}:${mins}` : `0${hours}:${mins}`;
         let rest = (({ day, date, time, geocode, ...object }) => object)(p);
-        return Object.assign(rest, { time, date: completeDate, lng: p.geocode?.lng, lat: p.geocode?.lat });
+        if (p.geocode) {
+            rest.lng = p.geocode.lng;
+            rest.lat = p.geocode.lat;
+        }
+        return Object.assign(rest, { time, date: completeDate, });
     }));
 
-    return deschematify({...item, performances, dateDone}, 'performances');
+    return deschematify({ ...item, performances, dateDone }, 'performances');
 }
 
 export default deschematifyEvent;

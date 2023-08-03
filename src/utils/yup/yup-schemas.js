@@ -7,8 +7,8 @@ const performanceSchema = object({
     location: string().required('location required'),
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
-    lat: number().required('latitude required'),
-    lng: number().required('longitude required')
+    lat: number('value needs to be a number'),
+    lng: number('value needs to be a number')
 });
 
 const eventSchema = object({
