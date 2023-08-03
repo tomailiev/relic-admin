@@ -1,14 +1,17 @@
 import { Drawer } from "@mui/material";
+import { useContext } from "react";
+import MenuContext from "../../context/MenuContext";
 
-const AppDrawer = ({ children, mobileOpen, handler }) => {
+const AppDrawer = ({ children, }) => {
 
+    const { mobileOpen, setMobileOpen } = useContext(MenuContext);
 
     return (
         <>
             <Drawer
                 variant="temporary"
                 open={mobileOpen}
-                onClose={handler}
+                onClose={() => setMobileOpen(!mobileOpen)}
                 ModalProps={{
                     keepMounted: true, // Better open performance on mobile.
                 }}

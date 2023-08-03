@@ -1,11 +1,14 @@
-import { Divider, List, Toolbar } from "@mui/material";
+import { Divider, IconButton, List, Toolbar } from "@mui/material";
 import ExpandableLI from "./ExpandableLI";
 import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import MenuContext from "../../context/MenuContext";
 
 const DrawerContent = () => {
 
-    const collectionsMenu = [
+    const { setMobileOpen } = useContext(MenuContext);
+    const databaseMenu = [
         { title: 'Videos', path: 'videos' },
         { title: 'Musicians', path: 'musicians' },
         { title: 'TextContent', path: 'texts' },
@@ -13,9 +16,11 @@ const DrawerContent = () => {
     ]
     return (
         <>
-            <Toolbar sx={{display: 'flex', justifyContent: 'center'}}>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
                 <NavLink to={'/'}>
-                    <HomeIcon fontSize="large" />
+                    <IconButton onClick={() => setMobileOpen(false)}>
+                        <HomeIcon fontSize="large" />
+                    </IconButton>
                 </NavLink>
             </Toolbar>
             <Divider />
@@ -24,9 +29,9 @@ const DrawerContent = () => {
                 aria-labelledby="nested-list-subheader"
             >
                 {
-                    ['Collections'].map((text, index) => (
+                    ['Database'].map((text, index) => (
 
-                        <ExpandableLI key={text} menuTitle={text} subMenu={collectionsMenu} />
+                        <ExpandableLI key={text} menuTitle={text} subMenu={databaseMenu} />
                     ))
                 }
             </List >

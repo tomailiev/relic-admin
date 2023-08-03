@@ -4,6 +4,7 @@ import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import { Box, Breadcrumbs, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
+import MenuContext from "../../context/MenuContext";
 
 const Home = () => {
 
@@ -27,7 +28,9 @@ const Home = () => {
     return (
         <>
             <Header handler={handleDrawerToggle} />
-            <AppDrawer children={<DrawerContent />} handler={handleDrawerToggle} mobileOpen={mobileOpen} />
+            <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
+                <AppDrawer children={<DrawerContent />} />
+            </MenuContext.Provider>
             <Box ml={sm ? '0px' : '240px'}>
                 <Container>
                     <Breadcrumbs>
