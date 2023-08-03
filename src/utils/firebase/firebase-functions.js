@@ -1,6 +1,7 @@
 import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob } from "firebase/storage";
-import { db, storage } from './firebase-init';
+import { db, functions, storage } from './firebase-init';
+import { httpsCallable } from "firebase/functions";
 
 function uploadDoc(data, col, id, merge) {
     return id
@@ -67,8 +68,9 @@ function deleteFile(path) {
     return deleteObject(ref(storage, path));
 }
 
+const getVideoInfo = httpsCallable(functions, 'getVideoInfo')
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
 
-export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, Timestamp };
+export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, getVideoInfo, Timestamp };

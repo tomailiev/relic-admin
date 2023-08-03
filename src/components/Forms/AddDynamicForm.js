@@ -1,4 +1,4 @@
-import { Button, Container, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Button, Grid, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
@@ -141,35 +141,38 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                     <Button onClick={addNestedItem}>
                         Add {nestedName}
                     </Button>
-                    {nestedItems?.map((_item, index) => {
-                        return <Container key={index}>
-                            <Typography variant="h5">{nestedName} {index}</Typography>
-                            <Stack spacing={2}>
-                                {nestedArray.map(({ id, label, type, }) => {
-                                    const itemId = `${nestedName}[${index}].${id}`;
-                                    return <TextField
-                                        focused
-                                        key={id}
-                                        id={itemId}
-                                        name={itemId}
-                                        type={type || 'text'}
-                                        step={'any'}
-                                        error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
-                                        value={userFields[itemId]}
-                                        onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
-                                        onChange={handleInputChange}
-                                        helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
-                                        label={label}
-                                        variant="outlined"
-                                        size="small"
-                                        // multiline={id === 'message'}
-                                        rows={4}
-                                    />
-                                })}
-                            </Stack>
-                        </Container>
-                    })}
-                    <Button onClick={removeNestedItem}>
+                    <Grid container>
+                        {nestedItems?.map((_item, index) => {
+                            return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
+                                <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
+                                <Stack spacing={2}>
+                                    {nestedArray.map(({ id, label, type, }) => {
+                                        const itemId = `${nestedName}[${index}].${id}`;
+                                        return <TextField
+                                            focused
+                                            key={id}
+                                            id={itemId}
+                                            name={itemId}
+                                            type={type || 'text'}
+                                            step={'any'}
+                                            error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
+                                            value={userFields[itemId]}
+                                            onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
+                                            onChange={handleInputChange}
+                                            helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
+                                            label={label}
+                                            variant="outlined"
+                                            size="small"
+                                            // multiline={id === 'message'}
+                                            rows={4}
+                                        />
+                                    })}
+                                </Stack>
+                            </Grid>
+                        })}
+
+                    </Grid>
+                    <Button onClick={removeNestedItem} disabled={!nestedItems.length}>
                         Remove {nestedName}
                     </Button>
                     <Button
@@ -180,7 +183,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                         value="preflight"
                         onClick={handleSubmitEvent}
                     >
-                        Send
+                        Submit
                     </Button>
                 </Stack>
             </Form>

@@ -2,7 +2,7 @@ import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import MusicianItem from "./MusicianItem";
-import { useLoaderData, useSubmit } from "react-router-dom";
+import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { musicianFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
@@ -18,6 +18,7 @@ const EditMusician = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const item = useLoaderData();
+    const navigate = useNavigate();
 
     function handleSubmission(data) {
         setSubmission(data);
@@ -27,6 +28,10 @@ const EditMusician = () => {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: `/musicians/${item.id}/edit` })
+    }
+
+    function handleBack() {
+        activeStep ? setActiveStep(prev => prev - 1) : navigate(`/musicians/${item.id}`);
     }
 
     return (
@@ -46,11 +51,11 @@ const EditMusician = () => {
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep(prev => prev - 1)}
+                    // disabled={activeStep === 0}
+                    onClick={handleBack}
                     sx={{ mr: 1 }}
                 >
-                    Back
+                    {activeStep === 0 ? 'Cancel' : 'Back'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 {activeStep === 1
