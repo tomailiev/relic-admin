@@ -16,7 +16,7 @@ const textFA = [
 ];
 
 const musicianFA = [
-    { label: 'Bio', id: 'bio', multiline: true},
+    { label: 'Bio', id: 'bio', multiline: true },
     { label: 'Name', id: 'name' },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
@@ -46,6 +46,12 @@ const userLoginFA = [
     { label: 'Password', id: 'password', type: 'password' }
 ];
 
+const userRegisterFA = [
+    { label: 'Email', id: 'email' },
+    { label: 'Password', id: 'password', type: 'password' },
+    { label: 'Password Confirmation', id: 'passwordConfirmation', type: 'password' }
+]
+
 export {
-    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA, initialVideoFA
+    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA, initialVideoFA, userRegisterFA
 }

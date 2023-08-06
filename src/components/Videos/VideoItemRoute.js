@@ -2,9 +2,12 @@ import { NavLink, useLoaderData, useSubmit } from "react-router-dom";
 import VideoItem from "./VideoItem";
 import { Box, Button } from "@mui/material";
 import DeleteDialog from "../Common/DeleteDialog";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../../context/UserContext";
 
 const VideoItemRoute = () => {
+
+    const { currentUser } = useContext(UserContext);
 
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -19,7 +22,7 @@ const VideoItemRoute = () => {
         <>
             <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={video.youtubeId} handleDelete={handleDelete} />
             <VideoItem item={video} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
+            {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                 <Button
                     color="inherit"
                     // disabled={activeStep === 0}
@@ -34,7 +37,7 @@ const VideoItemRoute = () => {
                         Edit
                     </Button>
                 </NavLink>
-            </Box>
+            </Box>}
         </>
     );
 };

@@ -2,9 +2,13 @@ import { NavLink, useLoaderData, useSubmit } from "react-router-dom";
 import MusicianItem from "./MusicianItem";
 import DeleteDialog from "../Common/DeleteDialog";
 import { Box, Button } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import UserContext from "../../context/UserContext";
 
 const MusicianItemRoute = () => {
+
+    const { currentUser } = useContext(UserContext);
+
 
     const [modalOpen, setModalOpen] = useState(false);
     const musician = useLoaderData();
@@ -18,7 +22,7 @@ const MusicianItemRoute = () => {
         <>
             <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={musician.name} handleDelete={handleDelete} />
             <MusicianItem item={musician} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
+            {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                 <Button
                     color="inherit"
                     // disabled={activeStep === 0}
@@ -33,7 +37,7 @@ const MusicianItemRoute = () => {
                         Edit
                     </Button>
                 </NavLink>
-            </Box>
+            </Box>}
         </>
 
     );

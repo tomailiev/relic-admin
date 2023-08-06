@@ -1,4 +1,4 @@
-import { object, string, array, number } from 'yup'
+import { object, string, array, number, ref } from 'yup'
 
 const performanceSchema = object({
     date: string().required('date required'),
@@ -32,40 +32,12 @@ const userSchema = object({
     password: string().required()
 });
 
-const textContentSchema = object({
-    aboutBio: string().required(),
-    aboutMission: string().required(),
-    aboutStory: string().required(),
-    aboutValues: string().required(),
-    actionCenterDonate: string().required(),
-    actionCenterSubscribe: string().required(),
-    actionCenterTitle: string().required(),
-    contentSections: array().of(object({
-        cardImage: string().required(),
-        cardTitle: string().required(),
-        infoTitle: string().required(),
-        infoText: string().required(),
-        route: string().required()
-    })),
-    footerGemsNote: string().required(),
-    mapText: string().required(),
-    siteSubtitle: string().required(),
-    subscribeTitle: string().required(),
-    supportDonateCheckText: string().required(),
-    supportDonateCheckTitle: string().required(),
-    supportDonateNowNote: string().required(),
-    supportDonateNowText: string().required(),
-    supportDonateNowTitle: string().required(),
-    supportGemsAddress: string().required(),
-    supportJoinTitle: string().required(),
-    supportMatchingText: string().required(),
-    supportMatchingTitle: string().required(),
-    supportOtherText: string().required(),
-    supportOtherTitle: string().required(),
-    supportSectionDonateTitle: string().required(),
-    supportSectionJoinTitle: string().required(),
-    supportVolunteersTitle: string().required()
+const newUserSchema = object({
+    email: string().required().email().oneOf(['anielaeddy@gmail.com', 'nataliekress@gmail.com'], 'Email not authorized'),
+    password: string().required('Password is required'),
+    passwordConfirmation: string().oneOf([ref('password'), null], 'Passwords must match')
 });
+
 
 const newTextSchema = object({
     key: string().required('title/key required'),
@@ -84,4 +56,13 @@ const initialVideoSchema = object({
     youtubeLink: string().url('valid youtube link required').required('youtube link required')
 })
 
-export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema, newTextSchema, userSchema, initialVideoSchema };
+export {
+    eventSchema,
+    musicianSchema,
+    videoSchema,
+    performanceSchema,
+    newTextSchema,
+    userSchema,
+    initialVideoSchema,
+    newUserSchema
+};

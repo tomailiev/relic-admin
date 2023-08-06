@@ -4,10 +4,14 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
+import { useContext } from "react";
+import UserContext from "../../context/UserContext";
 
 
 
 const Musicians = () => {
+
+    const { currentUser } = useContext(UserContext);
 
     const musicians = useLoaderData();
 
@@ -17,11 +21,11 @@ const Musicians = () => {
                 <Typography variant="h3" my={5}>
                     Musicians
                 </Typography>
-                <NavLink to={'/musicians/add'}>
+                {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <NavLink to={'/musicians/add'}>
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add
                     </Button>
-                </NavLink>
+                </NavLink>}
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>
