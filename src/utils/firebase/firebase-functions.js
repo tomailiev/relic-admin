@@ -70,8 +70,22 @@ function deleteFile(path) {
 
 const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
 const registerUser = httpsCallable(functions, 'registerUser');
+const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatus');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
 
-export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, getVideoInfo, Timestamp, registerUser };
+export {
+    uploadDoc,
+    getLink,
+    downloadDocs,
+    downloadOneDoc,
+    uploadFile,
+    deleteOneDoc,
+    deleteFile,
+    deleteOneField,
+    getVideoInfo,
+    Timestamp,
+    registerUser,
+    checkEmailVerificationStatus
+};
