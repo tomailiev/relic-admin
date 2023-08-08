@@ -8,7 +8,7 @@ const Register = () => {
         <>
             <Container maxWidth={'sm'}>
                 <Typography variant="h3" px={4} py={2} textAlign={'center'}>
-                    Log in
+                    Register
                 </Typography>
                 <RegisterForm />
                 <Typography variant="body2" px={4} py={1} textAlign={'center'}>

@@ -68,9 +68,10 @@ function deleteFile(path) {
     return deleteObject(ref(storage, path));
 }
 
-const getVideoInfo = httpsCallable(functions, 'getVideoInfo')
+const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
+const registerUser = httpsCallable(functions, 'registerUser');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
 
-export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, getVideoInfo, Timestamp };
+export { uploadDoc, getLink, downloadDocs, downloadOneDoc, uploadFile, deleteOneDoc, deleteFile, deleteOneField, getVideoInfo, Timestamp, registerUser };

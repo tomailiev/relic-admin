@@ -1,7 +1,5 @@
-import { redirect } from "react-router-dom";
 import { newUserSchema } from "../../utils/yup/yup-schemas";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase/firebase-init";
+import { registerUser } from "../../utils/firebase/firebase-functions";
 
 export default function registerAction({ request, params }) {
     return request.formData()
@@ -9,12 +7,13 @@ export default function registerAction({ request, params }) {
             const updates = Object.fromEntries(doc);
             return newUserSchema.validate(updates, { abortEarly: false })
         })
-        .then(({email, password}) => {
-            return createUserWithEmailAndPassword(auth, email, password)
+        .then(({ email, password }) => {
+            // return createUserWithEmailAndPassword(auth, email, password)
+            return registerUser({ email, password })
         })
-        .then(doc => {
-            console.log(doc);
-            return redirect('/')
+        .then(({ data }) => {
+            console.log(data);
+            return { result: 'Success' }
         })
         .catch(e => {
             if (e.inner) {

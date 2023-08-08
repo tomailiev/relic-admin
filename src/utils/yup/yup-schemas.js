@@ -33,7 +33,7 @@ const userSchema = object({
 });
 
 const newUserSchema = object({
-    email: string().required().email().oneOf(['anielaeddy@gmail.com', 'nataliekress@gmail.com'], 'Email not authorized'),
+    email: string().required().email(),
     password: string().required('Password is required'),
     passwordConfirmation: string().oneOf([ref('password'), null], 'Passwords must match')
 });

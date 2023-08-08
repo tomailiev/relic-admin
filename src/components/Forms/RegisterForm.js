@@ -28,6 +28,8 @@ const RegisterForm = () => {
                 errorData.code === 'auth/user-not-found'
                     ? setAlertMessage('Email/Pass not recognized')
                     : setAlertMessage(errorData.code);
+            } else if (errorData.result) {
+                setAlertMessage('Email verification sent. Check your email!');
             }
         }
     }, [errorData]);
@@ -51,9 +53,9 @@ const RegisterForm = () => {
         <Paper sx={{ mx: 4, my: 2, p: 8 }}>
             <Collapse in={!!alertMessage}>
                 <Alert
-                    severity="error"
+                    severity={errorData?.result ? 'success' : 'error'}
                     action={
-                        <IconButton
+                        !errorData?.result && <IconButton
                             aria-label="close"
                             color="inherit"
                             size="small"
@@ -69,7 +71,7 @@ const RegisterForm = () => {
                     {alertMessage}
                 </Alert>
             </Collapse>
-            <Form method="post" id="contact-form">
+            {!errorData?.result && <Form method="post" id="contact-form">
                 <Stack spacing={3}>
                     {userRegisterFA.map(({ id, label, type }) => (
                         <TextField
@@ -99,7 +101,7 @@ const RegisterForm = () => {
                         Register
                     </Button>
                 </Stack>
-            </Form>
+            </Form>}
         </Paper>
     );
 };
