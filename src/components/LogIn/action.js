@@ -10,6 +10,7 @@ export default async function signInAction({ request, params }) {
         const updates = Object.fromEntries(doc);
         const { email, password } = await userSchema.validate(updates, { abortEarly: false });
         const { data } = await checkEmailVerificationStatus({ email });
+        console.log(data);
         if (data.verified) {
             await signInWithEmailAndPassword(auth, email, password);
             console.log(doc);
