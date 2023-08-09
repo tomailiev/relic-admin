@@ -5,13 +5,18 @@ const videoFA = [
     { label: 'Thumbail Url', id: 'thumbnail' },
 ];
 
+const initialVideoFA = [
+    { label: 'Featured priority', id: 'featured', type: 'number' },
+    { label: 'YouTube link', id: 'youtubeLink' },
+]
+
 const textFA = [
     { label: 'Title', id: 'key' },
     { label: 'Value', id: 'value', multiline: true }
 ];
 
 const musicianFA = [
-    { label: 'Bio', id: 'bio', multiline: true},
+    { label: 'Bio', id: 'bio', multiline: true },
     { label: 'Name', id: 'name' },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
@@ -41,6 +46,24 @@ const userLoginFA = [
     { label: 'Password', id: 'password', type: 'password' }
 ];
 
+const userRegisterFA = [
+    { label: 'Email', id: 'email' },
+    { label: 'Password', id: 'password', type: 'password' },
+    { label: 'Password Confirmation', id: 'passwordConfirmation', type: 'password' }
+];
+
+const userEmailFA = [
+    { label: 'Email', id: 'email' }
+];
+
 export {
-    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA
+    videoFA, 
+    musicianFA, 
+    eventFA, 
+    performanceFA, 
+    textFA, 
+    userLoginFA, 
+    initialVideoFA, 
+    userRegisterFA,
+    userEmailFA
 }

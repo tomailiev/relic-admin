@@ -1,6 +1,6 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useCallback, useState } from "react";
-import { useLoaderData, useSubmit } from "react-router-dom";
+import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
@@ -21,6 +21,7 @@ const EditEvent = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const item = useLoaderData();
+    const navigate = useNavigate();
 
 
     const handleSubmission = useCallback((data) => {
@@ -32,6 +33,10 @@ const EditEvent = () => {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: `/events/${item.id}/edit` })
+    }
+
+    function handleBack() {
+        activeStep ? setActiveStep(prev => prev - 1) : navigate(`/events/${item.id}`);
     }
 
     return (
@@ -46,16 +51,15 @@ const EditEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA}  nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA} nestedLength={item?.performances.length} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep(prev => prev - 1)}
+                    onClick={handleBack}
                     sx={{ mr: 1 }}
                 >
-                    Back
+                    {activeStep ? 'Back' : 'Cancel'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 {activeStep === 1

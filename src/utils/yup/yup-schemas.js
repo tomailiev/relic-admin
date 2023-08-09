@@ -1,4 +1,4 @@
-import { object, string, array, number } from 'yup'
+import { object, string, array, number, ref } from 'yup'
 
 const performanceSchema = object({
     date: string().required('date required'),
@@ -7,8 +7,8 @@ const performanceSchema = object({
     location: string().required('location required'),
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
-    lat: number().required('latitude required'),
-    lng: number().required('longitude required')
+    lat: number('value needs to be a number'),
+    lng: number('value needs to be a number')
 });
 
 const eventSchema = object({
@@ -32,40 +32,16 @@ const userSchema = object({
     password: string().required()
 });
 
-const textContentSchema = object({
-    aboutBio: string().required(),
-    aboutMission: string().required(),
-    aboutStory: string().required(),
-    aboutValues: string().required(),
-    actionCenterDonate: string().required(),
-    actionCenterSubscribe: string().required(),
-    actionCenterTitle: string().required(),
-    contentSections: array().of(object({
-        cardImage: string().required(),
-        cardTitle: string().required(),
-        infoTitle: string().required(),
-        infoText: string().required(),
-        route: string().required()
-    })),
-    footerGemsNote: string().required(),
-    mapText: string().required(),
-    siteSubtitle: string().required(),
-    subscribeTitle: string().required(),
-    supportDonateCheckText: string().required(),
-    supportDonateCheckTitle: string().required(),
-    supportDonateNowNote: string().required(),
-    supportDonateNowText: string().required(),
-    supportDonateNowTitle: string().required(),
-    supportGemsAddress: string().required(),
-    supportJoinTitle: string().required(),
-    supportMatchingText: string().required(),
-    supportMatchingTitle: string().required(),
-    supportOtherText: string().required(),
-    supportOtherTitle: string().required(),
-    supportSectionDonateTitle: string().required(),
-    supportSectionJoinTitle: string().required(),
-    supportVolunteersTitle: string().required()
+const emailSchema = object({
+    email: string().required().email(),
 });
+
+const newUserSchema = object({
+    email: string().required().email(),
+    password: string().required('Password is required'),
+    passwordConfirmation: string().oneOf([ref('password'), null], 'Passwords must match')
+});
+
 
 const newTextSchema = object({
     key: string().required('title/key required'),
@@ -77,6 +53,21 @@ const videoSchema = object({
     title: string().required('title required'),
     youtubeId: string().required('youtubeId required'),
     thumbnail: string().url('valid url required').required('thumbnail is required')
+});
+
+const initialVideoSchema = object({
+    featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
+    youtubeLink: string().url('valid youtube link required').required('youtube link required')
 })
 
-export { eventSchema, musicianSchema, textContentSchema, videoSchema, performanceSchema, newTextSchema, userSchema };
+export {
+    eventSchema,
+    musicianSchema,
+    videoSchema,
+    performanceSchema,
+    newTextSchema,
+    userSchema,
+    initialVideoSchema,
+    newUserSchema,
+    emailSchema
+};

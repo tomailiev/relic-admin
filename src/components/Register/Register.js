@@ -1,22 +1,22 @@
 import { Container, Typography } from "@mui/material";
-import SignInForm from "../Forms/SignInForm";
 import { NavLink } from "react-router-dom";
+import RegisterForm from "../Forms/RegisterForm";
 
-const LogIn = () => {
+const Register = () => {
 
     return (
         <>
             <Container maxWidth={'sm'}>
                 <Typography variant="h3" px={4} py={2} textAlign={'center'}>
-                    Log in
+                    Register
                 </Typography>
-                <SignInForm />
+                <RegisterForm />
                 <Typography variant="body2" px={4} py={1} textAlign={'center'}>
-                    Need an account? <NavLink to={'/register'}>Register</NavLink> instead.
+                    Already have an account? <NavLink to={'/login'}>Log in</NavLink> instead.
                 </Typography>
             </Container>
         </>
     );
 };
 
-export default LogIn;
+export default Register;

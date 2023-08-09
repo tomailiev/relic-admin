@@ -26,6 +26,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 }
             }
             else {
+                setUserFields(actionData);
                 handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
             }
         }
@@ -42,7 +43,6 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     useEffect(() => {
         if (fields.imgSrc) {
-            console.log(fields.imgSrc);
             setFileValue(fields.imgSrc);
         }
     }, [fields.imgSrc]);

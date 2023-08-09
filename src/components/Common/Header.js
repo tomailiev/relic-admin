@@ -2,7 +2,7 @@ import { AppBar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, Menu
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
-import { Email, Login, Logout } from "@mui/icons-material";
+import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
 import { Form, NavLink } from "react-router-dom";
 
@@ -79,6 +79,18 @@ const Header = ({ handler }) => {
                                 </ListItemIcon>
                                 <ListItemText>
                                     Log in
+                                </ListItemText>
+                            </MenuItem>
+                        </NavLink>
+                    )}
+                    {!currentUser && (
+                        <NavLink to={'register'}>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <ExitToApp />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    Register
                                 </ListItemText>
                             </MenuItem>
                         </NavLink>

@@ -3,15 +3,13 @@ import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
 import { useSubmit } from "react-router-dom";
-import { videoFA } from "../../vars/fieldArrays";
+import { initialVideoFA, videoFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
 
 const fields = {
     featured: '',
-    title: '',
-    youtubeId: '',
-    thumbnail: '',
+    youtubeLink: '',
 };
 
 const steps = [
@@ -27,7 +25,6 @@ const AddVideo = () => {
 
     function handleSubmission(data) {
         setSubmission(data);
-        console.log(data);
     }
 
     function finishSubmission() {
@@ -48,7 +45,7 @@ const AddVideo = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={videoFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission ? submission : fields} fieldsArray={submission ? videoFA : initialVideoFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 1 && submission && <VideoItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

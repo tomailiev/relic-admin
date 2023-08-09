@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import { videoSchema } from "../../utils/yup/yup-schemas";
+import { getVideoInfo, uploadDoc } from "../../utils/firebase/firebase-functions";
+import { initialVideoSchema, videoSchema } from "../../utils/yup/yup-schemas";
 import collections from "../../vars/collections";
 
 export default async function videoAction({ request, params }) {
@@ -8,6 +8,13 @@ export default async function videoAction({ request, params }) {
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
         try {
+            const isInitialSubmission = !doc.get('title');
+
+            if (isInitialSubmission) {
+                const validatedData = await initialVideoSchema.validate(updates, { abortEarly: false });
+                const { data } = await getVideoInfo({ url: updates.youtubeLink })
+                return { ...data, featured: validatedData.featured };
+            }
             const validatedData = await videoSchema.validate(updates, { abortEarly: false })
             return validatedData;
         } catch (e) {

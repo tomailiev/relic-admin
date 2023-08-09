@@ -43,6 +43,11 @@ import EditEvent from '../../components/Events/EditEvent';
 import eventEditAction from '../../components/Events/editAction';
 import EditText from '../../components/Texts/EditText';
 import textEditAction from '../../components/Texts/editAction';
+import Admin from '../../components/Common/Admin';
+import Register from '../../components/Register/Register';
+import registerAction from '../../components/Register/action';
+import VerifyReset from '../../components/Common/VerifyReset';
+import verifyResetAction from '../../components/Common/action';
 
 const router = createBrowserRouter([
   {
@@ -61,7 +66,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/add',
-        element: <LoggedIn component={<AddVideo />} />,
+        element: <Admin component={<AddVideo />} />,
         action: videoAction,
       },
       {
@@ -75,7 +80,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/:videoId/edit',
-        element: <LoggedIn component={<EditVideo />} />,
+        element: <Admin component={<EditVideo />} />,
         loader: videoItemLoader,
         action: videoEditAction
       },
@@ -86,7 +91,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/add',
-        element: <LoggedIn component={<AddText />} />,
+        element: <Admin component={<AddText />} />,
         action: textAction
       },
       {
@@ -100,7 +105,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/:textId/edit',
-        element: <LoggedIn component={<EditText />} />,
+        element: <Admin component={<EditText />} />,
         loader: textItemLoader,
         action: textEditAction
       },
@@ -111,7 +116,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/add',
-        element: <LoggedIn component={<AddMusician />} />,
+        element: <Admin component={<AddMusician />} />,
         action: musicianAction,
       },
       {
@@ -125,7 +130,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/:musicianId/edit',
-        element: <LoggedIn component={<EditMusician />} />,
+        element: <Admin component={<EditMusician />} />,
         loader: musicianItemLoader,
         action: musicianEditAction
       },
@@ -136,7 +141,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/add',
-        element: <LoggedIn component={<AddEvent />} />,
+        element: <Admin component={<AddEvent />} />,
         action: eventAction
       },
       {
@@ -150,7 +155,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/:eventId/edit',
-        element: <LoggedIn component={<EditEvent />} />,
+        element: <Admin component={<EditEvent />} />,
         loader: eventItemLoader,
         action: eventEditAction
       },
@@ -160,8 +165,23 @@ const router = createBrowserRouter([
         action: signInAction
       },
       {
+        path: 'register',
+        element: <LoggedOut component={<Register />} />,
+        action: registerAction
+      },
+      {
         path: 'logout',
         action: signOutAction
+      },
+      {
+        path: 'verify',
+        element: <LoggedOut component={<VerifyReset />} />,
+        action: verifyResetAction
+      },
+      {
+        path: 'reset',
+        element: <LoggedOut component={<VerifyReset />} />,
+        action: verifyResetAction
       }
     ]
   },
