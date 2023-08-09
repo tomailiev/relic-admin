@@ -1,5 +1,5 @@
-import { downloadOneDoc, getLink } from "../../utils/firebase/firebase-functions";
-import collections from "../../vars/collections";
+import { downloadOneDoc, getLink } from "../utils/firebase/firebase-functions";
+import collections from "../vars/collections";
 
 export default async function musicianItemLoader({ params }) {
     const doc =  await downloadOneDoc(collections.musicians, params.musicianId);

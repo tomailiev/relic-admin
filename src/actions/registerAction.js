@@ -1,5 +1,5 @@
-import { newUserSchema } from "../../utils/yup/yup-schemas";
-import { registerUser } from "../../utils/firebase/firebase-functions";
+import { newUserSchema } from "../utils/yup/yup-schemas";
+import { registerUser } from "../utils/firebase/firebase-functions";
 
 export default function registerAction({ request, params }) {
     return request.formData()

@@ -1,27 +1,13 @@
 import Home from '../../components/Home/Home';
 import ErrorPage from '../../components/Common/ErrorPage';
 import Videos from '../../components/Videos/Videos';
-import videoLoader from '../../components/Videos/loader';
 import Musicians from '../../components/Musicians/Musicians';
-import musicianLoader from '../../components/Musicians/loader';
 import Texts from '../../components/Texts/Texts';
-import textLoader from '../../components/Texts/loader';
 import Events from '../../components/Events/Events';
-import eventLoader from '../../components/Events/loader';
-import textAction from '../../components/Texts/action';
-import videoAction from '../../components/Videos/action';
-import musicianAction from '../../components/Musicians/action';
-import eventAction from '../../components/Events/action';
 import Index from '../../components/Index/Index';
 import LogIn from '../../components/LogIn/LogIn';
-import signInAction from '../../components/LogIn/action';
-import signOutAction from '../../components/LogOut/action';
 import LoggedIn from '../../components/Common/LoggedIn';
 import LoggedOut from '../../components/Common/LoggedOut';
-import videoItemLoader from '../../components/Videos/itemLoader';
-import musicianItemLoader from '../../components/Musicians/itemLoader';
-import eventItemLoader from '../../components/Events/itemLoader';
-import textItemLoader from '../../components/Texts/itemLoader';
 import AddVideo from '../../components/Videos/AddVideo';
 import VideoItemRoute from '../../components/Videos/VideoItemRoute';
 import MusicianItemRoute from '../../components/Musicians/MusicianItemRoute';
@@ -30,23 +16,37 @@ import AddText from '../../components/Texts/AddText';
 import TextItemRoute from '../../components/Texts/TextItemRoute';
 import AddEvent from '../../components/Events/AddEvent';
 import EventItemRoute from '../../components/Events/EventItemRoute';
-import eventDeleteAction from '../../components/Events/deleteAction';
-import videoDeleteAction from '../../components/Videos/deleteAction';
-import musicianDeleteAction from '../../components/Musicians/deleteAction';
-import textDeleteAction from '../../components/Texts/deleteAction';
 import { createBrowserRouter } from 'react-router-dom';
 import EditVideo from '../../components/Videos/EditVideo';
-import videoEditAction from '../../components/Videos/editAction';
 import EditMusician from '../../components/Musicians/EditMusician';
-import musicianEditAction from '../../components/Musicians/editAction';
 import EditEvent from '../../components/Events/EditEvent';
-import eventEditAction from '../../components/Events/editAction';
 import EditText from '../../components/Texts/EditText';
-import textEditAction from '../../components/Texts/editAction';
 import Register from '../../components/Register/Register';
-import registerAction from '../../components/Register/action';
 import VerifyReset from '../../components/Common/VerifyReset';
-import verifyResetAction from '../../components/Common/action';
+import videoAddAction from '../../actions/videoAddAction';
+import videoDeleteAction from '../../actions/videoDeleteAction';
+import videoEditAction from '../../actions/videoEditAction';
+import textAddAction from '../../actions/textAddAction';
+import textDeleteAction from '../../actions/textDeleteAction';
+import textEditAction from '../../actions/textEditAction';
+import musicianAddAction from '../../actions/musicianAddAction';
+import musicianDeleteAction from '../../actions/musicianDeleteAction';
+import musicianEditAction from '../../actions/musicianEditAction';
+import eventAddAction from '../../actions/eventAddAction';
+import eventDeleteAction from '../../actions/eventDeleteAction';
+import eventEditAction from '../../actions/eventEditAction';
+import signInAction from '../../actions/signInAction';
+import registerAction from '../../actions/registerAction';
+import signOutAction from '../../actions/signOutAction';
+import verifyResetAction from '../../actions/verifyResetAction';
+import videoLoader from '../../loaders/videoLoader';
+import videoItemLoader from '../../loaders/videoItemLoader';
+import textLoader from '../../loaders/textLoader';
+import textItemLoader from '../../loaders/textItemLoader';
+import musicianLoader from '../../loaders/musicianLoader';
+import musicianItemLoader from '../../loaders/musicianItemLoader';
+import eventLoader from '../../loaders/eventLoader';
+import eventItemLoader from '../../loaders/eventItemLoader';
 
 const router = createBrowserRouter([
   {
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
       {
         path: 'videos/add',
         element: <LoggedIn component={<AddVideo />} />,
-        action: videoAction,
+        action: videoAddAction,
       },
       {
         path: 'videos/:videoId',
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
       {
         path: 'texts/add',
         element: <LoggedIn component={<AddText />} />,
-        action: textAction
+        action: textAddAction
       },
       {
         path: 'texts/:textId',
@@ -116,7 +116,7 @@ const router = createBrowserRouter([
       {
         path: 'musicians/add',
         element: <LoggedIn component={<AddMusician />} />,
-        action: musicianAction,
+        action: musicianAddAction,
       },
       {
         path: 'musicians/:musicianId',
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
       {
         path: 'events/add',
         element: <LoggedIn component={<AddEvent />} />,
-        action: eventAction
+        action: eventAddAction
       },
       {
         path: 'events/:eventId',

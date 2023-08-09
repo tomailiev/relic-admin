@@ -1,8 +1,8 @@
 import { redirect } from "react-router-dom";
-import { userSchema } from "../../utils/yup/yup-schemas";
+import { userSchema } from "../utils/yup/yup-schemas";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase/firebase-init";
-import { checkEmailVerificationStatus } from "../../utils/firebase/firebase-functions";
+import { auth } from "../utils/firebase/firebase-init";
+import { checkEmailVerificationStatus } from "../utils/firebase/firebase-functions";
 
 export default async function signInAction({ request, params }) {
     try {

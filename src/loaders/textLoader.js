@@ -1,5 +1,5 @@
-import { downloadOneDoc } from "../../utils/firebase/firebase-functions";
-import collections from "../../vars/collections";
+import { downloadOneDoc } from "../utils/firebase/firebase-functions";
+import collections from "../vars/collections";
 
 export default function textLoader() {
     return downloadOneDoc(collections.texts, 'allTexts')
