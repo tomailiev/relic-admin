@@ -32,6 +32,10 @@ const userSchema = object({
     password: string().required()
 });
 
+const emailSchema = object({
+    email: string().required().email(),
+});
+
 const newUserSchema = object({
     email: string().required().email(),
     password: string().required('Password is required'),
@@ -64,5 +68,6 @@ export {
     newTextSchema,
     userSchema,
     initialVideoSchema,
-    newUserSchema
+    newUserSchema,
+    emailSchema
 };

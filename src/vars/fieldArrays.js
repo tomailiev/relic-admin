@@ -50,8 +50,20 @@ const userRegisterFA = [
     { label: 'Email', id: 'email' },
     { label: 'Password', id: 'password', type: 'password' },
     { label: 'Password Confirmation', id: 'passwordConfirmation', type: 'password' }
-]
+];
+
+const userEmailFA = [
+    { label: 'Email', id: 'email' }
+];
 
 export {
-    videoFA, musicianFA, eventFA, performanceFA, textFA, userLoginFA, initialVideoFA, userRegisterFA
+    videoFA, 
+    musicianFA, 
+    eventFA, 
+    performanceFA, 
+    textFA, 
+    userLoginFA, 
+    initialVideoFA, 
+    userRegisterFA,
+    userEmailFA
 }

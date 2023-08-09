@@ -46,6 +46,8 @@ import textEditAction from '../../components/Texts/editAction';
 import Admin from '../../components/Common/Admin';
 import Register from '../../components/Register/Register';
 import registerAction from '../../components/Register/action';
+import VerifyReset from '../../components/Common/VerifyReset';
+import verifyResetAction from '../../components/Common/action';
 
 const router = createBrowserRouter([
   {
@@ -170,6 +172,16 @@ const router = createBrowserRouter([
       {
         path: 'logout',
         action: signOutAction
+      },
+      {
+        path: 'verify',
+        element: <LoggedOut component={<VerifyReset />} />,
+        action: verifyResetAction
+      },
+      {
+        path: 'reset',
+        element: <LoggedOut component={<VerifyReset />} />,
+        action: verifyResetAction
       }
     ]
   },

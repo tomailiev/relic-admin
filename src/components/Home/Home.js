@@ -35,7 +35,7 @@ const Home = () => {
             <Box ml={sm ? '0px' : '240px'}>
                 <Container sx={{ py: 2 }}>
                     {navigation.state === 'loading'
-                        ? <LinearProgress sx={{ height: 16, borderRadius: '8px', my: '4px' }} />
+                        ? <LinearProgress sx={{my: '10px' }} />
                         : <Breadcrumbs>
                             {locationList.map((name, i, arr) => {
                                 return (

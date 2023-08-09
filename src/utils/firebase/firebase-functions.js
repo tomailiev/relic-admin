@@ -71,6 +71,7 @@ function deleteFile(path) {
 const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
 const registerUser = httpsCallable(functions, 'registerUser');
 const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatus');
+const verifyOrReset = httpsCallable(functions, 'verifyOrReset');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
@@ -87,5 +88,6 @@ export {
     getVideoInfo,
     Timestamp,
     registerUser,
-    checkEmailVerificationStatus
+    checkEmailVerificationStatus,
+    verifyOrReset
 };

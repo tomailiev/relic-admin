@@ -1,17 +1,18 @@
-import { Alert, Box, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
+import { Alert, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Form, NavLink, useActionData, useNavigation } from "react-router-dom";
+import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
-import { userLoginFA } from "../../vars/fieldArrays";
+import { userEmailFA } from "../../vars/fieldArrays";
 
 const fields = {
     email: '',
-    password: ''
 };
 
-const SignInForm = () => {
+const VerifyResetForm = ({ reason }) => {
     const errorData = useActionData();
     const navigation = useNavigation();
+    const submit = useSubmit();
+
 
     const [hasError, setHasError] = useState(fields);
     const [userFields, setUserFields] = useState(fields);
@@ -26,9 +27,9 @@ const SignInForm = () => {
             } else if (errorData.code) {
                 errorData.code === 'auth/user-not-found'
                     ? setAlertMessage('Email/Pass not recognized')
-                    : errorData.code === 'verify'
-                        ? setAlertMessage(<NavLink to={'/verify'}> Email not verified. Get a verification email</NavLink>)
-                        : setAlertMessage(errorData.code);
+                    : setAlertMessage(errorData.code);
+            } else if (errorData.result) {
+                setAlertMessage('Email sent successfully. Check your email!');
             }
         }
     }, [errorData]);
@@ -48,13 +49,20 @@ const SignInForm = () => {
         })
     }
 
+    function handleSubmit() {
+        const formData = new FormData();
+        Object.entries(userFields).forEach(([key, value]) => formData.append(key, value));
+        formData.append('reason', reason);
+        submit(formData, { method: 'POST' })
+    }
+
     return (
         <Paper sx={{ mx: 4, my: 2, p: 8 }}>
             <Collapse in={!!alertMessage}>
                 <Alert
-                    severity="error"
+                    severity={errorData?.result ? 'success' : 'error'}
                     action={
-                        <IconButton
+                        !errorData?.result && <IconButton
                             aria-label="close"
                             color="inherit"
                             size="small"
@@ -68,12 +76,11 @@ const SignInForm = () => {
                     sx={{ mb: 2 }}
                 >
                     {alertMessage}
-                    {/* {errorData?.code === 'verify' && <NavLink to={'/verify'}>Get a verification email</NavLink>} */}
                 </Alert>
             </Collapse>
-            <Form method="post" id="contact-form">
+            {!errorData?.result && <Form method="post" id="contact-form">
                 <Stack spacing={3}>
-                    {userLoginFA.map(({ id, label, type }) => (
+                    {userEmailFA.map(({ id, label, type }) => (
                         <TextField
                             key={id}
                             id={id}
@@ -96,17 +103,15 @@ const SignInForm = () => {
                         variant="contained"
                         color="primary"
                         disabled={isSubmitting}
-                        type="submit"
+                        onClick={handleSubmit}
+                    // type="submit"
                     >
-                        Log in
+                        Send
                     </Button>
                 </Stack>
-            </Form>
-            <Box textAlign={'center'} mt={2}>
-                <NavLink to={'/reset'}>Forgot password?</NavLink>
-            </Box>
+            </Form>}
         </Paper>
     );
 };
 
-export default SignInForm;
+export default VerifyResetForm;

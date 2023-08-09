@@ -15,7 +15,7 @@ export default async function signInAction({ request, params }) {
             console.log(doc);
             return redirect('/')
         }
-        throw new Error('Please verify your email first');
+        throw new Error('verify');
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {
