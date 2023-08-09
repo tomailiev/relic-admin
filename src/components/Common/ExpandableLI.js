@@ -25,7 +25,7 @@ const ExpandableLI = ({ menuTitle, subMenu }) => {
                 <ListItemText primary={menuTitle} />
                 {menuOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={menuOpen} timeout="auto" unmountOnExit>
+            <Collapse in={menuOpen && currentUser} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {subMenu.map(({ title, path }) => (
                         <NavLink key={title} to={path} >
