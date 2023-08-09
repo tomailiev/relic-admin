@@ -43,7 +43,6 @@ import EditEvent from '../../components/Events/EditEvent';
 import eventEditAction from '../../components/Events/editAction';
 import EditText from '../../components/Texts/EditText';
 import textEditAction from '../../components/Texts/editAction';
-import Admin from '../../components/Common/Admin';
 import Register from '../../components/Register/Register';
 import registerAction from '../../components/Register/action';
 import VerifyReset from '../../components/Common/VerifyReset';
@@ -66,7 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/add',
-        element: <Admin component={<AddVideo />} />,
+        element: <LoggedIn component={<AddVideo />} />,
         action: videoAction,
       },
       {
@@ -80,7 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/:videoId/edit',
-        element: <Admin component={<EditVideo />} />,
+        element: <LoggedIn component={<EditVideo />} />,
         loader: videoItemLoader,
         action: videoEditAction
       },
@@ -91,7 +90,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/add',
-        element: <Admin component={<AddText />} />,
+        element: <LoggedIn component={<AddText />} />,
         action: textAction
       },
       {
@@ -105,7 +104,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/:textId/edit',
-        element: <Admin component={<EditText />} />,
+        element: <LoggedIn component={<EditText />} />,
         loader: textItemLoader,
         action: textEditAction
       },
@@ -116,7 +115,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/add',
-        element: <Admin component={<AddMusician />} />,
+        element: <LoggedIn component={<AddMusician />} />,
         action: musicianAction,
       },
       {
@@ -130,7 +129,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/:musicianId/edit',
-        element: <Admin component={<EditMusician />} />,
+        element: <LoggedIn component={<EditMusician />} />,
         loader: musicianItemLoader,
         action: musicianEditAction
       },
@@ -141,7 +140,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/add',
-        element: <Admin component={<AddEvent />} />,
+        element: <LoggedIn component={<AddEvent />} />,
         action: eventAction
       },
       {
@@ -155,7 +154,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/:eventId/edit',
-        element: <Admin component={<EditEvent />} />,
+        element: <LoggedIn component={<EditEvent />} />,
         loader: eventItemLoader,
         action: eventEditAction
       },

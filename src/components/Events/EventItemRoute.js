@@ -1,13 +1,11 @@
 import { NavLink, useLoaderData, useSubmit, } from "react-router-dom";
 import EventItem from "./EventItem";
 import { Box, Button } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
-import UserContext from "../../context/UserContext";
 
 const EventItemRoute = () => {
 
-    const { currentUser } = useContext(UserContext);
 
     const [modalOpen, setModalOpen] = useState(false);
     const event = useLoaderData();
@@ -21,7 +19,7 @@ const EventItemRoute = () => {
         <>
             <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={event.title} handleDelete={handleDelete} />
             <EventItem item={event} />
-            {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                 <Button
                     color="inherit"
                     // disabled={activeStep === 0}
@@ -36,7 +34,7 @@ const EventItemRoute = () => {
                         Edit
                     </Button>
                 </NavLink>
-            </Box>}
+            </Box>
         </>
     );
 };
