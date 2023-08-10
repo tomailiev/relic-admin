@@ -1,5 +1,5 @@
-import { emailSchema } from "../../utils/yup/yup-schemas";
-import { verifyOrReset } from "../../utils/firebase/firebase-functions";
+import { emailSchema } from "../utils/yup/yup-schemas";
+import { verifyOrReset } from "../utils/firebase/firebase-functions";
 
 export default async function verifyResetAction({ request, params }) {
     try {

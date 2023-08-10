@@ -1,9 +1,9 @@
 import { redirect } from "react-router-dom";
-import { getVideoInfo, uploadDoc } from "../../utils/firebase/firebase-functions";
-import { initialVideoSchema, videoSchema } from "../../utils/yup/yup-schemas";
-import collections from "../../vars/collections";
+import { getVideoInfo, uploadDoc } from "../utils/firebase/firebase-functions";
+import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
+import collections from "../vars/collections";
 
-export default async function videoAction({ request, params }) {
+export default async function videoAddAction({ request, params }) {
     const doc = await request.formData();
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {

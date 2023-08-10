@@ -1,5 +1,5 @@
-import { downloadDocs, getLink } from "../../utils/firebase/firebase-functions";
-import collections from "../../vars/collections";
+import { downloadDocs, getLink } from "../utils/firebase/firebase-functions";
+import collections from "../vars/collections";
 
 // const date = new Date();
 // const month = date.getMonth();

@@ -4,9 +4,11 @@ import { ExpandLess, ExpandMore, Folder, FolderOpen } from "@mui/icons-material"
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import MenuContext from "../../context/MenuContext";
+import UserContext from "../../context/UserContext";
 
 const ExpandableLI = ({ menuTitle, subMenu }) => {
 
+    const { currentUser } = useContext(UserContext);
     const { setMobileOpen } = useContext(MenuContext);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -16,14 +18,14 @@ const ExpandableLI = ({ menuTitle, subMenu }) => {
 
     return (
         <>
-            <ListItemButton onClick={handleClick}>
+            <ListItemButton onClick={handleClick} disabled={!currentUser}>
                 <ListItemIcon>
                     <StorageIcon />
                 </ListItemIcon>
                 <ListItemText primary={menuTitle} />
                 {menuOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={menuOpen} timeout="auto" unmountOnExit>
+            <Collapse in={menuOpen && currentUser} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {subMenu.map(({ title, path }) => (
                         <NavLink key={title} to={path} >

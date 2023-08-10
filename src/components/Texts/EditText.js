@@ -1,7 +1,7 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import TextItem from "./TextItem";
 import { textFA } from "../../vars/fieldArrays";
 
@@ -18,6 +18,7 @@ const EditText = () => {
     const submit = useSubmit();
     const item = useLoaderData();
     const navigate = useNavigate();
+    const actionData = useActionData();
 
 
     function handleSubmission(data) {
@@ -28,7 +29,7 @@ const EditText = () => {
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/texts/${item.id}/edit`})
+        submit(formData, { method: 'POST', action: `/texts/${item.id}/edit` })
     }
 
     function handleBack() {
@@ -57,7 +58,13 @@ const EditText = () => {
                 >
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
+                <Box sx={{ flex: '1 1 auto', mx: 5 }}>
+                    <Collapse in={!!actionData?.code}>
+                        <Alert severity="error">
+                            {actionData?.code}
+                        </Alert>
+                    </Collapse>
+                </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish

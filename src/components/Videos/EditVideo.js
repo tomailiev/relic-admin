@@ -1,8 +1,8 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
-import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { videoFA } from "../../vars/fieldArrays";
 
 // 'https://api.song.link/v1-alpha.1/links?url='
@@ -18,6 +18,7 @@ const EditVideo = () => {
     const submit = useSubmit();
     const item = useLoaderData(); //!!
     const navigate = useNavigate();
+    const actionData = useActionData();
 
     function handleSubmission(data) {
         setSubmission(data);
@@ -56,7 +57,13 @@ const EditVideo = () => {
                 >
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
+                <Box sx={{ flex: '1 1 auto', mx: 5, }} >
+                    <Collapse in={!!actionData?.code}>
+                        <Alert severity="error">
+                            {actionData?.code}
+                        </Alert>
+                    </Collapse>
+                </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish

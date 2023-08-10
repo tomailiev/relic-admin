@@ -3,13 +3,10 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
 
 
 const Texts = () => {
 
-    const { currentUser } = useContext(UserContext);
 
 
     const texts = useLoaderData();
@@ -20,11 +17,11 @@ const Texts = () => {
                 <Typography variant="h3" my={5}>
                     Texts
                 </Typography>
-                {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <NavLink to={'/texts/add'}>
+                <NavLink to={'/texts/add'}>
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add
                     </Button>
-                </NavLink>}
+                </NavLink>
             </Container>
 
             <Container maxWidth="lg">

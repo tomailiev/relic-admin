@@ -2,13 +2,10 @@ import { Typography, Container, List, Button } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
 
 
 const Videos = () => {
 
-    const { currentUser } = useContext(UserContext);
 
     const videos = useLoaderData();
 
@@ -18,11 +15,11 @@ const Videos = () => {
                 <Typography variant="h3" my={5}>
                     Videos
                 </Typography>
-                {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <NavLink to={'/videos/add'} >
+                <NavLink to={'/videos/add'} >
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add
                     </Button>
-                </NavLink>}
+                </NavLink>
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

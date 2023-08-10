@@ -4,8 +4,6 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import ItemList from "../Common/ItemList";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
-import { useContext } from "react";
-import UserContext from "../../context/UserContext";
 
 
 
@@ -13,7 +11,6 @@ import UserContext from "../../context/UserContext";
 const Events = () => {
 
     const events = useLoaderData();
-    const { currentUser } = useContext(UserContext);
 
     return (
         <>
@@ -21,11 +18,11 @@ const Events = () => {
                 <Typography variant="h3" my={5}>
                     Events
                 </Typography>
-                {currentUser?.uid === 'O7QvZktadtgcOuLZ2KqKGEAaRaF3' && <NavLink to={'/events/add'} >
+                <NavLink to={'/events/add'} >
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add
                     </Button>
-                </NavLink>}
+                </NavLink>
             </Container>
             <Container maxWidth="lg">
                 <List sx={{ width: '100%' }}>

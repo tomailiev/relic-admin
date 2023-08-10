@@ -1,7 +1,7 @@
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import { newTextSchema } from "../../utils/yup/yup-schemas";
-import collections from "../../vars/collections";
+import { uploadDoc } from "../utils/firebase/firebase-functions";
+import { newTextSchema } from "../utils/yup/yup-schemas";
+import collections from "../vars/collections";
 
 export default async function textEditAction({ request, params }) {
     const doc = await request.formData()

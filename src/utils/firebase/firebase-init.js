@@ -27,5 +27,6 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 const functions = getFunctions(app);
+// connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 
 export { db, analytics, storage, firebaseConfig, auth, functions };

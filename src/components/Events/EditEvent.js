@@ -1,6 +1,6 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
 import { useCallback, useState } from "react";
-import { useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
@@ -22,6 +22,7 @@ const EditEvent = () => {
     const submit = useSubmit();
     const item = useLoaderData();
     const navigate = useNavigate();
+    const actionData = useActionData();
 
 
     const handleSubmission = useCallback((data) => {
@@ -61,7 +62,13 @@ const EditEvent = () => {
                 >
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
+                <Box sx={{ flex: '1 1 auto', mx: 5 }}>
+                <Collapse in={!!actionData?.code}>
+                        <Alert severity="error">
+                            {actionData?.code}
+                        </Alert>
+                    </Collapse>
+                </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish

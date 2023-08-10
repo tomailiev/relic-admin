@@ -1,15 +1,19 @@
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import { musicianSchema } from "../../utils/yup/yup-schemas";
-import collections from "../../vars/collections";
+import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
+import { eventSchema } from "../utils/yup/yup-schemas";
+import collections from "../vars/collections";
+import { schematify } from "../vars/schemaFunctions";
+import schematifyEvent from "../vars/schematifyEvent";
 
-export default async function musicianEditAction({ request, params }) {
+
+
+export default async function eventAddAction({ request, params }) {
     const doc = await request.formData();
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
+        const schema = schematify(updates, 'performances');
         try {
-            const validatedData = await musicianSchema.validate(updates, { abortEarly: false });
-            return validatedData;
+            return await eventSchema.validate(schema, { abortEarly: false });
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
@@ -18,14 +22,19 @@ export default async function musicianEditAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
+            console.error(e)
             return Object.assign(e, { errorType: 'Error' });
         }
     }
+
     try {
-        const { id: _, ...rest } = updates;
-        const featured = Number(updates.featured);
-        await uploadDoc({ ...rest, featured }, collections.musicians, updates.id, true);
-        return redirect(`/musicians/${updates.id}`);
+        const update = schematifyEvent({
+            ...updates,
+            dateDone: Timestamp.fromDate(new Date(updates.dateDone))
+        });
+        const upload = await uploadDoc(update, collections.events);
+        console.log(upload);
+        return redirect('/events')
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {
@@ -34,7 +43,8 @@ export default async function musicianEditAction({ request, params }) {
             console.log(errors);
             return errors
         }
-
+        console.error(e)
         return Object.assign(e, { errorType: 'Error' });
+
     }
 }

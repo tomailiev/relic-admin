@@ -1,19 +1,15 @@
 import { redirect } from "react-router-dom";
-import { Timestamp, uploadDoc } from "../../utils/firebase/firebase-functions";
-import { eventSchema } from "../../utils/yup/yup-schemas";
-import collections from "../../vars/collections";
-import { schematify } from "../../vars/schemaFunctions";
-import schematifyEvent from "../../vars/schematifyEvent";
+import { uploadDoc } from "../utils/firebase/firebase-functions";
+import { musicianSchema } from "../utils/yup/yup-schemas";
+import collections from "../vars/collections";
 
-
-
-export default async function eventAction({ request, params }) {
+export default async function musicianAddAction({ request, params }) {
     const doc = await request.formData();
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
-        const schema = schematify(updates, 'performances');
         try {
-            return await eventSchema.validate(schema, { abortEarly: false });
+            const validatedData = await musicianSchema.validate(updates, { abortEarly: false });
+            return validatedData;
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
@@ -22,19 +18,14 @@ export default async function eventAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
-            console.error(e)
             return Object.assign(e, { errorType: 'Error' });
         }
     }
-
     try {
-        const update = schematifyEvent({
-            ...updates,
-            dateDone: Timestamp.fromDate(new Date(updates.dateDone))
-        });
-        const upload = await uploadDoc(update, collections.events);
+        const featured = Number(updates.featured);
+        const upload = await uploadDoc({ ...updates, featured }, collections.musicians);
         console.log(upload);
-        return redirect('/events')
+        return redirect('/musicians');
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {
@@ -43,8 +34,7 @@ export default async function eventAction({ request, params }) {
             console.log(errors);
             return errors
         }
-        console.error(e)
-        return Object.assign(e, { errorType: 'Error' });
 
+        return Object.assign(e, { errorType: 'Error' });
     }
 }
