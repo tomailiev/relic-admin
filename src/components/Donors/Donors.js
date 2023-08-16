@@ -1,5 +1,5 @@
 import { Typography, Container, Button } from "@mui/material";
-import { NavLink, useLoaderData } from "react-router-dom";
+import { Link, NavLink, useLoaderData } from "react-router-dom";
 // import MusicianItem from "./EventItem";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
@@ -21,6 +21,19 @@ const Donors = () => {
             headerName: 'Recognition name',
             width: 160,
         },
+        {
+            field: 'select',
+            headerName: 'Select',
+            sortable: false,
+            width: 150,
+            renderCell: (params) => (
+                <Link to={`/donors/${params.id}`}>
+                    <Button variant="contained">
+                        View
+                    </Button>
+                </Link>
+            )
+        }
     ];
 
     return (
@@ -31,7 +44,7 @@ const Donors = () => {
                 </Typography>
                 <NavLink to={'/donors/add'} >
                     <Button variant="contained" endIcon={<AddIcon />}>
-                        Add
+                        Add donation
                     </Button>
                 </NavLink>
             </Container>
