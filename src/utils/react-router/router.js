@@ -47,6 +47,8 @@ import musicianLoader from '../../loaders/musicianLoader';
 import musicianItemLoader from '../../loaders/musicianItemLoader';
 import eventLoader from '../../loaders/eventLoader';
 import eventItemLoader from '../../loaders/eventItemLoader';
+import Donors from '../../components/Donors/Donors';
+import donorLoader from '../../loaders/donorLoader';
 
 const router = createBrowserRouter([
   {
@@ -157,6 +159,11 @@ const router = createBrowserRouter([
         element: <LoggedIn component={<EditEvent />} />,
         loader: eventItemLoader,
         action: eventEditAction
+      },
+      {
+        path: 'donors',
+        element: <LoggedIn component={<Donors />} />,
+        loader: donorLoader
       },
       {
         path: 'login',

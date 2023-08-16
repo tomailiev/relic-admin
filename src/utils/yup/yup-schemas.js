@@ -46,7 +46,7 @@ const newUserSchema = object({
 const newTextSchema = object({
     key: string().required('title/key required'),
     value: string().required('value required')
-})
+});
 
 const videoSchema = object({
     featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
@@ -58,6 +58,23 @@ const videoSchema = object({
 const initialVideoSchema = object({
     featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
     youtubeLink: string().url('valid youtube link required').required('youtube link required')
+});
+
+const donationSchema = object({
+    date: string().required(),
+    amount: string().required(),
+    campaign: string().required().oneOf(['regular', 'GoFundMe 2022']),
+    comment: string()
+})
+
+const donorSchema = object({
+    donations: array().of(donationSchema).min(1),
+    firstName: string().required(),
+    lastName: string().required(),
+    email: string().email().required(),
+    recognitionName: string(),
+    address: string(),
+    phone: string()
 })
 
 export {
@@ -69,5 +86,7 @@ export {
     userSchema,
     initialVideoSchema,
     newUserSchema,
-    emailSchema
+    emailSchema,
+    donorSchema,
+    donationSchema
 };

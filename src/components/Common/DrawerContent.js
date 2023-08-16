@@ -4,15 +4,23 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
+import { Savings, Storage, Diversity1, Diversity3 } from '@mui/icons-material';
+// import StorageIcon from '@mui/icons-material/Storage';
+
 
 const DrawerContent = () => {
 
     const { setMobileOpen } = useContext(MenuContext);
+
     const databaseMenu = [
         { title: 'Videos', path: 'videos' },
         { title: 'Musicians', path: 'musicians' },
         { title: 'TextContent', path: 'texts' },
         { title: 'Events', path: 'events' }
+    ];
+
+    const developmentMenu = [
+        { title: 'Donors', path: 'donors', iconActive: <Diversity3 />, iconInactive: <Diversity1 /> },
     ]
     return (
         <>
@@ -30,11 +38,20 @@ const DrawerContent = () => {
             >
                 {
                     ['Database'].map((text, index) => (
-
-                        <ExpandableLI key={text} menuTitle={text} subMenu={databaseMenu} />
+                        <ExpandableLI key={text} menuTitle={text} subMenu={databaseMenu} icon={<Storage />} />
                     ))
                 }
             </List >
+            <List
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+            >
+                {
+                    ['Development'].map((text, index) => (
+                        <ExpandableLI key={text} menuTitle={text} subMenu={developmentMenu} icon={<Savings />} />
+                    ))
+                }
+            </List>
             <Divider />
         </>
     );
