@@ -74,6 +74,7 @@ const donorSchema = object({
     email: string().email().required(),
     recognitionName: string(),
     address: string(),
+    location: string(),
     phone: string()
 })
 

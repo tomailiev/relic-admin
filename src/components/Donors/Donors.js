@@ -4,6 +4,7 @@ import { Link, NavLink, useLoaderData } from "react-router-dom";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
+import { Face } from "@mui/icons-material";
 
 
 
@@ -13,19 +14,19 @@ const Donors = () => {
     const donors = useLoaderData();
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'firstName', headerName: 'First name', width: 130 },
-        { field: 'lastName', headerName: 'Last name', width: 130 },
+        { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <Face /> },
+        { field: 'firstName', headerName: 'First name', flex: 2 },
+        { field: 'lastName', headerName: 'Last name', flex: 2 },
         {
             field: 'recognitionName',
             headerName: 'Recognition name',
-            width: 160,
+            flex: 3
         },
         {
             field: 'select',
             headerName: 'Select',
             sortable: false,
-            width: 150,
+            flex: 1,
             renderCell: (params) => (
                 <Link to={`/donors/${params.id}`}>
                     <Button variant="contained">
@@ -48,7 +49,7 @@ const Donors = () => {
                     </Button>
                 </NavLink>
             </Container>
-            <Container maxWidth="lg" sx={{my: 3}}>
+            <Container maxWidth="lg" sx={{ my: 3 }}>
                 <DataGrid
                     rows={donors}
                     columns={columns}

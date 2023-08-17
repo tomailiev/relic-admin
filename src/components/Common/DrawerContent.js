@@ -20,7 +20,7 @@ const DrawerContent = () => {
     ];
 
     const developmentMenu = [
-        { title: 'Donors', path: 'donors', iconActive: <Diversity3 />, iconInactive: <Diversity1 /> },
+        { title: 'Donors', path: 'donors', iconInactive: <Diversity3 />, iconActive: <Diversity1 /> },
     ]
     return (
         <>
