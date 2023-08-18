@@ -43,7 +43,7 @@ const Donors = () => {
                 <Typography variant="h3" my={5}>
                     Donors
                 </Typography>
-                <NavLink to={'/donors/add'} >
+                <NavLink to={'/donations/add'} >
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add donation
                     </Button>

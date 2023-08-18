@@ -49,6 +49,7 @@ import eventLoader from '../../loaders/eventLoader';
 import eventItemLoader from '../../loaders/eventItemLoader';
 import Donors from '../../components/Donors/Donors';
 import donorLoader from '../../loaders/donorLoader';
+import AddDonation from '../../components/Donors/AddDonation';
 
 const router = createBrowserRouter([
   {
@@ -164,6 +165,11 @@ const router = createBrowserRouter([
         path: 'donors',
         element: <LoggedIn component={<Donors />} />,
         loader: donorLoader
+      },
+      {
+        path: 'donations/add',
+        element: <LoggedIn component={<AddDonation />} />,
+        action: ''
       },
       {
         path: 'login',
