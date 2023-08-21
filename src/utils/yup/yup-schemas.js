@@ -65,10 +65,10 @@ const donationSchema = object({
     amount: string().required(),
     campaign: string().required().oneOf(['regular', 'GoFundMe 2022']),
     comment: string()
-})
+});
 
 const donorSchema = object({
-    donations: array().of(donationSchema).min(1),
+    donations: array().of(donationSchema),
     firstName: string().required(),
     lastName: string().required(),
     email: string().email().required(),
@@ -76,7 +76,7 @@ const donorSchema = object({
     address: string(),
     location: string(),
     phone: string()
-})
+});
 
 export {
     eventSchema,

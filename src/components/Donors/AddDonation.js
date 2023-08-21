@@ -1,17 +1,30 @@
-import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
+import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper, Typography } from "@mui/material"
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useSubmit } from "react-router-dom";
 import DonorItem from "./DonorItem";
-import { textFA } from "../../vars/fieldArrays";
+import { donationFA, donorFA } from "../../vars/fieldArrays";
 import SearchDonor from "./SearchDonor";
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
 
 
-const fields = {
-    key: '',
-    value: ''
+const donorFields = {
+    donations: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    recognitionName: '',
+    address: '',
+    location: '',
+    phone: ''
+};
+
+const donationSchema = {
+    date: '',
+    amount: '',
+    campaign: '',
+    comment: ''
 };
 
 const steps = [
@@ -24,9 +37,14 @@ const steps = [
 const AddDonation = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
+    const [donor, setDonor] = useState(null);
     const submit = useSubmit();
     const actionData = useActionData();
 
+    function handleDonorSubmission(data) {
+        setDonor(data);
+        console.log(data);
+    }
 
     function handleSubmission(data) {
         setSubmission(data);
@@ -45,15 +63,19 @@ const AddDonation = () => {
                 {steps.map((label) => {
                     return (
                         <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
+                            <StepLabel optional={label === 'Add donor' && <Typography variant="caption">Optional</Typography>}>{label}</StepLabel>
                         </Step>
                     )
                 })}
             </Stepper>
-            {activeStep === 0 && <InstantSearch indexName="dev_donors" searchClient={searchClient}>
-                <SearchDonor /></InstantSearch>}
+            {activeStep === 0 &&
+                <InstantSearch indexName="dev_donors" searchClient={searchClient}>
+                    <SearchDonor handleDonor={setDonor} />
+                </InstantSearch>}
             {activeStep === 1 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={textFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={handleDonorSubmission} />}
+            {activeStep === 2 &&
+                <AddSimpleForm fields={submission || donationSchema} fieldsArray={donationFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 3 && submission && <DonorItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
@@ -71,12 +93,12 @@ const AddDonation = () => {
                         </Alert>
                     </Collapse>
                 </Box>
-                {activeStep === 1
+                {activeStep === 3
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish
                     </Button>
-                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev + 1)} disabled={!submission}>
-                        Next
+                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)} disabled={activeStep === 0 ? false : !submission}>
+                        {activeStep === 0 && !donor ? 'New Donor' : 'Next'}
                     </Button>
                 }
             </Box>

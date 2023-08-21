@@ -167,7 +167,7 @@ const router = createBrowserRouter([
         loader: donorLoader
       },
       {
-        path: 'donations/add',
+        path: 'donors/add-donation',
         element: <LoggedIn component={<AddDonation />} />,
         action: ''
       },

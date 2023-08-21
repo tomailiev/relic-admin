@@ -18,7 +18,6 @@ const Events = () => {
             headerName: 'Avatar',
             sortable: false, flex: 0,
             renderCell: (params) => {
-                console.log(params);
                 return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.name} />
             }
         },
@@ -27,7 +26,6 @@ const Events = () => {
         { field: 'description', headerName: 'Description', flex: 4 },
         {
             field: 'season', headerName: 'Season', flex: 1, valueGetter: (params) => {
-                console.log(params.row.dateDone);
                 const date = params.row.dateDone.toDate();
                 const month = date.getUTCMonth();
                 const year = date.getUTCFullYear();

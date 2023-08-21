@@ -1,4 +1,4 @@
-import { Button, Paper, Stack, TextField } from "@mui/material";
+import { Button, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
@@ -87,7 +87,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type, multiline }) => (
+                    {fieldsArray.map(({ id, label, type, multiline, options }) => (
                         type === 'file'
                             ? <MuiFileInput
                                 key={id}
@@ -101,22 +101,26 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                                 label={label}
                                 size="small"
                             />
-                            : <TextField
-                                key={id}
-                                id={id}
-                                name={id}
-                                type={type || 'text'}
-                                error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                value={userFields[id]}
-                                onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                onChange={handleInputChange}
-                                helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                label={label}
-                                variant="outlined"
-                                size="small"
-                                multiline={multiline}
-                                rows={4}
-                            />
+                            : type === 'select'
+                                ? <Select label={label} name={id}>
+                                    {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+                                </Select>
+                                : <TextField
+                                    key={id}
+                                    id={id}
+                                    name={id}
+                                    type={type || 'text'}
+                                    error={!!hasError[id] && (hasError[id] !== userFields[id])}
+                                    value={userFields[id]}
+                                    onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
+                                    onChange={handleInputChange}
+                                    helperText={(hasError[id] !== userFields[id]) && hasError[id]}
+                                    label={label}
+                                    variant="outlined"
+                                    size="small"
+                                    multiline={multiline}
+                                    rows={4}
+                                />
                     ))}
 
                     <Button
