@@ -29,7 +29,7 @@ const Donors = () => {
             flex: 1,
             renderCell: (params) => (
                 <Link to={`/donors/${params.id}`}>
-                    <Button variant="contained">
+                    <Button variant="contained" disabled={params.row.error}>
                         View
                     </Button>
                 </Link>
@@ -55,10 +55,6 @@ const Donors = () => {
                     columns={columns}
                 />
             </Container>
-            {/* {musicians?.length 
-            ? musicians.map(musician => <MusicianItem key={musician.id} musician={musician} />)
-            : <ItemListSkeleton /> */}
-
         </>
     );
 };

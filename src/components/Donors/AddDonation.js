@@ -20,7 +20,7 @@ const donorFields = {
     phone: ''
 };
 
-const donationSchema = {
+const donationFields = {
     date: '',
     amount: '',
     campaign: '',
@@ -75,7 +75,7 @@ const AddDonation = () => {
             {activeStep === 1 &&
                 <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={handleDonorSubmission} />}
             {activeStep === 2 &&
-                <AddSimpleForm fields={submission || donationSchema} fieldsArray={donationFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || donationFields} fieldsArray={donationFA} handleFormCompletion={handleSubmission} />}
             {activeStep === 3 && submission && <DonorItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
@@ -97,7 +97,7 @@ const AddDonation = () => {
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish
                     </Button>
-                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)} disabled={activeStep === 0 ? false : !submission}>
+                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)} disabled={activeStep === 0 ? false : activeStep === 1 ? ! donor : !submission}>
                         {activeStep === 0 && !donor ? 'New Donor' : 'Next'}
                     </Button>
                 }

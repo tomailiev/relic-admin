@@ -48,6 +48,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     }, [fields.imgSrc]);
 
     function handleInputChange(e) {
+        console.log(userFields);
         setUserFields(prev => {
             return { ...prev, [e.target.id]: e.target.value }
         })
@@ -102,7 +103,15 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                                 size="small"
                             />
                             : type === 'select'
-                                ? <Select label={label} name={id}>
+                                ? <Select
+                                    label={label}
+                                    name={id}
+                                    value={userFields[id]}
+                                    error={!!hasError[id] && (hasError[id] !== userFields[id])}
+                                    onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
+                                    onChange={handleInputChange}
+                                    helperText={(hasError[id] !== userFields[id]) && hasError[id]}
+                                >
                                     {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                 </Select>
                                 : <TextField

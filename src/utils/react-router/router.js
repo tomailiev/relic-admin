@@ -50,6 +50,7 @@ import eventItemLoader from '../../loaders/eventItemLoader';
 import Donors from '../../components/Donors/Donors';
 import donorLoader from '../../loaders/donorLoader';
 import AddDonation from '../../components/Donors/AddDonation';
+import donationAddAction from '../../actions/donationAddAction';
 
 const router = createBrowserRouter([
   {
@@ -169,7 +170,7 @@ const router = createBrowserRouter([
       {
         path: 'donors/add-donation',
         element: <LoggedIn component={<AddDonation />} />,
-        action: ''
+        action: donationAddAction
       },
       {
         path: 'login',

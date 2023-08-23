@@ -39,9 +39,6 @@ function downloadDocs(col, condition, sorting) {
             });
             return docs;
         })
-        .catch(e => {
-            console.error(e);
-        })
 }
 
 function downloadOneDoc(col, id) {
