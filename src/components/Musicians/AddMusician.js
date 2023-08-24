@@ -27,10 +27,10 @@ const AddMusician = () => {
     const actionData = useActionData();
 
 
-    function handleSubmission(data) {
-        setSubmission(data);
-        console.log(data);
-    }
+    // function handleSubmission(data) {
+    //     setSubmission(data);
+    //     console.log(data);
+    // }
 
     function finishSubmission() {
         const formData = new FormData();
@@ -50,7 +50,7 @@ const AddMusician = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={musicianFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || fields} fieldsArray={musicianFA} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && <MusicianItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

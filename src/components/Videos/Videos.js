@@ -15,7 +15,6 @@ const Videos = () => {
             headerName: 'Avatar',
             sortable: false, flex: 0,
             renderCell: (params) => {
-                console.log(params);
                 return <Avatar src={params.row?.thumbnail} alt={params.row?.title} />
             }
         },

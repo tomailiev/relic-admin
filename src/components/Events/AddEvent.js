@@ -1,5 +1,5 @@
 import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useActionData, useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
@@ -39,10 +39,10 @@ const AddEvent = () => {
     const submit = useSubmit();
     const actionData = useActionData();
 
-    const handleSubmission = useCallback((data) => {
-        setSubmission(data);
-        console.log(data);
-    }, []);
+    // const handleSubmission = useCallback((data) => {
+    //     setSubmission(data);
+    //     console.log(data);
+    // }, []);
 
     function finishSubmission() {
         const formData = new FormData();
@@ -62,7 +62,7 @@ const AddEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFA} nestedArray={performanceFA} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
+                <AddDynamicForm fields={submission || eventFields} fieldsArray={eventFA} nestedArray={performanceFA} nestedFields={performanceFields} nestedName={'performances'} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

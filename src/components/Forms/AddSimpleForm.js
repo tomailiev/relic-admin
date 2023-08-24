@@ -1,4 +1,4 @@
-import { Button, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
@@ -18,6 +18,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     useEffect(() => {
         if (actionData) {
+            console.log(actionData);
             if (actionData.errorType) {
                 if (actionData.errorType === 'Validation error') {
                     setHasError(actionData);
@@ -47,10 +48,13 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         }
     }, [fields.imgSrc]);
 
+    function removeError(e) {
+        setHasError(prev => ({ ...prev, [e.target.id]: '' }))
+    }
+
     function handleInputChange(e) {
-        console.log(userFields);
         setUserFields(prev => {
-            return { ...prev, [e.target.id]: e.target.value }
+            return { ...prev, [e.target.name]: e.target.value }
         })
     }
 
@@ -88,49 +92,34 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type, multiline, options }) => (
-                        type === 'file'
-                            ? <MuiFileInput
-                                key={id}
-                                id={id}
-                                name={id}
-                                value={fileValue}
-                                onChange={handleFileChange}
-                                error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                label={label}
-                                size="small"
-                            />
+                    {fieldsArray.map(({ id, label, type, multiline, options }) => {
+                        const props = {
+                            key: id,
+                            id: id,
+                            name: id,
+                            value: type === 'file' ? fileValue : userFields[id],
+                            onChange: type === 'file' ? handleFileChange : handleInputChange,
+                            error: actionData?.errorType === 'Validation error' && hasError[id],
+                            onFocus: removeError,
+                            helperText: actionData?.errorType === 'Validation error' && hasError[id],
+                            label: label,
+                            size: 'small',
+                            multiline: multiline,
+                            variant: 'outlined',
+                            rows: 4
+                        }
+                        return type === 'file'
+                            ? <MuiFileInput {...props} />
                             : type === 'select'
-                                ? <Select
-                                    label={label}
-                                    name={id}
-                                    value={userFields[id]}
-                                    error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                    onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                    onChange={handleInputChange}
-                                    helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                >
-                                    {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
-                                </Select>
-                                : <TextField
-                                    key={id}
-                                    id={id}
-                                    name={id}
-                                    type={type || 'text'}
-                                    error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                    value={userFields[id]}
-                                    onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                    onChange={handleInputChange}
-                                    helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                    label={label}
-                                    variant="outlined"
-                                    size="small"
-                                    multiline={multiline}
-                                    rows={4}
-                                />
-                    ))}
+                                ? <FormControl key={id}>
+                                    <InputLabel>{label}</InputLabel>
+                                    <Select {...props}>
+                                        {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+                                    </Select>
+                                    <FormHelperText>{props.helperText}</FormHelperText>
+                                </FormControl>
+                                : <TextField {...props} />
+                    })}
 
                     <Button
                         variant="contained"

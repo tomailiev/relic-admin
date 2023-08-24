@@ -38,18 +38,18 @@ const AddDonation = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const [donor, setDonor] = useState(null);
+    // const [existingDonor, setExistingDonor] = useState(false);
     const submit = useSubmit();
     const actionData = useActionData();
 
-    function handleDonorSubmission(data) {
-        setDonor(data);
-        console.log(data);
-    }
+    // function handleDonorSubmission(data) {
+    //     setDonor(data);
+    //     console.log(data);
+    // }
 
-    function handleSubmission(data) {
-        setSubmission(data);
-        console.log(data);
-    }
+    // function handleSubmission(data) {
+    //     setSubmission(data);
+    // }
 
     function finishSubmission() {
         const formData = new FormData();
@@ -73,9 +73,9 @@ const AddDonation = () => {
                     <SearchDonor handleDonor={setDonor} />
                 </InstantSearch>}
             {activeStep === 1 &&
-                <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={handleDonorSubmission} />}
+                <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={setDonor} />}
             {activeStep === 2 &&
-                <AddSimpleForm fields={submission || donationFields} fieldsArray={donationFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || donationFields} fieldsArray={donationFA} handleFormCompletion={setSubmission} />}
             {activeStep === 3 && submission && <DonorItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
