@@ -69,7 +69,7 @@ const donorFA = [
 const donationFA = [
     { label: 'Date', id: 'date', type: 'date' },
     { label: 'Amount', id: 'amount' },
-    { label: 'Campaign', id: 'campaign', type: 'select', options: ['regular', 'GoFundMe 2022'] },
+    { label: 'Campaign', id: 'campaign', type: 'select', options: ['online', 'check', 'GoFundMe 2022'] },
     { label: 'Comment', id: 'comment' }
 ];
 

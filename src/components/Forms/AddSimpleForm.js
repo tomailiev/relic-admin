@@ -97,6 +97,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                             key: id,
                             id: id,
                             name: id,
+                            type: type || 'text',
                             value: type === 'file' ? fileValue : userFields[id],
                             onChange: type === 'file' ? handleFileChange : handleInputChange,
                             error: actionData?.errorType === 'Validation error' && hasError[id],

@@ -63,7 +63,7 @@ const initialVideoSchema = object({
 const donationSchema = object({
     date: string().required(),
     amount: string().required(),
-    campaign: string().required().oneOf(['regular', 'GoFundMe 2022']),
+    campaign: string().required().oneOf(['online', 'check', 'GoFundMe 2022']),
     comment: string()
 });
 

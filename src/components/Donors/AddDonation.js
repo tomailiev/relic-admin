@@ -70,7 +70,7 @@ const AddDonation = () => {
             </Stepper>
             {activeStep === 0 &&
                 <InstantSearch indexName="dev_donors" searchClient={searchClient}>
-                    <SearchDonor handleDonor={setDonor} />
+                    <SearchDonor donor={donor} handleDonor={setDonor} />
                 </InstantSearch>}
             {activeStep === 1 &&
                 <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={setDonor} />}
@@ -81,7 +81,7 @@ const AddDonation = () => {
                 <Button
                     color="inherit"
                     disabled={activeStep === 0}
-                    onClick={() => setActiveStep(prev => prev - 1)}
+                    onClick={() => setActiveStep(prev => prev === 2 && donor.objectID ? prev - 2 : prev - 1)}
                     sx={{ mr: 1 }}
                 >
                     Back
