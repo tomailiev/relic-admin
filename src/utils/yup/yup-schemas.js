@@ -64,6 +64,7 @@ const donationSchema = object({
     date: string().required(),
     amount: string().required(),
     campaign: string().required().oneOf(['online', 'check', 'GoFundMe 2022']),
+    recognitionName: string(),
     comment: string()
 });
 
@@ -72,7 +73,6 @@ const donorSchema = object({
     firstName: string().required(),
     lastName: string().required(),
     email: string().email().required(),
-    recognitionName: string(),
     address: string(),
     location: string(),
     phone: string()

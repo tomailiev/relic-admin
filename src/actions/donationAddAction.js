@@ -1,8 +1,9 @@
 import { redirect } from "react-router-dom";
-import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
+import { uploadDoc } from "../utils/firebase/firebase-functions";
 import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
-import schematifyEvent from "../vars/schematifyEvent";
+import { getTruthy } from "../vars/schemaFunctions";
+import { arrayUnion } from "firebase/firestore";
 
 
 
@@ -41,13 +42,32 @@ export default async function donationAddAction({ request, params }) {
     }
 
     try {
-        const update = schematifyEvent({
-            ...updates,
-            dateDone: Timestamp.fromDate(new Date(updates.dateDone))
-        });
-        const upload = await uploadDoc(update, collections.events);
-        console.log(upload);
-        return redirect('/events')
+        const {
+            firstName,
+            lastName,
+            email,
+            phone,
+            address,
+            location,
+            objectID,
+            amount,
+            campaign,
+            comment,
+            date,
+            recognitionName
+        } = updates;
+        await uploadDoc(getTruthy({
+            firstName,
+            lastName,
+            email,
+            phone: phone,
+            address,
+            location,
+            lastDonationAmount: Number(amount),
+            lastDonationDate: date,
+            donations: arrayUnion(getTruthy({ amount: Number(amount), date, recognitionName, campaign, comment }))
+        }), collections.donors, objectID, true);
+        return redirect('/donors');
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {

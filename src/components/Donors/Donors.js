@@ -17,11 +17,11 @@ const Donors = () => {
         { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <Face /> },
         { field: 'firstName', headerName: 'First name', flex: 2 },
         { field: 'lastName', headerName: 'Last name', flex: 2 },
-        {
-            field: 'recognitionName',
-            headerName: 'Recognition name',
-            flex: 3
-        },
+        // {
+        //     field: 'recognitionName',
+        //     headerName: 'Recognition name',
+        //     flex: 3
+        // },
         {
             field: 'select',
             headerName: 'Select',

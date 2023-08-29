@@ -32,4 +32,10 @@ function deschematify(input, field) {
     return Object.assign(rest, fields);
 }
 
-export { schematify, deschematify };
+function getTruthy(obj) {
+    return Object.fromEntries(
+        Object.entries(obj).filter(([_key, value]) => !!value)
+    );
+}
+
+export { schematify, deschematify, getTruthy };

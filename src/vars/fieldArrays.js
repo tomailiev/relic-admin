@@ -59,7 +59,6 @@ const userEmailFA = [
 const donorFA = [
     { label: 'First name', id: 'firstName' },
     { label: 'Last name', id: 'lastName' },
-    { label: 'Recognition name', id: 'recognitionName' },
     { label: 'Email', id: 'email' },
     { label: 'Address', id: 'address' },
     { label: 'Location', id: 'location' },
@@ -70,6 +69,7 @@ const donationFA = [
     { label: 'Date', id: 'date', type: 'date' },
     { label: 'Amount', id: 'amount' },
     { label: 'Campaign', id: 'campaign', type: 'select', options: ['online', 'check', 'GoFundMe 2022'] },
+    { label: 'Recognition name', id: 'recognitionName' },
     { label: 'Comment', id: 'comment' }
 ];
 

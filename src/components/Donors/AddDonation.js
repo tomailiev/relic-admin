@@ -2,19 +2,17 @@ import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper, Typography } fr
 import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useSubmit } from "react-router-dom";
-import DonorItem from "./DonorItem";
 import { donationFA, donorFA } from "../../vars/fieldArrays";
 import SearchDonor from "./SearchDonor";
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
+import DonationItem from "./DonationItem";
 
 
 const donorFields = {
-    donations: '',
     firstName: '',
     lastName: '',
     email: '',
-    recognitionName: '',
     address: '',
     location: '',
     phone: ''
@@ -24,6 +22,7 @@ const donationFields = {
     date: '',
     amount: '',
     campaign: '',
+    recognitionName: '',
     comment: ''
 };
 
@@ -53,8 +52,9 @@ const AddDonation = () => {
 
     function finishSubmission() {
         const formData = new FormData();
+        Object.entries(donor).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
         Object.entries(submission).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: '/texts/add' })
+        submit(formData, { method: 'POST', action: '/donors/add-donation' })
     }
 
     return (
@@ -76,7 +76,7 @@ const AddDonation = () => {
                 <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={setDonor} />}
             {activeStep === 2 &&
                 <AddSimpleForm fields={submission || donationFields} fieldsArray={donationFA} handleFormCompletion={setSubmission} />}
-            {activeStep === 3 && submission && <DonorItem item={submission} />}
+            {activeStep === 3 && submission && <DonationItem donation={submission} donor={donor} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
