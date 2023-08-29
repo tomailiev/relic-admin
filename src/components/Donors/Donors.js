@@ -17,11 +17,23 @@ const Donors = () => {
         { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <Face /> },
         { field: 'firstName', headerName: 'First name', flex: 2 },
         { field: 'lastName', headerName: 'Last name', flex: 2 },
-        // {
-        //     field: 'recognitionName',
-        //     headerName: 'Recognition name',
-        //     flex: 3
-        // },
+        {
+            field: 'lastDonationDate',
+            headerName: 'Last $ date',
+            flex: 1
+        },
+        {
+            field: 'lastDonationAmount',
+            headerName: 'Last $ amount',
+            valueFormatter: (params) => `$${params.value}`,
+            flex: 1
+        },
+        {
+            field: 'totalDonationsAmount',
+            headerName: 'Total $ amount',
+            valueGetter: ({row}) => `$${row.donations.reduce((acc, curr) => acc + curr.amount, 0)}`,
+            flex: 1
+        },
         {
             field: 'select',
             headerName: 'Select',
