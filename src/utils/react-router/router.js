@@ -51,6 +51,9 @@ import Donors from '../../components/Donors/Donors';
 import donorLoader from '../../loaders/donorLoader';
 import AddDonation from '../../components/Donors/AddDonation';
 import donationAddAction from '../../actions/donationAddAction';
+import DonorItemRoute from '../../components/Donors/DonorItemRoute';
+import donorItemLoader from '../../loaders/donorItemLoader';
+import donorDeleteAction from '../../actions/donorDeleteAction';
 
 const router = createBrowserRouter([
   {
@@ -171,6 +174,21 @@ const router = createBrowserRouter([
         path: 'donors/add-donation',
         element: <LoggedIn component={<AddDonation />} />,
         action: donationAddAction
+      },
+      {
+        path: 'donors/:donorId',
+        element: <LoggedIn component={<DonorItemRoute />} />,
+        loader: donorItemLoader,
+      },
+      {
+        path: 'donors/:donorId/delete',
+        action: donorDeleteAction
+      },
+      {
+        path: 'donors/:donorId/edit',
+        // element: <LoggedIn component={<EditEvent />} />,
+        loader: donorItemLoader,
+        // action: eventEditAction
       },
       {
         path: 'login',
