@@ -5,8 +5,6 @@ import MusicianItem from "./MusicianItem";
 import { useActionData, useSubmit } from "react-router-dom";
 import { musicianFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
-
 const fields = {
     bio: '',
     featured: '',

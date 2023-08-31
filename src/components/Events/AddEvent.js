@@ -6,8 +6,6 @@ import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
 import { eventFA, performanceFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
-
 const eventFields = {
     dateDone: '',
     description: '',

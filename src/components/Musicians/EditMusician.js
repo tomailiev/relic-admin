@@ -5,8 +5,6 @@ import MusicianItem from "./MusicianItem";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { musicianFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
-
 
 const steps = [
     'Edit doc',

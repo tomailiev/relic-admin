@@ -5,7 +5,6 @@ import VideoItem from "./VideoItem";
 import { useActionData, useSubmit } from "react-router-dom";
 import { initialVideoFA, videoFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
 
 const fields = {
     featured: '',
@@ -22,11 +21,6 @@ const AddVideo = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const actionData = useActionData();
-
-
-    // function handleSubmission(data) {
-    //     setSubmission(data);
-    // }
 
     function finishSubmission() {
         const formData = new FormData();
