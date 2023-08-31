@@ -1,6 +1,6 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import { createRef, useEffect } from "react";
-import getMap from "../../utils/google-maps/getMap";
+import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 

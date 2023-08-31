@@ -1,10 +1,12 @@
-import { Typography, Container, Button } from "@mui/material";
+import { Typography, Container, Button, Box } from "@mui/material";
 import { Link, NavLink, useLoaderData } from "react-router-dom";
 // import MusicianItem from "./EventItem";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
 import { Face } from "@mui/icons-material";
+import { useState } from "react";
+import MapView from "./MapView";
 
 
 
@@ -12,6 +14,7 @@ import { Face } from "@mui/icons-material";
 const Donors = () => {
 
     const donors = useLoaderData();
+    const [mapView, setMapView] = useState(false);
 
     const columns = [
         { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <Face /> },
@@ -26,13 +29,15 @@ const Donors = () => {
             field: 'lastDonationAmount',
             headerName: 'Last $ amount',
             valueFormatter: (params) => `$${params.value}`,
-            flex: 1
+            flex: 1,
+            sortComparator: (v1, v2) => v1 - v2,
         },
         {
             field: 'totalDonationsAmount',
             headerName: 'Total $ amount',
-            valueGetter: ({row}) => `$${row.donations?.reduce((acc, curr) => acc + curr.amount, 0)}`,
-            flex: 1
+            valueGetter: ({ row }) => `$${row.donations?.reduce((acc, curr) => acc + curr.amount, 0)}`,
+            flex: 1,
+            sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
         },
         {
             field: 'select',
@@ -62,10 +67,36 @@ const Donors = () => {
                 </NavLink>
             </Container>
             <Container maxWidth="lg" sx={{ my: 3 }}>
-                <DataGrid
-                    rows={donors}
-                    columns={columns}
-                />
+                <Box sx={{ display: 'flex', flexDirection: 'row', py: 1 }}>
+                    <Button
+                        color="inherit"
+                        disabled={!mapView}
+                        variant="outlined"
+                        onClick={() => setMapView(false)}
+                    >
+                        Grid view
+                    </Button>
+                    <Box sx={{ flex: '1 1 auto' }} />
+                    <Button
+                        color="inherit"
+                        disabled={mapView}
+                        variant="outlined"
+                        onClick={() => setMapView(true)}
+                    >
+                        Map view
+                    </Button>
+                </Box>
+                {mapView
+                    ? <MapView donors={donors} />
+                    : <DataGrid
+                        rows={donors}
+                        columns={columns}
+                        initialState={{
+                            sorting: {
+                              sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
+                            },
+                          }}
+                    />}
             </Container>
         </>
     );
