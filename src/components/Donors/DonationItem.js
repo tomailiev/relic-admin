@@ -1,5 +1,6 @@
 import { Container, Grid, List, ListItem, ListItemText, Paper, Typography, ListItemIcon } from "@mui/material";
-import { CalendarToday, Campaign, Comment, Email, Face, LocationCity, LocationOn, Paid, Smartphone } from "@mui/icons-material";
+import { CalendarToday, Campaign, Comment, Paid, } from "@mui/icons-material";
+import DonorFields from "./DonorFields";
 
 
 
@@ -16,38 +17,7 @@ const DonationItem = ({ donor, donation }) => {
                         <Typography variant="h6" mt={2}>
                             Donor:
                         </Typography>
-                        <List>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Face />
-                                </ListItemIcon>
-                                <ListItemText primary={`${donor.firstName} ${donor.lastName}`} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Email />
-                                </ListItemIcon>
-                                <ListItemText primary={donor.email} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <LocationOn />
-                                </ListItemIcon>
-                                <ListItemText primary={donor.address} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <LocationCity />
-                                </ListItemIcon>
-                                <ListItemText primary={donor.location} />
-                            </ListItem>
-                            <ListItem>
-                                <ListItemIcon>
-                                    <Smartphone />
-                                </ListItemIcon>
-                                <ListItemText primary={donor.phone} />
-                            </ListItem>
-                        </List>
+                        <DonorFields donor={donor} />
                     </Container>
                 </Grid>
                 <Grid item md={6}>

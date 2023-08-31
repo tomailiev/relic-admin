@@ -31,7 +31,7 @@ const Donors = () => {
         {
             field: 'totalDonationsAmount',
             headerName: 'Total $ amount',
-            valueGetter: ({row}) => `$${row.donations.reduce((acc, curr) => acc + curr.amount, 0)}`,
+            valueGetter: ({row}) => `$${row.donations?.reduce((acc, curr) => acc + curr.amount, 0)}`,
             flex: 1
         },
         {

@@ -65,7 +65,7 @@ export default async function donationAddAction({ request, params }) {
             location,
             lastDonationAmount: Number(amount),
             lastDonationDate: date,
-            donations: arrayUnion(getTruthy({ amount: Number(amount), date, recognitionName, campaign, comment }))
+            donations: arrayUnion(getTruthy({ amount: Number(amount), date, recognitionName: recognitionName || `${firstName} ${lastName}`, campaign, comment }))
         }), collections.donors, objectID, true);
         return redirect('/donors');
     } catch (e) {
