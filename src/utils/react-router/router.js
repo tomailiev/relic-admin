@@ -47,6 +47,15 @@ import musicianLoader from '../../loaders/musicianLoader';
 import musicianItemLoader from '../../loaders/musicianItemLoader';
 import eventLoader from '../../loaders/eventLoader';
 import eventItemLoader from '../../loaders/eventItemLoader';
+import Donors from '../../components/Donors/Donors';
+import donorLoader from '../../loaders/donorLoader';
+import AddDonation from '../../components/Donors/AddDonation';
+import donationAddAction from '../../actions/donationAddAction';
+import DonorItemRoute from '../../components/Donors/DonorItemRoute';
+import donorItemLoader from '../../loaders/donorItemLoader';
+import donorDeleteAction from '../../actions/donorDeleteAction';
+import EditDonor from '../../components/Donors/EditDonor';
+import donorEditAction from '../../actions/donorEditAction';
 
 const router = createBrowserRouter([
   {
@@ -157,6 +166,31 @@ const router = createBrowserRouter([
         element: <LoggedIn component={<EditEvent />} />,
         loader: eventItemLoader,
         action: eventEditAction
+      },
+      {
+        path: 'donors',
+        element: <LoggedIn component={<Donors />} />,
+        loader: donorLoader
+      },
+      {
+        path: 'donors/add-donation',
+        element: <LoggedIn component={<AddDonation />} />,
+        action: donationAddAction
+      },
+      {
+        path: 'donors/:donorId',
+        element: <LoggedIn component={<DonorItemRoute />} />,
+        loader: donorItemLoader,
+      },
+      {
+        path: 'donors/:donorId/delete',
+        action: donorDeleteAction
+      },
+      {
+        path: 'donors/:donorId/edit',
+        element: <LoggedIn component={<EditDonor />} />,
+        loader: donorItemLoader,
+        action: donorEditAction
       },
       {
         path: 'login',

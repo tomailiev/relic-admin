@@ -56,14 +56,33 @@ const userEmailFA = [
     { label: 'Email', id: 'email' }
 ];
 
+const donorFA = [
+    { label: 'First name', id: 'firstName' },
+    { label: 'Last name', id: 'lastName' },
+    { label: 'Email', id: 'email' },
+    { label: 'Address', id: 'address' },
+    { label: 'Location', id: 'location' },
+    { label: 'Phone #', id: 'phone' },
+];
+
+const donationFA = [
+    { label: 'Date', id: 'date', type: 'date' },
+    { label: 'Amount', id: 'amount' },
+    { label: 'Campaign', id: 'campaign', type: 'select', options: ['online', 'check', 'GoFundMe 2022'] },
+    { label: 'Recognition name', id: 'recognitionName' },
+    { label: 'Comment', id: 'comment' }
+];
+
 export {
-    videoFA, 
-    musicianFA, 
-    eventFA, 
-    performanceFA, 
-    textFA, 
-    userLoginFA, 
-    initialVideoFA, 
+    videoFA,
+    musicianFA,
+    eventFA,
+    performanceFA,
+    textFA,
+    userLoginFA,
+    initialVideoFA,
     userRegisterFA,
-    userEmailFA
+    userEmailFA,
+    donorFA,
+    donationFA
 }

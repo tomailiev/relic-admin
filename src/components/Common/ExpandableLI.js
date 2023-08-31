@@ -1,12 +1,11 @@
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import StorageIcon from '@mui/icons-material/Storage';
 import { ExpandLess, ExpandMore, Folder, FolderOpen } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import MenuContext from "../../context/MenuContext";
 import UserContext from "../../context/UserContext";
 
-const ExpandableLI = ({ menuTitle, subMenu }) => {
+const ExpandableLI = ({ menuTitle, subMenu, icon }) => {
 
     const { currentUser } = useContext(UserContext);
     const { setMobileOpen } = useContext(MenuContext);
@@ -20,17 +19,17 @@ const ExpandableLI = ({ menuTitle, subMenu }) => {
         <>
             <ListItemButton onClick={handleClick} disabled={!currentUser}>
                 <ListItemIcon>
-                    <StorageIcon />
+                    {icon}
                 </ListItemIcon>
                 <ListItemText primary={menuTitle} />
                 {menuOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={menuOpen && currentUser} timeout="auto" unmountOnExit>
+            <Collapse in={menuOpen && !!currentUser} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    {subMenu.map(({ title, path }) => (
+                    {subMenu.map(({ title, path, iconActive, iconInactive }) => (
                         <NavLink key={title} to={path} >
                             {({ isActive, }) => {
-                                const icon = isActive ? <FolderOpen /> : <Folder />;
+                                const icon = isActive ? iconActive || <FolderOpen /> : iconInactive || <Folder />;
                                 return <ListItemButton sx={{ pl: 4 }} onClick={() => setMobileOpen(false)}>
                                     <ListItemIcon>
                                         {icon}

@@ -1,41 +1,33 @@
 import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
-import { useCallback, useState } from "react";
+import { useState } from "react";
+import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
-import AddDynamicForm from "../Forms/AddDynamicForm";
-import EventItem from "./EventItem";
-import schematifyEvent from "../../vars/schematifyEvent";
-import deschematifyEvent from "../../vars/deschematifyEvent";
-import { eventFA, performanceFA } from "../../vars/fieldArrays";
+import { donorFA } from "../../vars/fieldArrays";
+import DonorItem from "./DonorItem";
 
 
 const steps = [
-    'Edit doc',
+    'Edit donor',
     'Preview'
 ];
 
-
-const EditEvent = () => {
+const EditDonor = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const item = useLoaderData();
-    const navigate = useNavigate();
     const actionData = useActionData();
-
-
-    const handleSubmission = useCallback((data) => {
-        setSubmission(data);
-        console.log(data);
-    }, []);
+    const navigate = useNavigate();
 
     function finishSubmission() {
         const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/events/${item.id}/edit` })
+        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'donations').forEach(([key, value]) => formData.append(key, value))
+        submit(formData, { method: 'POST', action: `/donors/${item.id}/edit` })
     }
 
+
     function handleBack() {
-        activeStep ? setActiveStep(prev => prev - 1) : navigate(`/events/${item.id}`);
+        activeStep ? setActiveStep(prev => prev - 1) : navigate(`/donors/${item.id}`);
     }
 
     return (
@@ -50,8 +42,9 @@ const EditEvent = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddDynamicForm fields={submission || deschematifyEvent(item)} fieldsArray={eventFA} nestedArray={performanceFA} nestedLength={item?.performances.length} nestedName={'performances'} handleFormCompletion={handleSubmission} />}
-            {activeStep === 1 && submission && <EventItem item={schematifyEvent(submission)} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={donorFA} handleFormCompletion={setSubmission} />}
+            {activeStep === 1 && submission &&
+                <DonorItem item={{...submission, donations: item.donations, }} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -61,7 +54,7 @@ const EditEvent = () => {
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
-                <Collapse in={!!actionData?.code}>
+                    <Collapse in={!!actionData?.code}>
                         <Alert severity="error">
                             {actionData?.code}
                         </Alert>
@@ -80,4 +73,4 @@ const EditEvent = () => {
     );
 };
 
-export default EditEvent;
+export default EditDonor;

@@ -5,7 +5,6 @@ import VideoItem from "./VideoItem";
 import { useActionData, useSubmit } from "react-router-dom";
 import { initialVideoFA, videoFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
 
 const fields = {
     featured: '',
@@ -22,11 +21,6 @@ const AddVideo = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const actionData = useActionData();
-
-
-    function handleSubmission(data) {
-        setSubmission(data);
-    }
 
     function finishSubmission() {
         const formData = new FormData();
@@ -46,7 +40,7 @@ const AddVideo = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission ? submission : fields} fieldsArray={submission ? videoFA : initialVideoFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission ? submission : fields} fieldsArray={submission ? videoFA : initialVideoFA} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && <VideoItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

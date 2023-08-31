@@ -5,8 +5,6 @@ import { useActionData, useSubmit } from "react-router-dom";
 import TextItem from "./TextItem";
 import { textFA } from "../../vars/fieldArrays";
 
-// 'https://api.song.link/v1-alpha.1/links?url='
-
 const fields = {
     key: '',
     value: ''
@@ -22,12 +20,6 @@ const AddText = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const actionData = useActionData();
-
-
-    function handleSubmission(data) {
-        setSubmission(data);
-        console.log(data);
-    }
 
     function finishSubmission() {
         const formData = new FormData();
@@ -47,7 +39,7 @@ const AddText = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={textFA} handleFormCompletion={handleSubmission} />}
+                <AddSimpleForm fields={submission || fields} fieldsArray={textFA} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && <TextItem item={submission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

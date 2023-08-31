@@ -12,7 +12,6 @@ export default async function signInAction({ request, params }) {
         const { data } = await checkEmailVerificationStatus({ email });
         if (data.verified) {
             await signInWithEmailAndPassword(auth, email, password);
-            console.log(doc);
             return redirect('/')
         }
         throw new Error('verify');
