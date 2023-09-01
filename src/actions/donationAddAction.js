@@ -60,7 +60,7 @@ export default async function donationAddAction({ request, params }) {
         await uploadDoc(getTruthy({
             firstName,
             lastName,
-            email,
+            email: email.toLowerCase(),
             phone: normalizePhoneNumber(phone),
             address,
             location,
