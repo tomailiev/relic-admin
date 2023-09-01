@@ -1,6 +1,6 @@
 import { Container, Grid, Paper, Typography } from "@mui/material";
 import { createRef, useEffect } from "react";
-import getMap from "../../utils/google-maps/getMap";
+import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 
@@ -38,13 +38,13 @@ const DonorItem = ({ item }) => {
                 position: 'relative',
             }}>
                 <Grid item md={6} sm={8} xs={12} p={6}>
-                    <Container ref={mapRef} sx={{ width: '100%', height: '300px', borderRadius: '4px' }} />
+                    <Container disableGutters ref={mapRef} sx={{ width: '100%', height: '300px', borderRadius: '4px' }} />
                 </Grid>
                 <Grid item md={6}>
                     <DonorFields donor={item} />
                 </Grid>
             </Grid>
-            {item.donations && <Container disableGutters>
+            {item.donations && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Donations:
                 </Typography>

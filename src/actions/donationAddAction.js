@@ -4,6 +4,7 @@ import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
 import { getTruthy } from "../vars/schemaFunctions";
 import { arrayUnion } from "firebase/firestore";
+import normalizePhoneNumber from "../vars/normalizePhoneNumber";
 
 
 
@@ -59,8 +60,8 @@ export default async function donationAddAction({ request, params }) {
         await uploadDoc(getTruthy({
             firstName,
             lastName,
-            email,
-            phone: phone,
+            email: email.toLowerCase(),
+            phone: normalizePhoneNumber(phone),
             address,
             location,
             lastDonationAmount: Number(amount),

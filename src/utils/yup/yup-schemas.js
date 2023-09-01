@@ -72,7 +72,7 @@ const donorSchema = object({
     // donations: array().of(donationSchema),
     firstName: string().required(),
     lastName: string().required(),
-    email: string().email().required(),
+    email: string().email(),
     address: string(),
     location: string(),
     phone: string()

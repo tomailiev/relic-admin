@@ -1,5 +1,5 @@
-import { Container, Grid, List, ListItem, ListItemText, Paper, Typography, ListItemIcon } from "@mui/material";
-import { CalendarToday, Campaign, Comment, Paid, } from "@mui/icons-material";
+import { Container, Grid, List, ListItem, ListItemText, Paper, Typography, ListItemIcon, } from "@mui/material";
+import { Badge, CalendarToday, Campaign, Comment, Paid, } from "@mui/icons-material";
 import DonorFields from "./DonorFields";
 
 
@@ -12,7 +12,7 @@ const DonationItem = ({ donor, donation }) => {
             <Grid container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
-                <Grid item md={6} sm={8} xs={12} p={6}>
+                <Grid item md={6} sm={8} xs={12}>
                     <Container disableGutters>
                         <Typography variant="h6" mt={2}>
                             Donor:
@@ -20,12 +20,18 @@ const DonationItem = ({ donor, donation }) => {
                         <DonorFields donor={donor} />
                     </Container>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={6} sm={8} xs={12}>
                     <Container disableGutters>
                         <Typography variant="h6" mt={2}>
                             Donation:
                         </Typography>
                         <List>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <Badge />
+                                </ListItemIcon>
+                                <ListItemText primary={donation.recognitionName} />
+                            </ListItem>
                             <ListItem>
                                 <ListItemIcon>
                                     <CalendarToday />

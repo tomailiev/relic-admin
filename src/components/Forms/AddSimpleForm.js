@@ -18,7 +18,6 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     useEffect(() => {
         if (actionData) {
-            console.log(actionData);
             if (actionData.errorType) {
                 if (actionData.errorType === 'Validation error') {
                     setHasError(actionData);
@@ -27,11 +26,18 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 }
             }
             else {
-                setUserFields(actionData);
-                handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
+                let match = false;
+                Object.keys(actionData).forEach(key => {
+                    if (Object.keys(fields).includes(key))
+                        match = true;
+                })
+                if (match) {
+                    setUserFields(actionData);
+                    handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
+                }
             }
         }
-    }, [actionData, handleFormCompletion, fileValue]);
+    }, [actionData, handleFormCompletion, fileValue, fields]);
 
     useEffect(() => {
         const submissionStates = {
