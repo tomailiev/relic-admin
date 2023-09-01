@@ -4,7 +4,6 @@ import { Link, NavLink, useLoaderData } from "react-router-dom";
 // import ItemListSkeleton from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
-import { Face } from "@mui/icons-material";
 import { useState } from "react";
 import MapView from "./MapView";
 
@@ -17,13 +16,12 @@ const Donors = () => {
     const [mapView, setMapView] = useState(false);
 
     const columns = [
-        { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <Face /> },
-        { field: 'firstName', headerName: 'First name', flex: 2 },
-        { field: 'lastName', headerName: 'Last name', flex: 2 },
+        { field: 'firstName', headerName: 'First name', flex: 1 },
+        { field: 'lastName', headerName: 'Last name', flex: 1 },
         {
             field: 'lastDonationDate',
             headerName: 'Last $ date',
-            flex: 1
+            flex: 2
         },
         {
             field: 'lastDonationAmount',

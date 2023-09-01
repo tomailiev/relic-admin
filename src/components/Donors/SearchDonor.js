@@ -2,7 +2,7 @@ import { Autocomplete, Paper, TextField } from "@mui/material";
 import { useState } from "react";
 import { useHits, useSearchBox } from "react-instantsearch";
 
-const SearchDonor = ({ donor, handleDonor }) => {
+const SearchDonor = ({ donor, handleDonor, setSearchStatus }) => {
 
     const { hits } = useHits();
     const { query, refine, } = useSearchBox();
@@ -10,12 +10,15 @@ const SearchDonor = ({ donor, handleDonor }) => {
 
     function setQuery(e) {
         setInputValue(e.currentTarget.value);
-
+        if(e.currentTarget.value.length >= 4) {
+            setSearchStatus(true);
+        }
         refine(e.currentTarget.value);
     }
 
     function handleChange(_e, o) {
         handleDonor(o);
+        setSearchStatus(!!o);
     }
 
     return (

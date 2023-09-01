@@ -37,18 +37,11 @@ const AddDonation = () => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const [donor, setDonor] = useState(null);
+    const [hasSearched, setHasSearched] = useState(false);
     // const [existingDonor, setExistingDonor] = useState(false);
     const submit = useSubmit();
     const actionData = useActionData();
 
-    // function handleDonorSubmission(data) {
-    //     setDonor(data);
-    //     console.log(data);
-    // }
-
-    // function handleSubmission(data) {
-    //     setSubmission(data);
-    // }
 
     function finishSubmission() {
         const formData = new FormData();
@@ -70,7 +63,7 @@ const AddDonation = () => {
             </Stepper>
             {activeStep === 0 &&
                 <InstantSearch indexName="dev_donors" searchClient={searchClient}>
-                    <SearchDonor donor={donor} handleDonor={setDonor} />
+                    <SearchDonor donor={donor} handleDonor={setDonor} setSearchStatus={setHasSearched} />
                 </InstantSearch>}
             {activeStep === 1 &&
                 <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={setDonor} />}
@@ -97,7 +90,11 @@ const AddDonation = () => {
                     ? <Button variant="contained" onClick={finishSubmission}>
                         Finish
                     </Button>
-                    : <Button variant="contained" onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)} disabled={activeStep === 0 ? false : activeStep === 1 ? ! donor : !submission}>
+                    : <Button
+                        variant="contained"
+                        onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)}
+                        disabled={activeStep === 0 ? !hasSearched : activeStep === 1 ? !donor : activeStep === 2 ? !submission : false}
+                        >
                         {activeStep === 0 && !donor ? 'New Donor' : 'Next'}
                     </Button>
                 }
