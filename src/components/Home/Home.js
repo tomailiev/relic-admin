@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppDrawer from "../Common/AppDrawer";
 import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
-import { NavLink, Outlet, useLocation, useNavigation, } from "react-router-dom";
-import { Backdrop, Box, Breadcrumbs, CircularProgress, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { NavLink, Outlet, useLocation, useNavigation, useSubmit, } from "react-router-dom";
+import { Backdrop, Box, Breadcrumbs, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuContext from "../../context/MenuContext";
+import UserContext from "../../context/UserContext";
 
 const Home = () => {
 
+    const { currentUser } = useContext(UserContext);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
     const navigation = useNavigation();
+    const submit = useSubmit();
     const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
@@ -20,6 +24,35 @@ const Home = () => {
             ? ['']
             : location.pathname.split('/'));
     }, [location.pathname])
+
+
+    useEffect(() => {
+        let timer;
+        if ((currentUser && navigation.state === 'idle') && !timeoutModalOpen) {
+            timer = setTimeout(() => {
+                setTimeoutModalOpen(true);
+            }, 240 * 1000)
+        } else {
+            clearTimeout(timer)
+        }
+
+        return () => clearTimeout(timer);
+
+    }, [currentUser, navigation.state, timeoutModalOpen]);
+
+    useEffect(() => {
+        let timer;
+        if (timeoutModalOpen) {
+            timer = setTimeout(() => {
+                submit(null, { method: 'post', action: '/logout' });
+                setTimeoutModalOpen(false);
+            }, 60 * 1000)
+        } else {
+            clearTimeout(timer);
+        }
+
+        return (() => clearTimeout(timer));
+    }, [timeoutModalOpen, submit]);
 
 
     const handleDrawerToggle = () => {
@@ -34,6 +67,24 @@ const Home = () => {
             >
                 <CircularProgress color="inherit" />
             </Backdrop>
+            <Dialog
+                open={timeoutModalOpen}
+                onClose={() => setTimeoutModalOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    You will be logged out due to inactivity
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Continue session?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setTimeoutModalOpen(false)}>Continue</Button>
+                </DialogActions>
+            </Dialog>
             <Header handler={handleDrawerToggle} />
             <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
                 <AppDrawer children={<DrawerContent />} />
