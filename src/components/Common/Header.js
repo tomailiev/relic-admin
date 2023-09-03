@@ -1,15 +1,15 @@
-import { AppBar, Box, Button, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, IconButton, LinearProgress, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
 import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
-import { Form, NavLink } from "react-router-dom";
+import { Form, NavLink, useNavigation } from "react-router-dom";
 
 const Header = ({ handler }) => {
 
     const { currentUser } = useContext(UserContext);
-
+    const navigation = useNavigation();
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -29,6 +29,8 @@ const Header = ({ handler }) => {
             }}
         >
             <Toolbar sx={{ position: 'relative' }}>
+                {navigation.state === 'loading' && <LinearProgress color="success" sx={{ zIndex: 1000, position: 'absolute', width: '100%', left: '0', top: '0' }} />}
+
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
