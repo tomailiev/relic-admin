@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import AppDrawer from "../Common/AppDrawer";
 import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
-import { NavLink, Outlet, useLocation, } from "react-router-dom";
-import { Box, Breadcrumbs, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { NavLink, Outlet, useLocation, useNavigation, } from "react-router-dom";
+import { Backdrop, Box, Breadcrumbs, CircularProgress, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuContext from "../../context/MenuContext";
 
 const Home = () => {
@@ -12,6 +12,7 @@ const Home = () => {
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
+    const navigation = useNavigation();
     const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
@@ -27,6 +28,12 @@ const Home = () => {
 
     return (
         <>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={navigation.state === 'submitting'}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Header handler={handleDrawerToggle} />
             <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
                 <AppDrawer children={<DrawerContent />} />

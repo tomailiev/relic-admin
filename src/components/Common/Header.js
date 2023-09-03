@@ -30,7 +30,6 @@ const Header = ({ handler }) => {
         >
             <Toolbar sx={{ position: 'relative' }}>
                 {navigation.state === 'loading' && <LinearProgress color="success" sx={{ zIndex: 1000, position: 'absolute', width: '100%', left: '0', top: '0' }} />}
-
                 <IconButton
                     color="inherit"
                     aria-label="open drawer"
