@@ -34,7 +34,7 @@ async function getMap(mapRef, address, location) {
     return infoWindow;
 }
 
-async function getMultiMap(mapRef, markers,) {
+async function getMultiMap(mapRef, items,) {
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { Marker } = await loader.importLibrary('marker');
 
@@ -45,13 +45,13 @@ async function getMultiMap(mapRef, markers,) {
         zoom: 4
     });
 
-    const gmapMarkers = await Promise.all(markers.filter(({address, location}) => !!address || !!location).map(async ({ address, location, firstName, lastName }) => {
+    const gmapMarkers = await Promise.all(items.filter(({address, location}) => !!address || !!location).map(async ({ address, location, firstName, lastName, donations }) => {
         const position = await getCoordinates(address, location);
         const marker = new Marker({
             position: position,
             // map: map,
         });
-        const infoWindow = new InfoWindow({ content: `${firstName} ${lastName}` });
+        const infoWindow = new InfoWindow({ content: `${firstName} ${lastName}, $${donations.reduce((acc, curr) => acc + curr.amount, 0)}` });
 
         function showWindow() {
             infoWindow.open({
