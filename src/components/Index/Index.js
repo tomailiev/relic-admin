@@ -8,7 +8,7 @@ const HomeAlert = () => {
 
     return <>
         {!currentUser
-            ? <Alert severity="warning">Not logged in. <NavLink to={'/login'}>Log in</NavLink> to access more features</Alert>
+            ? <Alert severity="warning">Logged out. <NavLink to={'/login'}>Log in</NavLink> to access more features</Alert>
             : currentUser.emailVerified
                 ? <Alert severity="success">Logged in as {currentUser.email}</Alert>
                 : <Alert severity="warning">Logged in but not verified. <NavLink to={'/verify'}>Verify your email</NavLink></Alert>}

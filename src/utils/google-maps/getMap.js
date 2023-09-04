@@ -45,11 +45,11 @@ async function getMultiMap(mapRef, markers,) {
         zoom: 4
     });
 
-    const gmapMarkers = markers.map(async ({ address, location, firstName, lastName }) => {
+    const gmapMarkers = await Promise.all(markers.filter(({address, location}) => !!address || !!location).map(async ({ address, location, firstName, lastName }) => {
         const position = await getCoordinates(address, location);
         const marker = new Marker({
             position: position,
-            map: map,
+            // map: map,
         });
         const infoWindow = new InfoWindow({ content: `${firstName} ${lastName}` });
 
@@ -64,10 +64,10 @@ async function getMultiMap(mapRef, markers,) {
         marker.addListener("mouseout", () => {
             infoWindow.close();
         });
-        return marker
-    })
-
-    const markerCluster = new MarkerClusterer({ map, gmapMarkers });
+        return marker;
+    }));
+    console.log(gmapMarkers);
+    const markerCluster = new MarkerClusterer({ map, markers: gmapMarkers });
 
     return markerCluster;
 }
