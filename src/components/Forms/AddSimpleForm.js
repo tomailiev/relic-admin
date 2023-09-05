@@ -24,8 +24,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 } else {
                     console.log(actionData);
                 }
-            }
-            else {
+            } else {
                 let match = false;
                 Object.keys(actionData).forEach(key => {
                     if (Object.keys(fields).includes(key))
@@ -106,7 +105,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                             type: type || 'text',
                             value: type === 'file' ? fileValue : userFields[id],
                             onChange: type === 'file' ? handleFileChange : handleInputChange,
-                            error: actionData?.errorType === 'Validation error' && hasError[id],
+                            error: !!(actionData?.errorType === 'Validation error' && hasError[id]),
                             onFocus: removeError,
                             helperText: actionData?.errorType === 'Validation error' && hasError[id],
                             label: label,
