@@ -25,9 +25,9 @@ function App() {
 
   return (
     <CssBaseline>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }} >
-        <RouterProvider router={router} />
-      </UserContext.Provider>
+        <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+          <RouterProvider router={router} />
+        </UserContext.Provider>
     </CssBaseline>
   );
 }

@@ -6,10 +6,13 @@ import { NavLink, Outlet, useLocation, useNavigation, useSubmit, } from "react-r
 import { Backdrop, Box, Breadcrumbs, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuContext from "../../context/MenuContext";
 import UserContext from "../../context/UserContext";
+import ErrorFeedback from "../Common/ErrorFeedback";
+import ErrorContext from "../../context/ErrorContext";
 
 const Home = () => {
 
     const { currentUser } = useContext(UserContext);
+    const [error, setError] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
     const theme = useTheme();
@@ -60,7 +63,7 @@ const Home = () => {
     };
 
     return (
-        <>
+        <ErrorContext.Provider value={{ error, setError }}>
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={navigation.state === 'submitting'}
@@ -85,6 +88,7 @@ const Home = () => {
                     <Button onClick={() => setTimeoutModalOpen(false)}>Continue</Button>
                 </DialogActions>
             </Dialog>
+            <ErrorFeedback />
             <Header handler={handleDrawerToggle} />
             <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
                 <AppDrawer children={<DrawerContent />} />
@@ -104,7 +108,7 @@ const Home = () => {
                 </Container>
                 <Outlet />
             </Box>
-        </>
+        </ErrorContext.Provider>
     );
 };
 
