@@ -6,5 +6,5 @@ export default async function eventDeleteAction({ _, params }) {
     const docId = params.eventId;
     return deleteOneDoc(collections.events, docId)
         .then(() => redirect('/events'))
-        .catch(e => console.log(e));
+        .catch(e => Object.assign(e, { error: true, severity: 'error' }));
 }

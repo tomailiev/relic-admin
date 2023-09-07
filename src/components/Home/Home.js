@@ -1,18 +1,25 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AppDrawer from "../Common/AppDrawer";
 import DrawerContent from "../Common/DrawerContent";
 import Header from "../Common/Header";
-import { NavLink, Outlet, useLocation, useNavigation, } from "react-router-dom";
-import { Box, Breadcrumbs, Container, LinearProgress, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { NavLink, Outlet, useLocation, useNavigation, useSubmit, } from "react-router-dom";
+import { Backdrop, Box, Breadcrumbs, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuContext from "../../context/MenuContext";
+import UserContext from "../../context/UserContext";
+import ErrorFeedback from "../Common/ErrorFeedback";
+import ErrorContext from "../../context/ErrorContext";
 
 const Home = () => {
 
+    const { currentUser } = useContext(UserContext);
+    const [error, setError] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
     const navigation = useNavigation();
+    const submit = useSubmit();
     const [locationList, setLocationList] = useState([]);
 
     useEffect(() => {
@@ -22,35 +29,86 @@ const Home = () => {
     }, [location.pathname])
 
 
+    useEffect(() => {
+        let timer;
+        if ((currentUser && navigation.state === 'idle') && !timeoutModalOpen) {
+            timer = setTimeout(() => {
+                setTimeoutModalOpen(true);
+            }, 240 * 1000)
+        } else {
+            clearTimeout(timer)
+        }
+
+        return () => clearTimeout(timer);
+
+    }, [currentUser, navigation.state, timeoutModalOpen]);
+
+    useEffect(() => {
+        let timer;
+        if (timeoutModalOpen) {
+            timer = setTimeout(() => {
+                submit(null, { method: 'post', action: '/logout' });
+                setTimeoutModalOpen(false);
+            }, 60 * 1000)
+        } else {
+            clearTimeout(timer);
+        }
+
+        return (() => clearTimeout(timer));
+    }, [timeoutModalOpen, submit]);
+
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
 
     return (
-        <>
+        <ErrorContext.Provider value={{ error, setError }}>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={navigation.state === 'submitting'}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            <Dialog
+                open={timeoutModalOpen}
+                onClose={() => setTimeoutModalOpen(false)}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    You will be logged out due to inactivity
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Continue session?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setTimeoutModalOpen(false)}>Continue</Button>
+                </DialogActions>
+            </Dialog>
+            <ErrorFeedback />
             <Header handler={handleDrawerToggle} />
             <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
                 <AppDrawer children={<DrawerContent />} />
             </MenuContext.Provider>
             <Box ml={sm ? '0px' : '240px'}>
                 <Container sx={{ py: 2 }}>
-                    {navigation.state === 'loading'
-                        ? <LinearProgress sx={{my: '10px' }} />
-                        : <Breadcrumbs>
-                            {locationList.map((name, i, arr) => {
-                                return (
-                                    i === arr.length - 1
-                                        ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
-                                        : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
-                                            {name || 'home'}
-                                        </NavLink>)
-                            })}
-                        </Breadcrumbs>
-                    }
+                    <Breadcrumbs>
+                        {locationList.map((name, i, arr) => {
+                            return (
+                                i === arr.length - 1
+                                    ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
+                                    : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
+                                        {name || 'home'}
+                                    </NavLink>)
+                        })}
+                    </Breadcrumbs>
                 </Container>
                 <Outlet />
             </Box>
-        </>
+        </ErrorContext.Provider>
     );
 };
 

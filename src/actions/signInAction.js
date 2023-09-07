@@ -24,7 +24,7 @@ export default async function signInAction({ request, params }) {
             return errors
         }
         console.log(e);
-        return Object.assign({ code: e.message }, { errorType: 'Error' });
+        return Object.assign(e, { errorType: 'Error' });
 
     }
 }

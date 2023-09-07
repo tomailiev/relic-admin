@@ -29,7 +29,7 @@ const musicianSchema = object({
 
 const userSchema = object({
     email: string().required().email(),
-    password: string().required()
+    password: string().required().min(6, 'Password must be at least 6 characters long')
 });
 
 const emailSchema = object({
@@ -38,7 +38,7 @@ const emailSchema = object({
 
 const newUserSchema = object({
     email: string().required().email(),
-    password: string().required('Password is required'),
+    password: string().required('Password is required').min(6, 'Password must be at least 6 characters long'),
     passwordConfirmation: string().oneOf([ref('password'), null], 'Passwords must match')
 });
 

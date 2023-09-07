@@ -43,8 +43,6 @@ export default async function eventAddAction({ request, params }) {
             console.log(errors);
             return errors
         }
-        console.error(e)
-        return Object.assign(e, { errorType: 'Error' });
-
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }

@@ -23,7 +23,7 @@ function schematify(inputObject, nestedName) {
 
 function deschematify(input, field) {
     const fields = {};
-    input[field].forEach((item, i) => {
+    input[field]?.forEach((item, i) => {
         Object.entries(item).forEach(([key, value]) => {
             fields[`${field}[${i}].${key}`] = value;
         })

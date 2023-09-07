@@ -24,8 +24,8 @@ const SignInForm = () => {
                 setHasError(errorData);
 
             } else if (errorData.code) {
-                errorData.code === 'auth/user-not-found'
-                    ? setAlertMessage('Email/Pass not recognized')
+                errorData.code === 'functions/not-found' || errorData.code === 'auth/wrong-password'
+                    ? setAlertMessage('Email or password not recognized')
                     : errorData.code === 'verify'
                         ? setAlertMessage(<NavLink to={'/verify'}> Email not verified. Get a verification email</NavLink>)
                         : setAlertMessage(errorData.code);

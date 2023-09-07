@@ -34,6 +34,6 @@ export default async function videoAddAction({ request, params }) {
         return redirect('/videos');
     } catch (e) {
         console.log(e);
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }

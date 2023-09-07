@@ -1,9 +1,10 @@
-import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
-import { useState } from "react";
+import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import VideoItem from "./VideoItem";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { videoFA } from "../../vars/fieldArrays";
+import ErrorContext from "../../context/ErrorContext";
 
 const steps = [
     'Edit doc',
@@ -16,8 +17,14 @@ const EditVideo = () => {
     const submit = useSubmit();
     const item = useLoaderData(); //!!
     const navigate = useNavigate();
+    const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
 
+    useEffect(() => {
+        if (actionData?.error) {
+            setError(actionData);
+        }
+    }, [actionData, setError]);
     function handleSubmission(data) {
         setSubmission(data);
         console.log(data);
@@ -56,11 +63,6 @@ const EditVideo = () => {
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto', mx: 5, }} >
-                    <Collapse in={!!actionData?.code}>
-                        <Alert severity="error">
-                            {actionData?.code}
-                        </Alert>
-                    </Collapse>
                 </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>

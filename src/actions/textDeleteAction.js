@@ -6,5 +6,5 @@ export default async function textDeleteAction({ _, params }) {
     const field = params.textId;
     return deleteOneField(collections.texts, 'allTexts', field)
         .then(() => redirect('/texts'))
-        .catch(e => console.log(e));
+        .catch(e => Object.assign(e, { error: true, severity: 'error' }));
 }

@@ -18,10 +18,11 @@ const Donors = () => {
     const columns = [
         { field: 'firstName', headerName: 'First name', flex: 1 },
         { field: 'lastName', headerName: 'Last name', flex: 1 },
+        { field: 'location', headerName: 'Location', flex: 1.5 },
         {
             field: 'lastDonationDate',
             headerName: 'Last $ date',
-            flex: 2
+            flex: 1
         },
         {
             field: 'lastDonationAmount',
@@ -36,6 +37,17 @@ const Donors = () => {
             valueGetter: ({ row }) => `$${row.donations?.reduce((acc, curr) => acc + curr.amount, 0)}`,
             flex: 1,
             sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
+        },
+        {
+            field: 'type',
+            headerName: 'Type',
+            valueGetter: ({ row }) => {
+                return Array.from(row.donations?.reduce((acc, curr) => {
+                    acc.add(curr.campaign);
+                    return acc;
+                }, new Set())).join(', ');
+            },
+            flex: 1.5
         },
         {
             field: 'select',
@@ -91,9 +103,9 @@ const Donors = () => {
                         columns={columns}
                         initialState={{
                             sorting: {
-                              sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
+                                sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
                             },
-                          }}
+                        }}
                     />}
             </Container>
         </>

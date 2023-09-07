@@ -23,6 +23,6 @@ export default function registerAction({ request, params }) {
                 console.log(errors);
                 return errors
             }
-            return Object.assign({code: e.message}, { errorType: 'Error' });
+            return Object.assign(e, { errorType: 'Error' });
         })
 }

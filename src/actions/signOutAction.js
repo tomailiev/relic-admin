@@ -7,6 +7,6 @@ export default function signOutAction({ _request, _params }) {
         .then(() => redirect('/'))
         .catch(e => {
             console.log(e);
-            return e;
+            return Object.assign(e, { error: true, severity: 'error' });
         })
 }

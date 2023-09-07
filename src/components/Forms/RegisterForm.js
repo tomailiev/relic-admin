@@ -25,15 +25,15 @@ const RegisterForm = () => {
                 setHasError(errorData);
 
             } else if (errorData.code) {
-                errorData.code === 'auth/user-not-found'
-                    ? setAlertMessage('Email/Pass not recognized')
+                errorData.code === 'functions/permission-denied'
+                    ? setAlertMessage('This email address is not permitted to create an account')
                     : setAlertMessage(errorData.code);
             } else if (errorData.result) {
                 setAlertMessage('Email verification sent. Check your email!');
             }
         }
     }, [errorData]);
-
+ 
     useEffect(() => {
         const submissionStates = {
             submitting: true,

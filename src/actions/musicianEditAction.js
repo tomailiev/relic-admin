@@ -35,6 +35,6 @@ export default async function musicianEditAction({ request, params }) {
             return errors
         }
 
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }

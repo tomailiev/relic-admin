@@ -34,6 +34,6 @@ export default async function textAddAction({ request, params }) {
             console.log(errors);
             return errors
         }
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }
