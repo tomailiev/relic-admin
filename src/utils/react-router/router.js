@@ -56,7 +56,7 @@ import donorItemLoader from '../../loaders/donorItemLoader';
 import donorDeleteAction from '../../actions/donorDeleteAction';
 import EditDonor from '../../components/Donors/EditDonor';
 import donorEditAction from '../../actions/donorEditAction';
-import DeleteItem from '../../components/Common/DeleteItem';
+import FetchError from '../../components/Common/FetchError';
 
 const router = createBrowserRouter([
   {
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/:videoId/delete',
-        element: <LoggedIn component={<DeleteItem />} />,
+        element: <LoggedIn component={<FetchError />} />,
         action: videoDeleteAction
       },
       {
@@ -111,7 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/:textId/delete',
-        element: <LoggedIn component={<DeleteItem />} />,
+        element: <LoggedIn component={<FetchError />} />,
         action: textDeleteAction
       },
       {
@@ -137,7 +137,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/:musicianId/delete',
-        element: <LoggedIn component={<DeleteItem />} />,
+        element: <LoggedIn component={<FetchError />} />,
         action: musicianDeleteAction
       },
       {
@@ -163,7 +163,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/:eventId/delete',
-        element: <LoggedIn component={<DeleteItem />} />,
+        element: <LoggedIn component={<FetchError />} />,
         action: eventDeleteAction
       },
       {
@@ -189,7 +189,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'donors/:donorId/delete',
-        element: <LoggedIn component={<DeleteItem />} />,
+        element: <LoggedIn component={<FetchError />} />,
         action: donorDeleteAction
       },
       {
@@ -210,6 +210,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'logout',
+        element: <FetchError />,
         action: signOutAction
       },
       {
