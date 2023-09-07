@@ -6,5 +6,5 @@ export default async function musicianDeleteAction({ _, params }) {
     const docId = params.musicianId;
     return deleteOneDoc(collections.musicians, docId)
         .then(() => redirect('/musicians'))
-        .catch(e => console.log(e));
+        .catch(e => Object.assign(e, { error: true, severity: 'error' }));
 }

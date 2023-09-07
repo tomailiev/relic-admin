@@ -27,6 +27,6 @@ export default async function donorEditAction({ request, params }) {
         return redirect(`/donors/${updates.id}`);
     } catch (e) {
         console.log(e);
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }

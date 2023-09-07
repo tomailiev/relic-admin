@@ -1,9 +1,10 @@
-import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
-import { useState } from "react";
+import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { donorFA } from "../../vars/fieldArrays";
 import DonorItem from "./DonorItem";
+import ErrorContext from "../../context/ErrorContext";
 
 
 const steps = [
@@ -16,8 +17,15 @@ const EditDonor = () => {
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const item = useLoaderData();
-    const actionData = useActionData();
     const navigate = useNavigate();
+    const { setError } = useContext(ErrorContext);
+    const actionData = useActionData();
+
+    useEffect(() => {
+        if (actionData?.error) {
+            setError(actionData);
+        }
+    }, [actionData, setError]);
 
     function finishSubmission() {
         const formData = new FormData();
@@ -44,7 +52,7 @@ const EditDonor = () => {
             {activeStep === 0 && item &&
                 <AddSimpleForm fields={submission || item} fieldsArray={donorFA} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission &&
-                <DonorItem item={{...submission, donations: item.donations, }} />}
+                <DonorItem item={{ ...submission, donations: item.donations, }} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -54,11 +62,6 @@ const EditDonor = () => {
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
-                    <Collapse in={!!actionData?.code}>
-                        <Alert severity="error">
-                            {actionData?.code}
-                        </Alert>
-                    </Collapse>
                 </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>

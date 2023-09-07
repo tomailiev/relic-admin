@@ -1,11 +1,12 @@
-import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper } from "@mui/material"
-import { useCallback, useState } from "react";
+import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import EventItem from "./EventItem";
 import schematifyEvent from "../../vars/schematifyEvent";
 import deschematifyEvent from "../../vars/deschematifyEvent";
 import { eventFA, performanceFA } from "../../vars/fieldArrays";
+import ErrorContext from "../../context/ErrorContext";
 
 
 const steps = [
@@ -20,8 +21,14 @@ const EditEvent = () => {
     const submit = useSubmit();
     const item = useLoaderData();
     const navigate = useNavigate();
+    const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
 
+    useEffect(() => {
+        if (actionData?.error) {
+            setError(actionData);
+        }
+    }, [actionData, setError]);
 
     const handleSubmission = useCallback((data) => {
         setSubmission(data);
@@ -61,11 +68,6 @@ const EditEvent = () => {
                     {activeStep ? 'Back' : 'Cancel'}
                 </Button>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
-                <Collapse in={!!actionData?.code}>
-                        <Alert severity="error">
-                            {actionData?.code}
-                        </Alert>
-                    </Collapse>
                 </Box>
                 {activeStep === 1
                     ? <Button variant="contained" onClick={finishSubmission}>

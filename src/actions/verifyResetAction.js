@@ -19,7 +19,7 @@ export default async function verifyResetAction({ request, params }) {
             return errors
         }
         console.log(e);
-        return Object.assign({ code: e.message }, { errorType: 'Error' });
+        return Object.assign(e, { errorType: 'Error' });
 
     }
 }

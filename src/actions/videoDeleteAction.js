@@ -6,5 +6,5 @@ export default async function videoDeleteAction({ _, params }) {
     const docId = params.videoId;
     return deleteOneDoc(collections.videos, docId)
         .then(() => redirect('/videos'))
-        .catch(e => console.log(e));
+        .catch(e => Object.assign(e, { error: true, severity: 'error' }));
 }

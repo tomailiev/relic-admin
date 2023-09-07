@@ -1,5 +1,5 @@
-import { Alert, Box, Button, Collapse, Step, StepLabel, Stepper, Typography } from "@mui/material"
-import { useState } from "react";
+import { Box, Button, Step, StepLabel, Stepper, Typography } from "@mui/material"
+import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useSubmit } from "react-router-dom";
 import { donationFA, donorFA } from "../../vars/fieldArrays";
@@ -7,6 +7,7 @@ import SearchDonor from "./SearchDonor";
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
 import DonationItem from "./DonationItem";
+import ErrorContext from "../../context/ErrorContext";
 
 
 const donorFields = {
@@ -40,8 +41,14 @@ const AddDonation = () => {
     const [hasSearched, setHasSearched] = useState(false);
     // const [existingDonor, setExistingDonor] = useState(false);
     const submit = useSubmit();
+    const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
 
+    useEffect(() => {
+        if (actionData?.error) {
+            setError(actionData);
+        }
+    }, [actionData, setError]);
 
     function finishSubmission() {
         const formData = new FormData();
@@ -80,11 +87,6 @@ const AddDonation = () => {
                     Back
                 </Button>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
-                    <Collapse in={!!actionData?.code}>
-                        <Alert severity="error">
-                            {actionData?.code}
-                        </Alert>
-                    </Collapse>
                 </Box>
                 {activeStep === 3
                     ? <Button variant="contained" onClick={finishSubmission}>
@@ -94,7 +96,7 @@ const AddDonation = () => {
                         variant="contained"
                         onClick={() => setActiveStep(prev => prev === 0 && donor ? prev + 2 : prev + 1)}
                         disabled={activeStep === 0 ? !hasSearched : activeStep === 1 ? !donor : activeStep === 2 ? !submission : false}
-                        >
+                    >
                         {activeStep === 0 && !donor ? 'New Donor' : 'Next'}
                     </Button>
                 }

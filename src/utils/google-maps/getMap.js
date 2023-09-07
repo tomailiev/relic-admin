@@ -66,7 +66,6 @@ async function getMultiMap(mapRef, items,) {
         });
         return marker;
     }));
-    console.log(gmapMarkers);
     const markerCluster = new MarkerClusterer({ map, markers: gmapMarkers });
 
     return markerCluster;

@@ -56,6 +56,7 @@ import donorItemLoader from '../../loaders/donorItemLoader';
 import donorDeleteAction from '../../actions/donorDeleteAction';
 import EditDonor from '../../components/Donors/EditDonor';
 import donorEditAction from '../../actions/donorEditAction';
+import DeleteItem from '../../components/Common/DeleteItem';
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'videos/:videoId/delete',
+        element: <LoggedIn component={<DeleteItem />} />,
         action: videoDeleteAction
       },
       {
@@ -109,6 +111,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'texts/:textId/delete',
+        element: <LoggedIn component={<DeleteItem />} />,
         action: textDeleteAction
       },
       {
@@ -134,6 +137,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'musicians/:musicianId/delete',
+        element: <LoggedIn component={<DeleteItem />} />,
         action: musicianDeleteAction
       },
       {
@@ -159,6 +163,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'events/:eventId/delete',
+        element: <LoggedIn component={<DeleteItem />} />,
         action: eventDeleteAction
       },
       {
@@ -184,6 +189,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'donors/:donorId/delete',
+        element: <LoggedIn component={<DeleteItem />} />,
         action: donorDeleteAction
       },
       {

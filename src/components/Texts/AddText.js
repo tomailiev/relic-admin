@@ -18,11 +18,11 @@ const steps = [
 
 const AddText = () => {
 
-    const { setError } = useContext(ErrorContext);
-
+    
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
+    const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
 
     useEffect(() => {

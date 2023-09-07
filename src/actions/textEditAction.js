@@ -33,6 +33,6 @@ export default async function textEditAction({ request, params }) {
             console.log(errors);
             return errors
         }
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
     }
 }

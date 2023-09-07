@@ -78,7 +78,7 @@ export default async function donationAddAction({ request, params }) {
             return errors
         }
         console.error(e)
-        return Object.assign(e, { errorType: 'Error' });
+        return Object.assign(e, { error: true, severity: 'error' });
 
     }
 }
