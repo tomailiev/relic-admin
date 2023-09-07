@@ -1,23 +1,29 @@
-import { AppBar, Box, Button, IconButton, LinearProgress, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar } from "@mui/material";
+import { AppBar, Box, Drawer, IconButton, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
 import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
-import { Form, NavLink, useNavigation } from "react-router-dom";
+import { NavLink, useNavigation, useSubmit } from "react-router-dom";
 
 const Header = ({ handler }) => {
 
     const { currentUser } = useContext(UserContext);
     const navigation = useNavigation();
-    const [anchorEl, setAnchorEl] = useState(null);
+    const submit = useSubmit();
+    const [open, setOpen] = useState(false);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+    const logout = () => {
+        handleClick();
+        submit(null, { method: 'post', action: '/logout' });
+    }
+
+    const handleClick = (e) => {
+        setOpen(prev => !prev);
     };
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setOpen(false)
     };
 
     return (
@@ -43,60 +49,55 @@ const Header = ({ handler }) => {
                 <IconButton onClick={handleClick}>
                     <AccountCircleIcon fontSize="large" />
                 </IconButton>
-                <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={!!anchorEl}
+                <Drawer
+                    anchor={'right'}
+                    open={open}
                     onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
                 >
-                    {currentUser && <MenuItem>
-                        <ListItemIcon>
-                            <Email />
-                        </ListItemIcon>
-                        <ListItemText>
-                            {currentUser.email}
-                        </ListItemText>
-                    </MenuItem>}
-                    {currentUser && <MenuItem>
-                        <Form method="POST" action="logout">
-                            <Button type="submit" sx={{ textTransform: 'none', py: 0, }}>
-                                <ListItemIcon>
-                                    <Logout />
-                                </ListItemIcon>
-                                <ListItemText>
-                                    Log out
-                                </ListItemText>
-                            </Button>
-                        </Form>
-                    </MenuItem>}
-                    {!currentUser && (
-                        <NavLink to={'login'}>
-                            <MenuItem>
-                                <ListItemIcon>
-                                    <Login />
-                                </ListItemIcon>
-                                <ListItemText>
-                                    Log in
-                                </ListItemText>
-                            </MenuItem>
-                        </NavLink>
-                    )}
-                    {!currentUser && (
-                        <NavLink to={'register'}>
-                            <MenuItem>
-                                <ListItemIcon>
-                                    <ExitToApp />
-                                </ListItemIcon>
-                                <ListItemText>
-                                    Register
-                                </ListItemText>
-                            </MenuItem>
-                        </NavLink>
-                    )}
-                </Menu>
+                    <List>
+                        {currentUser && <ListItem onClick={handleClick}>
+                            <ListItemIcon>
+                                <Email />
+                            </ListItemIcon>
+                            <ListItemText>
+                                {currentUser.email}
+                            </ListItemText>
+                        </ListItem>}
+                        {currentUser && <ListItem onClick={logout} sx={{ cursor: 'pointer', textDecoration: 'underline', color: '-webkit-link' }}>
+                            <ListItemIcon>
+                                <Logout />
+                            </ListItemIcon>
+                            <ListItemText>
+                                Log out
+                            </ListItemText>
+                        </ListItem>}
+                        {!currentUser && (
+                            <NavLink to={'login'} onClick={handleClick}>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <Login />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        Log in
+                                    </ListItemText>
+                                </ListItem>
+                            </NavLink>
+                        )}
+                        {!currentUser && (
+                            <NavLink to={'register'} onClick={handleClick}>
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <ExitToApp />
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        Register
+                                    </ListItemText>
+                                </ListItem>
+                            </NavLink>
+                        )}
+                    </List>
+                </Drawer>
+                {/* </Menu> */}
             </Toolbar>
         </AppBar>
     );
