@@ -98,15 +98,17 @@ const Donors = () => {
                 </Box>
                 {mapView
                     ? <MapView donors={donors} />
-                    : <DataGrid
+                    : <Box overflow={'scroll'}><Box minWidth={'800px'} width={'100%'}><DataGrid
                         rows={donors}
                         columns={columns}
                         initialState={{
                             sorting: {
                                 sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
                             },
+                            pagination: { paginationModel: { pageSize: 25 } }
                         }}
-                    />}
+                        pageSizeOptions={[25, 50, 100]}
+                    /></Box></Box>}
             </Container>
         </>
     );

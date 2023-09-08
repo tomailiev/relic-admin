@@ -64,17 +64,15 @@ const Events = () => {
                 <DataGrid
                     rows={events}
                     columns={columns}
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'season', sort: 'desc' }],
+                        },
+                        pagination: { paginationModel: { pageSize: 10 } }
+                    }}
+                    pageSizeOptions={[10, 20, 30]}
                 />
-                {/* <List sx={{ width: '100%' }}>
-                    {events?.length
-                        ? events.map((m) => <ItemList key={m.id} title={m.title} avatar={URL.createObjectURL(m.imgSrc)} data={m} type={'events'} />)
-                        : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
-                </List> */}
             </Container>
-            {/* {musicians?.length 
-            ? musicians.map(musician => <MusicianItem key={musician.id} musician={musician} />)
-            : <ItemListSkeleton /> */}
-
         </>
     );
 };

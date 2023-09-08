@@ -2,6 +2,7 @@ import { redirect } from "react-router-dom";
 import { uploadDoc } from "../utils/firebase/firebase-functions";
 import { donorSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
+import normalizePhoneNumber from "../vars/normalizePhoneNumber";
 
 export default async function donorEditAction({ request, params }) {
     const doc = await request.formData();
@@ -22,8 +23,8 @@ export default async function donorEditAction({ request, params }) {
         }
     }
     try {
-        const { id: _, ...rest } = updates;
-        await uploadDoc(rest, collections.donors, updates.id, true);
+        const { id: _, phone, email, ...rest } = updates;
+        await uploadDoc({...rest, email: email?.toLowerCase() || '', phone: normalizePhoneNumber(phone)}, collections.donors, updates.id, true);
         return redirect(`/donors/${updates.id}`);
     } catch (e) {
         console.log(e);
