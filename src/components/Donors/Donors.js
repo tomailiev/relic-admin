@@ -6,6 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import MapView from "./MapView";
+import CustomGridToolbar from "../Common/GridExportToolbar";
 
 
 
@@ -98,17 +99,22 @@ const Donors = () => {
                 </Box>
                 {mapView
                     ? <MapView donors={donors} />
-                    : <Box overflow={'scroll'}><Box minWidth={'800px'} width={'100%'}><DataGrid
-                        rows={donors}
-                        columns={columns}
-                        initialState={{
-                            sorting: {
-                                sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
-                            },
-                            pagination: { paginationModel: { pageSize: 25 } }
-                        }}
-                        pageSizeOptions={[25, 50, 100]}
-                    /></Box></Box>}
+                    : <Box overflow={'scroll'}>
+                        <Box minWidth={'800px'} width={'100%'}>
+                            <DataGrid
+                                rows={donors}
+                                columns={columns}
+                                slots={{toolbar: CustomGridToolbar}}
+                                initialState={{
+                                    sorting: {
+                                        sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
+                                    },
+                                    pagination: { paginationModel: { pageSize: 25 } }
+                                }}
+                                pageSizeOptions={[25, 50, 100]}
+                            />
+                        </Box>
+                    </Box>}
             </Container>
         </>
     );

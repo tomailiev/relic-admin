@@ -29,7 +29,7 @@ const Events = () => {
                 const date = params.row.dateDone.toDate();
                 const month = date.getUTCMonth();
                 const year = date.getUTCFullYear();
-                return month >= 8 ? year - 2021 : year - 2022
+                return month >= 7 ? year - 2021 : year - 2022
             }
         },
         {
