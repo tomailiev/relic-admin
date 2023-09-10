@@ -1,9 +1,8 @@
 import { MenuItem } from "@mui/material";
 import { gridFilteredSortedRowIdsSelector, gridVisibleColumnFieldsSelector, useGridApiContext } from "@mui/x-data-grid";
-import { Document, Packer, Paragraph, TextRun } from "docx";
 import { useLocation } from "react-router-dom";
 
-function getDocx(apiRef) {
+function getTxt(apiRef) {
 
     const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
     const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
@@ -16,22 +15,9 @@ function getDocx(apiRef) {
         return row;
     });
 
-    const doc = new Document({
-        sections: [
-            {
-                properties: {},
-                children: data.map((item) => (
-                    new Paragraph({
-                        children: [
-                            new TextRun(Object.values(item).join(' ')),
-                        ]
-                    })
-                ))
-            }
-        ]
-    });
+    const doc = new Blob([data.map(item => Object.values(item).join(' ')).join('\n')], { type: 'text/plain' })
 
-    return Packer.toBlob(doc);
+    return doc;
 };
 
 const exportBlob = (blob, filename) => {
@@ -48,7 +34,7 @@ const exportBlob = (blob, filename) => {
     });
 }
 
-function DocxExportMenuItem(props) {
+function TxtExportMenuItem(props) {
     const apiRef = useGridApiContext();
     const location = useLocation();
     const { hideMenu } = props;
@@ -56,14 +42,14 @@ function DocxExportMenuItem(props) {
     return (
         <MenuItem
             onClick={async () => {
-                const document = await getDocx(apiRef);
-                exportBlob(document, `Relic${location.pathname}_${new Date().toLocaleDateString()}.docx`);
+                const document = getTxt(apiRef);
+                exportBlob(document, `Relic${location.pathname}_${new Date().toLocaleDateString()}.txt`);
                 hideMenu?.();
             }}
         >
-            Download as .docx
+            Download as .txt
         </MenuItem>
     );
 }
 
-export default DocxExportMenuItem;
+export default TxtExportMenuItem;
