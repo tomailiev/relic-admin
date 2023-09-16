@@ -1,4 +1,4 @@
-import { Typography, Container, Button } from "@mui/material";
+import { Typography, Container, Button, Box } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
@@ -26,16 +26,22 @@ const Musicians = () => {
                 </NavLink>
             </Container>
             <Container maxWidth="lg" sx={{ my: 3 }}>
-                {/* <List sx={{ width: '100%' }}>
-                    {musicians?.length
-                        ? musicians.map((m) => <ItemList key={m.id} title={m.name} avatar={URL.createObjectURL(m.imgSrc)} data={m} type={'musicians'} />)
-                        : Array(10).fill(null).map((m, i) => <ItemList key={i} />)}
-                </List> */}
-                <DataGrid
-                    rows={musicians}
-                    columns={musicianColumns}
-                />
-            </Container>
+                <Box overflow={'scroll'}>
+                    <Box minWidth={'700px'} width={'100%'}>
+                        <DataGrid
+                            rows={musicians}
+                            columns={musicianColumns}
+                            initialState={{
+                                sorting: {
+                                    sortModel: [{ field: 'newTitle', sort: 'asc' }],
+                                },
+                                pagination: { paginationModel: { pageSize: 15 } }
+                            }}
+                            pageSizeOptions={[5, 15, 30]}
+                        />
+                    </Box>
+                </Box>
+            </Container >
             {/* {musicians?.length 
             ? musicians.map(musician => <MusicianItem key={musician.id} musician={musician} />)
             : <ItemListSkeleton /> */}

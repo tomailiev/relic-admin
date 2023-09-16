@@ -96,7 +96,7 @@ const musicianColumns = [
     },
     // { field: 'id', headerName: 'ID', flex: 2 },
     { field: 'name', headerName: 'Name', flex: 2 },
-    { field: 'newTitle', headerName: 'Instrument', flex: 4 },
+    { field: 'newTitle', headerName: 'Instrument', flex: 2 },
     { field: 'featured', headerName: 'Season', flex: 1 },
     {
         field: 'select',
@@ -136,19 +136,19 @@ const videoColumns = [
     {
         field: 'icon',
         headerName: 'Avatar',
-        sortable: false, flex: 0,
+        sortable: false, flex: 1,
         renderCell: (params) => {
             return <Avatar src={params.row?.thumbnail} alt={params.row?.title} />
         }
     },
     // { field: 'id', headerName: 'ID', flex: 2 },
-    { field: 'title', headerName: 'Title', flex: 4 },
+    { field: 'title', headerName: 'Title', flex: 5 },
     { field: 'featured', headerName: 'Priority', flex: 1 },
     {
         field: 'select',
         headerName: 'Select',
         sortable: false,
-        flex: 2,
+        flex: 1,
         renderCell: (params) => (
             <Link to={`/videos/${params.id}`}>
                 <Button variant="contained">

@@ -1,4 +1,4 @@
-import { Typography, Container, Button, } from "@mui/material";
+import { Typography, Container, Button, Box, } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 // import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
@@ -10,7 +10,7 @@ const Videos = () => {
 
 
     const videos = useLoaderData();
-    
+
 
     return (
         <>
@@ -25,15 +25,26 @@ const Videos = () => {
                 </NavLink>
             </Container>
             <Container maxWidth="lg" sx={{ my: 3 }}>
-                <DataGrid
-                    rows={videos}
-                    columns={videoColumns}
-                />
-                {/* <List sx={{ width: '100%' }}>
+                <Box overflow={'scroll'}>
+                    <Box minWidth={'600px'} width={'100%'}>
+                        <DataGrid
+                            rows={videos}
+                            columns={videoColumns}
+                            initialState={{
+                                sorting: {
+                                    sortModel: [{ field: 'featured', sort: 'desc' }],
+                                },
+                                pagination: { paginationModel: { pageSize: 10 } }
+                            }}
+                            pageSizeOptions={[5, 10, 20]}
+                        />
+                        {/* <List sx={{ width: '100%' }}>
                     {videos?.length
                         ? videos.map((v) => <ItemList key={v.id} title={v.title} avatar={v.thumbnail} data={v} type={'videos'} />)
                         : Array(10).fill(null).map((v, i) => <ItemList key={i} />)}
                 </List> */}
+                    </Box>
+                </Box>
             </Container>
         </>
     );
