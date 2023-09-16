@@ -1,10 +1,8 @@
-import { Typography, Container, Button, Avatar } from "@mui/material";
-import { Link, NavLink, useLoaderData } from "react-router-dom";
-// import MusicianItem from "./EventItem";
-// import ItemList from "../Common/ItemList";
-// import ItemListSkeleton from "../Common/ItemList";
+import { Typography, Container, Button } from "@mui/material";
+import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
+import { eventColumns } from "../../vars/columns";
 
 
 
@@ -12,41 +10,6 @@ import { DataGrid } from "@mui/x-data-grid";
 const Events = () => {
 
     const events = useLoaderData();
-    const columns = [
-        {
-            field: 'icon',
-            headerName: 'Avatar',
-            sortable: false, flex: 0,
-            renderCell: (params) => {
-                return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.name} />
-            }
-        },
-        // { field: 'id', headerName: 'ID', flex: 2 },
-        { field: 'title', headerName: 'Title', flex: 2 },
-        { field: 'description', headerName: 'Description', flex: 4 },
-        {
-            field: 'season', headerName: 'Season', flex: 1, valueGetter: (params) => {
-                const date = params.row.dateDone.toDate();
-                const month = date.getUTCMonth();
-                const year = date.getUTCFullYear();
-                return month >= 7 ? year - 2021 : year - 2022
-            }
-        },
-        {
-            field: 'select',
-            headerName: 'Select',
-            sortable: false,
-            flex: 2,
-            renderCell: (params) => (
-                <Link to={`/events/${params.id}`}>
-                    <Button variant="contained">
-                        View
-                    </Button>
-                </Link>
-            )
-        }
-    ];
-
 
     return (
         <>
@@ -63,7 +26,7 @@ const Events = () => {
             <Container maxWidth="lg" sx={{ my: 3 }}>
                 <DataGrid
                     rows={events}
-                    columns={columns}
+                    columns={eventColumns}
                     initialState={{
                         sorting: {
                             sortModel: [{ field: 'season', sort: 'desc' }],

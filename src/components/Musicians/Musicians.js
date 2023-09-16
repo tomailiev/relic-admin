@@ -1,10 +1,8 @@
-import { Typography, Container, Button, Avatar } from "@mui/material";
-import { Link, NavLink, useLoaderData } from "react-router-dom";
-// import MusicianItem from "./MusicianItem";
-// import ItemList from "../Common/ItemList";
-// import ItemListSkeleton from "../Common/ItemList";
+import { Typography, Container, Button } from "@mui/material";
+import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
+import { musicianColumns } from "../../vars/columns";
 
 
 
@@ -13,33 +11,7 @@ const Musicians = () => {
 
     const musicians = useLoaderData();
 
-    const columns = [
-        {
-            field: 'icon',
-            headerName: 'Avatar',
-            sortable: false, flex: 0,
-            renderCell: (params) => {
-                return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.name} />
-            }
-        },
-        // { field: 'id', headerName: 'ID', flex: 2 },
-        { field: 'name', headerName: 'Name', flex: 2 },
-        { field: 'newTitle', headerName: 'Instrument', flex: 4 },
-        { field: 'featured', headerName: 'Season', flex: 1 },
-        {
-            field: 'select',
-            headerName: 'Select',
-            sortable: false,
-            flex: 2,
-            renderCell: (params) => (
-                <Link to={`/musicians/${params.id}`}>
-                    <Button variant="contained">
-                        View
-                    </Button>
-                </Link>
-            )
-        }
-    ];
+
 
     return (
         <>
@@ -61,7 +33,7 @@ const Musicians = () => {
                 </List> */}
                 <DataGrid
                     rows={musicians}
-                    columns={columns}
+                    columns={musicianColumns}
                 />
             </Container>
             {/* {musicians?.length 

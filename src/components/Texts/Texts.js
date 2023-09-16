@@ -1,8 +1,8 @@
 import { Typography, Container, Button } from "@mui/material";
-import { Link, NavLink, useLoaderData } from "react-router-dom";
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
+import { textColumns } from "../../vars/columns";
 
 
 const Texts = () => {
@@ -10,25 +10,6 @@ const Texts = () => {
 
 
     const texts = useLoaderData();
-
-    const columns = [
-        { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <TextSnippetIcon /> },
-        { field: 'id', headerName: 'ID', flex: 2 },
-        { field: 'value', headerName: 'Value', flex: 4 },
-        {
-            field: 'select',
-            headerName: 'Select',
-            sortable: false,
-            flex: 2,
-            renderCell: (params) => (
-                <Link to={`/texts/${params.id}`}>
-                    <Button variant="contained">
-                        View
-                    </Button>
-                </Link>
-            )
-        }
-    ];
 
     return (
         <>
@@ -45,7 +26,7 @@ const Texts = () => {
 
             <Container maxWidth="lg" sx={{ my: 3 }}>
                 <DataGrid
-                    columns={columns}
+                    columns={textColumns}
                     rows={texts}
                 />
                 {/* <List sx={{ width: '100%' }}>

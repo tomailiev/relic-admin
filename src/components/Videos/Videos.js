@@ -1,40 +1,16 @@
-import { Typography, Container, Button, Avatar } from "@mui/material";
-import { Link, NavLink, useLoaderData } from "react-router-dom";
+import { Typography, Container, Button, } from "@mui/material";
+import { NavLink, useLoaderData } from "react-router-dom";
 // import ItemList from "../Common/ItemList";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
+import { videoColumns } from "../../vars/columns";
 
 
 const Videos = () => {
 
 
     const videos = useLoaderData();
-    const columns = [
-        {
-            field: 'icon',
-            headerName: 'Avatar',
-            sortable: false, flex: 0,
-            renderCell: (params) => {
-                return <Avatar src={params.row?.thumbnail} alt={params.row?.title} />
-            }
-        },
-        // { field: 'id', headerName: 'ID', flex: 2 },
-        { field: 'title', headerName: 'Title', flex: 4 },
-        { field: 'featured', headerName: 'Priority', flex: 1 },
-        {
-            field: 'select',
-            headerName: 'Select',
-            sortable: false,
-            flex: 2,
-            renderCell: (params) => (
-                <Link to={`/videos/${params.id}`}>
-                    <Button variant="contained">
-                        View
-                    </Button>
-                </Link>
-            )
-        }
-    ];
+    
 
     return (
         <>
@@ -51,7 +27,7 @@ const Videos = () => {
             <Container maxWidth="lg" sx={{ my: 3 }}>
                 <DataGrid
                     rows={videos}
-                    columns={columns}
+                    columns={videoColumns}
                 />
                 {/* <List sx={{ width: '100%' }}>
                     {videos?.length
