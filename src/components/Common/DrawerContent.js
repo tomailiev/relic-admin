@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3 } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined } from '@mui/icons-material';
 // import StorageIcon from '@mui/icons-material/Storage';
 
 
@@ -21,6 +21,7 @@ const DrawerContent = () => {
 
     const developmentMenu = [
         { title: 'Donors', path: 'donors', iconInactive: <Diversity3 />, iconActive: <Diversity1 /> },
+        { title: 'Grants', path: 'grants', iconInactive: <AccountBalanceWallet />, iconActive: <AccountBalanceWalletOutlined /> }
     ]
     return (
         <>

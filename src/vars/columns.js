@@ -1,4 +1,4 @@
-import { TextSnippet } from "@mui/icons-material";
+import { Check, Close, TextSnippet } from "@mui/icons-material";
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -132,6 +132,25 @@ const textColumns = [
     }
 ];
 
+const grantColumns = [
+    { field: 'name', headerName: 'Name', flex: 1 },
+    { field: 'link', headerName: 'Url', flex: 2 },
+    { field: 'notification', headerName: 'Notification', renderCell: (params) => params.row.notification ? <Check /> : <Close /> },
+    {
+        field: 'select',
+        headerName: 'Select',
+        sortable: false,
+        flex: 2,
+        renderCell: (params) => (
+            <Link to={`/grants/${params.id}`}>
+                <Button variant="contained">
+                    View
+                </Button>
+            </Link>
+        )
+    }
+]
+
 const videoColumns = [
     {
         field: 'icon',
@@ -159,4 +178,4 @@ const videoColumns = [
     }
 ];
 
-export { donorColumns, eventColumns, musicianColumns, textColumns, videoColumns };
+export { donorColumns, eventColumns, musicianColumns, textColumns, videoColumns, grantColumns };

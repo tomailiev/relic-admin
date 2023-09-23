@@ -73,6 +73,12 @@ const donationFA = [
     { label: 'Comment', id: 'comment' }
 ];
 
+const grantsFA = [
+    { label: 'Name', id: 'name', },
+    { label: 'Url', id: 'link' },
+    { label: 'Notification', id: 'notification', type: 'number', },
+];
+
 export {
     videoFA,
     musicianFA,
@@ -84,5 +90,6 @@ export {
     userRegisterFA,
     userEmailFA,
     donorFA,
-    donationFA
+    donationFA,
+    grantsFA
 }

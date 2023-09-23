@@ -57,6 +57,15 @@ import donorDeleteAction from '../../actions/donorDeleteAction';
 import EditDonor from '../../components/Donors/EditDonor';
 import donorEditAction from '../../actions/donorEditAction';
 import FetchError from '../../components/Common/FetchError';
+import Grants from '../../components/Grants/Grants';
+import AddGrant from '../../components/Grants/AddGrant';
+import GrantItemRoute from '../../components/Grants/GrantItemRoute';
+import EditGrant from '../../components/Grants/EditGrant';
+import grantLoader from '../../loaders/grantLoader';
+import grantItemLoader from '../../loaders/grantItemLoader';
+import grantDeleteAction from '../../actions/grantDeleteAction';
+import grantAddAction from '../../actions/grantAddAction';
+import grantEditAction from '../../actions/grantEditAction';
 
 const router = createBrowserRouter([
   {
@@ -197,6 +206,32 @@ const router = createBrowserRouter([
         element: <LoggedIn component={<EditDonor />} />,
         loader: donorItemLoader,
         action: donorEditAction
+      },
+      {
+        path: 'grants',
+        element: <LoggedIn component={<Grants />} />,
+        loader: grantLoader
+      },
+      {
+        path: 'grants/add',
+        element: <LoggedIn component={<AddGrant />} />,
+        action: grantAddAction
+      },
+      {
+        path: 'grants/:grantId',
+        element: <LoggedIn component={<GrantItemRoute />} />,
+        loader: grantItemLoader,
+      },
+      {
+        path: 'grants/:grantId/delete',
+        element: <LoggedIn component={<FetchError />} />,
+        action: grantDeleteAction
+      },
+      {
+        path: 'grants/:grantId/edit',
+        element: <LoggedIn component={<EditGrant />} />,
+        loader: grantItemLoader,
+        action: grantEditAction
       },
       {
         path: 'login',

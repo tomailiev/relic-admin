@@ -78,6 +78,12 @@ const donorSchema = object({
     phone: string()
 });
 
+const grantSchema = object({
+    name: string().required(),
+    link: string().url().required(),
+    notification: number().oneOf([0, 1]).required()
+})
+
 export {
     eventSchema,
     musicianSchema,
@@ -89,5 +95,6 @@ export {
     newUserSchema,
     emailSchema,
     donorSchema,
-    donationSchema
+    donationSchema,
+    grantSchema
 };
