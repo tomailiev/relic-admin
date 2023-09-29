@@ -1,4 +1,5 @@
 import { Container, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import months from "../../vars/months";
 
 
 
@@ -20,7 +21,7 @@ const GrantItem = ({ item }) => {
                     {item.dueMonths && item.dueMonths.sort((a, b) => a - b).map((month) => {
                         return (
                                 <ListItem key={month}>
-                                    <ListItemText primary={month} />
+                                    <ListItemText primary={months[month]} />
                                 </ListItem>
                         )
                     })}

@@ -76,7 +76,7 @@ const donationFA = [
 const grantsFA = [
     { label: 'Name', id: 'name', },
     { label: 'Url', id: 'link' },
-    { label: 'Notification', id: 'notification', type: 'number', },
+    { label: 'Notification', id: 'notification', type: 'select', options: ['No', 'Yes'] },
 ];
 
 export {

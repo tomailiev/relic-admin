@@ -6,6 +6,7 @@ import { grantsFA } from "../../vars/fieldArrays";
 import ErrorContext from "../../context/ErrorContext";
 import GrantItem from "./GrantItem";
 import schematifyGrant from "../../vars/schematifyGrant";
+import months from "../../vars/months";
 
 const grantFields = {
     name: '',
@@ -56,7 +57,7 @@ const AddGrant = () => {
                 })}
             </Stepper>
             {activeStep === 0 &&
-                <AddDynamicForm fields={submission || grantFields} fieldsArray={grantsFA} nestedArray={[{ label: 'Month', id: 'month', type: 'number' }]} nestedFields={monthsFields} nestedName={'dueMonths'} handleFormCompletion={setSubmission} />}
+                <AddDynamicForm fields={submission || grantFields} fieldsArray={grantsFA} nestedArray={[{ label: 'Month', id: 'month', type: 'select', options: months }]} nestedFields={monthsFields} nestedName={'dueMonths'} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && <GrantItem item={schematifyGrant(submission, 'dueMonths')} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
