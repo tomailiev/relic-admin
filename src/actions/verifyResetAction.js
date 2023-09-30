@@ -9,6 +9,8 @@ export default async function verifyResetAction({ request, params }) {
         const { data } = await verifyOrReset({ email, reason });
         if (data.code === 'Success') {
             return { result: 'Email sent!' }
+        } else {
+            return { result: 'Possible error!' }
         }
     } catch (e) {
         if (e.inner) {

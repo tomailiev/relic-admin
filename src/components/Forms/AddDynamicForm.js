@@ -1,4 +1,4 @@
-import { Button, Grid, Paper, Stack, TextField, Typography } from "@mui/material";
+import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
@@ -52,7 +52,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
 
     function handleInputChange(e) {
         setUserFields(prev => {
-            return { ...prev, [e.target.id]: e.target.value }
+            return { ...prev, [e.target.name]: e.target.value }
         })
     }
 
@@ -86,9 +86,14 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
         }
     }
 
+    function removeError(e) {
+        setHasError(prev => ({ ...prev, [e.target.id]: '' }))
+    }
+
     function addNestedItem() {
         setNestedItems(prev => prev.concat(nestedFields));
     }
+
 
     function removeNestedItem() {
         Object.entries(userFields).forEach(([key,]) => {
@@ -106,38 +111,36 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type }) => (
-                        type === 'file'
-                            ? <MuiFileInput
-                                key={id}
-                                id={id}
-                                name={id}
-                                value={fileValue}
-                                onChange={handleFileChange}
-                                error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                label={label}
-                                size="small"
-                            />
-                            : <TextField
-                                focused
-                                key={id}
-                                id={id}
-                                name={id}
-                                type={type || 'text'}
-                                error={!!hasError[id] && (hasError[id] !== userFields[id])}
-                                value={userFields[id]}
-                                onFocus={() => setHasError(prev => ({ ...prev, [id]: '' }))}
-                                onChange={handleInputChange}
-                                helperText={(hasError[id] !== userFields[id]) && hasError[id]}
-                                label={label}
-                                variant="outlined"
-                                size="small"
-                                multiline={id === 'message'}
-                                rows={4}
-                            />
-                    ))}
+                    {fieldsArray.map(({ id, label, type, multiline, options }) => {
+                        const props = {
+                            key: id,
+                            id: id,
+                            name: id,
+                            type: type || 'text',
+                            value: type === 'file' ? fileValue : userFields[id],
+                            onChange: type === 'file' ? handleFileChange : handleInputChange,
+                            error: !!(actionData?.errorType === 'Validation error' && hasError[id]),
+                            onFocus: removeError,
+                            helperText: actionData?.errorType === 'Validation error' && hasError[id],
+                            label: label,
+                            size: 'small',
+                            multiline: multiline,
+                            variant: 'outlined',
+                            rows: 4,
+                            focused: true
+                        }
+                        return type === 'file'
+                            ? <MuiFileInput {...props} />
+                            : type === 'select'
+                                ? <FormControl key={id}>
+                                    <InputLabel>{label}</InputLabel>
+                                    <Select {...props}>
+                                        {options.map((option, i) => <MenuItem value={i} key={option}>{option}</MenuItem>)}
+                                    </Select>
+                                    <FormHelperText>{props.helperText}</FormHelperText>
+                                </FormControl>
+                                : <TextField {...props} />
+                    })}
                     <Button onClick={addNestedItem}>
                         Add {nestedName}
                     </Button>
@@ -146,26 +149,54 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
                                 <Stack spacing={2}>
-                                    {nestedArray.map(({ id, label, type, }) => {
+                                    {nestedArray.map(({ id, label, type, multiline, options }) => {
                                         const itemId = `${nestedName}[${index}].${id}`;
-                                        return <TextField
-                                            focused
-                                            key={id}
-                                            id={itemId}
-                                            name={itemId}
-                                            type={type || 'text'}
-                                            step={'any'}
-                                            error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
-                                            value={userFields[itemId]}
-                                            onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
-                                            onChange={handleInputChange}
-                                            helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
-                                            label={label}
-                                            variant="outlined"
-                                            size="small"
-                                            // multiline={id === 'message'}
-                                            rows={4}
-                                        />
+                                        const props = {
+                                            key: id,
+                                            id: itemId,
+                                            name: itemId,
+                                            type: type || 'text',
+                                            value: type === 'file' ? fileValue : userFields[itemId],
+                                            onChange: type === 'file' ? handleFileChange : handleInputChange,
+                                            error: !!(actionData?.errorType === 'Validation error' && hasError[itemId]),
+                                            onFocus: removeError,
+                                            helperText: actionData?.errorType === 'Validation error' && hasError[itemId],
+                                            label: label,
+                                            size: 'small',
+                                            multiline: multiline,
+                                            variant: 'outlined',
+                                            rows: 4,
+                                            focused: true
+                                        }
+                                        return type === 'file'
+                                            ? <MuiFileInput {...props} />
+                                            : type === 'select'
+                                                ? <FormControl key={id}>
+                                                    <InputLabel>{label}</InputLabel>
+                                                    <Select {...props}>
+                                                        {options.map((option, i) => <MenuItem value={i} key={option}>{option}</MenuItem>)}
+                                                    </Select>
+                                                    <FormHelperText>{props.helperText}</FormHelperText>
+                                                </FormControl>
+                                                : <TextField {...props} />
+                                        // return <TextField
+                                        //     focused
+                                        //     key={id}
+                                        //     id={itemId}
+                                        //     name={itemId}
+                                        //     type={type || 'text'}
+                                        //     step={'any'}
+                                        //     error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
+                                        //     value={userFields[itemId]}
+                                        //     onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
+                                        //     onChange={handleInputChange}
+                                        //     helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
+                                        //     label={label}
+                                        //     variant="outlined"
+                                        //     size="small"
+                                        //     // multiline={id === 'message'}
+                                        //     rows={4}
+                                        // />
                                     })}
                                 </Stack>
                             </Grid>

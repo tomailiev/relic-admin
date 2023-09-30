@@ -3,7 +3,8 @@ const collections = {
     events: 'events',
     musicians: 'musicians',
     texts: 'textContent',
-    donors: 'donors'
+    donors: 'donors',
+    grants: 'grants',
 };
 
 export default collections;
