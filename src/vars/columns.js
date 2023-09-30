@@ -1,6 +1,7 @@
-import { Check, Close, TextSnippet } from "@mui/icons-material";
+import { Check, Close, OpenInNew, TextSnippet } from "@mui/icons-material";
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import months from "./months";
 
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
@@ -133,9 +134,25 @@ const textColumns = [
 ];
 
 const grantColumns = [
-    { field: 'name', headerName: 'Name', flex: 1 },
-    { field: 'link', headerName: 'Url', flex: 2 },
-    { field: 'notification', headerName: 'Notification', renderCell: (params) => params.row.notification ? <Check /> : <Close /> },
+    { field: 'name', headerName: 'Name', flex: 2 },
+    { field: 'link', headerName: 'Url', flex: 1, renderCell: (params) => <Button href={params.row.link} startIcon={<OpenInNew />} target="_blank" referrerPolicy="no-referrer" >Link</Button> },
+    {
+        field: 'dueMonths',
+        headerName: 'Due months',
+        flex: 2,
+        valueGetter: (params) => params.row.dueMonths.map(m => months[m]).join(', '),
+        sortComparator: (v1, v2) => {
+            const item1 = months.findIndex(item => item === v1.split(',')[0]);
+            const item2 = months.findIndex(item => item === v2.split(',')[0]);
+            return item1 - item2;
+        }
+    },
+    {
+        field: 'notification',
+        headerName: 'Notification',
+        flex: 1,
+        renderCell: (params) => params.row.notification ? <Check /> : <Close />
+    },
     {
         field: 'select',
         headerName: 'Select',
