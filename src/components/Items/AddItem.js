@@ -1,17 +1,17 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import MusicianItem from "./MusicianItem";
 import { useActionData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
+import AddDynamicForm from "../Forms/AddDynamicForm";
 
 const steps = [
     'Add doc',
     'Preview'
 ];
 
-const AddItem = ({ itemType, formType, fields, fieldsArray, nestedFields, nestedArray, nestedName, schematifyFn }) => {
+const AddItem = ({ itemType, formType, fields, fieldsArray, initialFieldsArray, nestedFields, nestedArray, nestedName, schematifyFn }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
@@ -42,9 +42,9 @@ const AddItem = ({ itemType, formType, fields, fieldsArray, nestedFields, nested
                 })}
             </Stepper>
             {activeStep === 0 && formType === 'simple' &&
-                <AddSimpleForm fields={submission || fields} fieldsArray={fieldsArray} handleFormCompletion={setSubmission} />}
+                <AddSimpleForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 0 && formType === 'dynamic' &&
-                <AddDynamicForm fields={submission || fields} fieldsArray={fieldsArray} nestedArray={nestedArray} nestedFields={nestedFields} nestedName={nestedName} handleFormCompletion={setSubmission} />}
+                <AddDynamicForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} nestedArray={nestedArray} nestedFields={nestedFields} nestedName={nestedName} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} />}
             {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

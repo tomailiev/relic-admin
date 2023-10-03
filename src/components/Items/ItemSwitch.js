@@ -7,12 +7,12 @@ import VideoItem from "../Videos/VideoItem";
 
 const ItemSwitch = ({ item, itemType }) => {
     const itemComponents = {
-        musician: <MusicianItem item={item} />,
-        event: <EventItem item={item} />,
-        text: <TextItem item={item} />,
-        video: <VideoItem item={item} />,
-        grant: <GrantItem item={item} />,
-        donor: <DonorItem item={item} />
+        musicians: <MusicianItem item={item} />,
+        events: <EventItem item={item} />,
+        texts: <TextItem item={item} />,
+        videos: <VideoItem item={item} />,
+        grants: <GrantItem item={item} />,
+        donors: <DonorItem item={item} />
     }
     return itemComponents[itemType];
 };

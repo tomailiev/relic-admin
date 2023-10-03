@@ -18,6 +18,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     useEffect(() => {
         if (actionData) {
+            console.log(actionData);
             if (actionData.errorType) {
                 if (actionData.errorType === 'Validation error') {
                     setHasError(actionData);

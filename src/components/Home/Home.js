@@ -9,6 +9,9 @@ import UserContext from "../../context/UserContext";
 import ErrorFeedback from "../Common/ErrorFeedback";
 import ErrorContext from "../../context/ErrorContext";
 
+
+const time = process.env.NODE_ENV === 'development' ? 10000 : 240;
+
 const Home = () => {
 
     const { currentUser } = useContext(UserContext);
@@ -34,7 +37,7 @@ const Home = () => {
         if ((currentUser && navigation.state === 'idle') && !timeoutModalOpen) {
             timer = setTimeout(() => {
                 setTimeoutModalOpen(true);
-            }, 240 * 1000)
+            }, time * 1000)
         } else {
             clearTimeout(timer)
         }

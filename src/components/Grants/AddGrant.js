@@ -58,7 +58,7 @@ const AddGrant = () => {
             </Stepper>
             {activeStep === 0 &&
                 <AddDynamicForm fields={submission || grantFields} fieldsArray={grantsFA} nestedArray={[{ label: 'Month', id: 'month', type: 'select', options: months }]} nestedFields={monthsFields} nestedName={'dueMonths'} handleFormCompletion={setSubmission} />}
-            {activeStep === 1 && submission && <GrantItem item={schematifyGrant(submission, 'dueMonths')} />}
+            {activeStep === 1 && submission && <GrantItem item={schematifyGrant(submission)} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
