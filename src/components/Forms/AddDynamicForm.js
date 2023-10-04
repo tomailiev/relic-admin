@@ -130,7 +130,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                             focused: true
                         }
                         return type === 'file'
-                            ? <MuiFileInput {...props} />
+                            ? <MuiFileInput {...props} error={hasError[id] === 'Please select file'} helperText={hasError[id] === 'Please select file' && hasError[id]} />
                             : type === 'select'
                                 ? <FormControl key={id}>
                                     <InputLabel>{label}</InputLabel>
@@ -169,7 +169,7 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                                             focused: true
                                         }
                                         return type === 'file'
-                                            ? <MuiFileInput {...props} />
+                                            ? <MuiFileInput {...props} error={hasError[itemId] === 'Please select file'} helperText={hasError[itemId] === 'Please select file' && hasError[itemId]} />
                                             : type === 'select'
                                                 ? <FormControl key={id}>
                                                     <InputLabel>{label}</InputLabel>

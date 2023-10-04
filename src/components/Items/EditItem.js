@@ -52,8 +52,8 @@ const EditItem = ({ itemType, formType, fieldsArray, nestedArray, nestedName, sc
                 <AddSimpleForm fields={submission || item} fieldsArray={fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 0 && item && formType === 'dynamic' &&
                 <AddDynamicForm fields={submission || deschematifyFn(item)} fieldsArray={fieldsArray} nestedArray={nestedArray} nestedLength={item[nestedName].length} nestedName={nestedName} handleFormCompletion={setSubmission} />}
-            {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} />}
-            {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} />}
+            {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} />}
+            {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"

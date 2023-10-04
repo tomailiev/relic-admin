@@ -116,7 +116,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                             rows: 4
                         }
                         return type === 'file'
-                            ? <MuiFileInput {...props} />
+                            ? <MuiFileInput {...props} error={hasError[id] === 'Please select file'} helperText={hasError[id] === 'Please select file' && hasError[id]} />
                             : type === 'select'
                                 ? <FormControl key={id}>
                                     <InputLabel>{label}</InputLabel>
