@@ -2,9 +2,9 @@ import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
-import { donorFA } from "../../vars/fieldArrays";
 import DonorItem from "./DonorItem";
 import ErrorContext from "../../context/ErrorContext";
+import donorProps from "../../props/donorProps";
 
 
 const steps = [
@@ -50,7 +50,7 @@ const EditDonor = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddSimpleForm fields={submission || item} fieldsArray={donorFA} handleFormCompletion={setSubmission} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={donorProps.fields} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission &&
                 <DonorItem item={{ ...submission, donations: item.donations, }} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

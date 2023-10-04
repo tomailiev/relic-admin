@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useState } from "react";
 import MapView from "./MapView";
 import CustomGridToolbar from "../Common/GridExportToolbar";
-import { donorColumns } from "../../vars/columns";
+import donorProps from "../../props/donorProps";
 
 
 
@@ -53,15 +53,15 @@ const Donors = () => {
                         <Box minWidth={'800px'} width={'100%'}>
                             <DataGrid
                                 rows={donors}
-                                columns={donorColumns}
+                                columns={donorProps.columns}
                                 slots={{toolbar: CustomGridToolbar}}
                                 initialState={{
                                     sorting: {
-                                        sortModel: [{ field: 'lastDonationDate', sort: 'desc' }],
+                                        sortModel: [donorProps.sorting],
                                     },
-                                    pagination: { paginationModel: { pageSize: 25 } }
+                                    pagination: { paginationModel: { pageSize: donorProps.pageSize } }
                                 }}
-                                pageSizeOptions={[25, 50, 100]}
+                                pageSizeOptions={donorProps.pageSizeOptions}
                             />
                         </Box>
                     </Box>}
