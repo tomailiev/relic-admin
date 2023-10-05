@@ -2,11 +2,8 @@ import { Alert, Button, Collapse, IconButton, Paper, Stack, TextField } from "@m
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
-import { userEmailFA } from "../../vars/fieldArrays";
+import userProps from "../../props/userProps";
 
-const fields = {
-    email: '',
-};
 
 const VerifyResetForm = ({ reason }) => {
     const errorData = useActionData();
@@ -14,8 +11,8 @@ const VerifyResetForm = ({ reason }) => {
     const submit = useSubmit();
 
 
-    const [hasError, setHasError] = useState(fields);
-    const [userFields, setUserFields] = useState(fields);
+    const [hasError, setHasError] = useState(userProps.verifyResetFields);
+    const [userFields, setUserFields] = useState(userProps.verifyResetFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
@@ -80,7 +77,7 @@ const VerifyResetForm = ({ reason }) => {
             </Collapse>
             {!errorData?.result && <Form method="post" id="contact-form">
                 <Stack spacing={3}>
-                    {userEmailFA.map(({ id, label, type }) => (
+                    {userProps.verifyResetFA.map(({ id, label, type }) => (
                         <TextField
                             key={id}
                             id={id}
