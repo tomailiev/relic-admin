@@ -50,7 +50,7 @@ const EditDonor = () => {
                 })}
             </Stepper>
             {activeStep === 0 && item &&
-                <AddSimpleForm fields={submission || item} fieldsArray={donorProps.fields} handleFormCompletion={setSubmission} />}
+                <AddSimpleForm fields={submission || item} fieldsArray={donorProps.fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission &&
                 <DonorItem item={{ ...submission, donations: item.donations, }} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
