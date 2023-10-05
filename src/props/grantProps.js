@@ -7,7 +7,18 @@ import { Link } from "react-router-dom";
 
 const grantColumns = [
     { field: 'name', headerName: 'Name', flex: 2 },
-    { field: 'link', headerName: 'Url', flex: 1, renderCell: (params) => <Button href={params.row.link} startIcon={<OpenInNew />} target="_blank" referrerPolicy="no-referrer" >Link</Button> },
+    {
+        field: 'link', headerName: 'Url', flex: 1, renderCell: (params) => (
+            <Button
+                href={params.row.link}
+                startIcon={<OpenInNew />}
+                target="_blank"
+                referrerPolicy="no-referrer"
+                sx={{ textTransform: 'capitalize' }} >
+                Link
+            </Button>)
+    },
+    { field: 'description', headerName: 'Description', flex: 4 },
     {
         field: 'dueMonths',
         headerName: 'Due months',
@@ -44,6 +55,7 @@ const grantFields = {
     name: '',
     link: '',
     notification: '',
+    description: ''
     // performances: []
 };
 
@@ -55,6 +67,7 @@ const grantsFA = [
     { label: 'Name', id: 'name', },
     { label: 'Url', id: 'link' },
     { label: 'Notification', id: 'notification', type: 'select', options: ['No', 'Yes'] },
+    { label: 'Description', id: 'description', multiline: 'true' },
 ];
 
 const monthsFA = [

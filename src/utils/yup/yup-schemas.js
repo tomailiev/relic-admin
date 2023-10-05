@@ -81,7 +81,8 @@ const donorSchema = object({
 const grantSchema = object({
     name: string().required(),
     link: string().url().required(),
-    notification: number().oneOf([0, 1]).required()
+    notification: number().oneOf([0, 1]).required(),
+    description: string()
 })
 
 export {
