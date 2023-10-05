@@ -2,7 +2,7 @@ import donationAddAction from "../../actions/donationAddAction";
 import donorDeleteAction from "../../actions/donorDeleteAction";
 import donorEditAction from "../../actions/donorEditAction";
 import FetchError from "../../components/Common/FetchError";
-import LoggedIn from "../../components/Common/LoggedIn";
+import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddDonation from "../../components/Donors/AddDonation";
 import DonorItemRoute from "../../components/Donors/DonorItemRoute";
 import Donors from "../../components/Donors/Donors";

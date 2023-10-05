@@ -2,10 +2,9 @@ import Home from '../../components/Home/Home';
 import ErrorPage from '../../components/Common/ErrorPage';
 import Index from '../../components/Index/Index';
 import LogIn from '../../components/LogIn/LogIn';
-import LoggedOut from '../../components/Common/LoggedOut';
 import { createBrowserRouter } from 'react-router-dom';
 import Register from '../../components/Register/Register';
-import VerifyReset from '../../components/Common/VerifyReset';
+import VerifyReset from '../../components/VerifyReset/VerifyReset';
 import signInAction from '../../actions/signInAction';
 import registerAction from '../../actions/registerAction';
 import signOutAction from '../../actions/signOutAction';
@@ -17,6 +16,7 @@ import textRouter from './textRouter';
 import eventRouter from './eventRouter';
 import donorRouter from './donorRouter';
 import grantRouter from './grantRouter';
+import LoggedOut from '../../components/AuthGuard/LoggedOut';
 
 const router = createBrowserRouter([
   {

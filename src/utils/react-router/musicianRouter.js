@@ -2,7 +2,7 @@ import musicianAddAction from "../../actions/musicianAddAction";
 import musicianDeleteAction from "../../actions/musicianDeleteAction";
 import musicianEditAction from "../../actions/musicianEditAction";
 import FetchError from "../../components/Common/FetchError";
-import LoggedIn from "../../components/Common/LoggedIn";
+import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";

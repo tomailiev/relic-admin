@@ -2,7 +2,7 @@ import videoAddAction from "../../actions/videoAddAction";
 import videoDeleteAction from "../../actions/videoDeleteAction";
 import videoEditAction from "../../actions/videoEditAction";
 import FetchError from "../../components/Common/FetchError";
-import LoggedIn from "../../components/Common/LoggedIn";
+import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";

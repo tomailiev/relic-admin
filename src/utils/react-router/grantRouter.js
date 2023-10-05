@@ -2,7 +2,7 @@ import grantAddAction from "../../actions/grantAddAction";
 import grantDeleteAction from "../../actions/grantDeleteAction";
 import grantEditAction from "../../actions/grantEditAction";
 import FetchError from "../../components/Common/FetchError";
-import LoggedIn from "../../components/Common/LoggedIn";
+import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";

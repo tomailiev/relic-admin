@@ -2,7 +2,7 @@ import eventAddAction from "../../actions/eventAddAction";
 import eventDeleteAction from "../../actions/eventDeleteAction";
 import eventEditAction from "../../actions/eventEditAction";
 import FetchError from "../../components/Common/FetchError";
-import LoggedIn from "../../components/Common/LoggedIn";
+import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";
