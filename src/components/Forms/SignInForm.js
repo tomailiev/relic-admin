@@ -2,19 +2,15 @@ import { Alert, Box, Button, Collapse, IconButton, Paper, Stack, TextField } fro
 import { useEffect, useState } from "react";
 import { Form, NavLink, useActionData, useNavigation } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
-import { userLoginFA } from "../../vars/fieldArrays";
+import userProps from "../../props/userProps";
 
-const fields = {
-    email: '',
-    password: ''
-};
 
 const SignInForm = () => {
     const errorData = useActionData();
     const navigation = useNavigation();
 
-    const [hasError, setHasError] = useState(fields);
-    const [userFields, setUserFields] = useState(fields);
+    const [hasError, setHasError] = useState(userProps.loginFields);
+    const [userFields, setUserFields] = useState(userProps.loginFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
@@ -73,7 +69,7 @@ const SignInForm = () => {
             </Collapse>
             <Form method="post" id="contact-form">
                 <Stack spacing={3}>
-                    {userLoginFA.map(({ id, label, type }) => (
+                    {userProps.loginFA.map(({ id, label, type }) => (
                         <TextField
                             key={id}
                             id={id}

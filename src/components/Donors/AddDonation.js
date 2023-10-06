@@ -2,30 +2,13 @@ import { Box, Button, Step, StepLabel, Stepper, Typography } from "@mui/material
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useSubmit } from "react-router-dom";
-import { donationFA, donorFA } from "../../vars/fieldArrays";
 import SearchDonor from "./SearchDonor";
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
 import DonationItem from "./DonationItem";
 import ErrorContext from "../../context/ErrorContext";
+import donorProps from "../../props/donorProps";
 
-
-const donorFields = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    location: '',
-    phone: ''
-};
-
-const donationFields = {
-    date: '',
-    amount: '',
-    campaign: '',
-    recognitionName: '',
-    comment: ''
-};
 
 const steps = [
     'Search donor',
@@ -73,9 +56,9 @@ const AddDonation = () => {
                     <SearchDonor donor={donor} handleDonor={setDonor} setSearchStatus={setHasSearched} />
                 </InstantSearch>}
             {activeStep === 1 &&
-                <AddSimpleForm fields={donor || donorFields} fieldsArray={donorFA} handleFormCompletion={setDonor} />}
+                <AddSimpleForm fields={donor || donorProps.fields} fieldsArray={donorProps.fieldsArray} handleFormCompletion={setDonor} />}
             {activeStep === 2 &&
-                <AddSimpleForm fields={submission || donationFields} fieldsArray={donationFA} handleFormCompletion={setSubmission} />}
+                <AddSimpleForm fields={submission || donorProps.nestedFields} fieldsArray={donorProps.nestedArray} handleFormCompletion={setSubmission} />}
             {activeStep === 3 && submission && <DonationItem donation={submission} donor={donor} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

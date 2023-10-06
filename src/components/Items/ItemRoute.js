@@ -1,14 +1,14 @@
 import { NavLink, useLoaderData, useSubmit, } from "react-router-dom";
-import EventItem from "./EventItem";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
+import ItemSwitch from "./ItemSwitch";
 
-const EventItemRoute = () => {
+const ItemRoute = ({ name, itemType }) => {
 
 
     const [modalOpen, setModalOpen] = useState(false);
-    const event = useLoaderData();
+    const item = useLoaderData();
     const submit = useSubmit();
 
     const handleDelete = () => {
@@ -17,8 +17,8 @@ const EventItemRoute = () => {
 
     return (
         <>
-            <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={event.title} handleDelete={handleDelete} />
-            <EventItem item={event} />
+            <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={item[name]} handleDelete={handleDelete} />
+            <ItemSwitch itemType={itemType} item={item} />
             <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                 <Button
                     color="inherit"
@@ -39,4 +39,4 @@ const EventItemRoute = () => {
     );
 };
 
-export default EventItemRoute;
+export default ItemRoute;

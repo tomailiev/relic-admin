@@ -2,22 +2,19 @@ import { Typography, Container, Button, Box } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
-import { eventColumns } from "../../vars/columns";
 
 
+const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions }) => {
 
-
-const Events = () => {
-
-    const events = useLoaderData();
+    const items = useLoaderData();
 
     return (
         <>
             <Container maxWidth="lg">
-                <Typography variant="h3" my={5}>
-                    Events
+                <Typography variant="h3" my={5} textTransform={'capitalize'}>
+                    {itemType}
                 </Typography>
-                <NavLink to={'/events/add'} >
+                <NavLink to={`/${itemType}/add`} >
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add
                     </Button>
@@ -27,15 +24,15 @@ const Events = () => {
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid
-                            rows={events}
-                            columns={eventColumns}
+                            rows={items}
+                            columns={columns}
                             initialState={{
                                 sorting: {
-                                    sortModel: [{ field: 'season', sort: 'desc' }],
+                                    sortModel: [sorting],
                                 },
-                                pagination: { paginationModel: { pageSize: 10 } }
+                                pagination: { paginationModel: { pageSize } }
                             }}
-                            pageSizeOptions={[10, 20, 30]}
+                            pageSizeOptions={pageSizeOptions}
                         />
                     </Box>
                 </Box>
@@ -44,4 +41,4 @@ const Events = () => {
     );
 };
 
-export default Events;
+export default Items;

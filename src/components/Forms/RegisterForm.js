@@ -2,20 +2,14 @@ import { Alert, Button, Collapse, IconButton, Paper, Stack, TextField } from "@m
 import { useEffect, useState } from "react";
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
-import { userRegisterFA } from "../../vars/fieldArrays";
-
-const fields = {
-    email: '',
-    password: '',
-    passwordConfirmation: ''
-};
+import userProps from "../../props/userProps";
 
 const RegisterForm = () => {
     const errorData = useActionData();
     const navigation = useNavigation();
 
-    const [hasError, setHasError] = useState(fields);
-    const [userFields, setUserFields] = useState(fields);
+    const [hasError, setHasError] = useState(userProps.registerFields);
+    const [userFields, setUserFields] = useState(userProps.registerFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
@@ -73,7 +67,7 @@ const RegisterForm = () => {
             </Collapse>
             {!errorData?.result && <Form method="post" id="contact-form">
                 <Stack spacing={3}>
-                    {userRegisterFA.map(({ id, label, type }) => (
+                    {userProps.registerFA.map(({ id, label, type }) => (
                         <TextField
                             key={id}
                             id={id}

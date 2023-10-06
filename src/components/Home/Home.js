@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import AppDrawer from "../Common/AppDrawer";
-import DrawerContent from "../Common/DrawerContent";
-import Header from "../Common/Header";
+import AppDrawer from "../Drawer/AppDrawer";
 import { NavLink, Outlet, useLocation, useNavigation, useSubmit, } from "react-router-dom";
 import { Backdrop, Box, Breadcrumbs, Button, CircularProgress, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography, useMediaQuery, useTheme } from "@mui/material";
 import MenuContext from "../../context/MenuContext";
 import UserContext from "../../context/UserContext";
 import ErrorFeedback from "../Common/ErrorFeedback";
 import ErrorContext from "../../context/ErrorContext";
+import Header from "../Header/Header";
+import DrawerContent from "../Drawer/DrawerContent";
+
+
+const time = process.env.NODE_ENV === 'development' ? 10000 : 240;
 
 const Home = () => {
 
@@ -34,7 +37,7 @@ const Home = () => {
         if ((currentUser && navigation.state === 'idle') && !timeoutModalOpen) {
             timer = setTimeout(() => {
                 setTimeoutModalOpen(true);
-            }, 240 * 1000)
+            }, time * 1000)
         } else {
             clearTimeout(timer)
         }
