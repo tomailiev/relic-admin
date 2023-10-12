@@ -5,6 +5,7 @@ import { useActionData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
 import AddDynamicForm from "../Forms/AddDynamicForm";
+import AddFileForm from "../Forms/AddFileForm";
 
 const steps = [
     'Add doc',
@@ -45,6 +46,8 @@ const AddItem = ({ itemType, formType, fields, fieldsArray, initialFieldsArray, 
                 <AddSimpleForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 0 && formType === 'dynamic' &&
                 <AddDynamicForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} nestedArray={nestedArray} nestedFields={nestedFields} nestedName={nestedName} handleFormCompletion={setSubmission} />}
+                        {activeStep === 0 && formType === 'file' &&
+                <AddFileForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} />}
             {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

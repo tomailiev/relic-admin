@@ -22,6 +22,10 @@ const DrawerContent = () => {
     const developmentMenu = [
         { title: 'Donors', path: 'donors', iconInactive: <Diversity3 />, iconActive: <Diversity1 /> },
         { title: 'Grants', path: 'grants', iconInactive: <AccountBalanceWallet />, iconActive: <AccountBalanceWalletOutlined /> }
+    ];
+
+    const emailMenu = [
+        { title: 'Import CSV', path: 'email/import-csv', iconInactive: <Diversity3 />, iconActive: <Diversity1 /> },
     ]
     return (
         <>
@@ -50,6 +54,16 @@ const DrawerContent = () => {
                 {
                     ['Development'].map((text, index) => (
                         <ExpandableLI key={text} menuTitle={text} subMenu={developmentMenu} icon={<Savings />} />
+                    ))
+                }
+            </List>
+            <List
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+            >
+                {
+                    ['Email'].map((text, index) => (
+                        <ExpandableLI key={text} menuTitle={text} subMenu={emailMenu} icon={<Savings />} />
                     ))
                 }
             </List>

@@ -1,4 +1,4 @@
-import { object, string, array, number, ref } from 'yup'
+import { object, string, array, number, ref, mixed } from 'yup'
 
 const performanceSchema = object({
     date: string().required('date required'),
@@ -83,6 +83,10 @@ const grantSchema = object({
     link: string().url().required(),
     notification: number().oneOf([0, 1]).required(),
     description: string()
+});
+
+const CSVSchema = object().shape({
+    csv: mixed().required('CSV file upload required')
 })
 
 export {
@@ -97,5 +101,6 @@ export {
     emailSchema,
     donorSchema,
     donationSchema,
-    grantSchema
+    grantSchema,
+    CSVSchema
 };

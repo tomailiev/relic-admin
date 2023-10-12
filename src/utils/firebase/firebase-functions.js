@@ -69,6 +69,7 @@ const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
 const registerUser = httpsCallable(functions, 'registerUser');
 const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatus');
 const verifyOrReset = httpsCallable(functions, 'verifyOrReset');
+const parseCSV = httpsCallable(functions, 'parseCSV');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
@@ -86,5 +87,6 @@ export {
     Timestamp,
     registerUser,
     checkEmailVerificationStatus,
-    verifyOrReset
+    verifyOrReset,
+    parseCSV
 };
