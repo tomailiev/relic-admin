@@ -85,8 +85,11 @@ const grantSchema = object({
     description: string()
 });
 
+
 const CSVSchema = object().shape({
-    csv: mixed().required('CSV file upload required')
+    csv: mixed().required('CSV file upload required').test('is-valid-type', 'Not a valid CSV file', (value) => {
+        return value && (value.name?.toLowerCase())?.endsWith('.csv');
+    })
 })
 
 export {

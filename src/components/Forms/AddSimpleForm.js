@@ -72,7 +72,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => formData.append(key, value));
         formData.append('intent', 'preflight');
-        submit(formData, { method: 'POST' })
+        submit(formData, { method: 'POST', encType: 'multipart/form-data' })
     }
 
     function handleSubmitEvent() {

@@ -1,4 +1,6 @@
 import DonorItem from "../Donors/DonorItem";
+import CSVItem from "../Emails/CSVItem";
+import EmailItem from "../Emails/CSVItem";
 import EventItem from "../Events/EventItem";
 import GrantItem from "../Grants/GrantItem";
 import MusicianItem from "../Musicians/MusicianItem";
@@ -12,7 +14,8 @@ const ItemSwitch = ({ item, itemType }) => {
         texts: <TextItem item={item} />,
         videos: <VideoItem item={item} />,
         grants: <GrantItem item={item} />,
-        donors: <DonorItem item={item} />
+        donors: <DonorItem item={item} />,
+        CSVs: <CSVItem item={item} />
     }
     return itemComponents[itemType];
 };

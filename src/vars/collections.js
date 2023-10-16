@@ -5,6 +5,7 @@ const collections = {
     texts: process.env.NODE_ENV === 'development' ? 'mock-textContent' : 'textContent',
     donors: 'donors',
     grants: 'grants',
+    csv: 'mock-emails'
 };
 
 export default collections;

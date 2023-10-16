@@ -1,7 +1,8 @@
 import { Button, Paper, Stack, } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
+import ErrorContext from "../../context/ErrorContext";
 
 
 const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
@@ -13,6 +14,8 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [fileValue, setFileValue] = useState(null);
+    const { setError } = useContext(ErrorContext);
+
 
     useEffect(() => {
         if (actionData) {
@@ -20,8 +23,9 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
             if (actionData.errorType) {
                 if (actionData.errorType === 'Validation error') {
                     setHasError(actionData);
-                } else {
-                    console.log(actionData);
+                } else if (actionData.error) {
+                    console.log('error');
+                    setError(actionData);
                 }
             } else {
                 let match = false;
@@ -31,11 +35,11 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 })
                 if (match) {
                     setUserFields(actionData);
-                    handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
+                    handleFormCompletion(actionData);
                 }
             }
         }
-    }, [actionData, handleFormCompletion, fileValue, fields]);
+    }, [actionData, handleFormCompletion, fields, setError]);
 
     useEffect(() => {
         const submissionStates = {
@@ -46,19 +50,14 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    useEffect(() => {
-        if (fields.imgSrc) {
-            setFileValue(fields.imgSrc);
-        }
-    }, [fields.imgSrc]);
-
     function removeError(e) {
+        console.log(hasError);
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
 
     function handleFileChange(fileInput) {
-        setFileValue(fileInput)
+        setFileValue(fileInput);
     }
 
     function submitForm(data) {
@@ -70,19 +69,8 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     function handleSubmitEvent() {
         const fileUpload = fieldsArray.find(item => item.type === 'file');
-        if (fileUpload && fileValue) {
-            // if (!filePath) {
-
-                // uploadFile(fileValue, `${fileUpload.path}/${fileValue.name}`)
-                //     .then(path => {
-                //         setFilePath(path);
-                //         submitForm(Object.assign(userFields, { [fileUpload.id]: path }));
-                //     })
-            // } else {
-                submitForm(Object.assign(userFields, { [fileUpload.id]: fileValue }));
-            // }
-        } else if (fileUpload && !fileValue) {
-            setHasError(prev => ({ ...prev, [fileUpload.id]: 'Please select file' }));
+        if (fileUpload) {
+            submitForm(Object.assign(userFields, { [fileUpload.id]: fileValue }));
         } else {
             submitForm(userFields);
         }
@@ -101,7 +89,7 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                             onChange: handleFileChange,
                             error: !!(actionData?.errorType === 'Validation error' && hasError[id]),
                             onFocus: removeError,
-                            helperText: hasError[id] === 'Please select file' && hasError[id],
+                            helperText: actionData?.errorType === 'Validation error' && hasError[id],
                             label: label,
                             size: 'small',
                             variant: 'outlined',
