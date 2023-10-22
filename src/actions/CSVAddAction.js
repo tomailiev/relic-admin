@@ -1,7 +1,8 @@
 // import { redirect } from "react-router-dom";
-import { downloadDocs, uploadFile } from "../utils/firebase/firebase-functions";
+import { downloadDocs, uploadDoc, uploadFile } from "../utils/firebase/firebase-functions";
 import { CSVSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
+import { schematify } from "../vars/schemaFunctions";
 
 export default async function CSVAddAction({ request, params }) {
     const doc = await request.formData();
@@ -23,9 +24,20 @@ export default async function CSVAddAction({ request, params }) {
             console.error(e)
             return Object.assign(e, { error: true, severity: 'error' });
         }
-    } 
+    } else if (doc.has('final')) {
+        try {
+            console.log(updates.newSubs);
+            const { newSubs } = schematify(updates, 'newSubs')
+            const uploadQueue = newSubs.map(doc => {
+                return uploadDoc({...doc, tags: doc.tags.replaceAll('"', '').split(',')}, collections.subscribers, doc.id)
+            });
+            await Promise.all(uploadQueue);
+        } catch (e) {
+            return Object.assign(e, { error: true, severity: 'error' });
+        }
+    }
     try {
-        const docs = await downloadDocs(collections.csv, ['import', '!=', updates.fileName])
+        const docs = await downloadDocs(collections.csv, ['import', '==', `CSVs/${updates.fileName}`])
         console.log(docs);
         return docs;
     } catch (e) {

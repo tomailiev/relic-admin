@@ -48,9 +48,9 @@ const AddItem = ({ itemType, formType, fields, fieldsArray, initialFieldsArray, 
                 <AddDynamicForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} nestedArray={nestedArray} nestedFields={nestedFields} nestedName={nestedName} handleFormCompletion={setSubmission} />}
                         {activeStep === 0 && formType === 'file' &&
                 <AddFileForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
-            {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} />}
-            {activeStep === 1 && submission && formType === 'file' && <ItemSwitch item={submission} itemType={itemType} />}
-            {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} />}
+            {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} mutateItem={setSubmission} />}
+            {activeStep === 1 && submission && formType === 'file' && <ItemSwitch item={submission} itemType={itemType} mutateItem={setSubmission} />}
+            {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} mutateItem={setSubmission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
