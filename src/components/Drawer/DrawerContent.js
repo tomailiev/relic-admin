@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, ListAlt, Mail } from '@mui/icons-material';
 // import StorageIcon from '@mui/icons-material/Storage';
 
 
@@ -22,6 +22,10 @@ const DrawerContent = () => {
     const developmentMenu = [
         { title: 'Donors', path: 'donors', iconInactive: <Diversity3 />, iconActive: <Diversity1 /> },
         { title: 'Grants', path: 'grants', iconInactive: <AccountBalanceWallet />, iconActive: <AccountBalanceWalletOutlined /> }
+    ];
+
+    const emailMenu = [
+        { title: 'CSV', path: 'CSVs', iconInactive: <ListAlt />, iconActive: <ListAlt /> },
     ]
     return (
         <>
@@ -50,6 +54,16 @@ const DrawerContent = () => {
                 {
                     ['Development'].map((text, index) => (
                         <ExpandableLI key={text} menuTitle={text} subMenu={developmentMenu} icon={<Savings />} />
+                    ))
+                }
+            </List>
+            <List
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+            >
+                {
+                    ['Email'].map((text, index) => (
+                        <ExpandableLI key={text} menuTitle={text} subMenu={emailMenu} icon={<Mail />} />
                     ))
                 }
             </List>

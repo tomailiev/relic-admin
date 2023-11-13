@@ -1,5 +1,5 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField } from "firebase/firestore";
-import { ref, uploadBytes, deleteObject, getBlob } from "firebase/storage";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch } from "firebase/firestore";
+import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
 
@@ -61,14 +61,35 @@ function deleteOneField(collection, docId, field) {
     });
 }
 
+function deleteDocs(col, condition) {
+    const q = condition
+        ? query(collection(db, col), where(...condition))
+        : query(collection(db, col));
+    return getDocs(q)
+        .then(qSnap => {
+            const batch = writeBatch(db);
+            qSnap.forEach(doc => {
+                batch.delete(doc.ref);
+            });
+            return batch.commit();
+            // return docs;
+        });
+}
+
 function deleteFile(path) {
     return deleteObject(ref(storage, path));
+}
+
+function getFileList(path) {
+    const listRef = ref(storage, path);
+    return listAll(listRef);
 }
 
 const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
 const registerUser = httpsCallable(functions, 'registerUser');
 const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatus');
 const verifyOrReset = httpsCallable(functions, 'verifyOrReset');
+const parseCSV = httpsCallable(functions, 'parseCSV');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
@@ -79,12 +100,15 @@ export {
     downloadDocs,
     downloadOneDoc,
     uploadFile,
+    deleteDocs,
     deleteOneDoc,
     deleteFile,
     deleteOneField,
+    getFileList,
     getVideoInfo,
     Timestamp,
     registerUser,
     checkEmailVerificationStatus,
-    verifyOrReset
+    verifyOrReset,
+    parseCSV
 };

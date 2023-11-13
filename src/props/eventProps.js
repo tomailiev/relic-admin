@@ -2,6 +2,7 @@ import { Avatar, Button } from "@mui/material";
 import deschematifyEvent from "../vars/deschematifyEvent";
 import schematifyEvent from "../vars/schematifyEvent";
 import { Link } from "react-router-dom";
+import collections from "../vars/collections";
 
 const eventColumns = [
     {
@@ -59,7 +60,7 @@ const performanceFields = {
 const eventFA = [
     { label: 'Date done', id: 'dateDone', type: 'date' },
     { label: 'Description', id: 'description', multiline: true },
-    { label: 'Image Url', id: 'imageUrl', type: 'file', path: 'mock-images/events' },
+    { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
     { label: 'Title', id: 'title' },
 ];
 

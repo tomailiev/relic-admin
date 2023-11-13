@@ -1,11 +1,11 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
+import { Button, Paper, Stack, } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
-import { uploadFile } from "../../utils/firebase/firebase-functions";
+import ErrorContext from "../../context/ErrorContext";
 
 
-const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
+const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     const actionData = useActionData();
     const navigation = useNavigation();
     const submit = useSubmit();
@@ -14,7 +14,8 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [fileValue, setFileValue] = useState(null);
-    const [filePath, setFilePath] = useState('');
+    const { setError } = useContext(ErrorContext);
+
 
     useEffect(() => {
         if (actionData) {
@@ -22,8 +23,9 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
             if (actionData.errorType) {
                 if (actionData.errorType === 'Validation error') {
                     setHasError(actionData);
-                } else {
-                    console.log(actionData);
+                } else if (actionData.error) {
+                    console.log('error');
+                    setError(actionData);
                 }
             } else {
                 let match = false;
@@ -33,11 +35,11 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                 })
                 if (match) {
                     setUserFields(actionData);
-                    handleFormCompletion(fileValue ? Object.assign(actionData, { imgSrc: fileValue }) : actionData);
+                    handleFormCompletion(actionData);
                 }
             }
         }
-    }, [actionData, handleFormCompletion, fileValue, fields]);
+    }, [actionData, handleFormCompletion, fields, setError]);
 
     useEffect(() => {
         const submissionStates = {
@@ -48,24 +50,14 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    useEffect(() => {
-        if (fields.imgSrc) {
-            setFileValue(fields.imgSrc);
-        }
-    }, [fields.imgSrc]);
-
     function removeError(e) {
+        console.log(hasError);
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
-    function handleInputChange(e) {
-        setUserFields(prev => {
-            return { ...prev, [e.target.name]: e.target.value }
-        })
-    }
 
     function handleFileChange(fileInput) {
-        setFileValue(fileInput)
+        setFileValue(fileInput);
     }
 
     function submitForm(data) {
@@ -77,18 +69,8 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
 
     function handleSubmitEvent() {
         const fileUpload = fieldsArray.find(item => item.type === 'file');
-        if (fileUpload && fileValue) {
-            if (!filePath) {
-                uploadFile(fileValue, `${fileUpload.path}/${fileValue.name}`)
-                    .then(path => {
-                        setFilePath(path);
-                        submitForm(Object.assign(userFields, { [fileUpload.id]: path }));
-                    })
-            } else {
-                submitForm(Object.assign(userFields, { [fileUpload.id]: filePath }));
-            }
-        } else if (fileUpload && !fileValue) {
-            setHasError(prev => ({ ...prev, [fileUpload.id]: 'Please select file' }));
+        if (fileUpload) {
+            submitForm(Object.assign(userFields, { [fileUpload.id]: fileValue }));
         } else {
             submitForm(userFields);
         }
@@ -98,36 +80,22 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type, multiline, options }) => {
+                    {fieldsArray.map(({ id, label }) => {
                         const props = {
                             key: id,
                             id: id,
                             name: id,
-                            type: type || 'text',
-                            value: type === 'file' ? fileValue : userFields[id],
-                            onChange: type === 'file' ? handleFileChange : handleInputChange,
+                            value: fileValue || userFields[fieldsArray.find(item => item.type === 'file').id],
+                            onChange: handleFileChange,
                             error: !!(actionData?.errorType === 'Validation error' && hasError[id]),
                             onFocus: removeError,
                             helperText: actionData?.errorType === 'Validation error' && hasError[id],
                             label: label,
                             size: 'small',
-                            multiline: multiline,
                             variant: 'outlined',
-                            rows: 4
                         }
-                        return type === 'file'
-                            ? <MuiFileInput {...props} error={hasError[id] === 'Please select file'} helperText={hasError[id] === 'Please select file' && hasError[id]} />
-                            : type === 'select'
-                                ? <FormControl key={id}>
-                                    <InputLabel>{label}</InputLabel>
-                                    <Select {...props}>
-                                        {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
-                                    </Select>
-                                    <FormHelperText>{props.helperText}</FormHelperText>
-                                </FormControl>
-                                : <TextField {...props} />
+                        return <MuiFileInput {...props} />
                     })}
-
                     <Button
                         variant="contained"
                         color="primary"
@@ -144,4 +112,4 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     );
 };
 
-export default AddSimpleForm;
+export default AddFileForm;

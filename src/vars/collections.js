@@ -5,6 +5,9 @@ const collections = {
     texts: process.env.NODE_ENV === 'development' ? 'mock-textContent' : 'textContent',
     donors: 'donors',
     grants: 'grants',
+    csv: process.env.NODE_ENV === 'development' ? 'mock-emails' : 'CSVs',
+    subscribers: process.env.NODE_ENV === 'development' ? 'mock-subscribers' : 'subscribers',
+    images: process.env.NODE_ENV === 'development' ? 'mock-images' : 'images'
 };
 
 export default collections;
