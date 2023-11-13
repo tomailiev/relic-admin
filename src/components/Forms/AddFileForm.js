@@ -85,7 +85,7 @@ const AddFileForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                             key: id,
                             id: id,
                             name: id,
-                            value: fileValue,
+                            value: fileValue || userFields[fieldsArray.find(item => item.type === 'file').id],
                             onChange: handleFileChange,
                             error: !!(actionData?.errorType === 'Validation error' && hasError[id]),
                             onFocus: removeError,

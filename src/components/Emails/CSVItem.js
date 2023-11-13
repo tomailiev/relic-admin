@@ -14,17 +14,18 @@ const CSVItem = ({ item, mutateItem }) => {
 
     useEffect(() => {
         if (!(location.pathname === `/CSVs/${subscribers.id}`)) {
-            // console.log(subscribers);
             if (fetcher.state === 'idle' && !fetcher.data) {
-                fetcher.submit({ fileName: item.csv?.name }, { method: 'POST' })
+                fetcher.submit({ fileName: item.csv?.name || item.id }, { method: 'POST' })
             } else if (fetcher.state === 'idle' && fetcher.data) {
-                setSubs(fetcher.data.filter(item => !subscribers.docs?.includes(item.email)));
+                setSubs(fetcher.data.filter(item => {
+                    return !(subscribers.docs?.includes(item.email))
+                }));
             }
         } else {
             console.log(location.pathname);
             setSubs(subscribers.docs);
         }
-    }, [item.csv?.name, fetcher, subscribers, location.pathname]);
+    }, [item.csv?.name, item.id, fetcher, subscribers, location.pathname]);
 
     function filterer(model) {
         if (location.pathname === `/CSVs/${subscribers.id}`) {

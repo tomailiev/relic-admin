@@ -1,4 +1,5 @@
 // import { redirect } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { downloadDocs, uploadDoc, uploadFile } from "../utils/firebase/firebase-functions";
 import { CSVSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
@@ -32,13 +33,14 @@ export default async function CSVAddAction({ request, params }) {
                 return uploadDoc({...doc, tags: doc.tags.replaceAll('"', '').split(',')}, collections.subscribers, doc.id)
             });
             await Promise.all(uploadQueue);
+            return redirect('/CSVs')
         } catch (e) {
             return Object.assign(e, { error: true, severity: 'error' });
         }
     }
     try {
+        console.log(updates.fileName);
         const docs = await downloadDocs(collections.csv, ['import', '==', `CSVs/${updates.fileName}`])
-        console.log(docs);
         return docs;
     } catch (e) {
         console.error(e)

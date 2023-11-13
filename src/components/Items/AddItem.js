@@ -46,7 +46,7 @@ const AddItem = ({ itemType, formType, fields, fieldsArray, initialFieldsArray, 
                 <AddSimpleForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 0 && formType === 'dynamic' &&
                 <AddDynamicForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} nestedArray={nestedArray} nestedFields={nestedFields} nestedName={nestedName} handleFormCompletion={setSubmission} />}
-                        {activeStep === 0 && formType === 'file' &&
+            {activeStep === 0 && formType === 'file' &&
                 <AddFileForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} mutateItem={setSubmission} />}
             {activeStep === 1 && submission && formType === 'file' && <ItemSwitch item={submission} itemType={itemType} mutateItem={setSubmission} />}
