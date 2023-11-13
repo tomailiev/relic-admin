@@ -1,10 +1,10 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
-import { useActionData, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
+// import AddSimpleForm from "../Forms/AddSimpleForm";
+import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 // import AddDynamicForm from "../Forms/AddDynamicForm";
-import AddFileForm from "../Forms/AddFileForm";
+// import AddFileForm from "../Forms/AddFileForm";
 import ItemSwitch from "../Items/ItemSwitch";
 
 
@@ -15,11 +15,11 @@ import ItemSwitch from "../Items/ItemSwitch";
 
 const EditCSV = ({ itemType, formType, fieldsArray, nestedArray, nestedName, schematifyFn, deschematifyFn }) => {
     const { setError } = useContext(ErrorContext);
-    const [activeStep, setActiveStep] = useState(0);
+    // const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const item = useLoaderData();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const actionData = useActionData();
 
     useEffect(() => {
@@ -34,9 +34,9 @@ const EditCSV = ({ itemType, formType, fieldsArray, nestedArray, nestedName, sch
         submit(formData, { method: 'POST', action: `/${itemType}/${item.id}/edit` })
     }
 
-    function handleBack() {
-        activeStep ? setActiveStep(prev => prev - 1) : navigate(`/${itemType}/${item.id}`);
-    }
+    // function handleBack() {
+    //     activeStep ? setActiveStep(prev => prev - 1) : navigate(`/${itemType}/${item.id}`);
+    // }
 
     return (
         <Box m={4}>
