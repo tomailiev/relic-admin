@@ -4,7 +4,7 @@ import collections from "../vars/collections";
 export default async function csvItemLoader({ params }) {
     try {
         const docs = await downloadDocs(collections.csv, ['import', '==', `CSVs/${params.CSVId}`])
-        return { docs: docs.map(item => item.id), id: params.CSVId };
+        return { docs, id: params.CSVId };
     } catch (e) {
         console.error(e)
         return Object.assign(e, { error: true, severity: 'error' });

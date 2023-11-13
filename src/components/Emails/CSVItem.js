@@ -18,7 +18,7 @@ const CSVItem = ({ item, mutateItem }) => {
                 fetcher.submit({ fileName: item.csv?.name || item.id }, { method: 'POST' })
             } else if (fetcher.state === 'idle' && fetcher.data) {
                 setSubs(fetcher.data.filter(item => {
-                    return !(subscribers.docs?.includes(item.email))
+                    return !(subscribers.docs?.map(item => item.id).includes(item.email))
                 }));
             }
         } else {
