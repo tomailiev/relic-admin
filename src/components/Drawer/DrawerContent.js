@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, ListAlt, Mail } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, ListAlt, Mail, Person, PersonOutlined } from '@mui/icons-material';
 // import StorageIcon from '@mui/icons-material/Storage';
 
 
@@ -25,7 +25,8 @@ const DrawerContent = () => {
     ];
 
     const emailMenu = [
-        { title: 'CSV', path: 'CSVs', iconInactive: <ListAlt />, iconActive: <ListAlt /> },
+        { title: 'Import CSV', path: 'CSVs/add', iconInactive: <ListAlt />, iconActive: <ListAlt /> },
+        {title: 'Import Donors', path: 'donors/import', iconActive: <Person />, iconInactive: <PersonOutlined />}
     ]
     return (
         <>

@@ -90,6 +90,17 @@ const CSVSchema = object().shape({
     csv: mixed().required('CSV file upload required').test('is-valid-type', 'Not a valid CSV file', (value) => {
         return value && (value.name?.toLowerCase())?.endsWith('.csv');
     })
+});
+
+const subscriberSchema = object({
+    email: string().required().email(),
+    firstName: string().required(),
+    lastName: string().required(),
+    import: string(),
+    // tags: array().of(),
+    opt_in_time: string(),
+    location: string(),
+    status: string().oneOf(['subscribed', 'unsubscribed'])
 })
 
 export {
@@ -105,5 +116,6 @@ export {
     donorSchema,
     donationSchema,
     grantSchema,
-    CSVSchema
+    CSVSchema,
+    subscriberSchema
 };
