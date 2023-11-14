@@ -1,54 +1,41 @@
 import { Box, Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import CSVProps from "../../props/CSVProps";
 import { deschematify } from "../../vars/schemaFunctions";
 
-const CSVItem = ({ item, mutateItem }) => {
+const DonorSubsItem = ({ mutateItem }) => {
 
-    const fetcher = useFetcher();
-    const subscribers = useLoaderData();
+    // const fetcher = useFetcher();
+    const [donors, subscribers] = useLoaderData();
     const [subs, setSubs] = useState([]);
-    const location = useLocation();
+    // const location = useLocation();
 
     useEffect(() => {
-        if (!(location.pathname === `/CSVs/${subscribers.id}`)) {
-            if (fetcher.state === 'idle' && !fetcher.data) {
-                fetcher.submit({ fileName: item.csv?.name || item.id }, { method: 'POST' })
-            } else if (fetcher.state === 'idle' && fetcher.data) {
-                setSubs(fetcher.data.filter(item => {
-                    return !(subscribers.docs?.map(subscriber => subscriber.id).includes(item.email))
-                }));
-            }
-        } else {
-            console.log(location.pathname);
-            setSubs(subscribers.docs);
+        if (donors) {
+            const subscriberEmails = subscribers.map(item => item.email);
+            setSubs(donors.filter(({ email }) => {
+                return !!email && !(subscriberEmails.includes(email.toLowerCase()))
+            }));
         }
-    }, [item.csv?.name, item.id, fetcher, subscribers, location.pathname]);
+    }, [donors, subscribers]);
 
     function filterer(model) {
-        if (location.pathname === `/CSVs/${subscribers.id}`) {
-            return;
-        }
+        
         const newSubs = (subs.filter(({ id }) => model.includes(id)));
         console.log(newSubs);
 
         mutateItem(deschematify({ newSubs, final: '1' }, 'newSubs'));
     }
 
-    // useEffect(() => {
-    //     console.log(2);
-    //     if (fetcher.data && subs) {
-    //     }
-    // }, [subs, subscribers]);
 
     return (
         <Container maxWidth="lg" sx={{ my: 3 }}>
             <Box overflow={'scroll'}>
                 <Box minWidth={'800px'} width={'100%'}>
                     <DataGrid
-                        checkboxSelection={location.pathname !== `/CSVs/${subscribers.id}`}
+                        checkboxSelection
                         onRowSelectionModelChange={filterer}
                         rows={subs}
                         columns={CSVProps.listColumns}
@@ -66,4 +53,4 @@ const CSVItem = ({ item, mutateItem }) => {
     );
 };
 
-export default CSVItem;
+export default DonorSubsItem;
