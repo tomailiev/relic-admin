@@ -1,8 +1,8 @@
-import { Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
-import { createRef, useEffect } from "react";
-import { getMap } from "../../utils/google-maps/getMap";
-import { DataGrid } from "@mui/x-data-grid";
-import { Email, Face, LocationOn, Style } from "@mui/icons-material";
+import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper } from "@mui/material";
+// import { createRef, useEffect } from "react";
+// import { getMap } from "../../utils/google-maps/getMap";
+// import { DataGrid } from "@mui/x-data-grid";
+import { Email, Face, LocationOn, Loyalty, Style } from "@mui/icons-material";
 
 const SubscriberItem = ({ item }) => {
 
@@ -48,6 +48,12 @@ const SubscriberItem = ({ item }) => {
                             </ListItemIcon>
                             <ListItemText primary={item.tags.join(', ')} />
                         </ListItem>}
+                        <ListItem>
+                            <ListItemIcon>
+                                <Loyalty />
+                            </ListItemIcon>
+                            <ListItemText primary={item.status ? 'Subscribed' : 'Unsubscribed'} />
+                        </ListItem>
                     </List>
 
                 </Grid>
