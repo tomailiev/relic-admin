@@ -29,7 +29,12 @@ export default async function subscriberAddAction({ request, params }) {
     }
 
     try {
-        const upload = await uploadDoc(schematifySubscriber(updates, 'tags'), collections.subscribers);
+        const subAddition = {
+            opt_in_time: new Date().toISOString(),
+            import: 'admin',
+            id: updates.email
+        }
+        const upload = await uploadDoc(Object.assign((schematifySubscriber(updates, 'tags')), subAddition), collections.subscribers, updates.email, true);
         console.log(upload);
         return redirect('/subscribers')
     } catch (e) {
