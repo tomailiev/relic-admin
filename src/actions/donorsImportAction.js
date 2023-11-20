@@ -22,11 +22,11 @@ export default async function donorsImportAction({ request, params }) {
                     tags: ['Donor'],
                     opt_in_time: new Date().toISOString(),
                     location: item.location,
-                    status: 'subscribed'
+                    status: 1
                 }, collections.subscribers, item.email.toLowerCase())
             });
             await Promise.all(uploadQueue);
-            return redirect('/CSVs')
+            return redirect('/subscribers')
         } catch (e) {
             return Object.assign(e, { error: true, severity: 'error' });
         }

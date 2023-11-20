@@ -100,7 +100,7 @@ const subscriberSchema = object({
     // tags: array().of(),
     opt_in_time: string(),
     location: string(),
-    status: string().oneOf(['subscribed', 'unsubscribed'])
+    status: string().oneOf(["0", "1"]).required()
 })
 
 export {

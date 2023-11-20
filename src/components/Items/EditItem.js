@@ -56,7 +56,7 @@ const EditItem = ({ itemType, formType, fieldsArray, nestedArray, nestedName, sc
             {activeStep === 0 && formType === 'file' &&
                 <AddFileForm fields={submission || item} fieldsArray={fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 1 && submission && formType === 'simple' && <ItemSwitch item={submission} itemType={itemType} />}
-            {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} />}
+            {/* {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} />} */}
             {activeStep === 1 && submission && formType === 'dynamic' && <ItemSwitch item={schematifyFn(submission)} itemType={itemType} mutateItem={setSubmission} />}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

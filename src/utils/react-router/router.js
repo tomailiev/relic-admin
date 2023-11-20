@@ -18,6 +18,7 @@ import donorRouter from './donorRouter';
 import grantRouter from './grantRouter';
 import LoggedOut from '../../components/AuthGuard/LoggedOut';
 import csvRouter from './csvRouter';
+import subscriberRouter from './subscriberRouter';
 
 const router = createBrowserRouter([
   {
@@ -60,7 +61,8 @@ const router = createBrowserRouter([
       ...eventRouter,
       ...donorRouter,
       ...grantRouter,
-      ...csvRouter
+      ...csvRouter,
+      ...subscriberRouter
     ]
   },
 ]);
