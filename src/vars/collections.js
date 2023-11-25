@@ -8,7 +8,8 @@ const collections = {
     // csv: process.env.NODE_ENV === 'development' ? 'mock-emails' : 'CSVs',
     csv: 'CSVs',
     subscribers: process.env.NODE_ENV === 'development' ? 'mock-subscribers' : 'subscribers',
-    images: process.env.NODE_ENV === 'development' ? 'mock-images' : 'images'
+    images: process.env.NODE_ENV === 'development' ? 'mock-images' : 'images',
+    campaigns: 'campaigns'
 };
 
 export default collections;
