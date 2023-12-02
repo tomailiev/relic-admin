@@ -101,7 +101,14 @@ const subscriberSchema = object({
     opt_in_time: string(),
     location: string(),
     status: string().oneOf(["0", "1"]).required()
-})
+});
+
+const campaignSchema = object({
+    subject: string(),
+    previewText: string(),
+    to: string(),
+    from: string().email()
+});
 
 export {
     eventSchema,
@@ -117,5 +124,6 @@ export {
     donationSchema,
     grantSchema,
     CSVSchema,
-    subscriberSchema
+    subscriberSchema,
+    campaignSchema
 };

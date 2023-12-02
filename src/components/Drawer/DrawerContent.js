@@ -26,8 +26,6 @@ const DrawerContent = () => {
 
     const emailMenu = [
         { title: 'Subscribers', path: 'subscribers', iconActive: <RecentActorsOutlined />, iconInactive: <RecentActors />  },
-        { title: 'Import CSV', path: 'CSVs/add', iconInactive: <ListAlt />, iconActive: <ListAltOutlined /> },
-        { title: 'Import Donors', path: 'donors/import', iconActive: <PersonOutlined />, iconInactive: <Person /> },
         { title: 'Campaigns', path: 'campaigns', iconActive: <SendOutlined />, iconInactive: <Send /> }
     ]
     return (
