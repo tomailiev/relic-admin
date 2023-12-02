@@ -27,12 +27,14 @@ const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
     function addTags(arr) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
         const toField = arrCopy.find(item => item.id === 'to');
-        toField.options = toField.options.concat(tags);
+        toField.options = toField.options.concat(tags.map(([key]) => key));
         return arrCopy;
     }
 
     function finishSubmission() {
         const formData = new FormData();
+        console.log(submission.to);
+        return
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: `/${itemType}/add` })
     }

@@ -41,7 +41,7 @@ const campaignRouter = [
     //     action: CSVDeleteAction
     //   },
     //   {
-    //     path: 'CSVs/:CSVId/edit',
+    //     path: 'campaigns/:campaignId/edit',
     //     element: <LoggedIn component={<EditCSV {...CSVProps} />} />,
     //     loader: csvEditItemLoader,
     //     action: CSVAddAction

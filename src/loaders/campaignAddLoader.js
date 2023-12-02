@@ -7,6 +7,6 @@ export default function campaignAddLoader() {
             return Object.entries(allTags)
                 .filter(([key, value]) => key !== 'id')
                 .sort(([key1, value1], [key2, value2]) => value2 - value1)
-                .map(([key, value]) => `${key} (${value})`)
+                // .map(([key, value]) => `${key} (${value})`)
         });
 }
