@@ -1,7 +1,9 @@
 // import CSVAddAction from "../../actions/CSVAddAction";
 // import CSVDeleteAction from "../../actions/CSVDeleteAction";
 import campaignAddAction from "../../actions/campaignAddAction";
+import campaignEditAction from "../../actions/campaignEditAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
+import EditCampaign from "../../components/Campaigns/EditCampaign";
 import NewCampaign from "../../components/Campaigns/NewCampaign";
 import FetchError from "../../components/Common/FetchError";
 // import EditCSV from "../../components/Emails/EditCSV";
@@ -10,6 +12,7 @@ import AddItem from "../../components/Items/AddItem";
 // import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
 import campaignAddLoader from "../../loaders/campaignAddLoader";
+import campaignEditLoader from "../../loaders/campaignEditLoader";
 import campaignLoader from "../../loaders/campaignLoader";
 // import csvEditItemLoader from "../../loaders/csvEditItemLoader";
 // import csvItemLoader from "../../loaders/csvItemLoader";
@@ -40,12 +43,12 @@ const campaignRouter = [
     //     element: <LoggedIn component={<FetchError />} />,
     //     action: CSVDeleteAction
     //   },
-    //   {
-    //     path: 'campaigns/:campaignId/edit',
-    //     element: <LoggedIn component={<EditCSV {...CSVProps} />} />,
-    //     loader: csvEditItemLoader,
-    //     action: CSVAddAction
-    //   },
+      {
+        path: 'campaigns/:campaignId/edit',
+        element: <LoggedIn component={<EditCampaign {...campaignProps} />} />,
+        loader: campaignEditLoader,
+        action: campaignEditAction
+      },
 ];
 
 export default campaignRouter;

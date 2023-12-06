@@ -8,13 +8,13 @@ import AddFileForm from "../Forms/AddFileForm";
 import ItemSwitch from "../Items/ItemSwitch";
 
 
-const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
+const EditCampaign = ({ itemType, fieldsArray, }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-    const tags = useLoaderData();
+    const { tags, campaign } = useLoaderData();
 
     useEffect(() => {
         if (actionData?.error) {
@@ -34,12 +34,12 @@ const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/${itemType}/add` })
+        submit(formData, { method: 'POST', action: `/${itemType}/${campaign.id}/edit` })
     }
 
     return (
         <Box m={4}>
-                <AddSimpleForm fields={submission || fields} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} />
+            <AddSimpleForm fields={submission || campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} />
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -59,4 +59,4 @@ const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
     );
 };
 
-export default NewCampaign;
+export default EditCampaign;
