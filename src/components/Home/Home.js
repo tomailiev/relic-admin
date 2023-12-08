@@ -10,7 +10,7 @@ import Header from "../Header/Header";
 import DrawerContent from "../Drawer/DrawerContent";
 
 
-const time = process.env.NODE_ENV === 'development' ? 10000 : 240;
+const time = process.env.NODE_ENV === 'development' ? 10000 : 1200;
 
 const Home = () => {
 
