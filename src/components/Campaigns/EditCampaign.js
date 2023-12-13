@@ -1,7 +1,7 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
+import { redirect, useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import AddFileForm from "../Forms/AddFileForm";
@@ -33,7 +33,7 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
 
     function finishSubmission() {
         const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
+        Object.entries(submission || campaign).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: `/${itemType}/${campaign.id}/edit` })
     }
 

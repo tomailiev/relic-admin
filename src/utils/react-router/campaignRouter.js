@@ -1,24 +1,16 @@
-// import CSVAddAction from "../../actions/CSVAddAction";
-// import CSVDeleteAction from "../../actions/CSVDeleteAction";
 import campaignAddAction from "../../actions/campaignAddAction";
+import campaignDeleteAction from "../../actions/campaignDeleteAction";
 import campaignEditAction from "../../actions/campaignEditAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import EditCampaign from "../../components/Campaigns/EditCampaign";
+import EditCampaignContent from "../../components/Campaigns/EditCampaignContent";
 import NewCampaign from "../../components/Campaigns/NewCampaign";
 import FetchError from "../../components/Common/FetchError";
-// import EditCSV from "../../components/Emails/EditCSV";
 import AddItem from "../../components/Items/AddItem";
-// import EditItem from "../../components/Items/EditItem";
-// import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
 import campaignAddLoader from "../../loaders/campaignAddLoader";
 import campaignEditLoader from "../../loaders/campaignEditLoader";
 import campaignLoader from "../../loaders/campaignLoader";
-// import csvEditItemLoader from "../../loaders/csvEditItemLoader";
-// import csvItemLoader from "../../loaders/csvItemLoader";
-// import csvLoader from "../../loaders/csvLoader";
-// import subscriberLoader from "../../loaders/subscriberLoader";
-// import CSVProps from "../../props/CSVProps";
 import campaignProps from "../../props/campaignProps";
 
 const campaignRouter = [
@@ -38,16 +30,22 @@ const campaignRouter = [
     //     element: <LoggedIn component={<ItemRoute {...CSVProps} />} />,
     //     loader: csvItemLoader,
     //   },
-    //   {
-    //     path: 'CSVs/:CSVId/delete',
-    //     element: <LoggedIn component={<FetchError />} />,
-    //     action: CSVDeleteAction
-    //   },
+      {
+        path: 'campaigns/:campaignId/delete',
+        element: <LoggedIn component={<FetchError />} />,
+        action: campaignDeleteAction
+      },
       {
         path: 'campaigns/:campaignId/edit',
         element: <LoggedIn component={<EditCampaign {...campaignProps} />} />,
         loader: campaignEditLoader,
         action: campaignEditAction
+      },
+      {
+        path: 'campaigns/:campaignId/edit/content',
+        element: <LoggedIn component={<EditCampaignContent {...campaignProps} />} />,
+        loader: campaignEditLoader,
+        // action: campaignEditAction
       },
 ];
 

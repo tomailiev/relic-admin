@@ -29,8 +29,8 @@ export default async function campaignAddAction({ request, params }) {
 
     try {
         const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);
-        console.log(upload);
-        return redirect('/campaigns')
+        console.log(upload.id);
+        return redirect(`/campaigns/${upload.id}/edit/content`);
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {
