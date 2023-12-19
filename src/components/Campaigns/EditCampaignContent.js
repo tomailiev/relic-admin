@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, Grid, Step, StepLabel, Stepper, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
@@ -9,7 +9,7 @@ import ItemSwitch from "../Items/ItemSwitch";
 import EmailCompAddForm from "../Forms/EmailCompAddForm";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 
-const components = [
+const options = [
     'text',
     'image',
     'video',
@@ -22,7 +22,9 @@ const components = [
 
 const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState([]);
+    const [component, setComponent] = useState('');
+    const [componentList, setComponentList] = useState([]);
+    // const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -34,7 +36,9 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         }
     }, [actionData, setError]);
 
-
+    function addComponentToList(comp) {
+        setComponentList(prev => prev.concat(comp));
+    }
 
     // function addTags(arr) {
     //     const arrCopy = JSON.parse(JSON.stringify(arr));
@@ -51,13 +55,17 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <EmailCompAddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: components }]} handleFormCompletion={setSubmission} />
+            <EmailCompAddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={setComponent} />
             <Grid container>
                 <Grid item xs={12} md={6}>
-                    {submission.map(item => {
+                    {component && <>
+                        <Typography variant="h6" mx={4}>Add {component}</Typography>
+                        <AddSimpleForm fields={emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} />
+                    </>}
+                    {/* {submission.map(item => {
                         console.log(item);
                         return <AddSimpleForm fields={emailContentFields[item.component]} fieldsArray={emailContentFieldArrays[item.component]} />
-                    })}
+                    })} */}
                 </Grid>
                 <Grid item xs={12} md={6}>
 
