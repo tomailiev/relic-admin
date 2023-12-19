@@ -1,4 +1,4 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, Grid, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
@@ -7,6 +7,7 @@ import AddDynamicForm from "../Forms/AddDynamicForm";
 import AddFileForm from "../Forms/AddFileForm";
 import ItemSwitch from "../Items/ItemSwitch";
 import EmailCompAddForm from "../Forms/EmailCompAddForm";
+import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 
 const components = [
     'text',
@@ -15,13 +16,13 @@ const components = [
     'button',
     'footer',
     'header',
-    'divider',
-    'spacer'
+    // 'divider',
+    // 'spacer'
 ];
 
 const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState(null);
+    const [submission, setSubmission] = useState([]);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -51,7 +52,17 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     return (
         <Box m={4}>
             <EmailCompAddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: components }]} handleFormCompletion={setSubmission} />
-                {/* <AddSimpleForm fields={submission || campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} /> */}
+            <Grid container>
+                <Grid item xs={12} md={6}>
+                    {submission.map(item => {
+                        console.log(item);
+                        return <AddSimpleForm fields={emailContentFields[item.component]} fieldsArray={emailContentFieldArrays[item.component]} />
+                    })}
+                </Grid>
+                <Grid item xs={12} md={6}>
+
+                </Grid>
+            </Grid>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"

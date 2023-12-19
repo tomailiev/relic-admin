@@ -35,9 +35,10 @@ const EmailCompAddForm = ({ fields, fieldsArray, handleFormCompletion }) => {
         })
     }
 
-    function submitForm(data) {
-        console.log(userFields);
-        handleFormCompletion(data)
+    function submitForm(_data) {
+        handleFormCompletion(prev => {
+            return prev.concat([userFields])
+        });
     }
 
     return (

@@ -79,20 +79,20 @@ const videoFA = [
     { label: 'Link', id: 'link' }
 ];
 
-export const fields = {
-    textFields,
-    imageFields,
-    buttonFields,
-    headerFields,
-    footerFields,
-    videoFields
+export const emailContentFields = {
+    text: textFields,
+    image: imageFields,
+    button: buttonFields,
+    header: headerFields,
+    footer: footerFields,
+    video: videoFields
 };
 
-export const fieldArrays = {
-    textFA,
-    imageFA,
-    buttonFA,
-    headerFA,
-    footerFA,
-    videoFA
+export const emailContentFieldArrays = {
+    text: textFA,
+    image: imageFA,
+    button: buttonFA,
+    header: headerFA,
+    footer: footerFA,
+    video: videoFA
 };
