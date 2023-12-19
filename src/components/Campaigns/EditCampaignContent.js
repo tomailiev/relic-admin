@@ -6,6 +6,7 @@ import ErrorContext from "../../context/ErrorContext";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import AddFileForm from "../Forms/AddFileForm";
 import ItemSwitch from "../Items/ItemSwitch";
+import EmailCompAddForm from "../Forms/EmailCompAddForm";
 
 const components = [
     'text',
@@ -49,7 +50,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <AddSimpleForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: components }]} />
+            <EmailCompAddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: components }]} handleFormCompletion={setSubmission} />
                 {/* <AddSimpleForm fields={submission || campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} /> */}
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
