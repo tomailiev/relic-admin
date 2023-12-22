@@ -1,13 +1,11 @@
-import { Box, Button, Grid, Step, StepLabel, Stepper, Typography } from "@mui/material"
+import { Box, Button, Grid, IconButton, List, ListItemButton, ListItemText, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import AddDynamicForm from "../Forms/AddDynamicForm";
-import AddFileForm from "../Forms/AddFileForm";
-import ItemSwitch from "../Items/ItemSwitch";
-import EmailCompAddForm from "../Forms/EmailCompAddForm";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
+import AddForm from "../Forms/AddForm";
+import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
+import { Delete } from "@mui/icons-material";
 
 const options = [
     'text',
@@ -22,9 +20,10 @@ const options = [
 
 const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [component, setComponent] = useState('');
+    const [component, setComponent] = useState(null);
     const [componentList, setComponentList] = useState([]);
     // const [submission, setSubmission] = useState(null);
+    const [selectedComponent, setSelectedComponent] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -37,7 +36,21 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     }, [actionData, setError]);
 
     function addComponentToList(comp) {
+        console.log(componentList);
+        setComponent(null);
         setComponentList(prev => prev.concat(comp));
+    }
+
+    function selectComponent(comp) {
+        setComponent(null);
+        setTimeout(() => {
+            setComponent(comp.component);
+        }, 500);
+    }
+
+    function editComponent(event, i) {
+        console.log(selectedComponent);
+        setSelectedComponent(i)
     }
 
     // function addTags(arr) {
@@ -55,12 +68,25 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <EmailCompAddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={setComponent} />
+            <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
             <Grid container>
                 <Grid item xs={12} md={6}>
+                    {componentList && <List dense={true}>
+                        {componentList.map((componentItem, i) => {
+                            return <ListItemButton
+                                selected={selectedComponent === i}
+                                onClick={(e) => editComponent(e, i)}
+                            >
+                                <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.version || componentItem.src} />
+                                <IconButton edge="end" aria-label="delete" onClick={() => setComponentList(prev => prev.slice(0, i).concat(prev.slice(i + 1)))}>
+                                    <Delete />
+                                </IconButton>
+                            </ListItemButton>
+                        })}
+                    </List>}
                     {component && <>
                         <Typography variant="h6" mx={4}>Add {component}</Typography>
-                        <AddSimpleForm fields={emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} />
+                        <AddForm fields={emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
                     </>}
                     {/* {submission.map(item => {
                         console.log(item);

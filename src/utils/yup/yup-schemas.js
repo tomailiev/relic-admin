@@ -110,6 +110,47 @@ const campaignSchema = object({
     from: string().email()
 });
 
+const emailComponentSchemas = {
+    'text': object({
+        text: string().required(),
+        'font-size': number().default(16),
+        'font-weight': number().default(300),
+        'font-style': string().default('normal'),
+        color: string(),
+        align: string().default('left')
+    }),
+    'image': object({
+        src: string().url().required(),
+        href: string().url(),
+        width: number(),
+        alt: string().required()
+    }),
+    'button': object({
+        text: string().required(),
+        'font-size': number().default(16),
+        'font-weight': number().default(300),
+        'font-style': string().default('normal'),
+        color: string().default('#ffffff'),
+        'background-color': string().default('#000000'),
+        href: string().url(),
+        'text-decoration': string().default('none'),
+        width: number(),
+    }),
+    'header': object({
+        version: string().default('regular')
+    }),
+    'footer': object({
+        version: string().default('regular')
+    }),
+    'video': object({
+        link: string().url()
+    })
+};
+
+const selectComponentSchema = object({
+    component: string()
+});
+
 export {
     eventSchema,
     musicianSchema,
@@ -125,5 +166,7 @@ export {
     grantSchema,
     CSVSchema,
     subscriberSchema,
-    campaignSchema
+    campaignSchema,
+    emailComponentSchemas,
+    selectComponentSchema
 };

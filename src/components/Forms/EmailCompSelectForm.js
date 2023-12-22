@@ -5,7 +5,7 @@ import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom"
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 
 
-const EmailCompAddForm = ({ fields, fieldsArray, handleFormCompletion }) => {
+const EmailCompSelectForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     const actionData = useActionData();
     const navigation = useNavigation();
     // const submit = useSubmit();
@@ -83,4 +83,4 @@ const EmailCompAddForm = ({ fields, fieldsArray, handleFormCompletion }) => {
     );
 };
 
-export default EmailCompAddForm;
+export default EmailCompSelectForm;

@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
-import { campaignSchema } from "../utils/yup/yup-schemas";
+import { emailComponentSchemas } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
 import schematifyGrant from "../vars/schematifyGrant";
 import { schematify } from "../vars/schemaFunctions";
@@ -12,8 +12,9 @@ export default async function emailCompAddAction({ request, params }) {
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
         // const schema = schematify(updates, 'dueMonths');
+        console.log(doc.get('id'));
         try {
-            return await campaignSchema.validate(updates, { abortEarly: false });
+            return await emailComponentSchemas[doc.get('id')].validate(updates, { abortEarly: false });
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {

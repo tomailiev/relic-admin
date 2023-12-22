@@ -1,4 +1,5 @@
 const textFields = {
+    id: 'mj-text',
     text: '',
     fontSize: '',
     fontWeight: '',
@@ -18,6 +19,7 @@ const textFA = [
 ];
 
 const imageFields = {
+    id: 'mj-image',
     src: '',
     href: '',
     width: '',
@@ -32,6 +34,7 @@ const imageFA = [
 ];
 
 const buttonFields = {
+    id: 'mj-button',
     text: '',
     color: '',
     backgroundColor: '',
@@ -56,6 +59,7 @@ const buttonFA = [
 ];
 
 const headerFields = {
+    id: 'custom-header',
     version: ''
 };
 
@@ -64,6 +68,7 @@ const headerFA = [
 ];
 
 const footerFields = {
+    id: 'custom-footer',
     version: ''
 };
 
@@ -72,6 +77,7 @@ const footerFA = [
 ];
 
 const videoFields = {
+    id: 'custom-video',
     link: ''
 };
 
