@@ -24,7 +24,6 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [componentList, setComponentList] = useState([]);
     const [editedComponent, setEditedComponent] = useState(null);
     // const [submission, setSubmission] = useState(null);
-    const [selectedComponent, setSelectedComponent] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -39,6 +38,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     function addComponentToList(comp) {
         setComponent(null);
         if (editedComponent) {
+            setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index + 1)))
             setEditedComponent(null);
         } else {
             setComponentList(prev => prev.concat(comp));
@@ -47,30 +47,25 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     function selectComponent(comp) {
         setComponent(null);
+        setEditedComponent(null);
         setTimeout(() => {
             setComponent(comp.component);
         }, 250);
     }
 
     function editComponent(i) {
-        setSelectedComponent(i)
-        setComponent(componentList[i].id.substring(componentList[i].id.lastIndexOf('-') + 1));
-        setEditedComponent(componentList[i]);
+        setComponent(null);
+        setTimeout(() => {
+            setComponent(componentList[i].id.substring(componentList[i].id.lastIndexOf('-') + 1));
+            setEditedComponent({ ...componentList[i], index: i });
+        }, 250);
     }
 
     function deleteComponent(i) {
-        console.log('in here');
         setComponent(null);
         setEditedComponent(null);
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i + 1)))
-    } 
-
-    // function addTags(arr) {
-    //     const arrCopy = JSON.parse(JSON.stringify(arr));
-    //     const toField = arrCopy.find(item => item.id === 'to');
-    //     toField.options = toField.options.concat(tags.map(([key]) => key));
-    //     return arrCopy;
-    // }
+    }
 
     // function finishSubmission() {
     //     const formData = new FormData();
@@ -87,8 +82,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                         {componentList.map((componentItem, i) => {
                             return <ListItem
                                 key={`${componentItem.id}_${i}`}
-                                // selected={selectedComponent === i}
-                                // onClick={(e) => editComponent(e, i)}
+                            // selected={selectedComponent === i}
+                            // onClick={(e) => editComponent(e, i)}
                             >
                                 <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.version || componentItem.src} />
                                 <IconButton edge="end" aria-label="edit" onClick={() => editComponent(i)}>
@@ -104,10 +99,6 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                         <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
                         <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
                     </>}
-                    {/* {submission.map(item => {
-                        console.log(item);
-                        return <AddSimpleForm fields={emailContentFields[item.component]} fieldsArray={emailContentFieldArrays[item.component]} />
-                    })} */}
                 </Grid>
                 <Grid item xs={12} md={6}>
 
