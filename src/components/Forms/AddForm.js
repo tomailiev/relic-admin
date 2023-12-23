@@ -6,7 +6,6 @@ import { Form, useNavigation } from "react-router-dom";
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
     const navigation = useNavigation();
-
     const [hasError, setHasError] = useState(fields);
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
