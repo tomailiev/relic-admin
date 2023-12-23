@@ -37,7 +37,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
     async function submitForm(data) {
         try {
             const validated = await schema.validate(data, { abortEarly: false });
-            console.log(validated);
             handleFormCompletion(validated);
             setUserFields(fields);
         } catch (e) {

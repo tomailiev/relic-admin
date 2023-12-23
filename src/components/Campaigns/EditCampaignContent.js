@@ -5,7 +5,7 @@ import ErrorContext from "../../context/ErrorContext";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
-import { Delete, Edit } from "@mui/icons-material";
+import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
     'text',
@@ -67,6 +67,14 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i + 1)))
     }
 
+    function moveComponentUp(i) {
+        setComponentList(prev => prev.slice(0, i - 1).concat(prev.slice(i - 1, i + 1).reverse()).concat(prev.slice(i + 1)));
+    }
+
+    function moveComponentDown(i) {
+        setComponentList(prev => prev.slice(0, i).concat(prev.slice(i, i + 2).reverse()).concat(prev.slice(i + 2)));
+    }
+
     // function finishSubmission() {
     //     const formData = new FormData();
     //     Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
@@ -79,13 +87,19 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
             <Grid container>
                 <Grid item xs={12} md={6}>
                     {componentList && <List dense={true}>
-                        {componentList.map((componentItem, i) => {
+                        {componentList.map((componentItem, i, arr) => {
                             return <ListItem
                                 key={`${componentItem.id}_${i}`}
                             // selected={selectedComponent === i}
                             // onClick={(e) => editComponent(e, i)}
                             >
                                 <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.version || componentItem.src} />
+                                <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
+                                    <KeyboardArrowUp />
+                                </IconButton>
+                                <IconButton disabled={i === arr.length - 1} edge="end" aria-label="down" onClick={() => moveComponentDown(i)}>
+                                    <KeyboardArrowDown />
+                                </IconButton>
                                 <IconButton edge="end" aria-label="edit" onClick={() => editComponent(i)}>
                                     <Edit />
                                 </IconButton>
