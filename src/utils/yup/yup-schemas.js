@@ -111,39 +111,55 @@ const campaignSchema = object({
 });
 
 const emailComponentSchemas = {
-    'text': object({
+    text: object({
         text: string().required(),
-        'fontSize': number().default(16),
-        'fontWeight': number().default(300),
-        'fontStyle': string().default('normal'),
+        fontSize: number().default(16),
+        fontWeight: number(),
+        fontStyle: string().default('normal'),
         color: string(),
         align: string().default('left')
     }),
-    'image': object({
+    image: object({
         src: string().url().required(),
         href: string().url(),
         width: number(),
         alt: string().required()
     }),
-    'button': object({
+    button: object({
         text: string().required(),
-        'fontSize': number().default(16),
-        'fontWeight': number().default(300),
-        'fontStyle': string().default('normal'),
+        fontSize: number().default(16),
+        fontWeight: number().default(300),
+        fontStyle: string().default('normal'),
         color: string().default('#ffffff'),
-        'backgroundColor': string().default('#000000'),
+        backgroundColor: string().default('#000000'),
         href: string().url(),
-        'textDecoration': string().default('none'),
+        textDecoration: string().default('none'),
         width: number(),
     }),
-    'header': object({
+    header: object({
         version: string().default('regular')
     }),
-    'footer': object({
+    footer: object({
         version: string().default('regular')
     }),
-    'video': object({
+    video: object({
         link: string().url()
+    }),
+    section: object({
+        backgroundColor: string(),
+        backgroundUrl: string().url(),
+        border: string(),
+        borderRadius: number(),
+        padding: string(),
+        textAlign: string()
+    }),
+    column: object({
+        backgroundColor: string(),
+        backgroundUrl: string().url(),
+        border: string(),
+        borderRadius: number(),
+        padding: string(),
+        textAlign: string()
     })
 };
 

@@ -14,6 +14,8 @@ const options = [
     'button',
     'footer',
     'header',
+    'section',
+    'column'
     // 'divider',
     // 'spacer'
 ];

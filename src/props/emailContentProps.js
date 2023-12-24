@@ -1,11 +1,49 @@
+const sectionFields = {
+    id: 'mj-section',
+    backgroundColor: '',
+    backgroundUrl: '',
+    border: '',
+    borderRadius: '',
+    padding: '',
+    textAlign: 'left'
+};
+
+const sectionFA = [
+    { label: 'Background color', id: 'backgroundColor' },
+    { label: 'Background Url', id: 'backgroundUrl' },
+    { label: 'Border', id: 'border' },
+    { label: 'Border radius', id: 'borderRadius', type: 'number' },
+    { label: 'Padding', id: 'padding' },
+    { label: 'Text align', id: 'textAlign', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+];
+
+const columnFields = {
+    id: 'mj-column',
+    backgroundColor: '',
+    backgroundUrl: '',
+    border: '',
+    borderRadius: '',
+    padding: '',
+    textAlign: 'left'
+}
+
+const columnFA = [
+    { label: 'Background color', id: 'backgroundColor' },
+    { label: 'Background Url', id: 'backgroundUrl' },
+    { label: 'Border', id: 'border' },
+    { label: 'Border radius', id: 'borderRadius', type: 'number' },
+    { label: 'Padding', id: 'padding' },
+    { label: 'Text align', id: 'textAlign', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+]
+
 const textFields = {
     id: 'mj-text',
     text: '',
-    fontSize: '',
-    fontWeight: '',
-    fontStyle: '',
-    color: '',
-    align: ''
+    fontSize: 16,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    color: '#000000',
+    align: 'left'
 };
 
 
@@ -36,20 +74,20 @@ const imageFA = [
 const buttonFields = {
     id: 'mj-button',
     text: '',
-    color: '',
-    backgroundColor: '',
+    color: '#ffffff',
+    backgroundColor: '#000000',
     href: '',
-    fontSize: '',
-    fontWeight: '',
-    fontStyle: '',
-    textDecoration: '',
+    fontSize: 16,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    textDecoration: 'none',
     width: ''
 };
 
 const buttonFA = [
     { label: 'Text', id: 'text', },
     { label: 'Text color', id: 'color', },
-    { label: 'Background color', id: 'background-color' },
+    { label: 'Background color', id: 'backgroundColor' },
     { label: 'Link', id: 'href' },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
     { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 600, 700] },
@@ -60,7 +98,7 @@ const buttonFA = [
 
 const headerFields = {
     id: 'custom-header',
-    version: ''
+    version: 'regular'
 };
 
 const headerFA = [
@@ -69,7 +107,7 @@ const headerFA = [
 
 const footerFields = {
     id: 'custom-footer',
-    version: ''
+    version: 'regular'
 };
 
 const footerFA = [
@@ -91,7 +129,9 @@ export const emailContentFields = {
     button: buttonFields,
     header: headerFields,
     footer: footerFields,
-    video: videoFields
+    video: videoFields,
+    section: sectionFields,
+    column: columnFields
 };
 
 export const emailContentFieldArrays = {
@@ -100,5 +140,7 @@ export const emailContentFieldArrays = {
     button: buttonFA,
     header: headerFA,
     footer: footerFA,
-    video: videoFA
+    video: videoFA,
+    section: sectionFA,
+    column: columnFA
 };
