@@ -114,7 +114,7 @@ const emailComponentSchemas = {
     text: object({
         text: string().required(),
         fontSize: number().default(16),
-        fontWeight: number(),
+        fontWeight: number().default(300),
         fontStyle: string().default('normal'),
         color: string(),
         align: string().default('left')
@@ -122,7 +122,7 @@ const emailComponentSchemas = {
     image: object({
         src: string().url().required(),
         href: string().url(),
-        width: number(),
+        width: string(),
         alt: string().required()
     }),
     button: object({
@@ -134,30 +134,32 @@ const emailComponentSchemas = {
         backgroundColor: string().default('#000000'),
         href: string().url(),
         textDecoration: string().default('none'),
-        width: number(),
+        width: string(),
     }),
     header: object({
-        version: string().default('regular')
+        variant: string().default('regular')
     }),
     footer: object({
-        version: string().default('regular')
+        variant: string().default('regular')
     }),
     video: object({
         link: string().url()
     }),
     section: object({
+        variant: string().required().oneOf(['start', 'end', 'end-start']),
         backgroundColor: string(),
         backgroundUrl: string().url(),
         border: string(),
-        borderRadius: number(),
+        borderRadius: string(),
         padding: string(),
         textAlign: string()
     }),
     column: object({
+        variant: string().required().oneOf(['start', 'end', 'end-start']),
         backgroundColor: string(),
         backgroundUrl: string().url(),
         border: string(),
-        borderRadius: number(),
+        borderRadius: string(),
         padding: string(),
         textAlign: string()
     })

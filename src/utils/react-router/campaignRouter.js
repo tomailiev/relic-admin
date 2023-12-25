@@ -1,6 +1,7 @@
 import campaignAddAction from "../../actions/campaignAddAction";
 import campaignDeleteAction from "../../actions/campaignDeleteAction";
 import campaignEditAction from "../../actions/campaignEditAction";
+import campaignEditContentAction from "../../actions/campaignEditContentAction";
 import emailCompAddAction from "../../actions/emailCompAddAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import EditCampaign from "../../components/Campaigns/EditCampaign";
@@ -46,7 +47,7 @@ const campaignRouter = [
         path: 'campaigns/:campaignId/edit/content',
         element: <LoggedIn component={<EditCampaignContent {...campaignProps} />} />,
         loader: campaignEditLoader,
-        action: emailCompAddAction
+        action: campaignEditContentAction
       },
 ];
 

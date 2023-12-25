@@ -1,6 +1,6 @@
 import { Box, Button, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
+import { useActionData, useFetcher, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 import AddForm from "../Forms/AddForm";
@@ -10,7 +10,7 @@ import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-mat
 const options = [
     'text',
     'image',
-    'video',
+    // 'video',
     'button',
     'footer',
     'header',
@@ -25,17 +25,28 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [component, setComponent] = useState(null);
     const [componentList, setComponentList] = useState([]);
     const [editedComponent, setEditedComponent] = useState(null);
+    const [emailHtml, setEmailHtml] = useState(null);
     // const [submission, setSubmission] = useState(null);
-    const submit = useSubmit();
+    const fetcher = useFetcher();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
     const { campaign } = useLoaderData();
 
     useEffect(() => {
-        if (actionData?.error) {
-            setError(actionData);
+
+        fetcher.submit({ components: componentList }, { method: 'post', encType: 'application/json' });
+    }, [componentList]);
+
+    useEffect(() => {
+        if (fetcher.data?.html) {
+            setEmailHtml(fetcher.data.html)
+        } else if (fetcher.data?.errors) {
+            console.log(fetcher.data?.errors);
+            setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
         }
-    }, [actionData, setError]);
+    }, [fetcher.data, setError]);
+
+
 
     function addComponentToList(comp) {
         setComponent(null);
@@ -87,7 +98,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         <Box m={4}>
             <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
             <Grid container>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={4}>
                     {componentList && <List dense={true}>
                         {componentList.map((componentItem, i, arr) => {
                             return <ListItem
@@ -95,7 +106,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                             // selected={selectedComponent === i}
                             // onClick={(e) => editComponent(e, i)}
                             >
-                                <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.version || componentItem.src} />
+                                <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.variant || componentItem.src} />
                                 <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
                                     <KeyboardArrowUp />
                                 </IconButton>
@@ -116,8 +127,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                         <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
                     </>}
                 </Grid>
-                <Grid item xs={12} md={6}>
-
+                <Grid item xs={12} md={8}>
+                    {emailHtml && <iframe title="emailHtml" srcDoc={emailHtml} style={{ height: '800px', width: '600px' }} />}
                 </Grid>
             </Grid>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

@@ -1,5 +1,6 @@
 const sectionFields = {
     id: 'mj-section',
+    variant: '',
     backgroundColor: '',
     backgroundUrl: '',
     border: '',
@@ -9,6 +10,7 @@ const sectionFields = {
 };
 
 const sectionFA = [
+    { label: 'Variant', id: 'variant', type: 'select', options: ['start', 'end', 'end-start'] },
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Background Url', id: 'backgroundUrl' },
     { label: 'Border', id: 'border' },
@@ -19,6 +21,7 @@ const sectionFA = [
 
 const columnFields = {
     id: 'mj-column',
+    variant: '',
     backgroundColor: '',
     backgroundUrl: '',
     border: '',
@@ -28,6 +31,7 @@ const columnFields = {
 }
 
 const columnFA = [
+    { label: 'Variant', id: 'variant', type: 'select', options: ['start', 'end', 'end-start'] },
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Background Url', id: 'backgroundUrl' },
     { label: 'Border', id: 'border' },
@@ -98,20 +102,20 @@ const buttonFA = [
 
 const headerFields = {
     id: 'custom-header',
-    version: 'regular'
+    variant: 'regular'
 };
 
 const headerFA = [
-    { label: 'Version', id: 'version', type: 'select', options: ['regular'] }
+    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] }
 ];
 
 const footerFields = {
     id: 'custom-footer',
-    version: 'regular'
+    variant: 'regular'
 };
 
 const footerFA = [
-    { label: 'Version', id: 'version', type: 'select', options: ['regular'] }
+    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] }
 ];
 
 const videoFields = {
