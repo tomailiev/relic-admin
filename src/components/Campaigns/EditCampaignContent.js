@@ -21,16 +21,18 @@ const options = [
 ];
 
 const EditCampaignContent = ({ itemType, fieldsArray, }) => {
+    const { campaign } = useLoaderData();
+
     const [activeStep, setActiveStep] = useState(0);
     const [component, setComponent] = useState(null);
-    const [componentList, setComponentList] = useState([]);
+    const [componentList, setComponentList] = useState(campaign?.components || []);
     const [editedComponent, setEditedComponent] = useState(null);
-    const [emailHtml, setEmailHtml] = useState(null);
+    const [emailHtml, setEmailHtml] = useState(campaign?.html || '');
     // const [submission, setSubmission] = useState(null);
     const fetcher = useFetcher();
+    const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-    const { campaign } = useLoaderData();
 
     useEffect(() => {
 
@@ -88,11 +90,10 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i, i + 2).reverse()).concat(prev.slice(i + 2)));
     }
 
-    // function finishSubmission() {
-    //     const formData = new FormData();
-    //     Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-    //     submit(formData, { method: 'POST', action: `/${itemType}/${campaign.id}/edit` })
-    // }
+    function finishSubmission() {
+        const formData = { ...campaign, components: componentList, html: emailHtml }
+        submit(formData, { method: 'POST', encType: 'application/json', })
+    }
 
     return (
         <Box m={4}>
@@ -103,8 +104,6 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                         {componentList.map((componentItem, i, arr) => {
                             return <ListItem
                                 key={`${componentItem.id}_${i}`}
-                            // selected={selectedComponent === i}
-                            // onClick={(e) => editComponent(e, i)}
                             >
                                 <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.variant || componentItem.src} />
                                 <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
@@ -142,8 +141,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
-                <Button variant="contained" onClick={() => null}>
-                    Preview
+                <Button variant="contained" onClick={finishSubmission}>
+                    Save
                 </Button>
             </Box>
         </Box>

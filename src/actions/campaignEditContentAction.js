@@ -10,10 +10,14 @@ import { schematify } from "../vars/schemaFunctions";
 export default async function campaignEditContentAction({ request, params }) {
     return request.json()
         .then(res => {
+            if (res.id) {
+                const { id: _, datetime: __, ...rest } = res;
+                return uploadDoc(rest, collections.campaigns, res.id, true);
+            }
             return getMjml({ components: res.components });
         })
         .then(doc => {
-            return doc.data;
+            return doc ? doc.data : redirect('/campaigns');
         })
     // try {
     //     const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);

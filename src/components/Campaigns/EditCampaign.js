@@ -32,9 +32,9 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
     }
 
     function finishSubmission() {
-        const formData = new FormData();
-        Object.entries(submission || campaign).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/${itemType}/${campaign.id}/edit` })
+        // const formData = new FormData();
+        // Object.entries(submission || campaign).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
+        submit(submission || campaign, { method: 'POST', action: `/${itemType}/${campaign.id}/edit`, encType: 'application/json' })
     }
 
     return (
