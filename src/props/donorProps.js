@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
+    { field: 'email', headerName: 'Email', flex: 1 },
     { field: 'location', headerName: 'Location', flex: 1.5 },
     {
         field: 'lastDonationDate',
@@ -90,7 +91,7 @@ const donorProps = {
     sorting: { field: 'lastDonationDate', sort: 'desc' },
     pageSize: 25,
     pageSizeOptions: [25, 50, 100],
-    formType: 'simple', 
+    formType: 'simple',
     fields: donorFields,
     nestedFields: donationFields,
     fieldsArray: donorFA,
