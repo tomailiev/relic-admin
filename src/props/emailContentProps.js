@@ -30,6 +30,21 @@ const columnFields = {
     textAlign: 'left'
 }
 
+const dividerFields = {
+    id: 'mj-divider',
+    align: 'center',
+    width: '100',
+    borderWidth: '2',
+    borderColor: '#000000'
+};
+
+const dividerFA = [
+    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Width', id: 'width', type: 'number' },
+    { label: 'Border width', id: 'borderWidth', type: 'number' },
+    { label: 'Border color', id: 'borderColor' },
+]
+
 const columnFA = [
     { label: 'Variant', id: 'variant', type: 'select', options: ['start', 'end', 'end-start'] },
     { label: 'Background color', id: 'backgroundColor' },
@@ -135,7 +150,8 @@ export const emailContentFields = {
     footer: footerFields,
     video: videoFields,
     section: sectionFields,
-    column: columnFields
+    column: columnFields,
+    divider: dividerFields
 };
 
 export const emailContentFieldArrays = {
@@ -146,5 +162,6 @@ export const emailContentFieldArrays = {
     footer: footerFA,
     video: videoFA,
     section: sectionFA,
-    column: columnFA
+    column: columnFA,
+    divider: dividerFA
 };

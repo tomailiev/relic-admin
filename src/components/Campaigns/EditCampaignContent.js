@@ -1,6 +1,6 @@
-import { Box, Button, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
+import { Box, Button, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useFetcher, useLoaderData, useSubmit } from "react-router-dom";
+import { useFetcher, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 import AddForm from "../Forms/AddForm";
@@ -15,8 +15,8 @@ const options = [
     'footer',
     'header',
     'section',
-    'column'
-    // 'divider',
+    'column',
+    'divider',
     // 'spacer'
 ];
 
@@ -32,12 +32,12 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const fetcher = useFetcher();
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
-    const actionData = useActionData();
+    const fSubmit = fetcher.submit;
 
     useEffect(() => {
-
-        fetcher.submit({ components: componentList }, { method: 'post', encType: 'application/json' });
-    }, [componentList]);
+        console.log('ww');
+        fSubmit({ components: componentList }, { method: 'post', encType: 'application/json' });
+    }, [componentList, fSubmit]);
 
     useEffect(() => {
         if (fetcher.data?.html) {

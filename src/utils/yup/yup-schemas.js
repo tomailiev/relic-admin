@@ -162,6 +162,12 @@ const emailComponentSchemas = {
         borderRadius: string(),
         padding: string(),
         textAlign: string()
+    }),
+    divider: object({
+        width: string(),
+        align: string().default('center'),
+        borderWidth: string(),
+        borderColor: string(),
     })
 };
 
