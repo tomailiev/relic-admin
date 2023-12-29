@@ -52,7 +52,7 @@ const textFields = {
 
 
 const textFA = [
-    { label: 'Text', id: 'text', },
+    { label: 'Text', id: 'text', multiline: true },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
     { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 600, 700] },
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },

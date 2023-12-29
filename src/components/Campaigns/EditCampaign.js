@@ -6,6 +6,8 @@ import ErrorContext from "../../context/ErrorContext";
 import AddDynamicForm from "../Forms/AddDynamicForm";
 import AddFileForm from "../Forms/AddFileForm";
 import ItemSwitch from "../Items/ItemSwitch";
+import AddForm from "../Forms/AddForm";
+import { campaignSchema } from "../../utils/yup/yup-schemas";
 
 
 const EditCampaign = ({ itemType, fieldsArray, }) => {
@@ -22,7 +24,9 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
         }
     }, [actionData, setError]);
 
-
+    function handleSubmision(item) {
+        setSubmission(item)
+    }
 
     function addTags(arr) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
@@ -39,7 +43,7 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <AddSimpleForm fields={submission || campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} />
+            <AddForm fields={!!submission ? submission : campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={handleSubmision} schema={campaignSchema} />
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"

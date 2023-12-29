@@ -9,9 +9,11 @@ import EditCampaignContent from "../../components/Campaigns/EditCampaignContent"
 import NewCampaign from "../../components/Campaigns/NewCampaign";
 import FetchError from "../../components/Common/FetchError";
 import AddItem from "../../components/Items/AddItem";
+import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
 import campaignAddLoader from "../../loaders/campaignAddLoader";
 import campaignEditLoader from "../../loaders/campaignEditLoader";
+import campaignItemLoader from "../../loaders/campaignItemLoader";
 import campaignLoader from "../../loaders/campaignLoader";
 import campaignProps from "../../props/campaignProps";
 
@@ -27,11 +29,11 @@ const campaignRouter = [
         action: campaignAddAction,
         loader: campaignAddLoader
     },
-    // {
-    //     path: 'CSVs/:CSVId',
-    //     element: <LoggedIn component={<ItemRoute {...CSVProps} />} />,
-    //     loader: csvItemLoader,
-    //   },
+    {
+        path: 'campaigns/:campaignId',
+        element: <LoggedIn component={<ItemRoute {...campaignProps} />} />,
+        loader: campaignItemLoader,
+      },
       {
         path: 'campaigns/:campaignId/delete',
         element: <LoggedIn component={<FetchError />} />,

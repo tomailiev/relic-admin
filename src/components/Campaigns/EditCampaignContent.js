@@ -98,14 +98,15 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     return (
         <Box m={4}>
             <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
-            <Grid container>
+            <Grid container mx={4}>
                 <Grid item xs={12} md={4}>
                     {componentList && <List dense={true}>
                         {componentList.map((componentItem, i, arr) => {
                             return <ListItem
                                 key={`${componentItem.id}_${i}`}
+                                sx={{borderRadius: '3px', border: '1px solid black'}}
                             >
-                                <ListItemText primary={componentItem.id} secondary={componentItem.text || componentItem.variant || componentItem.src} />
+                                <ListItemText primary={componentItem.id} secondary={<Typography variant="body2" overflow={'hidden'}>{componentItem.text || componentItem.variant || componentItem.src}</Typography>} />
                                 <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
                                     <KeyboardArrowUp />
                                 </IconButton>
