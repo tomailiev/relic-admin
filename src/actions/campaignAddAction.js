@@ -2,9 +2,6 @@ import { redirect } from "react-router-dom";
 import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
 import { campaignSchema } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
-import schematifyGrant from "../vars/schematifyGrant";
-import { schematify } from "../vars/schemaFunctions";
-
 
 
 export default async function campaignAddAction({ request, params }) {

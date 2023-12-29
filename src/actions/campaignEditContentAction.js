@@ -1,9 +1,6 @@
 import { redirect } from "react-router-dom";
-import { Timestamp, getMjml, uploadDoc } from "../utils/firebase/firebase-functions";
-import { campaignSchema } from "../utils/yup/yup-schemas";
+import { getMjml, uploadDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
-import schematifyGrant from "../vars/schematifyGrant";
-import { schematify } from "../vars/schemaFunctions";
 
 
 

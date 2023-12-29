@@ -1,5 +1,5 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
-import { Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
+import { Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, } from "@mui/material";
 
 const CampaignItem = ({ item }) => {
 

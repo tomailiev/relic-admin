@@ -2,8 +2,6 @@ import { redirect } from "react-router-dom";
 import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
 import { emailComponentSchemas } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
-import schematifyGrant from "../vars/schematifyGrant";
-import { schematify } from "../vars/schemaFunctions";
 
 
 

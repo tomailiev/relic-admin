@@ -1,11 +1,8 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import AddDynamicForm from "../Forms/AddDynamicForm";
-import AddFileForm from "../Forms/AddFileForm";
-import ItemSwitch from "../Items/ItemSwitch";
 
 
 const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
