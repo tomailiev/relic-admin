@@ -135,11 +135,13 @@ const footerFA = [
 
 const videoFields = {
     id: 'custom-video',
-    link: ''
+    videoId: '',
+    thumbnail: '',
 };
 
 const videoFA = [
-    { label: 'Link', id: 'link' }
+    { label: 'Video Id', id: 'videoId' },
+    { label: 'Thumbnail', id: 'thumbnail' }
 ];
 
 export const emailContentFields = {

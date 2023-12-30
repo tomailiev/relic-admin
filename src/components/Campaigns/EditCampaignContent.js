@@ -10,7 +10,7 @@ import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-mat
 const options = [
     'text',
     'image',
-    // 'video',
+    'video',
     'button',
     'footer',
     'header',
@@ -143,7 +143,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
                 <Button variant="contained" onClick={finishSubmission}>
-                    Save
+                    Save & Preview
                 </Button>
             </Box>
         </Box>

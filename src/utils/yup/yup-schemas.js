@@ -143,7 +143,8 @@ const emailComponentSchemas = {
         variant: string().default('regular')
     }),
     video: object({
-        link: string().url()
+        videoId: string().required(),
+        thumbnail: string().url().required()
     }),
     section: object({
         variant: string().required().oneOf(['start', 'end', 'end-start']),

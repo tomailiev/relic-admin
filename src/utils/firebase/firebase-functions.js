@@ -91,6 +91,8 @@ const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerific
 const verifyOrReset = httpsCallable(functions, 'verifyOrReset');
 const parseCSV = httpsCallable(functions, 'parseCSV');
 const getMjml = httpsCallable(functions, 'getMjml');
+const sendCampaign = httpsCallable(functions, 'sendCampaign');
+
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
@@ -112,5 +114,6 @@ export {
     checkEmailVerificationStatus,
     verifyOrReset,
     parseCSV,
-    getMjml
+    getMjml,
+    sendCampaign
 };
