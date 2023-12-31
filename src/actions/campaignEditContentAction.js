@@ -5,17 +5,14 @@ import collections from "../vars/collections";
 
 
 export default async function campaignEditContentAction({ request, params }) {
-    return request.json()
-        .then(res => {
-            if (res.id) {
-                const { id: _, datetime: __, ...rest } = res;
-                return uploadDoc(rest, collections.campaigns, res.id, true);
-            }
-            return getMjml({ components: res.components });
-        })
-        .then(doc => {
-            return doc ? doc.data : redirect('/campaigns');
-        })
+    const res = await request.json();
+    if (res.id) {
+        const { id: _, datetime: __, ...rest } = res;
+        await uploadDoc(rest, collections.campaigns, res.id, true);
+        return redirect(`/campaigns/${res.id}`)
+    }
+    const doc = await getMjml({ components: res.components });
+    return doc.data;
     // try {
     //     const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);
     //     console.log(upload.id);

@@ -1,23 +1,30 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
-import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, } from "@mui/material";
+import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, } from "@mui/material";
 import { useState } from "react";
 import SendDialog from "./SendDialog";
 import { useSubmit } from "react-router-dom";
+import TestDialog from "./TestDialog";
 
 const CampaignItem = ({ item }) => {
 
-    const [modalOpen, setModalOpen] = useState(false);
+    const [sendModalOpen, setSendModalOpen] = useState(false);
+    const [testModalOpen, setTestModalOpen] = useState(false);
+
     const submit = useSubmit();
 
-    const handleCampaignSend = () => {
-        submit({ campaignId: item.id }, { method: 'POST', encType: 'application/json' })
+    const handleCampaignSend = (testAddresses) => {
+        submit({ campaignId: item.id, testAddresses }, { method: 'POST', encType: 'application/json' })
     }
 
     return (
         <>
-            <SendDialog open={modalOpen} setOpen={setModalOpen} name={item.subject} handleSend={handleCampaignSend} />
+            <SendDialog open={sendModalOpen} setOpen={setSendModalOpen} name={item.subject} handleSend={handleCampaignSend} />
+            <TestDialog open={testModalOpen} setOpen={setTestModalOpen} handleSend={handleCampaignSend} />
             <Paper sx={{ mx: 8, my: 2, p: 5, }}>
-                <Button variant="contained" fullWidth onClick={() => setModalOpen(true)}>Send...</Button>
+                <Stack spacing={2}>
+                    <Button variant="contained" fullWidth onClick={() => setSendModalOpen(true)}>Send...</Button>
+                    <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
+                </Stack>
                 <Grid container spacing={2} my={3}>
                     <Grid item md={4} sm={4} xs={12}>
                         <Container disableGutters>

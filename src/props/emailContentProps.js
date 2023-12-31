@@ -69,7 +69,7 @@ const textFields = {
 const textFA = [
     { label: 'Text', id: 'text', multiline: true },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
-    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 600, 700] },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text color', id: 'color', },
     { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] }
@@ -109,7 +109,7 @@ const buttonFA = [
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Link', id: 'href' },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
-    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 600, 700] },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text Decoration', id: 'textDecoration', type: 'select', options: ['underline', 'overline', 'none'] },
     { label: 'Width', id: 'width', type: 'number' },
