@@ -126,11 +126,13 @@ const headerFA = [
 
 const footerFields = {
     id: 'custom-footer',
-    variant: 'regular'
+    variant: 'regular',
+    socialType: 'color'
 };
 
 const footerFA = [
-    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] }
+    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] },
+    { label: 'Social icons', id: 'socialType', type: 'select', options: ['color', 'bw'] },
 ];
 
 const videoFields = {

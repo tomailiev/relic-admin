@@ -10,5 +10,7 @@ export default async function campaignSendAction({ request, params }) {
             console.log(doc);
             return redirect('/campaigns');
         })
-        .catch(e => console.log(e))
+        .catch(e => {
+            return e;
+        })
 }

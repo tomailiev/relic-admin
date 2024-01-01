@@ -43,8 +43,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         if (fetcher.data?.html) {
             setEmailHtml(fetcher.data.html)
         } 
-        if (fetcher.data?.errors) {
-            console.log(fetcher.data?.errors);
+        if (fetcher.data?.errors.length) {
+            console.log(fetcher.data.errors.length);
             setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
         }
     }, [fetcher.data, setError]);

@@ -21,10 +21,10 @@ const CampaignItem = ({ item }) => {
             <SendDialog open={sendModalOpen} setOpen={setSendModalOpen} name={item.subject} handleSend={handleCampaignSend} />
             <TestDialog open={testModalOpen} setOpen={setTestModalOpen} handleSend={handleCampaignSend} />
             <Paper sx={{ mx: 8, my: 2, p: 5, }}>
-                <Stack spacing={2}>
+                {item.status && <Stack spacing={2}>
                     <Button variant="contained" fullWidth onClick={() => setSendModalOpen(true)}>Send...</Button>
                     <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
-                </Stack>
+                </Stack>}
                 <Grid container spacing={2} my={3}>
                     <Grid item md={4} sm={4} xs={12}>
                         <Container disableGutters>
