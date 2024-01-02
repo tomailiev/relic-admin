@@ -44,7 +44,7 @@ const SendDialog = ({ open, setOpen, name, handleSend }) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Cancel</Button>
-                <Button disabled={textValue !== name} onClick={handleSend} autoFocus>
+                <Button disabled={textValue !== name} onClick={() => handleSend()} autoFocus>
                     Send
                 </Button>
             </DialogActions>
