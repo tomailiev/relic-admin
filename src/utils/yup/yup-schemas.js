@@ -141,7 +141,7 @@ const emailComponentSchemas = {
     }),
     footer: object({
         variant: string().default('regular'),
-        socialType: string().oneOf('color', 'bw')
+        socialType: string().oneOf(['color', 'bw'])
     }),
     video: object({
         videoId: string().required(),
