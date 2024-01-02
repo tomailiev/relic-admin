@@ -13,7 +13,7 @@ const CampaignItem = ({ item }) => {
     const submit = useSubmit();
 
     const handleCampaignSend = (testAddresses) => {
-        submit({ campaignId: item.id, testAddresses }, { method: 'POST', encType: 'application/json' })
+        submit(testAddresses ? { campaignId: item.id, testAddresses } : { campaignId: item.id }, { method: 'POST', encType: 'application/json' })
     }
 
     return (
