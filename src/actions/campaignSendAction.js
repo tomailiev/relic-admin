@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import { sendCampaign } from "../utils/firebase/firebase-functions";
 
 export default async function campaignSendAction({ request, params }) {
@@ -8,9 +7,9 @@ export default async function campaignSendAction({ request, params }) {
         })
         .then(doc => {
             console.log(doc);
-            return redirect('/campaigns');
+            return { severity: 'success', 'message': 'Campaign sent successfully.' };
         })
         .catch(e => {
-            return e;
+            return { severity: 'error', message: e };
         })
 }

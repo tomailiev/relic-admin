@@ -16,7 +16,7 @@ const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBo
                 </Typography>
                 <NavLink to={`/${itemType}/add`} >
                     <Button variant="contained" endIcon={<AddIcon />}>
-                        Add
+                        New...
                     </Button>
                 </NavLink>
             </Container>

@@ -1,17 +1,30 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
 import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
-import { useSubmit } from "react-router-dom";
+import { useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
+import ErrorContext from "../../context/ErrorContext";
 
 const CampaignItem = ({ item }) => {
 
+    const { setError } = useContext(ErrorContext);
     const [sendModalOpen, setSendModalOpen] = useState(false);
     const [testModalOpen, setTestModalOpen] = useState(false);
     const [query, setQuery] = useState('desktop');
-
+    const actionData = useActionData();
     const submit = useSubmit();
+
+    useEffect(() => {
+        if (actionData) {
+            console.log(actionData);
+            setError(actionData);
+            if (actionData.severity === 'success') {
+                setSendModalOpen(false);
+                setTestModalOpen(false);
+            }
+        }
+    }, [actionData, setError]);
 
     const handleCampaignSend = (testAddresses) => {
         console.log('sending');
@@ -105,7 +118,7 @@ const CampaignItem = ({ item }) => {
                         </Container>
                     </Grid>
                     <Grid item md={12} lg={8}>
-                        <Container disableGutters sx={{width: '100%', textAlign: 'center', pb: 2}}>
+                        <Container disableGutters sx={{ width: '100%', textAlign: 'center', pb: 2 }}>
                             <ToggleButtonGroup
                                 value={query}
                                 exclusive
@@ -120,7 +133,7 @@ const CampaignItem = ({ item }) => {
                                 </ToggleButton>
                             </ToggleButtonGroup>
                         </Container>
-                        <Container disableGutters sx={{textAlign: 'center'}}>
+                        <Container disableGutters sx={{ textAlign: 'center' }}>
                             <iframe title="emailHtml" srcDoc={item.html} style={{ height: '800px', width: query === 'desktop' ? '800px' : '400px', maxWidth: '100%' }} />
                         </Container>
                     </Grid>

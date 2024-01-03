@@ -5,14 +5,20 @@ import collections from "../vars/collections";
 
 
 export default async function campaignEditContentAction({ request, params }) {
-    const res = await request.json();
-    if (res.id) {
-        const { id: _, datetime: __, ...rest } = res;
-        await uploadDoc(rest, collections.campaigns, res.id, true);
-        return redirect(`/campaigns/${res.id}`)
+    try {
+        const res = await request.json();
+        if (res.id) {
+            const { id: _, datetime: __, ...rest } = res;
+            await uploadDoc(rest, collections.campaigns, res.id, true);
+            return redirect(`/campaigns/${res.id}`)
+        }
+        const doc = await getMjml({ components: res.components });
+        return doc.data;
+    } catch (error) {
+        console.log('error:' + error);
+        const data = { errors: [{ message: error }] };
+        return { data };
     }
-    const doc = await getMjml({ components: res.components });
-    return doc.data;
     // try {
     //     const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);
     //     console.log(upload.id);
