@@ -42,7 +42,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     useEffect(() => {
         if (fetcher.data?.html) {
             setEmailHtml(fetcher.data.html)
-        } 
+        }
         if (fetcher.data?.errors.length) {
             console.log(fetcher.data.errors.length);
             setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
@@ -99,13 +99,17 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     return (
         <Box m={4}>
             <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
-            <Grid container mx={4}>
-                <Grid item xs={12} md={4}>
+            <Grid container spacing={2}>
+                <Grid item md={12} lg={4}>
+                    {component && <>
+                        <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
+                        <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
+                    </>}
                     {componentList && <List dense={true}>
                         {componentList.map((componentItem, i, arr) => {
                             return <ListItem
                                 key={`${componentItem.id}_${i}`}
-                                sx={{borderRadius: '3px', border: '1px solid black'}}
+                                sx={{ borderRadius: '3px', border: '1px solid black' }}
                             >
                                 <ListItemText primary={componentItem.id} secondary={<Typography variant="body2" overflow={'hidden'}>{componentItem.text || componentItem.variant || componentItem.src}</Typography>} />
                                 <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
@@ -123,13 +127,9 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                             </ListItem>
                         })}
                     </List>}
-                    {component && <>
-                        <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
-                        <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
-                    </>}
                 </Grid>
-                <Grid item xs={12} md={8}>
-                    {emailHtml && <iframe title="emailHtml" srcDoc={emailHtml} style={{ height: '800px', width: '600px' }} />}
+                <Grid item md={12} lg={8}>
+                    {emailHtml && <iframe title="emailHtml" srcDoc={emailHtml} style={{ height: '800px', width: '800px', maxWidth: '100%' }} />}
                 </Grid>
             </Grid>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
