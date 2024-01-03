@@ -8,6 +8,9 @@ import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yu
 import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
+    'title',
+    'preview',
+    'font',
     'text',
     'image',
     'video',

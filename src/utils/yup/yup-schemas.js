@@ -117,7 +117,8 @@ const emailComponentSchemas = {
         fontWeight: number().default(300),
         fontStyle: string().default('normal'),
         color: string(),
-        align: string().default('left')
+        align: string().default('left'),
+        fontFamily: string(),
     }),
     image: object({
         src: string().url().required(),
@@ -135,6 +136,7 @@ const emailComponentSchemas = {
         href: string().url(),
         textDecoration: string().default('none'),
         width: string(),
+        fontFamily: string()
     }),
     header: object({
         variant: string().default('regular')
@@ -170,7 +172,17 @@ const emailComponentSchemas = {
         align: string().default('center'),
         borderWidth: string(),
         borderColor: string(),
-    })
+    }),
+    preview: object({
+        text: string().required()
+    }),
+    title: object({
+        text: string().required()
+    }),
+    font: object({
+        href: string().url().required(),
+        name: string().required()
+    }),
 };
 
 const selectComponentSchema = object({

@@ -62,7 +62,8 @@ const textFields = {
     fontWeight: 300,
     fontStyle: 'normal',
     color: '#000000',
-    align: 'left'
+    align: 'left',
+    fontFamily: ''
 };
 
 
@@ -72,7 +73,8 @@ const textFA = [
     { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text color', id: 'color', },
-    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] }
+    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Font family', id: 'fontFamily' }
 ];
 
 const imageFields = {
@@ -100,7 +102,8 @@ const buttonFields = {
     fontWeight: 300,
     fontStyle: 'normal',
     textDecoration: 'none',
-    width: ''
+    width: '',
+    fontFamily: '',
 };
 
 const buttonFA = [
@@ -113,6 +116,7 @@ const buttonFA = [
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text Decoration', id: 'textDecoration', type: 'select', options: ['underline', 'overline', 'none'] },
     { label: 'Width', id: 'width', type: 'number' },
+    { label: 'Font family', id: 'fontFamily' }
 ];
 
 const headerFields = {
@@ -146,6 +150,35 @@ const videoFA = [
     { label: 'Thumbnail', id: 'thumbnail' }
 ];
 
+const previewFields = {
+    id: 'mj-preview',
+    text: ''
+};
+
+const previewFA = [
+    { label: 'Text', id: 'text', }
+];
+
+const titleFields = {
+    id: 'mj-title',
+    text: ''
+};
+
+const titleFA = [
+    { label: 'Text', id: 'text', }
+];
+
+const fontFields = {
+    id: 'mj-font',
+    href: '',
+    name: ''
+};
+
+const fontFA = [
+    { label: 'Link', id: 'href', },
+    { label: 'Name', id: 'name' },
+];
+
 export const emailContentFields = {
     text: textFields,
     image: imageFields,
@@ -155,7 +188,10 @@ export const emailContentFields = {
     video: videoFields,
     section: sectionFields,
     column: columnFields,
-    divider: dividerFields
+    divider: dividerFields,
+    preview: previewFields,
+    title: titleFields,
+    font: fontFields
 };
 
 export const emailContentFieldArrays = {
@@ -167,5 +203,8 @@ export const emailContentFieldArrays = {
     video: videoFA,
     section: sectionFA,
     column: columnFA,
-    divider: dividerFA
+    divider: dividerFA,
+    preview: previewFA,
+    title: titleFA,
+    font: fontFA
 };
