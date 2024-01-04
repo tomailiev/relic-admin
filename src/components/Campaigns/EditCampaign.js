@@ -1,4 +1,4 @@
-import { Box, Button, } from "@mui/material"
+import { Box, Button, Typography, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
@@ -39,7 +39,11 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <AddForm fields={!!submission ? submission : campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={handleSubmision} schema={campaignSchema} />
+            {
+                campaign.status
+                    ? <AddForm fields={!!submission ? submission : campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={handleSubmision} schema={campaignSchema} />
+                    : <Box height={'400px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
+            }
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
@@ -51,7 +55,7 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
-                <Button variant="contained" onClick={finishSubmission}>
+                <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status}>
                     Edit content
                 </Button>
             </Box>

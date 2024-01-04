@@ -101,7 +101,11 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     return (
         <Box m={4}>
-            <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
+            {
+                campaign.status
+                    ? <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
+                    : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
+            }
             <Grid container spacing={2}>
                 <Grid item md={12} lg={4}>
                     {component && <>
@@ -146,7 +150,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
-                <Button variant="contained" onClick={finishSubmission}>
+                <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status}>
                     Save & Preview
                 </Button>
             </Box>

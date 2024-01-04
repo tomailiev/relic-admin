@@ -8,7 +8,7 @@ import SubscriberItem from "../Subscribers/SubscriberItem";
 import TextItem from "../Texts/TextItem";
 import VideoItem from "../Videos/VideoItem";
 
-const ItemSwitch = ({ item, itemType, mutateItem }) => {
+const ItemSwitch = ({ item, itemType, mutateItem, setEditable }) => {
     const itemComponents = {
         musicians: <MusicianItem item={item} />,
         events: <EventItem item={item} />,
@@ -18,7 +18,7 @@ const ItemSwitch = ({ item, itemType, mutateItem }) => {
         donors: <DonorItem item={item} />,
         CSVs: <CSVItem item={item} mutateItem={mutateItem} />,
         subscribers: <SubscriberItem item={item} />,
-        campaigns: <CampaignItem item={item} />
+        campaigns: <CampaignItem item={item} setEditable={setEditable} />
     }
     return itemComponents[itemType];
 };

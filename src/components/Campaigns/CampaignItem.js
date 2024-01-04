@@ -6,7 +6,7 @@ import { useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
 
-const CampaignItem = ({ item }) => {
+const CampaignItem = ({ item, setEditable }) => {
 
     const { setError } = useContext(ErrorContext);
     const [sendModalOpen, setSendModalOpen] = useState(false);
@@ -14,6 +14,10 @@ const CampaignItem = ({ item }) => {
     const [query, setQuery] = useState('desktop');
     const actionData = useActionData();
     const submit = useSubmit();
+
+    useEffect(() => {
+        if (!item.status) setEditable(false);
+    }, [item.status, setEditable]);
 
     useEffect(() => {
         if (actionData) {
