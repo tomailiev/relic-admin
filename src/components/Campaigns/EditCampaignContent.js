@@ -31,6 +31,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const [componentList, setComponentList] = useState(campaign?.components || []);
     const [editedComponent, setEditedComponent] = useState(null);
     const [emailHtml, setEmailHtml] = useState(campaign?.html || '');
+    const [emailMjml, setEmailMjml] = useState(campaign?.mjml || '');
+
     // const [submission, setSubmission] = useState(null);
     const fetcher = useFetcher();
     const submit = useSubmit();
@@ -44,7 +46,8 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
 
     useEffect(() => {
         if (fetcher.data?.html) {
-            setEmailHtml(fetcher.data.html)
+            setEmailHtml(fetcher.data.html);
+            setEmailMjml(fetcher.data.mjml);
         }
         if (fetcher.data?.errors.length) {
             console.log(fetcher.data.errors.length);
@@ -95,7 +98,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     }
 
     function finishSubmission() {
-        const formData = { ...campaign, components: componentList, html: emailHtml }
+        const formData = { ...campaign, components: componentList, html: emailHtml, mjml: emailMjml }
         submit(formData, { method: 'POST', encType: 'application/json', })
     }
 
