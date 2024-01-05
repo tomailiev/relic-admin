@@ -136,7 +136,9 @@ const emailComponentSchemas = {
         href: string().url(),
         textDecoration: string().default('none'),
         width: string(),
-        fontFamily: string()
+        fontFamily: string(),
+        border: string(),
+        borderRadius: string(),
     }),
     header: object({
         variant: string().default('regular')

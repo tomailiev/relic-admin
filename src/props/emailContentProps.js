@@ -104,6 +104,8 @@ const buttonFields = {
     textDecoration: 'none',
     width: '',
     fontFamily: '',
+    border: '',
+    borderRadius: '',
 };
 
 const buttonFA = [
@@ -116,7 +118,9 @@ const buttonFA = [
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text Decoration', id: 'textDecoration', type: 'select', options: ['underline', 'overline', 'none'] },
     { label: 'Width', id: 'width', type: 'number' },
-    { label: 'Font family', id: 'fontFamily' }
+    { label: 'Font family', id: 'fontFamily' },
+    { label: 'Border', id: 'border' },
+    { label: 'Border radius', id: 'borderRadius', type: 'number' },
 ];
 
 const headerFields = {
