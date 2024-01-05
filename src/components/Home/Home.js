@@ -68,7 +68,7 @@ const Home = () => {
     return (
         <ErrorContext.Provider value={{ error, setError }}>
             <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}
                 open={navigation.state === 'submitting'}
             >
                 <CircularProgress color="inherit" />

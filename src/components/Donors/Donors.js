@@ -28,7 +28,7 @@ const Donors = () => {
                 </NavLink>
             </Container>
             <Container maxWidth="lg" sx={{ my: 3 }}>
-                <Box sx={{ display: 'flex', flexDirection: 'row', py: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pb: 1 }}>
                     <Button
                         color="inherit"
                         disabled={!mapView}

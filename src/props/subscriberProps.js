@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import schematifySubscriber from "../vars/schematifySubscriber";
 import deschematifySubscriber from "../vars/deschematifySubscriber";
+import SubscriberActionBox from "../components/Emails/SubscriberActionBox";
 
 const subscriberColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
@@ -70,6 +71,7 @@ const tagsFA = [
 const subscriberProps = {
     itemType: 'subscribers',
     name: 'email',
+    actionBox: <SubscriberActionBox />,
     columns: subscriberColumns,
     sorting: { field: 'email', sort: 'asc' },
     pageSize: 50,

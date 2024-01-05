@@ -8,6 +8,7 @@ const ItemRoute = ({ name, itemType }) => {
 
 
     const [modalOpen, setModalOpen] = useState(false);
+    const [isEditable, setIsEditable] = useState(true);
     const item = useLoaderData();
     const submit = useSubmit();
 
@@ -18,7 +19,7 @@ const ItemRoute = ({ name, itemType }) => {
     return (
         <>
             <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={item[name]} handleDelete={handleDelete} />
-            <ItemSwitch itemType={itemType} item={item} />
+            <ItemSwitch itemType={itemType} item={item} setEditable={setIsEditable} />
             <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                 <Button
                     color="inherit"
@@ -29,11 +30,11 @@ const ItemRoute = ({ name, itemType }) => {
                     Delete
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <NavLink to={'edit'}>
+                {isEditable && <NavLink to={'edit'}>
                     <Button variant="contained">
                         Edit
                     </Button>
-                </NavLink>
+                </NavLink>}
             </Box>
         </>
     );

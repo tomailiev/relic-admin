@@ -19,6 +19,7 @@ import grantRouter from './grantRouter';
 import LoggedOut from '../../components/AuthGuard/LoggedOut';
 import csvRouter from './csvRouter';
 import subscriberRouter from './subscriberRouter';
+import campaignRouter from './campaignRouter';
 
 const router = createBrowserRouter([
   {
@@ -62,7 +63,8 @@ const router = createBrowserRouter([
       ...donorRouter,
       ...grantRouter,
       ...csvRouter,
-      ...subscriberRouter
+      ...subscriberRouter,
+      ...campaignRouter
     ]
   },
 ]);

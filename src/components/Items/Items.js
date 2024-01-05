@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
 
 
-const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions }) => {
+const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBox }) => {
 
     const items = useLoaderData();
 
@@ -16,11 +16,12 @@ const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions }) => {
                 </Typography>
                 <NavLink to={`/${itemType}/add`} >
                     <Button variant="contained" endIcon={<AddIcon />}>
-                        Add
+                        New...
                     </Button>
                 </NavLink>
             </Container>
             <Container maxWidth="lg" sx={{ my: 3 }}>
+                {actionBox && actionBox}
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid

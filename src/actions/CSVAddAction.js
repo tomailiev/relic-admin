@@ -33,7 +33,7 @@ export default async function CSVAddAction({ request, params }) {
                 return uploadDoc({...doc, tags: doc.tags.replaceAll('"', '').split(','), status: Number(doc.status)}, collections.subscribers, doc.id)
             });
             await Promise.all(uploadQueue);
-            return redirect('/CSVs')
+            return redirect('/subscribers')
         } catch (e) {
             return Object.assign(e, { error: true, severity: 'error' });
         }

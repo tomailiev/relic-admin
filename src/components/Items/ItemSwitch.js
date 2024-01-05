@@ -1,3 +1,4 @@
+import CampaignItem from "../Campaigns/CampaignItem";
 import DonorItem from "../Donors/DonorItem";
 import CSVItem from "../Emails/CSVItem";
 import EventItem from "../Events/EventItem";
@@ -7,7 +8,7 @@ import SubscriberItem from "../Subscribers/SubscriberItem";
 import TextItem from "../Texts/TextItem";
 import VideoItem from "../Videos/VideoItem";
 
-const ItemSwitch = ({ item, itemType, mutateItem }) => {
+const ItemSwitch = ({ item, itemType, mutateItem, setEditable }) => {
     const itemComponents = {
         musicians: <MusicianItem item={item} />,
         events: <EventItem item={item} />,
@@ -16,7 +17,8 @@ const ItemSwitch = ({ item, itemType, mutateItem }) => {
         grants: <GrantItem item={item} />,
         donors: <DonorItem item={item} />,
         CSVs: <CSVItem item={item} mutateItem={mutateItem} />,
-        subscribers: <SubscriberItem item={item} />
+        subscribers: <SubscriberItem item={item} />,
+        campaigns: <CampaignItem item={item} setEditable={setEditable} />
     }
     return itemComponents[itemType];
 };
