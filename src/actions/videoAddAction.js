@@ -29,7 +29,7 @@ export default async function videoAddAction({ request, params }) {
         }
     }
     try {
-        const upload = await uploadDoc(updates, collections.videos);
+        const upload = await uploadDoc(Object.assign(updates, { featured: Number(updates.featured) }), collections.videos);
         console.log(upload);
         return redirect('/videos');
     } catch (e) {
