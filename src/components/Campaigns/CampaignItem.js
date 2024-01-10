@@ -50,44 +50,47 @@ const CampaignItem = ({ item, setEditable }) => {
                         <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
                     </Stack>
                     : (
-                        <Grid container spacing={2} textAlign={'center'} p={2}>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Delivered</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
-                                </Paper>
+                        <>
+                            <Button variant="contained" fullWidth onClick={() => setSendModalOpen(true)}>Resend...</Button>
+                            <Grid container spacing={2} textAlign={'center'} p={2}>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Delivered</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Opened</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Clicked</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Rejected</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Bounced</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={2}>
+                                    <Paper>
+                                        <Typography variant="h6">Unsubscribed</Typography>
+                                        <Button variant="text"><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
+                                    </Paper>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Opened</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Clicked</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Rejected</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Bounced</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
-                                </Paper>
-                            </Grid>
-                            <Grid item xs={12} md={6} lg={2}>
-                                <Paper>
-                                    <Typography variant="h6">Unsubscribed</Typography>
-                                    <Button variant="text"><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
-                                </Paper>
-                            </Grid>
-                        </Grid>
+                        </>
                     )
                 }
                 <Grid container spacing={2} my={3}>
