@@ -5,12 +5,16 @@ import SendDialog from "./SendDialog";
 import { useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
+import StatsDialog from "./StatsDialog";
 
 const CampaignItem = ({ item, setEditable }) => {
 
     const { setError } = useContext(ErrorContext);
     const [sendModalOpen, setSendModalOpen] = useState(false);
     const [testModalOpen, setTestModalOpen] = useState(false);
+    const [statsModalOpen, setStatsModalOpen] = useState(false);
+    const [statsList, setStatsList] = useState([]);
+    const [statsName, setStatsName] = useState('');
     const [query, setQuery] = useState('desktop');
     const actionData = useActionData();
     const submit = useSubmit();
@@ -39,10 +43,17 @@ const CampaignItem = ({ item, setEditable }) => {
         setQuery(newQuery);
     }
 
+    const handleStatsDialogOpen = (name, list) => {
+        setStatsList(list);
+        setStatsName(name);
+        setStatsModalOpen(true);
+    }
+
     return (
         <>
             <SendDialog open={sendModalOpen} setOpen={setSendModalOpen} name={item.subject} handleSend={handleCampaignSend} />
             <TestDialog open={testModalOpen} setOpen={setTestModalOpen} handleSend={handleCampaignSend} />
+            <StatsDialog open={statsModalOpen} setOpen={setStatsModalOpen} name={statsName} list={statsList} />
             <Paper sx={{ mx: 8, my: 2, p: 5, }}>
                 {item.status
                     ? <Stack spacing={2}>
@@ -50,47 +61,44 @@ const CampaignItem = ({ item, setEditable }) => {
                         <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
                     </Stack>
                     : (
-                        <>
-                            <Button variant="contained" fullWidth onClick={() => setSendModalOpen(true)}>Resend...</Button>
                             <Grid container spacing={2} textAlign={'center'} p={2}>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Delivered</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Opened</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Clicked</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Rejected</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Bounced</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={2}>
                                     <Paper>
                                         <Typography variant="h6">Unsubscribed</Typography>
-                                        <Button variant="text"><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
                                     </Paper>
                                 </Grid>
                             </Grid>
-                        </>
                     )
                 }
                 <Grid container spacing={2} my={3}>
