@@ -26,6 +26,12 @@ const donorColumns = [
         sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },
     {
+        field: 'lastRecognitionName',
+        headerName: 'Recognition',
+        valueGetter: ({ row }) => `${row.donations[row.donations.length - 1].recognitionName}`,
+        flex: 2
+    },
+    {
         field: 'type',
         headerName: 'Type',
         valueGetter: ({ row }) => {
