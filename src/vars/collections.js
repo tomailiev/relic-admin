@@ -10,7 +10,7 @@ const collections = {
     subscribers: process.env.NODE_ENV === 'development' ? 'mock-subscribers' : 'subscribers',
     images: process.env.NODE_ENV === 'development' ? 'mock-images' : 'images',
     campaigns: 'campaigns',
-    tags: 'tags'
+    tags: process.env.NODE_ENV === 'development' ? 'mock-tags' : 'tags',
 };
 
 export default collections;

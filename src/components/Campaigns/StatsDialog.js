@@ -21,12 +21,18 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                {list.map((item, i) => {
-                    return <DialogContentText key={i} id="alert-dialog-description">
-                        {name === 'click' ? `${item.email}: ${item.link}` : item}
-                    </DialogContentText>
-
-                })}
+                {name === 'click'
+                    ? list.map((item, i) => {
+                        return <DialogContentText key={i} id="alert-dialog-description">
+                            {`${item.email}: ${item.link}`}
+                        </DialogContentText>
+                    })
+                    : list.map(item => item.email).filter((val, i, arr) => arr.indexOf(val) === i).map((item, i) => {
+                        return <DialogContentText key={i} id="alert-dialog-description">
+                            {item}
+                        </DialogContentText>
+                    })
+                }
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Close</Button>

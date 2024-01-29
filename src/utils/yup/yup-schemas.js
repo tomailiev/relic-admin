@@ -152,7 +152,6 @@ const emailComponentSchemas = {
         thumbnail: string().url().required()
     }),
     section: object({
-        variant: string().required().oneOf(['start', 'end', 'end-start']),
         backgroundColor: string(),
         backgroundUrl: string().url(),
         border: string(),
@@ -161,7 +160,6 @@ const emailComponentSchemas = {
         textAlign: string()
     }),
     column: object({
-        variant: string().required().oneOf(['start', 'end', 'end-start']),
         backgroundColor: string(),
         backgroundUrl: string().url(),
         border: string(),
