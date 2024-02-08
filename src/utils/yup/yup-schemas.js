@@ -119,6 +119,8 @@ const emailComponentSchemas = {
         color: string(),
         align: string().default('left'),
         fontFamily: string(),
+        lineHeight: string(),
+        letterSpacing: string()
     }),
     image: object({
         src: string().url().required(),
@@ -182,6 +184,21 @@ const emailComponentSchemas = {
     font: object({
         href: string().url().required(),
         name: string().required()
+    }),
+    event: object({
+        title: string().required(),
+        href: string().url().required(),
+        venue: string().required(),
+        location: string().required(),
+        dateTime: string().required(),
+        fontSize: number().default(16),
+        fontWeight: number().default(300),
+        fontStyle: string().default('normal'),
+        color: string(),
+        align: string().default('left'),
+        fontFamily: string(),
+        lineHeight: string(),
+        letterSpacing: string()
     }),
 };
 

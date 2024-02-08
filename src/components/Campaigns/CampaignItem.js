@@ -115,7 +115,7 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <ListItemIcon>
                                         <ShortText />
                                     </ListItemIcon>
-                                    <ListItemText primary={item.previewText} />
+                                    <ListItemText primary={item.components?.find(val => val.id ==='mj-preview')?.text} />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>

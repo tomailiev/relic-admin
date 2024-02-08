@@ -30,7 +30,7 @@ export default async function CSVAddAction({ request, params }) {
             console.log(updates.newSubs);
             const { newSubs } = schematify(updates, 'newSubs')
             const uploadQueue = newSubs.map(doc => {
-                return uploadDoc({...doc, tags: doc.tags.replaceAll('"', '').split(','), status: Number(doc.status)}, collections.subscribers, doc.id)
+                return uploadDoc({...doc, tags: doc.tags.replaceAll('"', '').split(','), status: Number(doc.status), id: doc.email.toLowerCase(), email: doc.email.toLowerCase()}, collections.subscribers, doc.email.toLowerCase(), true)
             });
             await Promise.all(uploadQueue);
             return redirect('/subscribers')

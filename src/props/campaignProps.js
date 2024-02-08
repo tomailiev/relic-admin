@@ -39,7 +39,6 @@ const campaignColumns = [
 
 const campaignFields = {
     subject: '',
-    previewText: '',
     to: '',
     from: '',
 };
@@ -47,7 +46,6 @@ const campaignFields = {
 
 const campaignsFA = [
     { label: 'Subject', id: 'subject', },
-    { label: 'Preview text', id: 'previewText', },
     { label: 'To', id: 'to', type: 'select', options: ['All subscribers'] },
     { label: 'From', id: 'from', type: 'select', options: ['info@relicensemble.org', 'relic@relicensemble.org'] },
 ];

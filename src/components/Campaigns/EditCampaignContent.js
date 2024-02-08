@@ -8,18 +8,19 @@ import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yu
 import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
-    'title',
-    'preview',
-    'font',
-    'text',
-    'image',
-    'video',
     'button',
-    'footer',
-    'header',
-    'section',
     'column',
     'divider',
+    'event',
+    'font',
+    'footer',
+    'header',
+    'image',
+    'preview',
+    'section',
+    'text',
+    'title',
+    'video',
     // 'spacer'
 ];
 
@@ -40,7 +41,6 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
     const fSubmit = fetcher.submit;
 
     useEffect(() => {
-        console.log('ww');
         fSubmit({ components: componentList }, { method: 'post', encType: 'application/json' });
     }, [componentList, fSubmit]);
 

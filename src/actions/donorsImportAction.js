@@ -3,6 +3,7 @@ import { redirect } from "react-router-dom";
 import { uploadDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 import { schematify } from "../vars/schemaFunctions";
+import { arrayUnion } from "firebase/firestore";
 
 export default async function donorsImportAction({ request, params }) {
     const doc = await request.formData();
@@ -19,11 +20,11 @@ export default async function donorsImportAction({ request, params }) {
                     lastName: item.lastName,
                     import: 'donorlist',
                     id: item.email.toLowerCase(),
-                    tags: ['Donor'],
+                    tags: arrayUnion('donor'),
                     opt_in_time: new Date().toISOString(),
                     location: item.location,
                     status: 1
-                }, collections.subscribers, item.email.toLowerCase())
+                }, collections.subscribers, item.email.toLowerCase(), true)
             });
             await Promise.all(uploadQueue);
             return redirect('/subscribers')

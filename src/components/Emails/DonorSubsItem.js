@@ -8,21 +8,20 @@ import { deschematify } from "../../vars/schemaFunctions";
 const DonorSubsItem = ({ mutateItem }) => {
 
     // const fetcher = useFetcher();
-    const [donors, subscribers] = useLoaderData();
+    const [donors] = useLoaderData();
     const [subs, setSubs] = useState([]);
     // const location = useLocation();
 
     useEffect(() => {
         if (donors) {
-            const subscriberEmails = subscribers.map(item => item.email);
             setSubs(donors.filter(({ email }) => {
-                return !!email && !(subscriberEmails.includes(email.toLowerCase()))
+                return !!email
             }));
         }
-    }, [donors, subscribers]);
+    }, [donors]);
 
     function filterer(model) {
-        
+
         const newSubs = (subs.filter(({ id }) => model.includes(id)));
         console.log(newSubs);
 

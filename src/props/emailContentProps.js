@@ -59,7 +59,9 @@ const textFields = {
     fontStyle: 'normal',
     color: '#000000',
     align: 'left',
-    fontFamily: ''
+    fontFamily: '',
+    letterSpacing: '',
+    lineHeight: '1.2'
 };
 
 
@@ -70,7 +72,43 @@ const textFA = [
     { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
     { label: 'Text color', id: 'color', },
     { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
-    { label: 'Font family', id: 'fontFamily' }
+    { label: 'Font family', id: 'fontFamily' },
+    { label: 'Letter spacing', id: 'letterSpacing', type: 'number' },
+    { label: 'Line height', id: 'lineHeight' }
+];
+
+const customTextFields = {
+    id: 'custom-event',
+    title: '',
+    dateTime: '',
+    venue: '',
+    location: '',
+    href: '',
+    fontSize: 16,
+    fontWeight: 300,
+    fontStyle: 'normal',
+    color: '#000000',
+    align: 'left',
+    fontFamily: '',
+    letterSpacing: '',
+    lineHeight: '1.2'
+};
+
+
+const customTextFA = [
+    { label: 'Title', id: 'title', },
+    { label: 'Date & time', id: 'dateTime' },
+    { label: 'Venue', id: 'venue' },
+    { label: 'Location', id: 'location' },
+    { label: 'Link', id: 'href' },
+    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
+    { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
+    { label: 'Text color', id: 'color', },
+    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Font family', id: 'fontFamily' },
+    { label: 'Letter spacing', id: 'letterSpacing', type: 'number' },
+    { label: 'Line height', id: 'lineHeight' }
 ];
 
 const imageFields = {
@@ -180,31 +218,33 @@ const fontFA = [
 ];
 
 export const emailContentFields = {
-    text: textFields,
-    image: imageFields,
     button: buttonFields,
-    header: headerFields,
-    footer: footerFields,
-    video: videoFields,
-    section: sectionFields,
     column: columnFields,
     divider: dividerFields,
+    event: customTextFields,
+    font: fontFields,
+    footer: footerFields,
+    header: headerFields,
+    image: imageFields,
     preview: previewFields,
+    section: sectionFields,
+    text: textFields,
     title: titleFields,
-    font: fontFields
+    video: videoFields,
 };
 
 export const emailContentFieldArrays = {
-    text: textFA,
-    image: imageFA,
     button: buttonFA,
-    header: headerFA,
-    footer: footerFA,
-    video: videoFA,
-    section: sectionFA,
     column: columnFA,
     divider: dividerFA,
+    event: customTextFA,
+    font: fontFA,
+    footer: footerFA,
+    header: headerFA,
+    image: imageFA,
     preview: previewFA,
+    section: sectionFA,
+    text: textFA,
     title: titleFA,
-    font: fontFA
+    video: videoFA,
 };
