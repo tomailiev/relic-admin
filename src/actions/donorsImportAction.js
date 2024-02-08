@@ -18,7 +18,7 @@ export default async function donorsImportAction({ request, params }) {
                     email: item.email.toLowerCase(),
                     firstName: item.firstName,
                     lastName: item.lastName,
-                    import: 'donorlist',
+                    imported: 'donorlist',
                     id: item.email.toLowerCase(),
                     tags: arrayUnion('donor'),
                     opt_in_time: new Date().toISOString(),

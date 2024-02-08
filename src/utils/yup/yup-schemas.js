@@ -96,7 +96,7 @@ const subscriberSchema = object({
     email: string().required().email(),
     firstName: string().required(),
     lastName: string().required(),
-    import: string(),
+    imported: string(),
     // tags: array().of(),
     opt_in_time: string(),
     location: string(),

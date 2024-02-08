@@ -31,7 +31,7 @@ export default async function subscriberAddAction({ request, params }) {
     try {
         const subAddition = {
             opt_in_time: new Date().toISOString(),
-            import: 'admin',
+            imported: 'admin',
             id: updates.email.toLowerCase()
         }
         const upload = await uploadDoc(Object.assign((schematifySubscriber(updates, 'tags')), subAddition), collections.subscribers, updates.email.toLowerCase(), true);
