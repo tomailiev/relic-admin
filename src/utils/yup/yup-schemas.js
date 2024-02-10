@@ -96,12 +96,114 @@ const subscriberSchema = object({
     email: string().required().email(),
     firstName: string().required(),
     lastName: string().required(),
-    import: string(),
+    imported: string(),
     // tags: array().of(),
-    opt_in_time: string(),
     location: string(),
     status: string().oneOf(["0", "1"]).required()
-})
+});
+
+const campaignSchema = object({
+    subject: string(),
+    previewText: string(),
+    to: string(),
+    from: string().email()
+});
+
+const emailComponentSchemas = {
+    text: object({
+        text: string().required(),
+        fontSize: number().default(16),
+        fontWeight: number().default(300),
+        fontStyle: string().default('normal'),
+        color: string(),
+        align: string().default('left'),
+        fontFamily: string(),
+        lineHeight: string(),
+        letterSpacing: string()
+    }),
+    image: object({
+        src: string().url().required(),
+        href: string().url(),
+        width: string(),
+        alt: string().required()
+    }),
+    button: object({
+        text: string().required(),
+        fontSize: number().default(16),
+        fontWeight: number().default(300),
+        fontStyle: string().default('normal'),
+        color: string().default('#ffffff'),
+        backgroundColor: string().default('#000000'),
+        href: string().url(),
+        textDecoration: string().default('none'),
+        width: string(),
+        fontFamily: string(),
+        border: string(),
+        borderRadius: string(),
+    }),
+    header: object({
+        variant: string().default('regular')
+    }),
+    footer: object({
+        variant: string().default('regular'),
+        socialType: string().oneOf(['color', 'bw'])
+    }),
+    video: object({
+        videoId: string().required(),
+        thumbnail: string().url().required()
+    }),
+    section: object({
+        backgroundColor: string(),
+        backgroundUrl: string().url(),
+        border: string(),
+        borderRadius: string(),
+        padding: string(),
+        textAlign: string()
+    }),
+    column: object({
+        backgroundColor: string(),
+        backgroundUrl: string().url(),
+        border: string(),
+        borderRadius: string(),
+        padding: string(),
+        textAlign: string()
+    }),
+    divider: object({
+        width: string(),
+        align: string().default('center'),
+        borderWidth: string(),
+        borderColor: string(),
+    }),
+    preview: object({
+        text: string().required()
+    }),
+    title: object({
+        text: string().required()
+    }),
+    font: object({
+        href: string().url().required(),
+        name: string().required()
+    }),
+    event: object({
+        title: string().required(),
+        href: string().url().required(),
+        venue: string().required(),
+        location: string().required(),
+        dateTime: string().required(),
+        fontSize: number().default(16),
+        fontWeight: number().default(300),
+        fontStyle: string().default('normal'),
+        color: string(),
+        align: string().default('left'),
+        fontFamily: string(),
+        lineHeight: string(),
+        letterSpacing: string()
+    }),
+};
+
+const selectComponentSchema = object({
+    component: string()
+});
 
 export {
     eventSchema,
@@ -117,5 +219,8 @@ export {
     donationSchema,
     grantSchema,
     CSVSchema,
-    subscriberSchema
+    subscriberSchema,
+    campaignSchema,
+    emailComponentSchemas,
+    selectComponentSchema
 };

@@ -1,20 +1,18 @@
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../utils/firebase/firebase-functions";
-import { subscriberSchema } from "../utils/yup/yup-schemas";
+import { Timestamp, uploadDoc } from "../utils/firebase/firebase-functions";
+import { emailComponentSchemas } from "../utils/yup/yup-schemas";
 import collections from "../vars/collections";
-import { schematify } from "../vars/schemaFunctions";
-import schematifySubscriber from "../vars/schematifySubscriber";
 
 
 
-export default async function subscriberAddAction({ request, params }) {
+export default async function emailCompAddAction({ request, params }) {
     const doc = await request.formData();
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
-        const schema = schematify(updates, 'tags');
+        // const schema = schematify(updates, 'dueMonths');
+        console.log(doc.get('id'));
         try {
-            console.log(schema);
-            return await subscriberSchema.validate(schema, { abortEarly: false });
+            return await emailComponentSchemas[doc.get('id')].validate(updates, { abortEarly: false });
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner.reduce((p, c) => {
@@ -29,14 +27,9 @@ export default async function subscriberAddAction({ request, params }) {
     }
 
     try {
-        const subAddition = {
-            imported: 'admin',
-            id: updates.email.toLowerCase(),
-            email: updates.email.toLowerCase()
-        }
-        const upload = await uploadDoc(Object.assign((schematifySubscriber(updates, 'tags')), subAddition), collections.subscribers, updates.email.toLowerCase(), true);
-        console.log(upload);
-        return redirect('/subscribers')
+        const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);
+        console.log(upload.id);
+        return redirect(`/campaigns/${upload.id}/edit/content`);
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {
