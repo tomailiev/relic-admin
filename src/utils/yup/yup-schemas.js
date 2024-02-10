@@ -98,7 +98,6 @@ const subscriberSchema = object({
     lastName: string().required(),
     imported: string(),
     // tags: array().of(),
-    opt_in_time: string(),
     location: string(),
     status: string().oneOf(["0", "1"]).required()
 });

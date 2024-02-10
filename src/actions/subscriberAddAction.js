@@ -30,7 +30,6 @@ export default async function subscriberAddAction({ request, params }) {
 
     try {
         const subAddition = {
-            opt_in_time: new Date().toISOString(),
             imported: 'admin',
             id: updates.email.toLowerCase(),
             email: updates.email.toLowerCase()
