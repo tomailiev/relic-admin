@@ -23,10 +23,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const db = process.env.NODE_ENV === 'development' ? getFirestore(app, 'mock-data') :  getFirestore(app);
+// const db = getFirestore(app)
+const storage = process.env.NODE_ENV === 'development' ? getStorage(app, 'gs://relic-mock-storage') : getStorage(app);
 const auth = getAuth(app);
-const functions = getFunctions(app);
+const functions =  getFunctions(app);
 if (process.env.REACT_APP_EMULATORS) {
   connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 }
