@@ -150,7 +150,7 @@ const emailComponentSchemas = {
     }),
     video: object({
         videoId: string().required(),
-        thumbnail: string().url().required()
+        thumbnail: string().url()
     }),
     section: object({
         backgroundColor: string(),

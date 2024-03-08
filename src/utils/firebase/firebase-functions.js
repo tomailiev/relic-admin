@@ -85,13 +85,12 @@ function getFileList(path) {
     return listAll(listRef);
 }
 
-const getVideoInfo = httpsCallable(functions, 'getVideoInfo');
-const registerUser = httpsCallable(functions, 'registerUser');
-const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatus');
-const verifyOrReset = httpsCallable(functions, 'verifyOrReset');
-const parseCSV = httpsCallable(functions, 'parseCSV');
-const getMjml = httpsCallable(functions, 'getMjml');
-const sendCampaign = httpsCallable(functions, 'sendCampaign');
+const getVideoInfo = httpsCallable(functions, 'getVideoInfoV2');
+const registerUser = httpsCallable(functions, 'registerUserV2');
+const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatusV2');
+const verifyOrReset = httpsCallable(functions, 'verifyOrResetV2');
+const getMjml = httpsCallable(functions, 'getMjmlV2');
+const sendCampaign = httpsCallable(functions, 'sendCampaignV2');
 
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
@@ -113,7 +112,6 @@ export {
     registerUser,
     checkEmailVerificationStatus,
     verifyOrReset,
-    parseCSV,
     getMjml,
     sendCampaign
 };
