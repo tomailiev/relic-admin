@@ -69,7 +69,6 @@ const donationSchema = object({
 });
 
 const donorSchema = object({
-    // donations: array().of(donationSchema),
     firstName: string().required(),
     lastName: string().required(),
     email: string().email(),
@@ -97,7 +96,6 @@ const subscriberSchema = object({
     firstName: string().required(),
     lastName: string().required(),
     imported: string(),
-    // tags: array().of(),
     location: string(),
     status: string().oneOf(["0", "1"]).required()
 });
