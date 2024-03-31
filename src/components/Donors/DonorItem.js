@@ -1,4 +1,4 @@
-import { Container, Grid, Paper, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { createRef, useEffect } from "react";
 import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid } from "@mui/x-data-grid";
@@ -17,13 +17,24 @@ const columns = [
     {
         field: 'comment',
         headerName: 'Comment',
-        flex: 3
+        flex: 2
     },
+    {
+        field: 'thank',
+        headerName: 'Acknowledge',
+        sortable: false,
+        flex: 1,
+        renderCell: (params) => {
+            console.log(params.row);
+            return <Button variant="contained" disabled={!params.row.email || !!params.row.acknowledged}>
+                {params.row.acknowledged ? 'Thanked' : 'Thank'}
+            </Button>
+        }
+    }
 ]
 
 const DonorItem = ({ item }) => {
     const mapRef = createRef();
-
     useEffect(() => {
         getMap(mapRef.current, item.address, item.location)
             .then(infoWindow => {
@@ -48,11 +59,14 @@ const DonorItem = ({ item }) => {
                 <Typography variant="h6" mt={2}>
                     Donations:
                 </Typography>
-
-                <DataGrid
-                    rows={item.donations?.map((item, i) => ({ ...item, id: i }))}
-                    columns={columns}
-                />
+                <Box overflow={'scroll'}>
+                    <Box minWidth={'800px'} width={'100%'}>
+                        <DataGrid
+                            rows={item.donations?.map((donation, i) => ({ ...donation, id: i, email: item.email }))}
+                            columns={columns}
+                        />
+                    </Box>
+                </Box>
             </Container>}
         </Paper>
     );
