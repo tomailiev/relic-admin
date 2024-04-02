@@ -206,6 +206,7 @@ const selectComponentSchema = object({
 const donationAcknowledgementSchema = object({
     email: string().email().required(),
     from: string().email().oneOf(['aniela@relicensemble.org', 'cullen@relicensemble.org', 'kako@relicensemble.org', 'natalie@relicensemble.org', 'rebecca@relicensemble.org', 'toma@relicensemble.org']).required(),
+    subject: string().required(),
     content: string().required()
 })
 

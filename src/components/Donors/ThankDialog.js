@@ -15,8 +15,10 @@ With endless gratitude,
 The Relic team:
 Aniela, Cullen, Kako, Natalie, Rebecca, and Toma`;
 
+    const subject = 'Thank you for supporting Relic!';
+
     return (
-        <Dialog open={open}>
+        <Dialog open={open} maxWidth={'lg'} fullWidth="true">
             <DialogTitle>
                 Send Thank You Email
                 <IconButton
@@ -32,7 +34,7 @@ Aniela, Cullen, Kako, Natalie, Rebecca, and Toma`;
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={{ email: donationInfo?.email, from: '', content: emailText }} />
+                <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={{ email: donationInfo?.email, from: '', subject, content: emailText }} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Cancel</Button>

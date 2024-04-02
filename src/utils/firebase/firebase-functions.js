@@ -91,6 +91,7 @@ const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerific
 const verifyOrReset = httpsCallable(functions, 'verifyOrResetV2');
 const getMjml = httpsCallable(functions, 'getMjmlV2');
 const sendCampaign = httpsCallable(functions, 'sendCampaignV2');
+const acknowledgeDonor = httpsCallable(functions, 'acknowledgeDonor');
 
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
@@ -113,5 +114,6 @@ export {
     checkEmailVerificationStatus,
     verifyOrReset,
     getMjml,
-    sendCampaign
+    sendCampaign,
+    acknowledgeDonor
 };

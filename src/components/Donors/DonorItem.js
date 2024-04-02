@@ -1,49 +1,79 @@
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useContext, useEffect, useState } from "react";
 import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 import ThankDialog from "./ThankDialog";
+import { useActionData, useSubmit } from "react-router-dom";
+import ErrorContext from "../../context/ErrorContext";
 
-// const columns = [
-//     { field: 'date', headerName: 'Date', flex: 1 },
-//     {
-//         field: 'amount',
-//         headerName: 'Amount',
-//         valueFormatter: (params) => `$${params.value}`,
-//         flex: 1
-//     },
-//     { field: 'campaign', headerName: 'Campaign', flex: 1 },
-//     { field: 'recognitionName', headerName: 'Recognition name', flex: 1 },
-//     {
-//         field: 'comment',
-//         headerName: 'Comment',
-//         flex: 2
-//     },
-//     {
-//         field: 'thank',
-//         headerName: 'Acknowledge',
-//         sortable: false,
-//         flex: 1,
-//         renderCell: (params) => {
-//             console.log(params.row);
-//             return <Button variant="contained" disabled={params.row.thanksDisabled || !!params.row.acknowledged}>
-//                 {params.row.acknowledged ? 'Thanked' : 'Thank'}
-//             </Button>
-//         }
-//     }
-// ]
 
 const DonorItem = ({ item }) => {
+
+    const columns = [
+        { field: 'date', headerName: 'Date', flex: 1 },
+        {
+            field: 'amount',
+            headerName: 'Amount',
+            valueFormatter: (params) => `$${params.value}`,
+            flex: 1
+        },
+        { field: 'campaign', headerName: 'Campaign', flex: 1 },
+        { field: 'recognitionName', headerName: 'Recognition name', flex: 1 },
+        {
+            field: 'comment',
+            headerName: 'Comment',
+            flex: 2
+        },
+        {
+            field: 'thank',
+            headerName: 'Acknowledge',
+            sortable: false,
+            flex: 1,
+            renderCell: (params) => {
+                return <Button variant="contained" disabled={params.row.thanksDisabled || !!params.row.acknowledged} onClick={() => handleThanksClick(params.row.id)}>
+                    {params.row.acknowledged ? 'Thanked' : 'Thank'}
+                </Button>
+            }
+        }
+    ];
+
+    const { setError } = useContext(ErrorContext);
     const [modalOpen, setModalOpen] = useState(false);
     const [donationInfo, setDonationInfo] = useState(null);
+    const submit = useSubmit();
+    const actionData = useActionData();
+
+
+
+    useEffect(() => {
+        if (actionData) {
+            console.log(actionData);
+            if (actionData.code === 'Success') {
+                setModalOpen(false);
+                setError({ severity: 'success', message: 'Sent email' })
+            } else {
+                setError({ severity: 'error', message: 'Something went wrong' })
+            }
+        }
+    }, [actionData, setError]);
 
     function handleSend(emailInfo) {
-        console.log(emailInfo);
+        // to, from, content, donorId, donationIndex
+        const update = {
+            to: emailInfo.email,
+            from: emailInfo.from,
+            content: emailInfo.content,
+            subject: emailInfo.subject,
+            donorId: item.id,
+            donationIndex: donationInfo.index
+        }
+
+        submit(update, { method: 'POST', encType: 'application/json' });
     }
 
     function handleThanksClick(i) {
-        setDonationInfo({...item.donations[i], email: item.email});
+        setDonationInfo({ ...item.donations[i], email: item.email, index: i });
         setModalOpen(true);
     }
 
@@ -78,36 +108,7 @@ const DonorItem = ({ item }) => {
                         <Box minWidth={'800px'} width={'100%'}>
                             <DataGrid
                                 rows={item.donations?.map((donation, i) => ({ ...donation, id: i, thanksDisabled: !item.email }))}
-                                columns={
-                                    [
-                                        { field: 'date', headerName: 'Date', flex: 1 },
-                                        {
-                                            field: 'amount',
-                                            headerName: 'Amount',
-                                            valueFormatter: (params) => `$${params.value}`,
-                                            flex: 1
-                                        },
-                                        { field: 'campaign', headerName: 'Campaign', flex: 1 },
-                                        { field: 'recognitionName', headerName: 'Recognition name', flex: 1 },
-                                        {
-                                            field: 'comment',
-                                            headerName: 'Comment',
-                                            flex: 2
-                                        },
-                                        {
-                                            field: 'thank',
-                                            headerName: 'Acknowledge',
-                                            sortable: false,
-                                            flex: 1,
-                                            renderCell: (params) => {
-                                                console.log(params.row);
-                                                return <Button variant="contained" disabled={params.row.thanksDisabled || !!params.row.acknowledged} onClick={() => handleThanksClick(params.row.id)}>
-                                                    {params.row.acknowledged ? 'Thanked' : 'Thank'}
-                                                </Button>
-                                            }
-                                        }
-                                    ]
-                                }
+                                columns={columns}
                             />
                         </Box>
                     </Box>
