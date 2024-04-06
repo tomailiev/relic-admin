@@ -47,9 +47,9 @@ const DonorItem = ({ item }) => {
     const fetcher = useFetcher();
 
     useEffect(() => {
-      if (fetcher.state === "idle" && !fetcher.data) {
-        fetcher.load("/donors/text");
-      }
+        if (fetcher.state === "idle" && !fetcher.data) {
+            fetcher.load("/donors/text");
+        }
     }, [fetcher]);
 
     useEffect(() => {
@@ -83,14 +83,14 @@ const DonorItem = ({ item }) => {
             ? `${item.firstName} ${item.lastName}`
             : item.donations[i].recognitionName;
 
-        setDonationInfo({ 
-            ...item.donations[i], 
-            email: item.email, 
-            index: i, 
-            recognitionName, 
+        setDonationInfo({
+            ...item.donations[i],
+            email: item.email,
+            index: i,
+            recognitionName,
             content: fetcher.data?.content,
             subject: fetcher.data?.subject
-         });
+        });
         setModalOpen(true);
     }
 
@@ -126,6 +126,11 @@ const DonorItem = ({ item }) => {
                             <DataGrid
                                 rows={item.donations?.map((donation, i) => ({ ...donation, id: i, thanksDisabled: !item.email }))}
                                 columns={columns}
+                                initialState={{
+                                    sorting: {
+                                        sortModel: [{ field: 'date', sort: 'desc' }],
+                                    }
+                                }}
                             />
                         </Box>
                     </Box>
