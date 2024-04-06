@@ -12,6 +12,8 @@ import donorLoader from "../../loaders/donorLoader";
 import ImportDonor from "../../components/Emails/ImportDonor";
 import donorsSubsLoader from "../../loaders/donorsSubsLoader";
 import donorsImportAction from "../../actions/donorsImportAction";
+import donorThankAction from "../../actions/donorThankAction";
+import donorTextLoader from "../../loaders/donorTextLoader";
 
 const donorRouter = [
     {
@@ -28,6 +30,7 @@ const donorRouter = [
         path: 'donors/:donorId',
         element: <LoggedIn component={<DonorItemRoute />} />,
         loader: donorItemLoader,
+        action: donorThankAction
       },
       {
         path: 'donors/:donorId/delete',
@@ -45,6 +48,10 @@ const donorRouter = [
         element: <LoggedIn component={<ImportDonor />} />,
         loader: donorsSubsLoader,
         action: donorsImportAction
+      },
+      {
+        path: 'donors/text',
+        loader: donorTextLoader
       }
 ];
 

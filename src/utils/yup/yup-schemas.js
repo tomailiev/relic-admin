@@ -203,6 +203,13 @@ const selectComponentSchema = object({
     component: string()
 });
 
+const donationAcknowledgementSchema = object({
+    email: string().email().required(),
+    from: string().email().oneOf(['aniela@relicensemble.org', 'cullen@relicensemble.org', 'kako@relicensemble.org', 'natalie@relicensemble.org', 'rebecca@relicensemble.org', 'toma@relicensemble.org']).required(),
+    subject: string().required(),
+    content: string().required()
+})
+
 export {
     eventSchema,
     musicianSchema,
@@ -220,5 +227,6 @@ export {
     subscriberSchema,
     campaignSchema,
     emailComponentSchemas,
-    selectComponentSchema
+    selectComponentSchema,
+    donationAcknowledgementSchema,
 };

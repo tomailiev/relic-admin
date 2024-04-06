@@ -79,7 +79,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
                             size: 'small',
                             multiline: multiline,
                             variant: 'outlined',
-                            rows: 4
+                            // rows: 4
                         }
                         return type === 'file'
                             ? <MuiFileInput {...props} error={hasError[id] === 'Please select file'} helperText={hasError[id] === 'Please select file' && hasError[id]} />
