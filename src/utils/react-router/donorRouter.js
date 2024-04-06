@@ -13,6 +13,7 @@ import ImportDonor from "../../components/Emails/ImportDonor";
 import donorsSubsLoader from "../../loaders/donorsSubsLoader";
 import donorsImportAction from "../../actions/donorsImportAction";
 import donorThankAction from "../../actions/donorThankAction";
+import donorTextLoader from "../../loaders/donorTextLoader";
 
 const donorRouter = [
     {
@@ -47,6 +48,10 @@ const donorRouter = [
         element: <LoggedIn component={<ImportDonor />} />,
         loader: donorsSubsLoader,
         action: donorsImportAction
+      },
+      {
+        path: 'donors/text',
+        loader: donorTextLoader
       }
 ];
 

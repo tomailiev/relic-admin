@@ -5,17 +5,17 @@ import { donationAcknowledgementSchema } from "../../utils/yup/yup-schemas";
 import { donationAcknowledgementProps } from "../../props/donationAcknowledgementProps";
 
 
-const ThankDialog = ({ open, setOpen, donationInfo, handleSend }) => {
+const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }) => {
 
-    const emailText = `Dear ${donationInfo?.recognitionName},
-
-Thank you for supporting Relic! Your donation of $${donationInfo?.amount} means the world to us! Through generous sponsors such as yourself, we are able to cover operating expenses, pay our musicians, and continue to pursue our mission of sharing the joy of early music with communities across the country.
-    
-With endless gratitude,
-The Relic team:
-Aniela, Cullen, Kako, Natalie, Rebecca, and Toma`;
-
-    const subject = 'Thank you for supporting Relic!';
+    const fields = {
+        email: donationInfo?.email,
+        from: '',
+        subject: donationInfo?.subject,
+        content: donationInfo?.content
+            .replaceAll('\\n', '\n')
+            .replace('{recognitionName}', donationInfo?.recognitionName)
+            .replace('{amount}', donationInfo?.amount)
+    }
 
     return (
         <Dialog open={open} maxWidth={'lg'} fullWidth="true">
@@ -34,7 +34,7 @@ Aniela, Cullen, Kako, Natalie, Rebecca, and Toma`;
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={{ email: donationInfo?.email, from: '', subject, content: emailText }} />
+                <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={fields} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Cancel</Button>

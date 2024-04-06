@@ -4,7 +4,7 @@ import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 import ThankDialog from "./ThankDialog";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useFetcher, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 
 
@@ -44,7 +44,13 @@ const DonorItem = ({ item }) => {
     const submit = useSubmit();
     const actionData = useActionData();
 
+    const fetcher = useFetcher();
 
+    useEffect(() => {
+      if (fetcher.state === "idle" && !fetcher.data) {
+        fetcher.load("/donors/text");
+      }
+    }, [fetcher]);
 
     useEffect(() => {
         if (actionData) {
@@ -69,11 +75,22 @@ const DonorItem = ({ item }) => {
             donationIndex: donationInfo.index
         }
 
-        submit(update, { method: 'POST', encType: 'application/json' });
+        submit(update, { method: 'POST', encType: 'application/json', action: `/donors/${item.id}` });
     }
 
     function handleThanksClick(i) {
-        setDonationInfo({ ...item.donations[i], email: item.email, index: i });
+        const recognitionName = item.donations[i].recognitionName === '(anonymous)'
+            ? `${item.firstName} ${item.lastName}`
+            : item.donations[i].recognitionName;
+
+        setDonationInfo({ 
+            ...item.donations[i], 
+            email: item.email, 
+            index: i, 
+            recognitionName, 
+            content: fetcher.data?.content,
+            subject: fetcher.data?.subject
+         });
         setModalOpen(true);
     }
 
