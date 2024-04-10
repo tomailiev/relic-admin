@@ -1,11 +1,13 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Box } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { DataGrid } from "@mui/x-data-grid";
+import { clickColumns, multiColumns } from "../../props/campaignStatProps";
 
 
 const StatsDialog = ({ open, setOpen, name, list }) => {
 
     return (
-        <Dialog open={open}>
+        <Dialog open={open} maxWidth={'lg'} fullWidth="true">
             <DialogTitle sx={{ textTransform: 'capitalize' }}>
                 {name} stats
                 <IconButton
@@ -21,7 +23,20 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                {name === 'click'
+                <Box overflow={'scroll'}>
+                    <Box minWidth={'800px'} width={'100%'}>
+                        <DataGrid
+                            rows={list.map((item, i) => ({ ...item, id: i }))}
+                            columns={name === 'click' ? clickColumns : multiColumns}
+                            initialState={{
+                                sorting: {
+                                    sortModel: [{ field: 'timestamp', sort: 'desc' }],
+                                }
+                            }}
+                        />
+                    </Box>
+                </Box>
+                {/* {name === 'click'
                     ? list.map((item, i) => {
                         return <DialogContentText key={i} id="alert-dialog-description">
                             {`${item.email}: ${item.link}`}
@@ -32,7 +47,7 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
                             {item}
                         </DialogContentText>
                     })
-                }
+                } */}
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Close</Button>

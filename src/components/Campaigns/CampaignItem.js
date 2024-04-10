@@ -7,6 +7,17 @@ import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
 
+const reducer = (a, c) => {
+    if (!a[c.email]) {
+        a[c.email] = {
+            count: 0,
+            email: c.email
+        }
+    }
+    a[c.email].count++;
+    return a;
+}
+
 const CampaignItem = ({ item, setEditable }) => {
 
     const { setError } = useContext(ErrorContext);
@@ -61,44 +72,46 @@ const CampaignItem = ({ item, setEditable }) => {
                         <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
                     </Stack>
                     : (
-                            <Grid container spacing={2} textAlign={'center'} p={2}>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Delivered</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Opened</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Clicked</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Rejected</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Bounced</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Unsubscribed</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
+                        <Grid container spacing={2} textAlign={'center'} p={2}>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Delivered</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
+                                </Paper>
                             </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Opened</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('openUnique', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length ? Object.values(item.open.reduce(reducer, {})).length : 0}</Typography></Button> /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Clicked</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('clickUnique', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length ? Object.values(item.click.reduce(reducer, {})).length : 0}</Typography></Button> /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Rejected</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Bounced</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Unsubscribed</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     )
                 }
                 <Grid container spacing={2} my={3}>
@@ -115,7 +128,7 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <ListItemIcon>
                                         <ShortText />
                                     </ListItemIcon>
-                                    <ListItemText primary={item.components?.find(val => val.id ==='mj-preview')?.text} />
+                                    <ListItemText primary={item.components?.find(val => val.id === 'mj-preview')?.text} />
                                 </ListItem>
                                 <ListItem>
                                     <ListItemIcon>
