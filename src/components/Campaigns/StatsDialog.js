@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Box } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from "@mui/x-data-grid";
-import { clickColumns, multiColumns } from "../../props/campaignStatProps";
+import { clickColumns, fullColumns, multiColumns } from "../../props/campaignStatProps";
 
 
 const StatsDialog = ({ open, setOpen, name, list }) => {
@@ -27,7 +27,7 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid
                             rows={list.map((item, i) => ({ ...item, id: i }))}
-                            columns={name === 'click' ? clickColumns : multiColumns}
+                            columns={name === 'click' ? clickColumns : name === 'full' ? fullColumns : multiColumns}
                             initialState={{
                                 sorting: {
                                     sortModel: [{ field: 'timestamp', sort: 'desc' }],

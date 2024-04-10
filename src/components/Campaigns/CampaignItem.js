@@ -1,5 +1,5 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
-import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
 import { useActionData, useSubmit } from "react-router-dom";
@@ -8,14 +8,31 @@ import ErrorContext from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
 
 const reducer = (a, c) => {
-    if (!a[c.email]) {
-        a[c.email] = {
-            count: 0,
-            email: c.email
-        }
+    const item = a.find(sub => sub.email === c.email);
+    if (!item) {
+        return a.concat({
+            email: c.email,
+            count: 1,
+            timestamp: c.timestamp
+        });
     }
-    a[c.email].count++;
+    item.count++;
     return a;
+}
+
+const campaignStatSummarizer = (campaign) => {
+    return campaign.sentTo.reduce((a, c) => {
+        const email = c.email;
+        return a.concat({
+            email,
+            delivered: campaign.delivered?.map(a => a.email).includes(email),
+            open: campaign.open?.map(a => a.email).includes(email),
+            click: campaign.click?.map(a => a.email).includes(email),
+            bounce: campaign.bounce?.map(a => a.email).includes(email),
+            reject: campaign.reject?.map(a => a.email).includes(email),
+            unsubscribe: campaign.unsubscribe?.map(a => a.email).includes(email),
+        })
+    }, []);
 }
 
 const CampaignItem = ({ item, setEditable }) => {
@@ -82,14 +99,14 @@ const CampaignItem = ({ item, setEditable }) => {
                             <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Opened</Typography>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('openUnique', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length ? Object.values(item.open.reduce(reducer, {})).length : 0}</Typography></Button> /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(reducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(reducer, []).length || 0}</Typography></Button> /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Clicked</Typography>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('clickUnique', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length ? Object.values(item.click.reduce(reducer, {})).length : 0}</Typography></Button> /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(reducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(reducer, []).length || 0}</Typography></Button> /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
@@ -130,12 +147,12 @@ const CampaignItem = ({ item, setEditable }) => {
                                     </ListItemIcon>
                                     <ListItemText primary={item.components?.find(val => val.id === 'mj-preview')?.text} />
                                 </ListItem>
-                                <ListItem>
+                                <ListItemButton disabled={!item.sentTo?.length} onClick={() => handleStatsDialogOpen('full', campaignStatSummarizer(item))}>
                                     <ListItemIcon>
                                         <Group />
                                     </ListItemIcon>
                                     <ListItemText primary={`${item.to} (${item.sentTo?.length || 'unknown number'})`} />
-                                </ListItem>
+                                </ListItemButton>
                                 <ListItem>
                                     <ListItemIcon>
                                         <Email />
