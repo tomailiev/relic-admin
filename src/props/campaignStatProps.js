@@ -56,6 +56,8 @@ export const clickColumns = [
     }
 ];
 
+export const clickSorting = { field: 'link', sort: 'asc' };
+
 export const uniqueOpenColumns = [
     {
         field: 'email',
@@ -82,6 +84,8 @@ export const uniqueOpenColumns = [
     }
 ];
 
+export const uniqueOpenSorting = { field: 'count', sort: 'desc' };
+
 export const uniqueClickColumns = [
     {
         field: 'email',
@@ -105,9 +109,11 @@ export const uniqueClickColumns = [
         field: 'timestamps',
         headerName: 'Timestamps',
         flex: 2,
-        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate()).join('\n')
+        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate())
     }
 ];
+
+export const uniqueClickSorting = { field: 'links', sort: 'desc' }
 
 export const fullColumns = [
     {
@@ -159,4 +165,49 @@ export const fullColumns = [
         renderCell: (params) => params.row.reject && <Check />
     },
 ];
+
+export const fullSorting = { field: 'delivered', sort: 'desc' };
+
+export const openReducer = (a, c) => {
+    const item = a.find(sub => sub.email === c.email);
+    if (!item) {
+        return a.concat({
+            email: c.email,
+            count: 1,
+            timestamps: [c.timestamp]
+        });
+    }
+    item.count++;
+    item.timestamps.push(c.timestamp);
+    return a;
+}
+
+export const clickReducer = (a, c) => {
+    const item = a.find(sub => sub.email === c.email);
+    if (!item) {
+        return a.concat({
+            email: c.email,
+            timestamps: [c.timestamp],
+            links: [c.link]
+        });
+    }
+    item.timestamps.push(c.timestamp);
+    item.links.push(c.link);
+    return a;
+}
+
+export const campaignStatSummarizer = (campaign) => {
+    return campaign.sentTo.reduce((a, c) => {
+        const email = c.email;
+        return a.concat({
+            email,
+            delivered: campaign.delivered?.map(a => a.email).includes(email),
+            open: campaign.open?.map(a => a.email).includes(email),
+            click: campaign.click?.map(a => a.email).includes(email),
+            bounce: campaign.bounce?.map(a => a.email).includes(email),
+            reject: campaign.reject?.map(a => a.email).includes(email),
+            unsubscribe: campaign.unsubscribe?.map(a => a.email).includes(email),
+        })
+    }, []);
+}
 

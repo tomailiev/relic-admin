@@ -6,49 +6,8 @@ import { useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
+import { openReducer, clickReducer, campaignStatSummarizer } from "../../props/campaignStatProps";
 
-const reducer = (a, c) => {
-    const item = a.find(sub => sub.email === c.email);
-    if (!item) {
-        return a.concat({
-            email: c.email,
-            count: 1,
-            timestamps: [c.timestamp]
-        });
-    }
-    item.count++;
-    item.timestamps.push(c.timestamp);
-    return a;
-}
-
-const clickReducer = (a, c) => {
-    const item = a.find(sub => sub.email === c.email);
-    if (!item) {
-        return a.concat({
-            email: c.email,
-            timestamps: [c.timestamp],
-            links: [c.link] 
-        });
-    }
-    item.timestamps.push(c.timestamp);
-    item.links.push(c.link);
-    return a;
-}
-
-const campaignStatSummarizer = (campaign) => {
-    return campaign.sentTo.reduce((a, c) => {
-        const email = c.email;
-        return a.concat({
-            email,
-            delivered: campaign.delivered?.map(a => a.email).includes(email),
-            open: campaign.open?.map(a => a.email).includes(email),
-            click: campaign.click?.map(a => a.email).includes(email),
-            bounce: campaign.bounce?.map(a => a.email).includes(email),
-            reject: campaign.reject?.map(a => a.email).includes(email),
-            unsubscribe: campaign.unsubscribe?.map(a => a.email).includes(email),
-        })
-    }, []);
-}
 
 const CampaignItem = ({ item, setEditable }) => {
 
@@ -114,8 +73,8 @@ const CampaignItem = ({ item, setEditable }) => {
                             <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Opened</Typography>
-                                    <Tooltip title={`${(item.open?.reduce(reducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(reducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(reducer, []).length || 0}</Typography></Button>
+                                    <Tooltip title={`${(item.open?.reduce(openReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(openReducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(openReducer, []).length || 0}</Typography></Button>
                                     </Tooltip>
                                      /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
