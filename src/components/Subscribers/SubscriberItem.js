@@ -1,18 +1,12 @@
-import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper } from "@mui/material";
+import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
 // import { createRef, useEffect } from "react";
 // import { getMap } from "../../utils/google-maps/getMap";
 // import { DataGrid } from "@mui/x-data-grid";
 import { Email, Face, LocationOn, Loyalty, Style } from "@mui/icons-material";
+import { DataGrid } from "@mui/x-data-grid";
+import subscriberProps from '../../props/subscriberProps'
 
 const SubscriberItem = ({ item }) => {
-
-    // useEffect(() => {
-    //     getMap(mapRef.current, item.address, item.location)
-    //         .then(infoWindow => {
-    //             infoWindow.setContent(`${item.address || ''} ${item.location || ''}`)
-    //         })
-    //         .catch(e => console.log(e))
-    // }, [item, mapRef]);
 
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
@@ -58,16 +52,24 @@ const SubscriberItem = ({ item }) => {
 
                 </Grid>
             </Grid>
-            {/* {item.donations && <Container maxWidth={false} disableGutters>
+            {item.history && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Tags:
                 </Typography>
-
-                <DataGrid
-                    rows={item.donations?.map((item, i) => ({ ...item, id: i }))}
-                    columns={columns}
-                />
-            </Container>} */}
+                <Box overflow={'scroll'}>
+                        <Box minWidth={'800px'} width={'100%'}>
+                            <DataGrid
+                                rows={item.history?.map((historyItem, i) => ({ ...historyItem, id: i, }))}
+                                columns={subscriberProps.historyColumns}
+                                initialState={{
+                                    sorting: {
+                                        sortModel: [{ field: 'timestamp', sort: 'desc' }],
+                                    }
+                                }}
+                            />
+                        </Box>
+                    </Box>
+            </Container>}
         </Paper>
     );
 };

@@ -40,6 +40,25 @@ const subscriberColumns = [
     }
 ];
 
+const historyColumns = [
+    {
+        field: 'event',
+        headerName: 'Event',
+        flex: 1
+    },
+    {
+        field: 'subject',
+        headerName: 'Campaign',
+        flex: 2,
+    },
+    {
+        field: 'timestamp',
+        headerName: 'Timestamp',
+        flex: 2,
+        valueGetter: ({ row }) => row.timestamp.toDate()
+    }
+]
+
 const subscriberFields = {
     firstName: '',
     lastName: '',
@@ -73,6 +92,7 @@ const subscriberProps = {
     name: 'email',
     actionBox: <SubscriberActionBox />,
     columns: subscriberColumns,
+    historyColumns: historyColumns,
     sorting: { field: 'email', sort: 'asc' },
     pageSize: 50,
     pageSizeOptions: [25, 50, 100],
