@@ -1,10 +1,17 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Box } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from "@mui/x-data-grid";
-import { clickColumns, fullColumns, multiColumns } from "../../props/campaignStatProps";
+import { clickColumns, fullColumns, multiColumns, uniqueOpenColumns, uniqueClickColumns } from "../../props/campaignStatProps";
 
 
 const StatsDialog = ({ open, setOpen, name, list }) => {
+
+    const columns = {
+        click: clickColumns,
+        full: fullColumns,
+        'unique click': uniqueClickColumns,
+        'unique open': uniqueOpenColumns
+    }
 
     return (
         <Dialog open={open} maxWidth={'lg'} fullWidth="true">
@@ -27,7 +34,7 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid
                             rows={list.map((item, i) => ({ ...item, id: i }))}
-                            columns={name === 'click' ? clickColumns : name === 'full' ? fullColumns : multiColumns}
+                            columns={columns[name] || multiColumns}
                             initialState={{
                                 sorting: {
                                     sortModel: [{ field: 'timestamp', sort: 'desc' }],

@@ -1,5 +1,5 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
-import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, Tooltip } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
 import { useActionData, useSubmit } from "react-router-dom";
@@ -13,10 +13,25 @@ const reducer = (a, c) => {
         return a.concat({
             email: c.email,
             count: 1,
-            timestamp: c.timestamp
+            timestamps: [c.timestamp]
         });
     }
     item.count++;
+    item.timestamps.push(c.timestamp);
+    return a;
+}
+
+const clickReducer = (a, c) => {
+    const item = a.find(sub => sub.email === c.email);
+    if (!item) {
+        return a.concat({
+            email: c.email,
+            timestamps: [c.timestamp],
+            links: [c.link] 
+        });
+    }
+    item.timestamps.push(c.timestamp);
+    item.links.push(c.link);
     return a;
 }
 
@@ -99,14 +114,20 @@ const CampaignItem = ({ item, setEditable }) => {
                             <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Opened</Typography>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(reducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(reducer, []).length || 0}</Typography></Button> /
+                                    <Tooltip title={`${(item.open?.reduce(reducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(reducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(reducer, []).length || 0}</Typography></Button>
+                                    </Tooltip>
+                                     /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
                             <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Clicked</Typography>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(reducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(reducer, []).length || 0}</Typography></Button> /
+                                    <Tooltip title={`${(item.click?.reduce(clickReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(clickReducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(clickReducer, []).length || 0}</Typography></Button>
+                                    </Tooltip>
+                                     /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>

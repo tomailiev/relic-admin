@@ -56,6 +56,59 @@ export const clickColumns = [
     }
 ];
 
+export const uniqueOpenColumns = [
+    {
+        field: 'email',
+        headerName: 'Email address',
+        flex: 2,
+        renderCell: (params) => {
+            return (
+                <Link to={`/subscribers/${params.row.email}`}>
+                    {params.row.email}
+                </Link>
+            )
+        }
+    },
+    {
+        field: 'count',
+        headerName: 'Times open',
+        flex: 1
+    },
+    {
+        field: 'timestamps',
+        headerName: 'Timestamps',
+        flex: 2,
+        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate()).join('\n')
+    }
+];
+
+export const uniqueClickColumns = [
+    {
+        field: 'email',
+        headerName: 'Email address',
+        flex: 2,
+        renderCell: (params) => {
+            return (
+                <Link to={`/subscribers/${params.row.email}`}>
+                    {params.row.email}
+                </Link>
+            )
+        }
+    },
+    {
+        field: 'links',
+        headerName: 'Links opened',
+        flex: 2,
+        valueGetter: ({ row }) => row.links.join('\n')
+    },
+    {
+        field: 'timestamps',
+        headerName: 'Timestamps',
+        flex: 2,
+        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate()).join('\n')
+    }
+];
+
 export const fullColumns = [
     {
         field: 'email',
