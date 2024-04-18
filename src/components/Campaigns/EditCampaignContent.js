@@ -5,7 +5,7 @@ import ErrorContext from "../../context/ErrorContext";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
-import { Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
     'button',
@@ -93,6 +93,10 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         setComponentList(prev => prev.slice(0, i - 1).concat(prev.slice(i - 1, i + 1).reverse()).concat(prev.slice(i + 1)));
     }
 
+    function copyComponent(i) {
+        setComponentList(prev => prev.concat(prev[i]));
+    }
+
     function moveComponentDown(i) {
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i, i + 2).reverse()).concat(prev.slice(i + 2)));
     }
@@ -130,6 +134,9 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
                                 </IconButton>
                                 <IconButton edge="end" aria-label="edit" onClick={() => editComponent(i)}>
                                     <Edit />
+                                </IconButton>
+                                <IconButton edge="end" aria-label="copy" onClick={() => copyComponent(i)}>
+                                    <ContentCopy />
                                 </IconButton>
                                 <IconButton edge="end" aria-label="delete" onClick={() => deleteComponent(i)}>
                                     <Delete />

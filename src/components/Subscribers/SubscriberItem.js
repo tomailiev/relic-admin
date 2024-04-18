@@ -54,7 +54,7 @@ const SubscriberItem = ({ item }) => {
             </Grid>
             {item.history && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
-                    Tags:
+                    Interactions:
                 </Typography>
                 <Box overflow={'scroll'}>
                         <Box minWidth={'800px'} width={'100%'}>

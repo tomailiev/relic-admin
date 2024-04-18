@@ -168,12 +168,12 @@ const headerFA = [
 
 const footerFields = {
     id: 'custom-footer',
-    variant: 'regular',
+    variant: '',
     socialType: 'color'
 };
 
 const footerFA = [
-    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] },
+    { label: 'Variant', id: 'variant', type: 'select', options: ['regular', 'no-button'] },
     { label: 'Social icons', id: 'socialType', type: 'select', options: ['color', 'bw'] },
 ];
 
