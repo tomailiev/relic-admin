@@ -1,11 +1,13 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
-import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, } from "@mui/material";
+import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, Tooltip } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
 import { useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
+import { openReducer, clickReducer, campaignStatSummarizer } from "../../props/campaignStatProps";
+
 
 const CampaignItem = ({ item, setEditable }) => {
 
@@ -61,44 +63,52 @@ const CampaignItem = ({ item, setEditable }) => {
                         <Button variant="contained" fullWidth onClick={() => setTestModalOpen(true)}>Test...</Button>
                     </Stack>
                     : (
-                            <Grid container spacing={2} textAlign={'center'} p={2}>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Delivered</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Opened</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Clicked</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Rejected</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Bounced</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={2}>
-                                    <Paper>
-                                        <Typography variant="h6">Unsubscribed</Typography>
-                                        <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
-                                    </Paper>
-                                </Grid>
+                        <Grid container spacing={2} textAlign={'center'} p={2}>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Delivered</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
+                                </Paper>
                             </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Opened</Typography>
+                                    <Tooltip title={`${(item.open?.reduce(openReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(openReducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(openReducer, []).length || 0}</Typography></Button>
+                                    </Tooltip>
+                                     /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Clicked</Typography>
+                                    <Tooltip title={`${(item.click?.reduce(clickReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(clickReducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(clickReducer, []).length || 0}</Typography></Button>
+                                    </Tooltip>
+                                     /
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Rejected</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Bounced</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Unsubscribed</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                        </Grid>
                     )
                 }
                 <Grid container spacing={2} my={3}>
@@ -115,14 +125,14 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <ListItemIcon>
                                         <ShortText />
                                     </ListItemIcon>
-                                    <ListItemText primary={item.components?.find(val => val.id ==='mj-preview')?.text} />
+                                    <ListItemText primary={item.components?.find(val => val.id === 'mj-preview')?.text} />
                                 </ListItem>
-                                <ListItem>
+                                <ListItemButton disabled={!item.sentTo?.length} onClick={() => handleStatsDialogOpen('full', campaignStatSummarizer(item))}>
                                     <ListItemIcon>
                                         <Group />
                                     </ListItemIcon>
                                     <ListItemText primary={`${item.to} (${item.sentTo?.length || 'unknown number'})`} />
-                                </ListItem>
+                                </ListItemButton>
                                 <ListItem>
                                     <ListItemIcon>
                                         <Email />
