@@ -5,8 +5,11 @@ import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typ
 import { Email, Face, LocationOn, Loyalty, Style } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import subscriberProps from '../../props/subscriberProps'
+import { useLocation } from "react-router-dom";
 
 const SubscriberItem = ({ item }) => {
+
+    const location = useLocation();
 
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
@@ -52,7 +55,7 @@ const SubscriberItem = ({ item }) => {
 
                 </Grid>
             </Grid>
-            {item.history && <Container maxWidth={false} disableGutters>
+            {item.history && !location.pathname.endsWith('edit') && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Interactions:
                 </Typography>
