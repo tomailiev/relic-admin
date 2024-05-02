@@ -28,7 +28,7 @@ export default async function subscriberEditAction({ request, params }) {
     }
 
     try {
-        const { id: _, ...rest } = updates;
+        const { id: _, history: __, ...rest } = updates;
         const update = schematifySubscriber(rest);
         await uploadDoc(update, collections.subscribers, updates.id, true);
         return redirect(`/subscribers/${updates.id}`);
