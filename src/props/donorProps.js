@@ -2,21 +2,21 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const getTier = (amount) => {
-    return amount >= 50 && amount < 200
-        ? 'Muse $50+'
-        : amount >= 200 && amount < 500
-            ? 'Dionysus $200+'
-            : amount >= 500 && amount < 1000
-                ? 'Artemis $500+'
-                : amount >= 1000 && amount < 2500
-                    ? 'Hermes $1000+'
-                    : amount >= 2500 && amount < 7500
-                        ? 'Athena $2500+'
-                        : amount >= 7500 && amount < 15000
-                            ? 'Apollo $7500+'
-                            : amount >= 15000
-                                ? 'Zeus & Hera $15,000+'
-                                : ''
+    return amount < 50
+        ? ''
+        : amount >= 50 && amount < 200
+            ? 'Muse $50+'
+            : amount >= 200 && amount < 500
+                ? 'Dionysus $200+'
+                : amount >= 500 && amount < 1000
+                    ? 'Artemis $500+'
+                    : amount >= 1000 && amount < 2500
+                        ? 'Hermes $1000+'
+                        : amount >= 2500 && amount < 7500
+                            ? 'Athena $2500+'
+                            : amount >= 7500 && amount < 15000
+                                ? 'Apollo $7500+'
+                                : 'Zeus & Hera $15,000+'
 };
 
 const today = new Date();
