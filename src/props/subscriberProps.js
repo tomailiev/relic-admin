@@ -11,19 +11,24 @@ const subscriberColumns = [
     {
         field: 'status', 
         headerName: 'Status',
-        flex: 2,
+        flex: 1,
         valueGetter: (params) => params.row.status ? 'Subscribed' : 'Unsubscribed'
+    },
+    {
+        field: 'opt_in_time',
+        headerName: 'Subscriber since',
+        flex: 2
     },
     {
         field: 'tags',
         headerName: 'Tags',
-        flex: 2,
+        flex: 1,
         valueGetter: (params) => params.row.tags?.join(', '),
-        // sortComparator: (v1, v2) => {
-        //     const item1 = months.findIndex(item => item === v1.split(',')[0]);
-        //     const item2 = months.findIndex(item => item === v2.split(',')[0]);
-        //     return item1 - item2;
-        // }
+    },
+    {
+        field: 'location',
+        headerName: 'Location',
+        flex: 2
     },
     {
         field: 'select',
