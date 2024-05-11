@@ -2,6 +2,7 @@ import { Typography, Container, Button, Box } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
+import CustomGridToolbar from "../Common/GridExportToolbar";
 
 
 const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBox }) => {
@@ -27,6 +28,7 @@ const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBo
                         <DataGrid
                             rows={items}
                             columns={columns}
+                            slots={{toolbar: CustomGridToolbar}}
                             initialState={{
                                 sorting: {
                                     sortModel: [sorting],
