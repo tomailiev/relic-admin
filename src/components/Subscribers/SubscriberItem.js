@@ -60,18 +60,21 @@ const SubscriberItem = ({ item }) => {
                     Interactions:
                 </Typography>
                 <Box overflow={'scroll'}>
-                        <Box minWidth={'800px'} width={'100%'}>
-                            <DataGrid
-                                rows={item.history?.map((historyItem, i) => ({ ...historyItem, id: i, }))}
-                                columns={subscriberProps.historyColumns}
-                                initialState={{
-                                    sorting: {
-                                        sortModel: [{ field: 'timestamp', sort: 'desc' }],
-                                    }
-                                }}
-                            />
-                        </Box>
+                    <Box minWidth={'800px'} width={'100%'}>
+                        <DataGrid
+                            rows={item.history?.map((historyItem, i) => ({ ...historyItem, id: i, }))}
+                            columns={subscriberProps.historyColumns}
+                            initialState={{
+                                sorting: {
+                                    sortModel: [{ field: 'timestamp', sort: 'desc' }],
+                                },
+                                pagination: { paginationModel: 10 }
+                            }}
+                            pageSizeOptions={[10, 25, 50]}
+
+                        />
                     </Box>
+                </Box>
             </Container>}
         </Paper>
     );
