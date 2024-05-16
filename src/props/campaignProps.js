@@ -19,8 +19,8 @@ const campaignColumns = [
                     </Button>
                 </Link>
             )
-            : `Open: ${(row.open?.reduce(openReducer, []).length / row.sentTo?.length * 100).toFixed(1)}%
-            Click: ${(row.click?.reduce(clickReducer, []).length / row.sentTo?.length * 100).toFixed(1)}%`
+            : `Open: ${(row.open?.reduce(openReducer, []).length / row.sentTo?.length * 100).toFixed(1) || 0}%,
+            Click: ${(row.click?.reduce(clickReducer, []).length / row.sentTo?.length * 100).toFixed(1) || 0}%`
         }
     },
     {

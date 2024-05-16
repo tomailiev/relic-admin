@@ -46,7 +46,7 @@ const columnFA = [
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Background Url', id: 'backgroundUrl' },
     { label: 'Border', id: 'border' },
-    { label: 'Border radius', id: 'borderRadius', type: 'number' },
+    { label: 'Border radius', id: 'borderRadius' },
     { label: 'Padding', id: 'padding' },
     { label: 'Text align', id: 'textAlign', type: 'select', options: ['left', 'right', 'center', 'justify'] },
 ]

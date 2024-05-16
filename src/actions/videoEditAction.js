@@ -23,7 +23,7 @@ export default async function videoEditAction({ request, params }) {
     }
     try {
         const { id: _, ...rest } = updates;
-        await uploadDoc(rest, collections.videos, updates.id, true);
+        await uploadDoc({ ...rest, featured: Number(rest.featured) }, collections.videos, updates.id, true);
         return redirect(`/videos/${updates.id}`);
     } catch (e) {
         console.log(e);
