@@ -1,16 +1,10 @@
-import { Email, Face, LocationCity, LocationOn, Smartphone } from "@mui/icons-material";
+import { Email, LocationCity, LocationOn, Smartphone } from "@mui/icons-material";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 const DonorFields = ({ donor }) => {
 
     return (
         <List>
-            <ListItem>
-                <ListItemIcon>
-                    <Face />
-                </ListItemIcon>
-                <ListItemText primary={`${donor.firstName} ${donor.lastName}`} primaryTypographyProps={{variant: 'h5'}} />
-            </ListItem>
             {donor.email && <ListItem>
                 <ListItemIcon>
                     <Email />

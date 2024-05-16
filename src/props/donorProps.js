@@ -132,7 +132,7 @@ const donorProps = {
     itemType: 'donors',
     columns: donorColumns,
     sorting: { field: 'lastDonationDate', sort: 'desc' },
-    pageSize: 25,
+    pageSize: 50,
     pageSizeOptions: [25, 50, 100],
     formType: 'simple',
     fields: donorFields,

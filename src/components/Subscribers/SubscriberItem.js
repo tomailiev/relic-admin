@@ -2,7 +2,7 @@ import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typ
 // import { createRef, useEffect } from "react";
 // import { getMap } from "../../utils/google-maps/getMap";
 // import { DataGrid } from "@mui/x-data-grid";
-import { Email, Face, LocationOn, Loyalty, Style } from "@mui/icons-material";
+import { Email, LocationOn, Loyalty, Style, ImportContacts, Event } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import subscriberProps from '../../props/subscriberProps'
 import { useLocation } from "react-router-dom";
@@ -13,20 +13,17 @@ const SubscriberItem = ({ item }) => {
 
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
-            <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
+            <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
+            <Grid key={item.id} container spacing={2} mt={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
-                {/* <Grid item md={6} sm={8} xs={12} p={6}>
-                    <Container disableGutters ref={mapRef} sx={{ width: '100%', height: '300px', borderRadius: '4px' }} />
-                </Grid> */}
+                <Grid item md={6} sm={8} xs={12} p={6}>
+                    <Container disableGutters sx={{ borderRadius: '4px', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} >
+                        <img width={'50%'} src="https://upload.wikimedia.org/wikipedia/commons/f/f9/User_%2889041%29_-_The_Noun_Project.svg" alt="user avatar" />
+                    </Container>
+                </Grid>
                 <Grid item md={6}>
                     <List>
-                        <ListItem>
-                            <ListItemIcon>
-                                <Face />
-                            </ListItemIcon>
-                            <ListItemText primary={`${item.firstName} ${item.lastName}`} primaryTypographyProps={{ variant: 'h5' }} />
-                        </ListItem>
                         {item.email && <ListItem>
                             <ListItemIcon>
                                 <Email />
@@ -51,6 +48,18 @@ const SubscriberItem = ({ item }) => {
                             </ListItemIcon>
                             <ListItemText primary={item.status ? 'Subscribed' : 'Unsubscribed'} />
                         </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <ImportContacts />
+                            </ListItemIcon>
+                            <ListItemText primary={item.origin} />
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <Event />
+                            </ListItemIcon>
+                            <ListItemText primary={`Contact since ${item.opt_in_time}`} />
+                        </ListItem>
                     </List>
 
                 </Grid>
@@ -68,9 +77,9 @@ const SubscriberItem = ({ item }) => {
                                 sorting: {
                                     sortModel: [{ field: 'timestamp', sort: 'desc' }],
                                 },
-                                pagination: { paginationModel: 10 }
+                                pagination: { paginationModel: { pageSize: 5 } }
                             }}
-                            pageSizeOptions={[10, 25, 50]}
+                            pageSizeOptions={[5, 10, 25]}
 
                         />
                     </Box>
