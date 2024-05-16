@@ -98,7 +98,7 @@ const subscriberProps = {
     actionBox: <SubscriberActionBox />,
     columns: subscriberColumns,
     historyColumns: historyColumns,
-    sorting: { field: 'email', sort: 'asc' },
+    sorting: { field: 'opt_in_time', sort: 'desc' },
     pageSize: 50,
     pageSizeOptions: [25, 50, 100],
     formType: 'dynamic',
