@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
@@ -25,12 +25,16 @@ function uploadFile(file, path) {
         })
 }
 
-function downloadDocs(col, condition, sorting) {
-    const q = sorting
-        ? query(collection(db, col), where(...condition), orderBy(...sorting))
-        : condition
-            ? query(collection(db, col), where(...condition))
-            : query(collection(db, col));
+function downloadDocs(col, options = []) {
+    const queryConditions = options?.map(c => (
+        c.type === 'where'
+            ? where(...c.value)
+            : c.type === 'orderBy'
+                ? orderBy(...c.value)
+                : limit(...c.value)
+    ));
+    const q = query(collection(db, col), ...queryConditions);
+
     return getDocs(q)
         .then(qSnap => {
             const docs = [];
