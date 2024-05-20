@@ -107,6 +107,10 @@ const campaignSchema = object({
     from: string().email()
 });
 
+const templateSchema = object({
+    subject: string().required()
+});
+
 const emailComponentSchemas = {
     text: object({
         text: string().required(),
@@ -226,6 +230,7 @@ export {
     CSVSchema,
     subscriberSchema,
     campaignSchema,
+    templateSchema,
     emailComponentSchemas,
     selectComponentSchema,
     donationAcknowledgementSchema,

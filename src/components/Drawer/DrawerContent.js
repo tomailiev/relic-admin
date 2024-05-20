@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, SpaceDashboardOutlined, SpaceDashboard, } from '@mui/icons-material';
 // import StorageIcon from '@mui/icons-material/Storage';
 
 
@@ -25,8 +25,9 @@ const DrawerContent = () => {
     ];
 
     const emailMenu = [
-        { title: 'Subscribers', path: 'subscribers', iconActive: <RecentActorsOutlined />, iconInactive: <RecentActors />  },
-        { title: 'Campaigns', path: 'campaigns', iconActive: <SendOutlined />, iconInactive: <Send /> }
+        { title: 'Subscribers', path: 'subscribers', iconActive: <RecentActorsOutlined />, iconInactive: <RecentActors /> },
+        { title: 'Campaigns', path: 'campaigns', iconActive: <SendOutlined />, iconInactive: <Send /> },
+        { title: 'Templates', path: 'templates', iconActive: <SpaceDashboardOutlined />, iconInactive: <SpaceDashboard /> }
     ]
     return (
         <>
