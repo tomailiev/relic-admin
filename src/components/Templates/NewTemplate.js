@@ -1,8 +1,7 @@
 import { Box, Button, } from "@mui/material"
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import AddSimpleForm from "../Forms/AddSimpleForm";
-import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
-import ErrorContext from "../../context/ErrorContext";
+import { useSubmit } from "react-router-dom";
 
 
 const NewTemplate = ({ itemType, fields, fieldsArray, }) => {
