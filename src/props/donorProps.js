@@ -56,7 +56,7 @@ const donorColumns = [
     },
     {
         field: 'yearEndStatus',
-        headerName: 'Current status',
+        headerName: 'Current tier',
         valueGetter: ({ row }) => getTier(row.donations
             .filter(donation => new Date(donation.date) >= startDate && new Date(donation.date <= endDate))
             .reduce((a, c) => a + c.amount, 0)),
@@ -101,6 +101,7 @@ const donorFA = [
     { label: 'Address', id: 'address' },
     { label: 'Location', id: 'location' },
     { label: 'Phone #', id: 'phone' },
+    { label: 'Tier', id: 'tier', type: 'select', options: ['', 'Muse', 'Dionysus', 'Artemis', 'Hermes', 'Athena', 'Apollo', 'Zeus & Hera'] }
 ];
 
 const donationFA = [
@@ -117,7 +118,8 @@ const donorFields = {
     email: '',
     address: '',
     location: '',
-    phone: ''
+    phone: '',
+    tier: ''
 };
 
 const donationFields = {

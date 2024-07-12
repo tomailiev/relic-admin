@@ -6,5 +6,4 @@ const loader = new Loader({
     version: "weekly",
     libraries: ["places", "geocoding"]
 });
-
 export default loader;

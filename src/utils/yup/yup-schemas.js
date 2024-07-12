@@ -74,7 +74,8 @@ const donorSchema = object({
     email: string().email(),
     address: string(),
     location: string(),
-    phone: string()
+    phone: string(),
+    tier: string()
 });
 
 const grantSchema = object({
