@@ -1,5 +1,6 @@
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
 
 const videoColumns = [
     {
@@ -51,10 +52,13 @@ const videoProps = {
     sorting: { field: 'featured', sort: 'desc' },
     pageSize: 10,
     pageSizeOptions: [5, 10, 20],
-    formType: 'simple', 
     fields: fields,
     fieldsArray: videoFA,
-    initialFieldsArray: initialVideoFA
+    initialFieldsArray: initialVideoFA,
+    formType: 'simple',
+    encType: 'application/json',
+    steps: ['initialFieldsArray', 'fieldsArray', 'preview'],
+    schemas: { initialFieldsArray: initialVideoSchema, fieldsArray: videoSchema }
 };
 
 export default videoProps;
