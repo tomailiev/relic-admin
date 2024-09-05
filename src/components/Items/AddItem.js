@@ -8,6 +8,7 @@ import AddDynamicForm from "../Forms/AddDynamicForm";
 import AddFileForm from "../Forms/AddFileForm";
 import AddForm from "../Forms/AddForm";
 
+
 // const steps = [
 //     'Add doc',
 //     'Preview'
@@ -28,13 +29,19 @@ import AddForm from "../Forms/AddForm";
 // }
 
 const AddItem = (itemProps) => {
-    console.log(itemProps);
 
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
+
+    const labels = {
+        fieldsArray: 'Fill out the fields',
+        initialFieldsArray: 'Fill out the initial fields',
+        nestedArray: `Add ${itemProps.nestedName}`,
+        preview: 'Preview'
+    }
 
     useEffect(() => {
         if (actionData?.error) {
@@ -54,7 +61,7 @@ const AddItem = (itemProps) => {
                 {itemProps.steps?.map((label) => {
                     return (
                         <Step key={label}>
-                            <StepLabel>{label}</StepLabel>
+                            <StepLabel>{labels[label]}</StepLabel>
                         </Step>
                     )
                 })}

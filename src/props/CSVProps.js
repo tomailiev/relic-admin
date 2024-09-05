@@ -4,6 +4,7 @@
 
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CSVSchema } from "../utils/yup/yup-schemas";
 
 const CSVListColumns = [
     // { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0 },
@@ -26,7 +27,7 @@ const CSVListColumns = [
 ];
 
 const CSVColumns = [
-    {field: 'name', headerName: 'Name', flex: 4 },
+    { field: 'name', headerName: 'Name', flex: 4 },
     {
         field: 'select',
         headerName: 'Select',
@@ -61,6 +62,9 @@ const CSVProps = {
     formType: 'file',
     fields: fields,
     fieldsArray: csvFA,
+    encType: 'multipart/form-data',
+    steps: ['fieldsArray', 'preview'],
+    schemas: { fieldsArray: CSVSchema }
 };
 
 export default CSVProps;

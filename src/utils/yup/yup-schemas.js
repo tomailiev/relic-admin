@@ -84,6 +84,10 @@ const grantSchema = object({
     description: string()
 });
 
+const dueMonthsSchema = object({
+    dueMonth: number().required().min(0).max(11)
+});
+
 
 const CSVSchema = object().shape({
     csv: mixed().required('CSV file upload required').test('is-valid-type', 'Not a valid CSV file', (value) => {
@@ -99,6 +103,10 @@ const subscriberSchema = object({
     location: string(),
     status: string().oneOf(["0", "1"]).required()
 });
+
+const tagsSchema = object({
+    tag: string().required()
+})
 
 const campaignSchema = object({
     subject: string(),
@@ -223,8 +231,10 @@ export {
     donorSchema,
     donationSchema,
     grantSchema,
+    dueMonthsSchema,
     CSVSchema,
     subscriberSchema,
+    tagsSchema,
     campaignSchema,
     emailComponentSchemas,
     selectComponentSchema,

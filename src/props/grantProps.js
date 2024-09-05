@@ -4,6 +4,7 @@ import months from "../vars/months";
 import schematifyGrant from "../vars/schematifyGrant";
 import { Check, Close, OpenInNew } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { dueMonthsSchema, grantSchema } from "../utils/yup/yup-schemas";
 
 const grantColumns = [
     { field: 'name', headerName: 'Name', flex: 2 },
@@ -93,7 +94,10 @@ const grantProps = {
     nestedArray: monthsFA,
     nestedName: 'dueMonths',
     schematifyFn: schematifyGrant,
-    deschematifyFn: deschematifyGrant
+    deschematifyFn: deschematifyGrant,
+    encType: 'application/json',
+    steps: ['fieldsArray', 'nestedArray', 'preview'],
+    schemas: { fieldsArray: grantSchema, nestedArray: dueMonthsSchema }
 };
 
 export default grantProps;
