@@ -55,6 +55,11 @@ const AddItem = (itemProps) => {
         submit(formData, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: itemProps.encType })
     }
 
+    function handleSubmitEvent(submision) {
+        console.log(submision);
+        setActiveStep(prev => ++prev);
+    }
+
     return (
         <Box m={4}>
             <Stepper activeStep={activeStep}>
@@ -67,7 +72,7 @@ const AddItem = (itemProps) => {
                 })}
             </Stepper>
             {activeStep !== itemProps.steps.length - 1
-                ? <AddForm fields={submission || itemProps.fields} fieldsArray={submission || itemProps[itemProps.steps[activeStep]]} handleFormCompletion={setSubmission} schema={itemProps[itemProps.steps[activeStep]]} />
+                ? <AddForm fields={submission || itemProps.fields} fieldsArray={submission || itemProps[itemProps.steps[activeStep]]} handleFormCompletion={handleSubmitEvent} schema={itemProps.schemas[itemProps.steps[activeStep]]} nestedLength={itemProps.steps[activeStep] === 'nestedArray' ? 1 : 0} nestedArray={itemProps.nestedArray} nestedName={itemProps.nestedName} />
                 : <ItemSwitch item={submission} itemType={itemProps.itemType} mutateItem={setSubmission} />
             }
             {/* {activeStep === 0 && formType === 'simple' &&

@@ -179,24 +179,6 @@ const AddDynamicForm = ({ fields, fieldsArray, nestedFields, nestedArray, nested
                                                     <FormHelperText>{props.helperText}</FormHelperText>
                                                 </FormControl>
                                                 : <TextField {...props} />
-                                        // return <TextField
-                                        //     focused
-                                        //     key={id}
-                                        //     id={itemId}
-                                        //     name={itemId}
-                                        //     type={type || 'text'}
-                                        //     step={'any'}
-                                        //     error={!!hasError[itemId] && (hasError[itemId] !== userFields[itemId])}
-                                        //     value={userFields[itemId]}
-                                        //     onFocus={() => setHasError(prev => ({ ...prev, [itemId]: '' }))}
-                                        //     onChange={handleInputChange}
-                                        //     helperText={(hasError[itemId] !== userFields[itemId]) && hasError[itemId]}
-                                        //     label={label}
-                                        //     variant="outlined"
-                                        //     size="small"
-                                        //     // multiline={id === 'message'}
-                                        //     rows={4}
-                                        // />
                                     })}
                                 </Stack>
                             </Grid>

@@ -22,10 +22,7 @@ export default async function musicianAddAction({ request, params }) {
         }
     }
     try {
-        const featured = Number(updates.featured);
-        const upload = await uploadDoc({ ...updates, featured }, collections.musicians);
-        console.log(upload);
-        return redirect('/musicians');
+ 
     } catch (e) {
         if (e.inner) {
             const errors = e.inner.reduce((p, c) => {

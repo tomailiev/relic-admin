@@ -24,7 +24,7 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
-    pic: string().required('File path required')
+    pic: mixed().required()
 });
 
 const userSchema = object({
