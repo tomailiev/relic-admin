@@ -1,6 +1,6 @@
 import { object, string, array, number, ref, mixed } from 'yup'
 
-const performanceSchema = object({
+const performanceSchema = array().of(object({
     date: string().required('date required'),
     time: string().required('time required'),
     id: number().required('id required'),
@@ -9,7 +9,7 @@ const performanceSchema = object({
     venue: string().required('venue required'),
     lat: number('value needs to be a number'),
     lng: number('value needs to be a number')
-});
+})).min(1);
 
 const eventFileSchema = object({
     imageUrl: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
@@ -21,7 +21,7 @@ const eventSchema = object({
     dateDone: string().required('date required'),
     description: string().required('description required'),
     title: string().required('title required'),
-    performances: array().of(performanceSchema).min(1)
+    // performances: array().of(performanceSchema).min(1)
 });
 
 const musicianSchema = object({

@@ -2,12 +2,12 @@ import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper,
 import { useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 
-const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema }) => {
+const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, }) => {
     const navigation = useNavigation();
 
     const [nestedItems, setNestedItems] = useState(Array(nestedLength).fill(fields));
-    const [hasError, setHasError] = useState(fields);
-    const [userFields, setUserFields] = useState(fields);
+    const [hasError, setHasError] = useState(Array(nestedLength).fill(fields));
+    // const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
 
@@ -21,7 +21,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }, [navigation.state]);
 
     function handleInputChange(e, index, id) {
-        console.log(nestedItems);
 
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)
@@ -33,27 +32,33 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
 
 
     async function handleSubmitEvent() {
-        console.log(userFields);
 
-        const data = userFields;
         try {
-            const validated = await schema.validate(data, { abortEarly: false });
+            const validated = await schema.validate(nestedItems, { abortEarly: false });
+            // const validated = await schema.validate(data, { abortEarly: false });
             handleFormCompletion(validated);
             // setUserFields(fields);
         } catch (e) {
             if (e.inner) {
-                const errors = e.inner?.reduce((p, c) => {
-                    return { ...p, [c.path]: c.message, };
-                }, {});
-
-                setHasError(errors);
+                setHasError(e.inner?.reduce((p, c) => {
+                    const startChar = c.path?.indexOf('[');
+                    const endChar = c.path?.indexOf(']');
+                    const index = Number(c.path?.substring(startChar + 1, endChar));
+                    const prop = c.path?.substring(endChar + 2);
+                    if (!p[index]) p[index] = {};
+                    p[index][prop] = c.message;
+                    return p;
+                }, []))
             }
         }
 
     }
 
-    function removeError(e) {
-        setHasError(prev => ({ ...prev, [e.target.id]: '' }))
+    function removeError(e, index, id) {
+        // setHasError(prev => ({ ...prev, [e.target.id]: '' }))
+        setHasError((prev) => {
+            return prev.map((item, i) => i === index ? { ...item, [id]: '' } : item)
+        })
     }
 
     function removeNestedItem(index) {
@@ -103,9 +108,9 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                             type: type || 'text',
                                             value: nestedItems[index][id],
                                             onChange: (e) => handleInputChange(e, index, id),
-                                            error: !!(hasError[itemId]),
-                                            onFocus: removeError,
-                                            helperText: hasError[itemId],
+                                            error: !!(hasError[index] ? hasError[index][id] : null),
+                                            onFocus: (e) => removeError(e, index, id),
+                                            helperText: hasError[index] ? hasError[index][id] : null,
                                             label: label,
                                             size: 'small',
                                             multiline: multiline,
