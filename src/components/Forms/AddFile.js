@@ -1,13 +1,13 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
+import { Button, Paper, Stack, } from "@mui/material";
+import { MuiFileInput } from "mui-file-input";
 import { useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
-    // const [nestedFields, setNestedFields] = useState(Array(nestedLength).fill(fields));
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -23,12 +23,15 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
-    function handleInputChange(e) {
+    function handleFileChange(newValue, id) {
         setUserFields(prev => {
-            return { ...prev, [e.target.name]: e.target.value }
+            return { ...prev, [id]: newValue }
         })
     }
 
+    // function handleFileChange(fileInput, id) {
+    //     setFileValue(fileInput)
+    // }
 
     async function submitForm() {
 
@@ -37,8 +40,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             handleFormCompletion(validated);
             // setUserFields(fields);
         } catch (e) {
-            console.log(e);
-            
             if (e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
                     return { ...p, [c.path]: c.message, };
@@ -62,14 +63,14 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type, multiline, options }) => {
+                    {fieldsArray.map(({ id, label, type, multiline }) => {
                         const props = {
                             key: id,
                             id: id,
                             name: id,
-                            type: type || 'text',
+                            type: type || 'file',
                             value: userFields[id],
-                            onChange: handleInputChange,
+                            onChange: (newValue) => handleFileChange(newValue, id),
                             error: !!(hasError[id]),
                             onFocus: removeError,
                             helperText: hasError[id],
@@ -80,15 +81,8 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             // rows: 4
                         }
 
-                        return type === 'select'
-                            ? <FormControl key={id}>
-                                <InputLabel>{label}</InputLabel>
-                                <Select {...props}>
-                                    {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
-                                </Select>
-                                <FormHelperText>{props.helperText}</FormHelperText>
-                            </FormControl>
-                            : <TextField {...props} />
+                        return <MuiFileInput {...props} error={!!(hasError[id])} helperText={hasError[id]} />
+
                     })}
                     <Button
                         variant="contained"
@@ -106,4 +100,4 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     );
 };
 
-export default AddForm;
+export default AddFile;

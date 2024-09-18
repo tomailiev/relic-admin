@@ -3,7 +3,7 @@ import deschematifyEvent from "../vars/deschematifyEvent";
 import schematifyEvent from "../vars/schematifyEvent";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";
-import { eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
+import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
 
 const eventColumns = [
     {
@@ -42,7 +42,7 @@ const eventColumns = [
 const eventFields = {
     dateDone: '',
     description: '',
-    imageUrl: '',
+    // imageUrl: '',
     title: '',
     // performances: []
 };
@@ -61,7 +61,7 @@ const performanceFields = {
 const eventFA = [
     { label: 'Date done', id: 'dateDone', type: 'date' },
     { label: 'Description', id: 'description', multiline: true },
-    { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
+    // { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
     { label: 'Title', id: 'title' },
 ];
 
@@ -87,13 +87,15 @@ const eventProps = {
     nestedFields: performanceFields,
     fieldsArray: eventFA,
     nestedArray: performanceFA,
+    filesFields: { imageUrl: '' },
+    filesFieldsArray: [{ label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` }],
     nestedName: 'performances',
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,
     formType: 'dynamic',
     encType: 'application/json',
-    steps: ['fieldsArray', 'nestedArray', 'preview'],
-    schemas: { fieldsArray: eventSchema, nestedArray: performanceSchema }
+    steps: ['files', 'fieldsArray', 'nestedArray', 'preview'],
+    schemas: { files: eventFileSchema, fieldsArray: eventSchema, nestedArray: performanceSchema }
 };
 
 export default eventProps;

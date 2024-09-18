@@ -11,10 +11,15 @@ const performanceSchema = object({
     lng: number('value needs to be a number')
 });
 
+const eventFileSchema = object({
+    imageUrl: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    })
+})
+
 const eventSchema = object({
     dateDone: string().required('date required'),
     description: string().required('description required'),
-    imageUrl: string().required('imageUrl required'),
     title: string().required('title required'),
     performances: array().of(performanceSchema).min(1)
 });
@@ -223,6 +228,7 @@ export {
     musicianSchema,
     videoSchema,
     performanceSchema,
+    eventFileSchema,
     newTextSchema,
     userSchema,
     initialVideoSchema,

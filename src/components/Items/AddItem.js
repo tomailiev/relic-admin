@@ -1,12 +1,12 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
 import AddDynamicForm from "../Forms/AddDynamicForm";
-import AddFileForm from "../Forms/AddFileForm";
 import AddForm from "../Forms/AddForm";
+import AddFile from "../Forms/AddFile";
+import AddDynamic from "../Forms/AddDynamic";
 
 
 // const steps = [
@@ -28,36 +28,50 @@ import AddForm from "../Forms/AddForm";
 //     steps
 // }
 
-const AddItem = (itemProps) => {
 
+const AddItem = (itemProps) => {
+    
     const [activeStep, setActiveStep] = useState(0);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-
+    
     const labels = {
+        files: 'Upload files',
         fieldsArray: 'Fill out the fields',
         initialFieldsArray: 'Fill out the initial fields',
         nestedArray: `Add ${itemProps.nestedName}`,
         preview: 'Preview'
     }
 
+    
     useEffect(() => {
         if (actionData?.error) {
             setError(actionData);
         }
     }, [actionData, setError]);
-
+    
     function finishSubmission() {
         const formData = new FormData();
         Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(formData, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: itemProps.encType })
     }
 
-    function handleSubmitEvent(submision) {
-        console.log(submision);
-        setActiveStep(prev => ++prev);
+    function handleSubmitEvent(submission) {
+        console.log(submission);
+        setTimeout(() => {
+            console.log('hello');
+            
+            setActiveStep(prev => ++prev);
+        }, 1500);
+    }
+    
+    const steps = {
+        files: <AddFile fields={itemProps.filesFields} fieldsArray={itemProps.filesFieldsArray} schema={itemProps.schemas.files} handleFormCompletion={handleSubmitEvent} />,
+        fieldsArray: <AddForm fields={submission || itemProps.fields} fieldsArray={submission || itemProps[itemProps.steps[activeStep]]} handleFormCompletion={handleSubmitEvent} schema={itemProps.schemas[itemProps.steps[activeStep]]} />,
+        nestedArray: <AddDynamic fields={submission || itemProps.nestedFields} nestedArray={itemProps.nestedArray} nestedName={itemProps.nestedName} handleFormCompletion={handleSubmitEvent} nestedLength={1} schema={itemProps.schemas[itemProps.steps[activeStep]]} />,
+        preview: <ItemSwitch item={submission} itemType={itemProps.itemType} mutateItem={setSubmission} />
     }
 
     return (
@@ -71,10 +85,11 @@ const AddItem = (itemProps) => {
                     )
                 })}
             </Stepper>
-            {activeStep !== itemProps.steps.length - 1
+            {steps[itemProps.steps[activeStep]]}
+            {/* {activeStep !== itemProps.steps.length - 1
                 ? <AddForm fields={submission || itemProps.fields} fieldsArray={submission || itemProps[itemProps.steps[activeStep]]} handleFormCompletion={handleSubmitEvent} schema={itemProps.schemas[itemProps.steps[activeStep]]} nestedLength={itemProps.steps[activeStep] === 'nestedArray' ? 1 : 0} nestedArray={itemProps.nestedArray} nestedName={itemProps.nestedName} />
                 : <ItemSwitch item={submission} itemType={itemProps.itemType} mutateItem={setSubmission} />
-            }
+            } */}
             {/* {activeStep === 0 && formType === 'simple' &&
                 <AddSimpleForm fields={submission || fields} fieldsArray={submission ? fieldsArray : initialFieldsArray || fieldsArray} handleFormCompletion={setSubmission} />}
             {activeStep === 0 && formType === 'dynamic' &&
