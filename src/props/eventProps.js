@@ -88,7 +88,7 @@ const eventProps = {
     fieldsArray: eventFA,
     nestedArray: performanceFA,
     filesFields: { imageUrl: '' },
-    filesFieldsArray: [{ label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` }],
+    filesFieldsArray: [{ label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' }],
     nestedName: 'performances',
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,

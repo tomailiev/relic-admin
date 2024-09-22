@@ -13,7 +13,6 @@ import { uploadFile } from "../../utils/firebase/firebase-functions";
 const AddItem = (itemProps) => {
 
     const [activeStep, setActiveStep] = useState(0);
-    // const [submission, setSubmission] = useState(itemProps.nestedName ? { ...itemProps.fields, [itemProps.nestedName]: [itemProps.nestedFields] } : itemProps.fields);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const { submission, setSubmission } = useContext(SubmissionContext);
@@ -27,36 +26,29 @@ const AddItem = (itemProps) => {
         preview: 'Preview'
     }
 
-
     useEffect(() => {
 
         if (actionData?.error) {
             setError(actionData);
         }
 
-        return () => setSubmission({});
-        
-    }, [actionData, setError, setSubmission]);
-
-
-
+    }, [actionData, setError]);
 
     function finishSubmission() {
-        const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: itemProps.encType })
+        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' })
     }
 
     async function handleFileSubmission(data) {
         const filePaths = {};
-            await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
-                const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
-                filePaths[item.id] = { path: filePath, file: data[item.id] };
-                return item;
-            }));
-            setSubmission(prev => {
-                return Object.assign(prev, filePaths);
-            })
+        await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
+            const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
+            filePaths[item.id] = filePath;
+            filePaths[item.displayName] = data[item.id];
+            return item;
+        }));
+        setSubmission(prev => {
+            return Object.assign(prev, filePaths);
+        })
         handleSubmitEvent();
     }
 
@@ -76,16 +68,14 @@ const AddItem = (itemProps) => {
     }
 
     function handleSubmitEvent() {
-        setTimeout(() => {
             setActiveStep(prev => ++prev);
-        }, 1500);
     }
 
     const steps = {
-        files: <AddFile fields={itemProps.filesFields} fieldsArray={itemProps.filesFieldsArray} schema={itemProps.schemas.files} handleFormCompletion={handleFileSubmission} />,
+        files: <AddFile fields={submission || itemProps.filesFields} fieldsArray={itemProps.filesFieldsArray} schema={itemProps.schemas.files} handleFormCompletion={handleFileSubmission} />,
         fieldsArray: <AddForm fields={submission || itemProps.fields} fieldsArray={itemProps[itemProps.steps[activeStep]]} handleFormCompletion={handleObjectSubmission} schema={itemProps.schemas[itemProps.steps[activeStep]]} />,
         nestedArray: <AddDynamic fields={submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]} nestedArray={itemProps.nestedArray} nestedName={itemProps.nestedName} handleFormCompletion={handleArraySubmission} nestedLength={1} schema={itemProps.schemas[itemProps.steps[activeStep]]} blanks={itemProps.nestedFields} />,
-        preview: <ItemSwitch item={submission} itemType={itemProps.itemType} mutateItem={setSubmission} />
+        preview: <ItemSwitch item={submission} itemType={itemProps.itemType} />
     }
 
     return (
@@ -111,7 +101,7 @@ const AddItem = (itemProps) => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
-                {itemProps.steps[activeStep] === itemProps.steps.length - 1 &&
+                {activeStep === itemProps.steps.length - 1 &&
                     <Button variant="contained" onClick={finishSubmission}>
                         Finish
                     </Button>

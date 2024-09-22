@@ -19,7 +19,7 @@ const EventItem = ({ item }) => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={URL.createObjectURL(item.imageUrl?.file)}
+                            image={URL.createObjectURL(item.imgSrc)}
                             alt="event image"
                         ></CardMedia>
                         {/* </CardActionArea> */}

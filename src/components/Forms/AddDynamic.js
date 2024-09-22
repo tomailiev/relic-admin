@@ -70,8 +70,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                         Add {nestedName}
                     </Button>
                     <Grid container>
-                        {nestedItems?.map((item, index, arr) => {
-                            console.log(arr);
+                        {nestedItems?.map((_item, index, arr) => {
                             
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
