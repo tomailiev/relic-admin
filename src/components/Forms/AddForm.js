@@ -7,9 +7,8 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
-    // const [nestedFields, setNestedFields] = useState(Array(nestedLength).fill(fields));
     const [isSubmitting, setIsSubmitting] = useState(false);
-
+    
     useEffect(() => {
         const submissionStates = {
             submitting: true,
@@ -35,7 +34,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         try {
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
-            // setUserFields(fields);
         } catch (e) {
             console.log(e);
             
@@ -48,15 +46,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             }
         }
     }
-
-    // function removeNestedItem(index) {
-    //     console.log(index);
-    //     setNestedFields(prev => prev.slice(0, index).concat(prev.slice(index + 1)));
-    // }
-
-    // function addNestedItem() {
-    //     setNestedFields(prev => prev.concat(fields));
-    // }
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>

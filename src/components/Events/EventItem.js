@@ -5,7 +5,8 @@ import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumb
 
 const EventItem = ({ item }) => {
 
-
+    console.log(item);
+    
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
@@ -18,7 +19,7 @@ const EventItem = ({ item }) => {
                             component="img"
                             // width="70%"
                             // height={150}
-                            image={URL.createObjectURL(item.imgSrc)}
+                            image={URL.createObjectURL(item.imageUrl?.file)}
                             alt="event image"
                         ></CardMedia>
                         {/* </CardActionArea> */}

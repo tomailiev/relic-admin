@@ -29,16 +29,11 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         })
     }
 
-    // function handleFileChange(fileInput, id) {
-    //     setFileValue(fileInput)
-    // }
-
     async function submitForm() {
 
         try {
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
-            // setUserFields(fields);
         } catch (e) {
             if (e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
@@ -49,15 +44,6 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             }
         }
     }
-
-    // function removeNestedItem(index) {
-    //     console.log(index);
-    //     setNestedFields(prev => prev.slice(0, index).concat(prev.slice(index + 1)));
-    // }
-
-    // function addNestedItem() {
-    //     setNestedFields(prev => prev.concat(fields));
-    // }
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>

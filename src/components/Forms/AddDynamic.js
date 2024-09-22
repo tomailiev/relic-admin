@@ -2,12 +2,11 @@ import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper,
 import { useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 
-const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, }) => {
+const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks}) => {
     const navigation = useNavigation();
-
-    const [nestedItems, setNestedItems] = useState(Array(nestedLength).fill(fields));
-    const [hasError, setHasError] = useState(Array(nestedLength).fill(fields));
-    // const [userFields, setUserFields] = useState(fields);
+    
+    const [nestedItems, setNestedItems] = useState(fields);
+    const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
 
 
@@ -21,13 +20,9 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }, [navigation.state]);
 
     function handleInputChange(e, index, id) {
-
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)
         })
-        // setUserFields(prev => {
-        //     return { ...prev, [e.target.name]: e.target.value }
-        // })
     }
 
 
@@ -35,9 +30,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
 
         try {
             const validated = await schema.validate(nestedItems, { abortEarly: false });
-            // const validated = await schema.validate(data, { abortEarly: false });
             handleFormCompletion(validated);
-            // setUserFields(fields);
         } catch (e) {
             if (e.inner) {
                 setHasError(e.inner?.reduce((p, c) => {
@@ -55,7 +48,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }
 
     function removeError(e, index, id) {
-        // setHasError(prev => ({ ...prev, [e.target.id]: '' }))
         setHasError((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: '' } : item)
         })
@@ -67,25 +59,8 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }
 
     function addNestedItem() {
-        setNestedItems(prev => prev.concat(fields));
+        setNestedItems(prev => prev.concat(blanks));
     }
-
-    // function addNestedItem() {
-    //     setNestedItems(prev => prev.concat(nestedFields));
-    // }
-
-
-    // function removeNestedItem() {
-    //     Object.entries(userFields).forEach(([key,]) => {
-    //         if (key.match(nestedName && key.match(nestedItems.length - 1))) {
-    //             setUserFields(o => {
-    //                 const { [key]: _, ...rest } = o;
-    //                 return rest;
-    //             })
-    //         }
-    //     })
-    //     setNestedItems(prev => prev.slice(0, prev.length - 1));
-    // }
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
@@ -95,18 +70,21 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                         Add {nestedName}
                     </Button>
                     <Grid container>
-                        {nestedItems?.map((_item, index) => {
+                        {nestedItems?.map((item, index, arr) => {
+                            console.log(arr);
+                            
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
                                 <Stack spacing={2}>
                                     {nestedArray.map(({ id, label, type, multiline, options }) => {
-                                        const itemId = `${nestedName}[${index}].${id}`;
+                                        // const itemId = `[${index}].${id}`;
+                                        
                                         const props = {
+                                            value: arr[index][id],
                                             key: id,
-                                            id: itemId,
-                                            // name: itemId,
+                                            id: id,
+                                            name: id,
                                             type: type || 'text',
-                                            value: nestedItems[index][id],
                                             onChange: (e) => handleInputChange(e, index, id),
                                             error: !!(hasError[index] ? hasError[index][id] : null),
                                             onFocus: (e) => removeError(e, index, id),
