@@ -1,4 +1,5 @@
 import { object, string, array, number, ref, mixed } from 'yup'
+import months from '../../vars/months';
 
 const performanceSchema = array().of(object({
     date: string().required('date required'),
@@ -90,13 +91,13 @@ const donorSchema = object({
 const grantSchema = object({
     name: string().required(),
     link: string().url().required(),
-    notification: number().oneOf([0, 1]).required(),
+    notification: string().oneOf(['No', 'Yes']).required(),
     description: string()
 });
 
-const dueMonthsSchema = object({
-    dueMonth: number().required().min(0).max(11)
-});
+const dueMonthsSchema = array().of(object({
+    dueMonth: string().required().oneOf(months)
+}));
 
 
 const CSVSchema = object().shape({

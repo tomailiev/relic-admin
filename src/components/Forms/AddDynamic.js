@@ -20,6 +20,8 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }, [navigation.state]);
 
     function handleInputChange(e, index, id) {
+        console.log(e.target.value);
+        
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)
         })
@@ -33,6 +35,8 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
             handleFormCompletion(validated);
         } catch (e) {
             if (e.inner) {
+                console.log(e.inner);
+                
                 setHasError(e.inner?.reduce((p, c) => {
                     const startChar = c.path?.indexOf('[');
                     const endChar = c.path?.indexOf(']');
@@ -99,7 +103,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                             ? <FormControl key={id}>
                                                 <InputLabel>{label}</InputLabel>
                                                 <Select {...props}>
-                                                    {options.map((option, i) => <MenuItem value={i} key={option}>{option}</MenuItem>)}
+                                                    {options.map((option, i) => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                                 </Select>
                                                 <FormHelperText>{props.helperText}</FormHelperText>
                                             </FormControl>

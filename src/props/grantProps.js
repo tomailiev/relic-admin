@@ -73,7 +73,7 @@ const grantsFA = [
 const monthsFA = [
     {
         label: 'Month',
-        id: 'month',
+        id: 'dueMonth',
         type: 'select',
         options: months
     }
