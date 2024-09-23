@@ -29,8 +29,13 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
-    pic: mixed().required()
 });
+
+const musicianFileSchema = object({
+    pic: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    })
+})
 
 const userSchema = object({
     email: string().required().email(),
@@ -226,6 +231,7 @@ const donationAcknowledgementSchema = object({
 export {
     eventSchema,
     musicianSchema,
+    musicianFileSchema,
     videoSchema,
     performanceSchema,
     eventFileSchema,

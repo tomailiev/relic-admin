@@ -35,6 +35,8 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
         } catch (e) {
+            console.log(e);
+            
             if (e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
                     return { ...p, [c.path]: c.message, };

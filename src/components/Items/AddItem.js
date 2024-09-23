@@ -34,22 +34,29 @@ const AddItem = (itemProps) => {
 
     }, [actionData, setError]);
 
+    useEffect(() => () => setSubmission({}), [setSubmission]);
+
     function finishSubmission() {
         submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' })
     }
 
     async function handleFileSubmission(data) {
         const filePaths = {};
-        await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
-            const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
-            filePaths[item.id] = filePath;
-            filePaths[item.displayName] = data[item.id];
-            return item;
-        }));
-        setSubmission(prev => {
-            return Object.assign(prev, filePaths);
-        })
-        handleSubmitEvent();
+        try {
+            await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
+                const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
+                filePaths[item.id] = filePath;
+                filePaths[item.displayName] = data[item.id];
+                return item;
+            }));
+            setSubmission(prev => {
+                return Object.assign(prev, filePaths);
+            })
+            handleSubmitEvent();
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
 
     function handleObjectSubmission(data) {

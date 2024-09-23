@@ -57,7 +57,6 @@ const grantFields = {
     link: '',
     notification: '',
     description: ''
-    // performances: []
 };
 
 const monthsFields = {
@@ -68,7 +67,7 @@ const grantsFA = [
     { label: 'Name', id: 'name', },
     { label: 'Url', id: 'link' },
     { label: 'Notification', id: 'notification', type: 'select', options: ['No', 'Yes'] },
-    { label: 'Description', id: 'description', multiline: 'true' },
+    { label: 'Description', id: 'description', multiline: true },
 ];
 
 const monthsFA = [

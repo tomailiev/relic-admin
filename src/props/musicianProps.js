@@ -1,7 +1,7 @@
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";
-import { musicianSchema } from "../utils/yup/yup-schemas";
+import { musicianFileSchema, musicianSchema } from "../utils/yup/yup-schemas";
 
 const musicianColumns = [
     {
@@ -44,8 +44,9 @@ const musicianFA = [
     { label: 'Name', id: 'name' },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
-    { label: 'Avatar', id: 'pic', type: 'file', path: `${collections.images}/musicians` }
 ];
+
+const musicianFilesFA = [{ label: 'Avatar', id: 'pic', type: 'file', path: `${collections.images}/musicians`, displayName: 'imgSrc' }];
 
 const musicianProps = {
     itemType: 'musicians',
@@ -57,9 +58,11 @@ const musicianProps = {
     formType: 'simple',
     fields: fields,
     fieldsArray: musicianFA,
+    filesFields: {pic: ''},
+    filesFieldsArray: musicianFilesFA,
     encType: 'application/json',
-    steps: ['fieldsArray', 'preview'],
-    schemas: { fieldsArray: musicianSchema }
+    steps: ['files', 'fieldsArray', 'preview'],
+    schemas: { files: musicianFileSchema, fieldsArray: musicianSchema }
 };
 
 export default musicianProps;
