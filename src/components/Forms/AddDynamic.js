@@ -20,7 +20,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }, [navigation.state]);
 
     function handleInputChange(e, index, id) {
-        console.log(e.target.value);
         
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)

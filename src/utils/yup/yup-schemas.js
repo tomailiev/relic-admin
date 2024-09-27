@@ -111,12 +111,12 @@ const subscriberSchema = object({
     lastName: string().required(),
     imported: string(),
     location: string(),
-    status: string().oneOf(["0", "1"]).required()
+    status: string().oneOf(["Unsubscribed", "Subscribed"]).required()
 });
 
-const tagsSchema = object({
+const tagsSchema = array().of(object({
     tag: string().required()
-})
+}));
 
 const campaignSchema = object({
     subject: string(),

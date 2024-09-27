@@ -9,6 +9,8 @@ import { useLocation } from "react-router-dom";
 
 const SubscriberItem = ({ item }) => {
 
+    console.log(item);
+    
     const location = useLocation();
 
     return (

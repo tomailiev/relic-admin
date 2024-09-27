@@ -48,7 +48,7 @@ const fields = {
 };
 
 const csvFA = [
-    { label: 'CSV', id: 'csv', type: 'file', path: 'mock-email/csv' },
+    { label: 'CSV', id: 'csv', type: 'file', path: 'CSVs', displayName: 'csvFile' },
 ];
 
 const CSVProps = {
@@ -60,11 +60,11 @@ const CSVProps = {
     pageSize: 25,
     pageSizeOptions: [10, 25, 50],
     formType: 'file',
-    fields: fields,
-    fieldsArray: csvFA,
+    filesFields: fields,
+    filesFieldsArray: csvFA,
     encType: 'multipart/form-data',
-    steps: ['fieldsArray', 'preview'],
-    schemas: { fieldsArray: CSVSchema }
+    steps: ['files', 'preview'],
+    schemas: { files: CSVSchema }
 };
 
 export default CSVProps;
