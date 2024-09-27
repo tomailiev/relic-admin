@@ -67,8 +67,7 @@ const videoSchema = object({
 });
 
 const initialVideoSchema = object({
-    featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
-    youtubeLink: string().url('valid youtube link required').required('youtube link required')
+    url: string().url('valid youtube link required').required('youtube link required')
 });
 
 const donationSchema = object({

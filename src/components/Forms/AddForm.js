@@ -8,6 +8,10 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        setUserFields(fields)
+    }, [fields]);
     
     useEffect(() => {
         const submissionStates = {
@@ -19,6 +23,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     }, [navigation.state]);
 
     function removeError(e) {
+        
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
@@ -68,7 +73,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             variant: 'outlined',
                             // rows: 4
                         }
-
+                        
                         return type === 'select'
                             ? <FormControl key={id}>
                                 <InputLabel>{label}</InputLabel>

@@ -1,6 +1,7 @@
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
+import { getVideoInfo } from "../utils/firebase/firebase-functions";
 
 const videoColumns = [
     {
@@ -29,8 +30,7 @@ const videoColumns = [
 ];
 
 const initialVideoFA = [
-    { label: 'Featured priority', id: 'featured', type: 'number' },
-    { label: 'YouTube link', id: 'youtubeLink' },
+    { label: 'YouTube link', id: 'url' },
 ]
 
 const videoFA = [
@@ -42,7 +42,13 @@ const videoFA = [
 
 const fields = {
     featured: '',
-    youtubeLink: '',
+    title: '',
+    youtubeId: '',
+    thumbnail: ''
+}
+
+const initialFields = {
+    url: '',
 }
 
 const videoProps = {
@@ -55,10 +61,12 @@ const videoProps = {
     fields: fields,
     fieldsArray: videoFA,
     initialFieldsArray: initialVideoFA,
+    initialFields: initialFields,
     formType: 'simple',
     encType: 'application/json',
     steps: ['initialFieldsArray', 'fieldsArray', 'preview'],
-    schemas: { initialFieldsArray: initialVideoSchema, fieldsArray: videoSchema }
+    schemas: { initialFieldsArray: initialVideoSchema, fieldsArray: videoSchema },
+    initialFn: getVideoInfo
 };
 
 export default videoProps;
