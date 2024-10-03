@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useContext, useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
 import CSVProps from "../../props/CSVProps";
-import { deschematify } from "../../vars/schemaFunctions";
+// import { deschematify } from "../../vars/schemaFunctions";
 import SubmissionContext from "../../context/SubmissionContext";
 
 const CSVItem = ({ item }) => {
