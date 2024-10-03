@@ -1,7 +1,6 @@
 // import { redirect } from "react-router-dom";
 import { redirect } from "react-router-dom";
-import { downloadDocs, uploadDoc, uploadFile } from "../utils/firebase/firebase-functions";
-import { CSVSchema } from "../utils/yup/yup-schemas";
+import { downloadDocs, uploadDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default async function CSVAddAction({ request, params }) {
