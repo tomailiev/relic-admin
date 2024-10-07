@@ -17,6 +17,8 @@ const SearchDonor = ({ donor, handleDonor, setSearchStatus }) => {
     }
 
     function handleChange(_e, o) {
+        console.log(o);
+        
         handleDonor(o);
         setSearchStatus(!!o);
     }
