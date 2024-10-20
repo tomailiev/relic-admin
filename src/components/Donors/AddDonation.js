@@ -1,23 +1,23 @@
-import { Box, Button, Step, StepLabel, Stepper, Typography } from "@mui/material"
+import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
-import { useActionData, useSubmit } from "react-router-dom";
+// import AddSimpleForm from "../Forms/AddSimpleForm";
+import { useActionData, } from "react-router-dom";
 import SearchDonor from "./SearchDonor";
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
-import DonationItem from "./DonationItem";
+// import DonationItem from "./DonationItem";
 import ErrorContext from "../../context/ErrorContext";
 import donorProps from "../../props/donorProps";
 import SubmissionContext from "../../context/SubmissionContext";
 import AddItem from "../Items/AddItem";
 
 
-const steps = [
-    'Search donor',
-    'Add donor',
-    'Add donation',
-    'Preview'
-];
+// const steps = [
+//     'Search donor',
+//     'Add donor',
+//     'Add donation',
+//     'Preview'
+// ];
 
 const AddDonation = () => {
     const [activeStep, setActiveStep] = useState(0);
