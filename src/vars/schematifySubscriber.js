@@ -1,8 +1,11 @@
-import { schematify } from "./schemaFunctions";
 
 export default function schematifySubscriber(item) {
-    const withTags = schematify(item, 'tags');
-    const tags = withTags.tags.map(({ tag }) => tag);
-    const status = Number(item.status);
-    return { ...withTags, tags, status };
+    const subAddition = {
+        imported: 'admin',
+        id: item.email.toLowerCase(),
+        email: item.email.toLowerCase()
+    }
+    const tags = item.tags.map(({ tag }) => tag);
+    const status = item.status === 'Subscribed' ? 1 : 0;
+    return { ...item, tags, status, ...subAddition };
 };

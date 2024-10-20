@@ -4,6 +4,7 @@
 
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CSVSchema } from "../utils/yup/yup-schemas";
 
 const CSVListColumns = [
     // { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0 },
@@ -26,7 +27,7 @@ const CSVListColumns = [
 ];
 
 const CSVColumns = [
-    {field: 'name', headerName: 'Name', flex: 4 },
+    { field: 'name', headerName: 'Name', flex: 4 },
     {
         field: 'select',
         headerName: 'Select',
@@ -47,7 +48,7 @@ const fields = {
 };
 
 const csvFA = [
-    { label: 'CSV', id: 'csv', type: 'file', path: 'mock-email/csv' },
+    { label: 'CSV', id: 'csv', type: 'file', path: 'CSVs', displayName: 'csvFile' },
 ];
 
 const CSVProps = {
@@ -59,8 +60,11 @@ const CSVProps = {
     pageSize: 25,
     pageSizeOptions: [10, 25, 50],
     formType: 'file',
-    fields: fields,
-    fieldsArray: csvFA,
+    filesFields: fields,
+    filesFieldsArray: csvFA,
+    encType: 'multipart/form-data',
+    steps: ['files', 'preview'],
+    schemas: { files: CSVSchema }
 };
 
 export default CSVProps;

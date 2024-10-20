@@ -7,12 +7,14 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './utils/firebase/firebase-init';
 import UserContext from './context/UserContext';
 import router from './utils/react-router/router';
+import SubmissionContext from './context/SubmissionContext';
 
 
 
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
+  const [submission, setSubmission] = useState({});
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -25,9 +27,11 @@ function App() {
 
   return (
     <CssBaseline>
-        <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+      <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+        <SubmissionContext.Provider value={{ submission, setSubmission }} >
           <RouterProvider router={router} />
-        </UserContext.Provider>
+        </SubmissionContext.Provider>
+      </UserContext.Provider>
     </CssBaseline>
   );
 }

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import schematifySubscriber from "../vars/schematifySubscriber";
 import deschematifySubscriber from "../vars/deschematifySubscriber";
 import SubscriberActionBox from "../components/Emails/SubscriberActionBox";
+import { subscriberSchema, tagsSchema } from "../utils/yup/yup-schemas";
 
 const subscriberColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 2 },
     {
-        field: 'status', 
+        field: 'status',
         headerName: 'Status',
         flex: 1,
         valueGetter: (params) => params.row.status ? 'Subscribed' : 'Unsubscribed'
@@ -108,7 +109,10 @@ const subscriberProps = {
     nestedArray: tagsFA,
     nestedName: 'tags',
     schematifyFn: schematifySubscriber,
-    deschematifyFn: deschematifySubscriber
+    deschematifyFn: deschematifySubscriber,
+    encType: 'application/json',
+    steps: ['fieldsArray', 'nestedArray', 'preview'],
+    schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema}
 };
 
 export default subscriberProps;

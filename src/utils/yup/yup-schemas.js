@@ -1,6 +1,7 @@
 import { object, string, array, number, ref, mixed } from 'yup'
+import months from '../../vars/months';
 
-const performanceSchema = object({
+const performanceSchema = array().of(object({
     date: string().required('date required'),
     time: string().required('time required'),
     id: number().required('id required'),
@@ -9,14 +10,19 @@ const performanceSchema = object({
     venue: string().required('venue required'),
     lat: number('value needs to be a number'),
     lng: number('value needs to be a number')
-});
+})).min(1);
+
+const eventFileSchema = object({
+    imageUrl: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    })
+})
 
 const eventSchema = object({
     dateDone: string().required('date required'),
     description: string().required('description required'),
-    imageUrl: string().required('imageUrl required'),
     title: string().required('title required'),
-    performances: array().of(performanceSchema).min(1)
+    // performances: array().of(performanceSchema).min(1)
 });
 
 const musicianSchema = object({
@@ -24,8 +30,13 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
-    pic: string().required('File path required')
 });
+
+const musicianFileSchema = object({
+    pic: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    })
+})
 
 const userSchema = object({
     email: string().required().email(),
@@ -56,8 +67,7 @@ const videoSchema = object({
 });
 
 const initialVideoSchema = object({
-    featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
-    youtubeLink: string().url('valid youtube link required').required('youtube link required')
+    url: string().url('valid youtube link required').required('youtube link required')
 });
 
 const donationSchema = object({
@@ -80,9 +90,13 @@ const donorSchema = object({
 const grantSchema = object({
     name: string().required(),
     link: string().url().required(),
-    notification: number().oneOf([0, 1]).required(),
+    notification: string().oneOf(['No', 'Yes']).required(),
     description: string()
 });
+
+const dueMonthsSchema = array().of(object({
+    dueMonth: string().required().oneOf(months)
+}));
 
 
 const CSVSchema = object().shape({
@@ -97,8 +111,12 @@ const subscriberSchema = object({
     lastName: string().required(),
     imported: string(),
     location: string(),
-    status: string().oneOf(["0", "1"]).required()
+    status: string().oneOf(["Unsubscribed", "Subscribed"]).required()
 });
+
+const tagsSchema = array().of(object({
+    tag: string().required()
+}));
 
 const campaignSchema = object({
     subject: string(),
@@ -213,8 +231,10 @@ const donationAcknowledgementSchema = object({
 export {
     eventSchema,
     musicianSchema,
+    musicianFileSchema,
     videoSchema,
     performanceSchema,
+    eventFileSchema,
     newTextSchema,
     userSchema,
     initialVideoSchema,
@@ -223,8 +243,10 @@ export {
     donorSchema,
     donationSchema,
     grantSchema,
+    dueMonthsSchema,
     CSVSchema,
     subscriberSchema,
+    tagsSchema,
     campaignSchema,
     emailComponentSchemas,
     selectComponentSchema,

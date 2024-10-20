@@ -19,15 +19,21 @@ const getTier = (amount) => {
                                 : 'Zeus & Hera $15,000+'
 };
 
-const today = new Date();
-const isYearEnd = (today.getUTCMonth()) > 5;
-const startDate = isYearEnd
-    ? new Date(`07-01-${today.getUTCFullYear()}`)
-    : new Date(`07-01-${today.getUTCFullYear() - 1}`);
+// const today = new Date();
+// const isYearEnd = (today.getUTCMonth()) > 5;
+// const startDate = isYearEnd
+//     ? new Date(`07-01-${today.getUTCFullYear()}`)
+//     : new Date(`07-01-${today.getUTCFullYear() - 1}`);
 
-const endDate = isYearEnd
-    ? new Date(`06-30-${today.getUTCFullYear() + 1}`)
-    : new Date(`06-30-${today.getUTCFullYear()}`);
+// const endDate = isYearEnd
+//     ? new Date(`06-30-${today.getUTCFullYear() + 1}`)
+//     : new Date(`06-30-${today.getUTCFullYear()}`);
+
+const endDate = new Date();
+const startDate = new Date();
+startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
+
+
 
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },

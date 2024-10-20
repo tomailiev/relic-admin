@@ -5,7 +5,8 @@ import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumb
 
 const EventItem = ({ item }) => {
 
-
+    console.log(item);
+    
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
