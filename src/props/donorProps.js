@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
 
 const getTier = (amount) => {
     return amount < 50
@@ -146,6 +147,8 @@ const donorProps = {
     fieldsArray: donorFA,
     nestedArray: donationFA,
     nestedName: 'donations',
+    steps: ['fieldsArray', 'nestedArray', 'preview'],
+    schemas: { fieldsArray: donorSchema, nestedArray: donationSchema }
 };
 
 export default donorProps;
