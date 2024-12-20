@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
