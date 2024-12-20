@@ -41,6 +41,26 @@ function downloadDocs(col, condition, sorting) {
         })
 }
 
+function downloadDocsV2(col, options = []) {
+    const queryConditions = options?.map(c => (
+        c.type === 'condition'
+            ? where(...c.value)
+            : c.type === 'sorting'
+                ? orderBy(...c.value)
+                : limit(...c.value)
+    ));
+    const q = query(collection(db, col), ...queryConditions);
+
+    return getDocs(q)
+        .then(qSnap => {
+            const docs = [];
+            qSnap.forEach(doc => {
+                docs.push(Object.assign({ id: doc.id }, doc.data()));
+            });
+            return docs;
+        })
+}
+
 function downloadOneDoc(col, id) {
     // REVISE!!!
     return getDoc(doc(db, col, id))
@@ -101,6 +121,7 @@ export {
     uploadDoc,
     getLink,
     downloadDocs,
+    downloadDocsV2,
     downloadOneDoc,
     uploadFile,
     deleteDocs,

@@ -1,6 +1,6 @@
-import { downloadDocs } from "../utils/firebase/firebase-functions";
+import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default async function videoLoader() {
-    return await downloadDocs(collections.videos, ['featured', '!=', 0], ['featured', 'desc']);
+    return await downloadDocsV2(collections.videos, [{ value: ['featured', '!=', 0], type: 'condition' }, { value: ['featured', 'desc'], type: 'sorting' }]);
 }

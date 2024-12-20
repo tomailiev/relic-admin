@@ -1,6 +1,6 @@
 // import { redirect } from "react-router-dom";
 import { redirect } from "react-router-dom";
-import { downloadDocs, uploadDoc } from "../utils/firebase/firebase-functions";
+import { downloadDocsV2, uploadDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default async function CSVAddAction({ request, params }) {
@@ -10,7 +10,7 @@ export default async function CSVAddAction({ request, params }) {
     if (updates.final) {
         try {
             console.log(updates.newSubs);
-            
+
             const uploadQueue = updates.newSubs?.map(doc => {
                 return uploadDoc({ ...doc, tags: doc.tags.replaceAll('"', '').toLowerCase().split(','), status: Number(doc.status), id: doc.email.toLowerCase(), email: doc.email.toLowerCase() }, collections.subscribers, doc.email.toLowerCase(), true)
             });
@@ -21,9 +21,9 @@ export default async function CSVAddAction({ request, params }) {
         }
     }
     try {
-        const docs = await downloadDocs(collections.csv, ['imported', '==', `CSVs/${updates.fileName}`]);
+        const docs = await downloadDocsV2(collections.csv, [{ value: ['imported', '==', `CSVs/${updates.fileName}`], type: 'condition' }]);
         console.log(docs);
-        
+
         return docs;
     } catch (e) {
         console.error(e)

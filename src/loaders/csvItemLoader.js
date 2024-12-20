@@ -1,9 +1,9 @@
-import { downloadDocs } from "../utils/firebase/firebase-functions";
+import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default async function csvItemLoader({ params }) {
     try {
-        const docs = await downloadDocs(collections.csv, ['imported', '==', `CSVs/${params.CSVId}`])
+        const docs = await downloadDocsV2(collections.csv, [{ value: ['imported', '==', `CSVs/${params.CSVId}`], type: 'condition' }])
         return { docs, id: params.CSVId };
     } catch (e) {
         console.error(e)
