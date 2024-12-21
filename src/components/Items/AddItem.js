@@ -84,7 +84,7 @@ const AddItem = (itemProps) => {
             });
             setTimeout(() => {
                 handleSubmitEvent();
-                
+
             }, 1000);
 
         } catch (error) {
@@ -99,11 +99,37 @@ const AddItem = (itemProps) => {
     }
 
     const steps = {
-        files: <AddFile fields={submission || itemProps.filesFields} fieldsArray={itemProps.filesFieldsArray} schema={itemProps.schemas.files} handleFormCompletion={handleFileSubmission} />,
-        initialFieldsArray: <AddForm fields={itemProps.initialFields} fieldsArray={itemProps.initialFieldsArray} schema={itemProps.schemas.initialFieldsArray} handleFormCompletion={handleInitialSubmission} />,
-        fieldsArray: <AddForm fields={submission || itemProps.fields} fieldsArray={itemProps[itemProps.steps[activeStep]]} handleFormCompletion={handleObjectSubmission} schema={itemProps.schemas[itemProps.steps[activeStep]]} />,
-        nestedArray: <AddDynamic fields={submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]} nestedArray={itemProps.nestedArray} nestedName={itemProps.nestedName} handleFormCompletion={handleArraySubmission} nestedLength={1} schema={itemProps.schemas[itemProps.steps[activeStep]]} blanks={itemProps.nestedFields} />,
-        preview: <ItemSwitch item={submission} itemType={itemProps.itemType} />
+        files: <AddFile
+            fields={submission || itemProps.filesFields}
+            fieldsArray={itemProps.filesFieldsArray}
+            schema={itemProps.schemas.files}
+            handleFormCompletion={handleFileSubmission}
+        />,
+        initialFieldsArray: <AddForm
+            fields={itemProps.initialFields}
+            fieldsArray={itemProps.initialFieldsArray}
+            schema={itemProps.schemas.initialFieldsArray}
+            handleFormCompletion={handleInitialSubmission}
+        />,
+        fieldsArray: <AddForm
+            fields={submission || itemProps.fields}
+            fieldsArray={itemProps[itemProps.steps[activeStep]]}
+            handleFormCompletion={handleObjectSubmission}
+            schema={itemProps.schemas[itemProps.steps[activeStep]]}
+        />,
+        nestedArray: <AddDynamic
+            fields={submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
+            nestedArray={itemProps.nestedArray}
+            nestedName={itemProps.nestedName}
+            handleFormCompletion={handleArraySubmission}
+            nestedLength={1}
+            schema={itemProps.schemas[itemProps.steps[activeStep]]}
+            blanks={itemProps.nestedFields}
+        />,
+        preview: <ItemSwitch
+            item={submission}
+            itemType={itemProps.itemType}
+        />
     }
 
     return (

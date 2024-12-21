@@ -1,4 +1,4 @@
-import { Box, Button, } from "@mui/material"
+import { Box, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 // import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, } from "react-router-dom";
@@ -8,8 +8,9 @@ import searchClient from "../../utils/algolia/algolia";
 // import DonationItem from "./DonationItem";
 import ErrorContext from "../../context/ErrorContext";
 import donorProps from "../../props/donorProps";
-import SubmissionContext from "../../context/SubmissionContext";
+// import SubmissionContext from "../../context/SubmissionContext";
 import AddItem from "../Items/AddItem";
+import EditItem from "../Items/EditItem";
 
 
 // const steps = [
@@ -20,10 +21,10 @@ import AddItem from "../Items/AddItem";
 // ];
 
 const AddDonation = () => {
-    const [activeStep, setActiveStep] = useState(0);
-    const { submission, setSubmission } = useContext(SubmissionContext);
+    const [submissionType, setSubmissionType] = useState('');
+    // const { submission, setSubmission } = useContext(SubmissionContext);
     // const [donor, setDonor] = useState(null);
-    const [hasSearched, setHasSearched] = useState(false); //refactor
+    // const [hasSearched, setHasSearched] = useState(false); //refactor
     // const [existingDonor, setExistingDonor] = useState(false);
     // const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
@@ -35,6 +36,16 @@ const AddDonation = () => {
         }
     }, [actionData, setError]);
 
+    function handleSubmission(data) {
+        console.log(data);
+        setSubmissionType(data ? 'edit' : 'add');
+        // setSubmission(prev => {
+        //     return Object.assign(prev, data);
+        // });
+        // setActiveStep(prev => ++prev);
+        // handleSubmitEvent()
+    }
+
     // function finishSubmission() {
     //     const formData = new FormData();
     //     Object.entries(donor).filter(([key,]) => key !== 'intent').forEach(([key, value]) => formData.append(key, value))
@@ -44,11 +55,11 @@ const AddDonation = () => {
 
     return (
         <>
-            {!activeStep ? <Box m={4}>
+            {!submissionType ? <Box m={4}>
                 <InstantSearch indexName="dev_donors" searchClient={searchClient}>
-                    <SearchDonor donor={submission} handleDonor={setSubmission} setSearchStatus={setHasSearched} />
+                    <SearchDonor handleDonor={handleSubmission} />
                 </InstantSearch>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Box sx={{ flex: '1 1 auto', mx: 5 }}>
                     </Box>
 
@@ -57,11 +68,14 @@ const AddDonation = () => {
                         onClick={() => setActiveStep(1)}
                         disabled={!hasSearched}
                     >
-                        {!submission ? 'New Donor' : 'Next'}
+                        {!submission.objectID ? 'New Donor' : 'Edit Donor'}
                     </Button>
-                </Box>
+                </Box> */}
             </Box>
-                : <AddItem {...donorProps} />}
+                : submissionType === 'add'
+                    ? <AddItem {...donorProps} />
+                    : <EditItem {...donorProps} />
+            }
         </>
     );
 };
