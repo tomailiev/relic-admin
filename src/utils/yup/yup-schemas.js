@@ -70,13 +70,13 @@ const initialVideoSchema = object({
     url: string().url('valid youtube link required').required('youtube link required')
 });
 
-const donationSchema = object({
+const donationSchema = array().of(object({
     date: string().required(),
     amount: string().required(),
     campaign: string().required().oneOf(['online', 'check', 'GoFundMe 2022']),
     recognitionName: string(),
     comment: string()
-});
+}));
 
 const donorSchema = object({
     firstName: string().required(),
