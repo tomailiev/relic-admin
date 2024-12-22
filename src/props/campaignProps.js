@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { clickReducer, openReducer } from "./campaignStatProps";
+import { campaignSchema } from "../utils/yup/yup-schemas";
 
 const campaignColumns = [
     { field: 'subject', headerName: 'Subject', flex: 2 },
@@ -63,6 +64,8 @@ const campaignProps = {
     formType: 'simple',
     fields: campaignFields,
     fieldsArray: campaignsFA,
+    steps: ['fieldsArray'],
+    schemas: { fieldsArray: campaignSchema }
 };
 
 export default campaignProps;

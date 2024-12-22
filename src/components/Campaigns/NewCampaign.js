@@ -1,13 +1,14 @@
 import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import AddSimpleForm from "../Forms/AddSimpleForm";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
+import SubmissionContext from "../../context/SubmissionContext";
+import AddForm from "../Forms/AddForm";
 
 
-const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
+const NewCampaign = (itemProps) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState(null);
+    const { submission, setSubmission } = useContext(SubmissionContext);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -19,7 +20,15 @@ const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
         }
     }, [actionData, setError]);
 
+    useEffect(() => () => setSubmission({}), [setSubmission]);
 
+
+    function handleObjectSubmission(data) {
+
+        setSubmission(prev => {
+            return Object.assign(prev, data);
+        });
+    }
 
     function addTags(arr) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
@@ -29,14 +38,18 @@ const NewCampaign = ({ itemType, formType, fields, fieldsArray, }) => {
     }
 
     function finishSubmission() {
-        const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/${itemType}/add` })
+        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' });
     }
 
     return (
         <Box m={4}>
-                <AddSimpleForm fields={submission || fields} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} />
+            {/* <AddSimpleForm fields={submission || fields} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} /> */}
+            <AddForm
+                fields={submission || itemProps.fields}
+                fieldsArray={addTags(itemProps[itemProps.steps[activeStep]])}
+                handleFormCompletion={handleObjectSubmission}
+                schema={itemProps.schemas[itemProps.steps[activeStep]]}
+            />
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                     color="inherit"
