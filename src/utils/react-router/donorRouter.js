@@ -16,6 +16,7 @@ import donorThankAction from "../../actions/donorThankAction";
 import donorTextLoader from "../../loaders/donorTextLoader";
 import donorProps from "../../props/donorProps";
 import AddItem from "../../components/Items/AddItem";
+import donorAddAction from "../../actions/donorAddAction";
 
 const donorRouter = [
   {
@@ -30,7 +31,8 @@ const donorRouter = [
   },
   {
     path: 'donors/add',
-    element: <LoggedIn component={<AddItem {...donorProps} />} />
+    element: <LoggedIn component={<AddItem {...donorProps} />} />,
+    action: donorAddAction
   },
   {
     path: 'donors/:donorId',
