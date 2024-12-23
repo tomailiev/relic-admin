@@ -65,6 +65,7 @@ const videoProps = {
     formType: 'simple',
     encType: 'application/json',
     steps: ['initialFieldsArray', 'fieldsArray', 'preview'],
+    editSteps: ['fieldsArray', 'preview'],
     schemas: { initialFieldsArray: initialVideoSchema, fieldsArray: videoSchema },
     initialFn: getVideoInfo
 };

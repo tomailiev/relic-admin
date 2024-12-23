@@ -43,7 +43,6 @@ const NewCampaign = (itemProps) => {
 
     return (
         <Box m={4}>
-            {/* <AddSimpleForm fields={submission || fields} fieldsArray={addTags(fieldsArray)} handleFormCompletion={setSubmission} /> */}
             <AddForm
                 fields={submission || itemProps.fields}
                 fieldsArray={addTags(itemProps[itemProps.steps[activeStep]])}

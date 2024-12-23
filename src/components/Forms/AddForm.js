@@ -12,7 +12,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     useEffect(() => {
         setUserFields(fields)
     }, [fields]);
-    
+
     useEffect(() => {
         const submissionStates = {
             submitting: true,
@@ -23,7 +23,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     }, [navigation.state]);
 
     function removeError(e) {
-        
+
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
@@ -41,7 +41,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             handleFormCompletion(validated);
         } catch (e) {
             console.log(e);
-            
+
             if (e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
                     return { ...p, [c.path]: c.message, };
@@ -73,16 +73,16 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             variant: 'outlined',
                             // rows: 4
                         }
-                        
+
                         return type === 'select'
                             ? <FormControl key={id}>
-                                <InputLabel>{label}</InputLabel>
+                                <InputLabel shrink>{label}</InputLabel>
                                 <Select {...props}>
                                     {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                 </Select>
                                 <FormHelperText>{props.helperText}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} />
+                            : <TextField {...props} InputLabelProps={{ shrink: true }} />
                     })}
                     <Button
                         variant="contained"

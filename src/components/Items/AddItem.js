@@ -37,6 +37,8 @@ const AddItem = (itemProps) => {
     useEffect(() => () => setSubmission({}), [setSubmission]);
 
     function finishSubmission() {
+        console.log(submission);
+        
         submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' })
     }
 
