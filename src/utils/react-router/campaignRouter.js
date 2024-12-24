@@ -1,6 +1,6 @@
 import campaignAddAction from "../../actions/campaign/campaignAddAction";
 import campaignDeleteAction from "../../actions/campaign/campaignDeleteAction";
-import campaignEditAction from "../../actions/campaignEditAction";
+import campaignEditAction from "../../actions/campaign/campaignEditAction";
 import campaignEditContentAction from "../../actions/campaign/campaignEditContentAction";
 import campaignSendAction from "../../actions/campaign/campaignSendAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
