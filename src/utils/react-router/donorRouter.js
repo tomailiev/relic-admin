@@ -6,7 +6,7 @@ import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddDonation from "../../components/Donors/AddDonation";
 import DonorItemRoute from "../../components/Donors/DonorItemRoute";
 import Donors from "../../components/Donors/Donors";
-import EditDonor from "../../components/Donors/EditDonor";
+// import EditDonor from "../../components/Donors/EditDonor";
 import donorItemLoader from "../../loaders/donorItemLoader";
 import donorLoader from "../../loaders/donorLoader";
 import ImportDonor from "../../components/Emails/ImportDonor";
@@ -17,6 +17,7 @@ import donorTextLoader from "../../loaders/donorTextLoader";
 import donorProps from "../../props/donorProps";
 import AddItem from "../../components/Items/AddItem";
 import donorAddAction from "../../actions/donorAddAction";
+import EditItem from "../../components/Items/EditItem";
 
 const donorRouter = [
   {
@@ -47,7 +48,7 @@ const donorRouter = [
   },
   {
     path: 'donors/:donorId/edit',
-    element: <LoggedIn component={<EditDonor />} />,
+    element: <LoggedIn component={<EditItem {...donorProps} />} />,
     loader: donorItemLoader,
     action: donorEditAction
   },
