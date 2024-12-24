@@ -37,13 +37,17 @@ const AddItem = (itemProps) => {
     useEffect(() => () => setSubmission({}), [setSubmission]);
 
     function finishSubmission() {
-        console.log(submission);
-        
+
         submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' })
     }
 
     async function handleFileSubmission(data) {
+        if (!data) {
+            return handleSubmitEvent();
+        }
+
         const filePaths = {};
+
         try {
             await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
                 const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);

@@ -58,7 +58,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                 <Stack spacing={2}>
                     {fieldsArray.map(({ id, label, type, multiline, options }) => {
                         const props = {
-                            key: id,
                             id: id,
                             name: id,
                             type: type || 'text',
@@ -82,7 +81,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                                 </Select>
                                 <FormHelperText>{props.helperText}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} InputLabelProps={{ shrink: true }} />
+                            : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"

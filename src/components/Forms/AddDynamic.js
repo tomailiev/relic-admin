@@ -83,7 +83,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                         
                                         const props = {
                                             value: arr[index][id],
-                                            key: id,
                                             id: id,
                                             name: id,
                                             type: type || 'text',
@@ -106,7 +105,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                                 </Select>
                                                 <FormHelperText>{props.helperText}</FormHelperText>
                                             </FormControl>
-                                            : <TextField {...props} />
+                                            : <TextField {...props} key={id} />
                                     })}
                                     <Button onClick={() => removeNestedItem(index)}>
                                         Remove {nestedName}
