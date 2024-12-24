@@ -38,7 +38,7 @@ const AddItem = (itemProps) => {
 
     function finishSubmission() {
 
-        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' })
+        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.itemID ? itemProps.itemID + '/edit' : 'add'}`, encType: 'application/json' })
     }
 
     async function handleFileSubmission(data) {

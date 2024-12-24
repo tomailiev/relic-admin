@@ -6,9 +6,9 @@ export default async function musicianEditAction({ request, params }) {
     try {
         const doc = await request.json();
         const { id: _, ...rest } = doc;
-        const featured = Number(updates.featured);
-        await uploadDoc({ ...rest, featured }, collections.musicians, updates.id, true);
-        return redirect(`/musicians/${updates.id}`);
+        const featured = Number(doc.featured);
+        await uploadDoc({ ...rest, featured }, collections.musicians, doc.id, true);
+        return redirect(`/musicians/${doc.id}`);
     } catch (e) {
         return Object.assign(e, { error: true, severity: 'error' });
     }

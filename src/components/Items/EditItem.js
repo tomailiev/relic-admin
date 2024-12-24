@@ -48,7 +48,7 @@ const EditItem = (itemProps) => {
     // }
 
     return (
-        <AddItem {...{ ...itemProps, steps: itemProps.editSteps ? itemProps.editSteps : itemProps.steps }} />
+        <AddItem {...{ ...itemProps, steps: itemProps.editSteps ? itemProps.editSteps : itemProps.steps, itemID: item.id }} />
         // <Box m={4}>
         //     <Stepper activeStep={activeStep}>
         //         {steps.map((label) => {
