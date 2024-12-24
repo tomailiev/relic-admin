@@ -1,6 +1,6 @@
-import donationAddAction from "../../actions/donationAddAction";
-import donorDeleteAction from "../../actions/donorDeleteAction";
-import donorEditAction from "../../actions/donorEditAction";
+import donationAddAction from "../../actions/donor/donationAddAction";
+import donorDeleteAction from "../../actions/donor/donorDeleteAction";
+import donorEditAction from "../../actions/donor/donorEditAction";
 import FetchError from "../../components/Common/FetchError";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import AddDonation from "../../components/Donors/AddDonation";
@@ -11,12 +11,12 @@ import donorItemLoader from "../../loaders/donorItemLoader";
 import donorLoader from "../../loaders/donorLoader";
 import ImportDonor from "../../components/Emails/ImportDonor";
 import donorsSubsLoader from "../../loaders/donorsSubsLoader";
-import donorsImportAction from "../../actions/donorsImportAction";
-import donorThankAction from "../../actions/donorThankAction";
+import donorsImportAction from "../../actions/donor/donorsImportAction";
+import donorThankAction from "../../actions/donor/donorThankAction";
 import donorTextLoader from "../../loaders/donorTextLoader";
 import donorProps from "../../props/donorProps";
 import AddItem from "../../components/Items/AddItem";
-import donorAddAction from "../../actions/donorAddAction";
+import donorAddAction from "../../actions/donor/donorAddAction";
 import EditItem from "../../components/Items/EditItem";
 
 const donorRouter = [

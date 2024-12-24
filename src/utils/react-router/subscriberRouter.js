@@ -7,9 +7,9 @@ import Items from "../../components/Items/Items";
 import subscriberProps from "../../props/subscriberProps";
 import subscriberLoader from "../../loaders/subscriberLoader";
 import subscriberItemLoader from "../../loaders/subscriberItemLoader";
-import subscriberAddAction from "../../actions/subscriberAddAction";
-import subscriberDeleteAction from "../../actions/subscriberDeleteAction";
-import subscriberEditAction from "../../actions/subscriberEditAction";
+import subscriberAddAction from "../../actions/subscriber/subscriberAddAction";
+import subscriberDeleteAction from "../../actions/subscriber/subscriberDeleteAction";
+import subscriberEditAction from "../../actions/subscriber/subscriberEditAction";
 
 const subscriberRouter = [
     {

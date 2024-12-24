@@ -99,13 +99,13 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                         }
                                         return type === 'select'
                                             ? <FormControl key={id}>
-                                                <InputLabel>{label}</InputLabel>
+                                                <InputLabel shrink>{label}</InputLabel>
                                                 <Select {...props}>
                                                     {options.map((option, i) => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                                 </Select>
                                                 <FormHelperText>{props.helperText}</FormHelperText>
                                             </FormControl>
-                                            : <TextField {...props} key={id} />
+                                            : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} />
                                     })}
                                     <Button onClick={() => removeNestedItem(index)}>
                                         Remove {nestedName}
