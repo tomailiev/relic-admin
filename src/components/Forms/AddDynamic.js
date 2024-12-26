@@ -95,7 +95,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                             multiline: multiline,
                                             variant: 'outlined',
                                             rows: 4,
-                                            focused: true
                                         }
                                         return type === 'select'
                                             ? <FormControl key={id}>

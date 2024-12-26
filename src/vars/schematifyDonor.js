@@ -1,7 +1,6 @@
 import normalizePhoneNumber from "./normalizePhoneNumber";
 
 export default function schematifyDonor(item) {
-    console.log(item);
     const lastDonation = { lastDonationAmount: '', lastDonationDate: '' }
     const donations = item.donations.map((donation) => {
         if (!lastDonation.lastDonationDate || new Date(donation.date) > new Date(lastDonation.lastDonationDate)) {

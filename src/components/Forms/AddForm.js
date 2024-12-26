@@ -8,7 +8,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
+    
     useEffect(() => {
         setUserFields(fields)
     }, [fields]);
@@ -72,7 +72,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             variant: 'outlined',
                             // rows: 4
                         }
-
+                        
                         return type === 'select'
                             ? <FormControl key={id}>
                                 <InputLabel shrink>{label}</InputLabel>
