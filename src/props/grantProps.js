@@ -60,7 +60,7 @@ const grantFields = {
 };
 
 const monthsFields = {
-    month: '',
+    dueMonth: '',
 };
 
 const grantsFA = [

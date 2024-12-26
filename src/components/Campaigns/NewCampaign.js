@@ -20,13 +20,13 @@ const NewCampaign = (itemProps) => {
         }
     }, [actionData, setError]);
 
-    useEffect(() => () => setSubmission({}), [setSubmission]);
+    useEffect(() => () => setSubmission(null), [setSubmission]);
 
 
     function handleObjectSubmission(data) {
 
         setSubmission(prev => {
-            return Object.assign(prev, data);
+            return Object.assign(prev || {}, data);
         });
     }
 

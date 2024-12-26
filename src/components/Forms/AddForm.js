@@ -65,7 +65,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             onChange: handleInputChange,
                             error: !!(hasError[id]),
                             onFocus: removeError,
-                            helperText: hasError[id],
                             label: label,
                             size: 'small',
                             multiline: multiline,
@@ -79,9 +78,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                                 <Select {...props}>
                                     {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                 </Select>
-                                <FormHelperText>{props.helperText}</FormHelperText>
+                                <FormHelperText>{hasError[id]}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} />
+                            : <TextField {...props} helperText={hasError[id]} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"

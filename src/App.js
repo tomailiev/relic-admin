@@ -14,7 +14,7 @@ import SubmissionContext from './context/SubmissionContext';
 function App() {
 
   const [currentUser, setCurrentUser] = useState(null);
-  const [submission, setSubmission] = useState({});
+  const [submission, setSubmission] = useState(null);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {

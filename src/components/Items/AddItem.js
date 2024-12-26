@@ -34,7 +34,7 @@ const AddItem = (itemProps) => {
 
     }, [actionData, setError]);
 
-    useEffect(() => () => setSubmission({}), [setSubmission]);
+    useEffect(() => () => setSubmission(null), [setSubmission]);
 
     function finishSubmission() {
 
@@ -68,14 +68,14 @@ const AddItem = (itemProps) => {
     function handleObjectSubmission(data) {
 
         setSubmission(prev => {
-            return Object.assign(prev, data);
+            return Object.assign(prev || {}, data);
         });
         handleSubmitEvent()
     }
 
     function handleArraySubmission(data) {
         setSubmission(prev => {
-            return Object.assign(prev, { [itemProps.nestedName]: data });
+            return Object.assign(prev || {}, { [itemProps.nestedName]: data });
         });
         handleSubmitEvent();
     }
@@ -86,7 +86,7 @@ const AddItem = (itemProps) => {
             const { data } = await itemProps.initialFn(initialData);
 
             setSubmission(prev => {
-                return Object.assign(prev, data);
+                return Object.assign(prev || {}, data);
             });
             setTimeout(() => {
                 handleSubmitEvent();
@@ -124,7 +124,7 @@ const AddItem = (itemProps) => {
             schema={itemProps.schemas[itemProps.steps[activeStep]]}
         />,
         nestedArray: <AddDynamic
-            fields={submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
+            fields={submission && submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
             nestedArray={itemProps.nestedArray}
             nestedName={itemProps.nestedName}
             handleFormCompletion={handleArraySubmission}
