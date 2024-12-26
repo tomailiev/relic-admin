@@ -4,11 +4,12 @@ import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
+import SubmissionContext from "../../context/SubmissionContext";
 
 
 const EditCampaign = ({ itemType, fieldsArray, }) => {
+    const { submission, setSubmission } = useContext(SubmissionContext);
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
@@ -20,8 +21,13 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
         }
     }, [actionData, setError]);
 
-    function handleSubmision(item) {
-        setSubmission(item)
+    useEffect(() => () => setSubmission(null), [setSubmission]);
+
+    function handleObjectSubmission(data) {
+
+        setSubmission(prev => {
+            return Object.assign(prev || {}, data);
+        });
     }
 
     function addTags(arr) {
@@ -32,8 +38,6 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
     }
 
     function finishSubmission() {
-        // const formData = new FormData();
-        // Object.entries(submission || campaign).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
         submit(submission || campaign, { method: 'POST', action: `/${itemType}/${campaign.id}/edit`, encType: 'application/json' })
     }
 
@@ -41,7 +45,12 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
         <Box m={4}>
             {
                 campaign.status
-                    ? <AddForm fields={!!submission ? submission : campaign} fieldsArray={addTags(fieldsArray)} handleFormCompletion={handleSubmision} schema={campaignSchema} />
+                    ? <AddForm
+                        fields={!!submission ? submission : campaign}
+                        fieldsArray={addTags(fieldsArray)}
+                        handleFormCompletion={handleObjectSubmission}
+                        schema={campaignSchema}
+                    />
                     : <Box height={'400px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
             }
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

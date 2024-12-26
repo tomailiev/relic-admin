@@ -89,7 +89,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                             onChange: (e) => handleInputChange(e, index, id),
                                             error: !!(hasError[index] ? hasError[index][id] : null),
                                             onFocus: (e) => removeError(e, index, id),
-                                            helperText: hasError[index] ? hasError[index][id] : null,
                                             label: label,
                                             size: 'small',
                                             multiline: multiline,
@@ -102,9 +101,9 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                                 <Select {...props}>
                                                     {options.map((option, i) => <MenuItem value={option} key={option}>{option}</MenuItem>)}
                                                 </Select>
-                                                <FormHelperText>{props.helperText}</FormHelperText>
+                                                <FormHelperText>{hasError[index] ? hasError[index][id] : null}</FormHelperText>
                                             </FormControl>
-                                            : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} />
+                                            : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} helperText={hasError[index] ? hasError[index][id] : null} />
                                     })}
                                     <Button onClick={() => removeNestedItem(index)}>
                                         Remove {nestedName}
