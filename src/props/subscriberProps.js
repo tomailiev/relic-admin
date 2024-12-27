@@ -61,7 +61,7 @@ const historyColumns = [
         field: 'timestamp',
         headerName: 'Timestamp',
         flex: 2,
-        valueGetter: ({ row }) => row.timestamp.toDate()
+        valueGetter: ({ row }) => row.timestamp
     }
 ]
 
@@ -71,7 +71,6 @@ const subscriberFields = {
     email: '',
     location: '',
     status: ''
-    // performances: []
 };
 
 const tagsFields = {
@@ -110,7 +109,7 @@ const subscriberProps = {
     nestedName: 'tags',
     schematifyFn: schematifySubscriber,
     deschematifyFn: deschematifySubscriber,
-    encType: 'application/json',
+    blankObject: {...subscriberFields, tags: [tagsFields]},
     steps: ['fieldsArray', 'nestedArray', 'preview'],
     schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema}
 };

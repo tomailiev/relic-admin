@@ -2,13 +2,12 @@ import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import SubmissionContext from "../../context/SubmissionContext";
 import AddForm from "../Forms/AddForm";
 
 
 const NewCampaign = (itemProps) => {
     const [activeStep, setActiveStep] = useState(0);
-    const { submission, setSubmission } = useContext(SubmissionContext);
+    const [ submission, setSubmission ] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();

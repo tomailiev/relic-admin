@@ -4,11 +4,10 @@ import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
-import SubmissionContext from "../../context/SubmissionContext";
 
 
 const EditCampaign = ({ itemType, fieldsArray, }) => {
-    const { submission, setSubmission } = useContext(SubmissionContext);
+    const [submission, setSubmission] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);

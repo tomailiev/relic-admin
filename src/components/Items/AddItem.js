@@ -6,7 +6,7 @@ import ItemSwitch from "./ItemSwitch";
 import AddForm from "../Forms/AddForm";
 import AddFile from "../Forms/AddFile";
 import AddDynamic from "../Forms/AddDynamic";
-import SubmissionContext from "../../context/SubmissionContext";
+// import SubmissionContext from "../../context/SubmissionContext";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 
 
@@ -15,7 +15,7 @@ const AddItem = (itemProps) => {
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
-    const { submission, setSubmission } = useContext(SubmissionContext);
+    const [ submission, setSubmission ] = useState(null);
     const actionData = useActionData();
 
     const labels = {
@@ -25,6 +25,10 @@ const AddItem = (itemProps) => {
         nestedArray: `Add ${itemProps.nestedName}`,
         preview: 'Preview'
     }
+
+    useEffect(() => {
+        setSubmission(itemProps.item);
+    }, [itemProps.item]);
 
     useEffect(() => {
 
@@ -38,7 +42,7 @@ const AddItem = (itemProps) => {
 
     function finishSubmission() {
 
-        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.itemID ? itemProps.itemID + '/edit' : 'add'}`, encType: 'application/json' })
+        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
     }
 
     async function handleFileSubmission(data) {
@@ -56,7 +60,7 @@ const AddItem = (itemProps) => {
                 return item;
             }));
             setSubmission(prev => {
-                return Object.assign(prev, filePaths);
+                return Object.assign(prev || {}, filePaths);
             })
             handleSubmitEvent();
         } catch (error) {

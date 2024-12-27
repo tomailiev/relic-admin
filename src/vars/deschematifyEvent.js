@@ -1,4 +1,3 @@
-import { deschematify } from "./schemaFunctions";
 
 const months = [
     'January',
@@ -42,7 +41,7 @@ function deschematifyEvent(item) {
         return Object.assign(rest, { time, date: completeDate, });
     }));
 
-    return deschematify({ ...item, performances, dateDone }, 'performances');
+    return { ...item, performances, dateDone };
 }
 
 export default deschematifyEvent;
