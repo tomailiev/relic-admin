@@ -1,5 +1,5 @@
 import { Avatar, Button } from "@mui/material";
-import deschematifyEvent from "../vars/deschematifyEvent";
+import { deschematifyEvent } from "../vars/deschematifyEvent";
 import schematifyEvent from "../vars/schematifyEvent";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";

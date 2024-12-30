@@ -1,5 +1,5 @@
 import { object, string, array, number, ref, mixed } from 'yup'
-import months from '../../vars/months';
+import { months } from '../../vars/dateObjects';
 
 const performanceSchema = array().of(object({
     date: string().required('date required'),

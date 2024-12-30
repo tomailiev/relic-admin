@@ -1,11 +1,11 @@
 import { Button, Container, Grid, Paper, Typography } from "@mui/material";
-import months from "../../vars/months";
 import { OpenInNew } from "@mui/icons-material";
 
 
 
 const GrantItem = ({ item }) => {
-
+    console.log(item.dueMonths);
+    
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Typography variant="h4" mb={2}>
@@ -19,7 +19,7 @@ const GrantItem = ({ item }) => {
                 </Grid>
                 <Grid item md={6} sm={8} xs={12} p={6}>
                     <Typography variant="body1" mb={2}>
-                        Notification {item.notification ? 'ON' : 'OFF'}
+                        Notification: {item.notification}
                     </Typography>
                     <Button href={item.link} variant="outlined" startIcon={<OpenInNew />} target="_blank" referrerPolicy="no-referrer" >
                         Link
@@ -29,7 +29,7 @@ const GrantItem = ({ item }) => {
                             Due:
                         </Typography>
                         <Typography variant="body1">
-                            {item.dueMonths && item.dueMonths.sort((a, b) => a - b).map(m => months[m]).join(', ')}
+                            {item.dueMonths && item.dueMonths.map(({dueMonth}) => dueMonth).join(', ')}
                         </Typography>
                     </Container>
                 </Grid>

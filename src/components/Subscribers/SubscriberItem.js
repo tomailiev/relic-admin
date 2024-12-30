@@ -42,7 +42,7 @@ const SubscriberItem = ({ item }) => {
                             <ListItemIcon>
                                 <Style />
                             </ListItemIcon>
-                            <ListItemText primary={item.tags.join(', ')} />
+                            <ListItemText primary={item.tags.map(({ tag }) => tag).join(', ')} />
                         </ListItem>}
                         <ListItem>
                             <ListItemIcon>

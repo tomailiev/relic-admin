@@ -128,12 +128,12 @@ export const fullColumns = [
             )
         }
     },
-    {
-        field: 'delivered',
-        headerName: 'Delivered',
-        flex: 1,
-        renderCell: (params) => params.row.delivered && <Check />
-    },
+    // {
+    //     field: 'delivered',
+    //     headerName: 'Delivered',
+    //     flex: 1,
+    //     renderCell: (params) => params.row.delivered && <Check />
+    // },
     {
         field: 'open',
         headerName: 'Open',
@@ -166,7 +166,7 @@ export const fullColumns = [
     },
 ];
 
-export const fullSorting = { field: 'delivered', sort: 'desc' };
+export const fullSorting = { field: 'open', sort: 'desc' };
 
 export const openReducer = (a, c) => {
     const item = a.find(sub => sub.email === c.email);
@@ -193,6 +193,8 @@ export const clickReducer = (a, c) => {
     }
     item.timestamps.push(c.timestamp);
     item.links.push(c.link);
+    console.log(a);
+    
     return a;
 }
 
@@ -201,7 +203,7 @@ export const campaignStatSummarizer = (campaign) => {
         const email = c.email;
         return a.concat({
             email,
-            delivered: campaign.delivered?.map(a => a.email).includes(email),
+            // delivered: campaign.delivered?.map(a => a.email).includes(email),
             open: campaign.open?.map(a => a.email).includes(email),
             click: campaign.click?.map(a => a.email).includes(email),
             bounce: campaign.bounce?.map(a => a.email).includes(email),

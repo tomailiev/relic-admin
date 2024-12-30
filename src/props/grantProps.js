@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import deschematifyGrant from "../vars/deschematifyGrant";
-import months from "../vars/months";
 import schematifyGrant from "../vars/schematifyGrant";
 import { Check, Close, OpenInNew } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { dueMonthsSchema, grantSchema } from "../utils/yup/yup-schemas";
+import { months } from "../vars/dateObjects";
 
 const grantColumns = [
     { field: 'name', headerName: 'Name', flex: 2 },
@@ -24,7 +24,7 @@ const grantColumns = [
         field: 'dueMonths',
         headerName: 'Due months',
         flex: 2,
-        valueGetter: (params) => params.row.dueMonths.map(m => months[m]).join(', '),
+        valueGetter: (params) => params.row.dueMonths.sort((a, b) => a - b).map(m => months[m]).join(', '),
         sortComparator: (v1, v2) => {
             const item1 = months.findIndex(item => item === v1.split(',')[0]);
             const item2 = months.findIndex(item => item === v2.split(',')[0]);

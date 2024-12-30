@@ -1,4 +1,4 @@
-const months = [
+export const months = [
     'January',
     'February',
     'March',
@@ -13,4 +13,12 @@ const months = [
     'December',
 ];
 
-export default months;
+export const daysOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+];

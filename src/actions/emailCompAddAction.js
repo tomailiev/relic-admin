@@ -9,7 +9,6 @@ export default async function emailCompAddAction({ request, params }) {
     const doc = await request.formData();
     const updates = Object.fromEntries(doc);
     if (doc.get('intent') === 'preflight') {
-        // const schema = schematify(updates, 'dueMonths');
         console.log(doc.get('id'));
         try {
             return await emailComponentSchemas[doc.get('id')].validate(updates, { abortEarly: false });

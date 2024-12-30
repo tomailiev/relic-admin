@@ -1,4 +1,4 @@
-import months from "./months";
+import { months } from "./dateObjects";
 
 export default function schematifyGrant(item) {
     console.log(item);
