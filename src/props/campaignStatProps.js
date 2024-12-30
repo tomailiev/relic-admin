@@ -192,9 +192,7 @@ export const clickReducer = (a, c) => {
         });
     }
     item.timestamps.push(c.timestamp);
-    item.links.push(c.link);
-    console.log(a);
-    
+    item.links.push(c.link);    
     return a;
 }
 

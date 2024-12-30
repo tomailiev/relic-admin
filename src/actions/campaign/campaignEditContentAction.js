@@ -19,18 +19,5 @@ export default async function campaignEditContentAction({ request, params }) {
         const data = { errors: [{ message: error }] };
         return { data };
     }
-    // try {
-    //     const upload = await uploadDoc(Object.assign(updates, { status: 1, datetime: Timestamp.fromDate(new Date()) }), collections.campaigns);
-    //     console.log(upload.id);
-    //     return redirect(`/campaigns/${upload.id}/edit/content`);
-    // } catch (e) {
-    //     if (e.inner) {
-    //         const errors = e.inner.reduce((p, c) => {
-    //             return { ...p, [c.path]: c.message, errorType: 'Validation error' };
-    //         }, {});
-    //         console.log(errors);
-    //         return errors
-    //     }
-    //     return Object.assign(e, { error: true, severity: 'error' });
-    // }
+    
 }

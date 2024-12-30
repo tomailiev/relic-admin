@@ -9,6 +9,7 @@ import AddDynamic from "../Forms/AddDynamic";
 // import SubmissionContext from "../../context/SubmissionContext";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
+import SubmissionContext from "../../context/SubmissionContext";
 
 
 const AddItem = (itemProps) => {
@@ -98,7 +99,7 @@ const AddItem = (itemProps) => {
             setTimeout(() => {
                 handleSubmitEvent();
                 setIsLoading(false);
-                
+
             }, 1000);
 
         } catch (error) {
@@ -141,10 +142,10 @@ const AddItem = (itemProps) => {
             schema={itemProps.schemas[itemProps.steps[activeStep]]}
             blanks={itemProps.nestedFields}
         />,
-        preview: <ItemSwitch
+        preview: <SubmissionContext.Provider value={{ submission, setSubmission }}><ItemSwitch
             item={submission}
             itemType={itemProps.itemType}
-        />
+        /></SubmissionContext.Provider>
     }
 
     return (

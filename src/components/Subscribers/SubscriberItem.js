@@ -48,7 +48,7 @@ const SubscriberItem = ({ item }) => {
                             <ListItemIcon>
                                 <Loyalty />
                             </ListItemIcon>
-                            <ListItemText primary={item.status ? 'Subscribed' : 'Unsubscribed'} />
+                            <ListItemText primary={item.status} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
