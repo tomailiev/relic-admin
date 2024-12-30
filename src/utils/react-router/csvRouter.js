@@ -1,5 +1,5 @@
-import CSVAddAction from "../../actions/CSVAddAction";
-import CSVDeleteAction from "../../actions/CSVDeleteAction";
+import CSVAddAction from "../../actions/CSV/CSVAddAction";
+import CSVDeleteAction from "../../actions/CSV/CSVDeleteAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import FetchError from "../../components/Common/FetchError";
 import EditCSV from "../../components/Emails/EditCSV";

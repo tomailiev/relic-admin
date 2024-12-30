@@ -1,32 +1,16 @@
-// import { TextSnippet } from "@mui/icons-material";
-// import { Button } from "@mui/material";
-// import { Link } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { CSVSchema } from "../utils/yup/yup-schemas";
 
 const CSVListColumns = [
-    // { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0 },
     { field: 'firstName', headerName: 'First name', flex: 2 },
     { field: 'lastName', headerName: 'Last name', flex: 2 },
     { field: 'email', headerName: 'Email', flex: 2 }
-    // {
-    //     field: 'select',
-    //     headerName: 'Select',
-    //     sortable: false,
-    //     flex: 2,
-    //     renderCell: (params) => (
-    //         <Link to={`/texts/${params.id}`}>
-    //             <Button variant="contained">
-    //                 View
-    //             </Button>
-    //         </Link>
-    //     )
-    // }
 ];
 
 const CSVColumns = [
-    {field: 'name', headerName: 'Name', flex: 4 },
+    { field: 'name', headerName: 'Name', flex: 4 },
     {
         field: 'select',
         headerName: 'Select',
@@ -47,7 +31,7 @@ const fields = {
 };
 
 const csvFA = [
-    { label: 'CSV', id: 'csv', type: 'file', path: 'mock-email/csv' },
+    { label: 'CSV', id: 'csv', type: 'file', path: 'CSVs', displayName: 'csvFile' },
 ];
 
 const CSVProps = {
@@ -59,8 +43,11 @@ const CSVProps = {
     pageSize: 25,
     pageSizeOptions: [10, 25, 50],
     formType: 'file',
-    fields: fields,
-    fieldsArray: csvFA,
+    filesFields: fields,
+    filesFieldsArray: csvFA,
+    encType: 'multipart/form-data',
+    steps: ['files', 'preview'],
+    schemas: { files: CSVSchema }
 };
 
 export default CSVProps;

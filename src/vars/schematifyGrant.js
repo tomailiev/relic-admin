@@ -1,8 +1,7 @@
-import { schematify } from "./schemaFunctions";
+import { months } from "./dateObjects";
 
 export default function schematifyGrant(item) {
-    const withMonths = schematify(item, 'dueMonths');
-    const dueMonths = withMonths.dueMonths.map(({ month }) => Number(month));
-    const notification = Number(item.notification);
-    return { ...withMonths, dueMonths, notification };
+    const dueMonths = item.dueMonths.map(({ dueMonth }) => months.findIndex(str => str === dueMonth));
+    const notification = item.notification === 'No' ? 0 : 1;
+    return { ...item, dueMonths, notification };
 };

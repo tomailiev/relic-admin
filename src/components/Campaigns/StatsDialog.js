@@ -21,7 +21,7 @@ const StatsDialog = ({ open, setOpen, name, list }) => {
     }
 
     return (
-        <Dialog open={open} maxWidth={'lg'} fullWidth="true">
+        <Dialog open={open} maxWidth={'lg'} fullWidth={true}>
             <DialogTitle sx={{ textTransform: 'capitalize' }}>
                 {name} stats
                 <IconButton

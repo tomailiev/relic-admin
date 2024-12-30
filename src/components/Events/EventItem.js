@@ -1,11 +1,12 @@
 import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
+import { daysOfWeek } from "../../vars/dateObjects";
+// import { deschematifyPerformance } from "../../vars/deschematifyEvent";
 
 
 
 const EventItem = ({ item }) => {
-
-
+    
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
@@ -36,7 +37,7 @@ const EventItem = ({ item }) => {
                             Performances:
                         </Typography>
                         <List>
-                            {item.performances && item.performances.sort((a, b) => a.id - b.id).map(({ id, date, day, time, location, venue, url }) => {
+                            {item.performances && item.performances.sort((a, b) => a.id - b.id).map(({ id, date, time, location, venue, url }) => {
                                 return (
                                     <Link key={id} href={url} target={'_blank'} underline={'none'}>
                                         <ListItem button>
@@ -45,7 +46,7 @@ const EventItem = ({ item }) => {
                                                     <ConfirmationNumberOutlinedIcon />
                                                 </Avatar>
                                             </ListItemAvatar>
-                                            <ListItemText primary={`${venue} - ${location}`} secondary={`${day}, ${date} - ${time}`} />
+                                            <ListItemText primary={`${venue} - ${location}`} secondary={`${daysOfWeek[new Date(date).getUTCDay()]}, ${date} - ${time}`} />
                                         </ListItem>
                                     </Link>
                                 )

@@ -1,33 +1,10 @@
-import { schematify } from "./schemaFunctions";
+import { Timestamp } from "firebase/firestore";
+import { months, daysOfWeek } from "./dateObjects";
 
-const daysOfWeek = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday'
-];
-
-const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-]
 
 function schematifyEvent(event) {
-    const withPerformances = schematify(event, 'performances');
-    const performances = withPerformances.performances.map((p) => {
+    
+    const performances = event.performances.map((p) => {
         const fullDate = new Date(p.date);
         const day = daysOfWeek[fullDate.getUTCDay()];
         const month = months[fullDate.getUTCMonth()];
@@ -39,7 +16,12 @@ function schematifyEvent(event) {
         let rest = (({ lng, lat, date, time, ...object }) => object)(p);
         return Object.assign(rest, { time, geocode, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });
     });
-    return { ...withPerformances, performances };
+    const { imgSrc: _, ...updatedEvent } = event;
+    return {
+        ...updatedEvent,
+        performances,
+        dateDone: Timestamp.fromDate(new Date(event.dateDone))
+    };
 }
 
 export default schematifyEvent;

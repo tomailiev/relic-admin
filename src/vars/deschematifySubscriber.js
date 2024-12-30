@@ -1,6 +1,7 @@
-import { deschematify } from "./schemaFunctions";
 
 export default function deschematifySubscriber(item) {
     const tags = item.tags.map(m => ({ tag: m }));
-    return deschematify({...item, tags}, 'tags');
+    const status = item.status === 1 ? 'Subscribed' : 'Unsubscribed';
+    const history = item.history?.map((e) => ({...e, timestamp: e.timestamp.toDate()}))
+    return { ...item, status, tags, history };
 }

@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { clickReducer, openReducer } from "./campaignStatProps";
+import { campaignSchema } from "../utils/yup/yup-schemas";
 
 const campaignColumns = [
     { field: 'subject', headerName: 'Subject', flex: 2 },
@@ -8,19 +9,12 @@ const campaignColumns = [
     { field: 'datetime', headerName: 'Date', flex: 1, valueGetter: ({ row }) => row.datetime.toDate() },
     {
         field: 'edit',
-        headerName: 'Edit/Stats',
+        headerName: 'Stats',
         sortable: false,
         flex: 2,
-        renderCell: ({row, id}) => {
-            return row.status === 1 ? (
-                <Link to={`/campaigns/${id}/edit`}>
-                    <Button variant="contained">
-                        Edit
-                    </Button>
-                </Link>
-            )
-            : `Open: ${(row.open?.reduce(openReducer, []).length / row.sentTo?.length * 100).toFixed(1) || 0}%,
-            Click: ${(row.click?.reduce(clickReducer, []).length / row.sentTo?.length * 100).toFixed(1) || 0}%`
+        renderCell: ({row}) => {
+            return `Open: ${((row.open?.reduce(openReducer, []).length / row.sentTo?.length * 100) || (0)).toFixed(1)}%,
+            Click: ${((row.click?.reduce(clickReducer, []).length / row.sentTo?.length * 100) || (0)).toFixed(1)}%`
         }
     },
     {
@@ -32,7 +26,7 @@ const campaignColumns = [
             return (
                 <Link to={`/campaigns/${params.id}`}>
                     <Button variant="contained">
-                        {params.row.status === 1 ? 'View' : 'Report'}
+                        {params.row.status === 1 ? 'View' : 'Full stats'}
                     </Button>
                 </Link>
             )
@@ -63,6 +57,8 @@ const campaignProps = {
     formType: 'simple',
     fields: campaignFields,
     fieldsArray: campaignsFA,
+    steps: ['fieldsArray'],
+    schemas: { fieldsArray: campaignSchema }
 };
 
 export default campaignProps;

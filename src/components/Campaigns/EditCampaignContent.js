@@ -50,7 +50,6 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
             setEmailMjml(fetcher.data.mjml);
         }
         if (fetcher.data?.errors.length) {
-            console.log(fetcher.data.errors.length);
             setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
         }
     }, [fetcher.data, setError]);

@@ -1,14 +1,11 @@
 import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
-// import { createRef, useEffect } from "react";
-// import { getMap } from "../../utils/google-maps/getMap";
-// import { DataGrid } from "@mui/x-data-grid";
 import { Email, LocationOn, Loyalty, Style, ImportContacts, Event } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import subscriberProps from '../../props/subscriberProps'
 import { useLocation } from "react-router-dom";
 
 const SubscriberItem = ({ item }) => {
-
+    
     const location = useLocation();
 
     return (
@@ -40,13 +37,13 @@ const SubscriberItem = ({ item }) => {
                             <ListItemIcon>
                                 <Style />
                             </ListItemIcon>
-                            <ListItemText primary={item.tags.join(', ')} />
+                            <ListItemText primary={item.tags.map(({ tag }) => tag).join(', ')} />
                         </ListItem>}
                         <ListItem>
                             <ListItemIcon>
                                 <Loyalty />
                             </ListItemIcon>
-                            <ListItemText primary={item.status ? 'Subscribed' : 'Unsubscribed'} />
+                            <ListItemText primary={item.status} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>

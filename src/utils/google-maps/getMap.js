@@ -7,12 +7,13 @@ import loader from "./maps-init";
 async function getMap(mapRef, address, location) {
     const position = await getCoordinates(address, location);
     const { Map, InfoWindow } = await loader.importLibrary('maps');
-    const { Marker } = await loader.importLibrary('marker');
+    const { AdvancedMarkerElement } = await loader.importLibrary('marker');
     const map = new Map(mapRef, {
         center: position,
-        zoom: 9
+        zoom: 9,
+        mapId: 'single_donor'
     });
-    const marker = new Marker({
+    const marker = new AdvancedMarkerElement({
         position: position,
         map: map,
     });
@@ -36,18 +37,19 @@ async function getMap(mapRef, address, location) {
 
 async function getMultiMap(mapRef, items,) {
     const { Map, InfoWindow } = await loader.importLibrary('maps');
-    const { Marker } = await loader.importLibrary('marker');
+    const { AdvancedMarkerElement } = await loader.importLibrary('marker');
 
     const center = { lat: 37.0902, lng: -95.7129 };
 
     const map = new Map(mapRef, {
         center: center,
-        zoom: 4
+        zoom: 4,
+        mapId: 'multi_donor'
     });
 
     const gmapMarkers = await Promise.all(items.filter(({address, location}) => !!address || !!location).map(async ({ address, location, firstName, lastName, donations }) => {
         const position = await getCoordinates(address, location);
-        const marker = new Marker({
+        const marker = new AdvancedMarkerElement({
             position: position,
             // map: map,
         });

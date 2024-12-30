@@ -1,6 +1,7 @@
 import { TextSnippet } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { newTextSchema } from "../utils/yup/yup-schemas";
 
 const textColumns = [
     { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <TextSnippet /> },
@@ -41,6 +42,9 @@ const textProps = {
     formType: 'simple', 
     fields: fields,
     fieldsArray: textFA,
+    encType: 'application/json',
+    steps: ['fieldsArray', 'preview'],
+    schemas: { fieldsArray: newTextSchema }
 };
 
 export default textProps;

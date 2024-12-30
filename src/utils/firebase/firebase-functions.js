@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
@@ -6,21 +6,17 @@ import { httpsCallable } from "firebase/functions";
 function uploadDoc(data, col, id, merge) {
     return id
         ? setDoc(doc(db, col, id), data, { merge })
-        // .then(docRef => console.log("Document written with ID: ", docRef.id))
-        // .catch(e => console.error("Error adding document: ", e))
         : addDoc(collection(db, col), data)
 }
 
 function getLink(url) {
-    // return getDownloadURL(ref(storage, url));
     return getBlob(ref(storage, url));
 }
 
 function uploadFile(file, path) {
     const pathRef = ref(storage, path)
     return uploadBytes(pathRef, file)
-        .then(snap => {
-            console.log(snap);
+        .then(_snap => {
             return pathRef.fullPath;
         })
 }
@@ -31,6 +27,26 @@ function downloadDocs(col, condition, sorting) {
         : condition
             ? query(collection(db, col), where(...condition))
             : query(collection(db, col));
+    return getDocs(q)
+        .then(qSnap => {
+            const docs = [];
+            qSnap.forEach(doc => {
+                docs.push(Object.assign({ id: doc.id }, doc.data()));
+            });
+            return docs;
+        })
+}
+
+function downloadDocsV2(col, options = []) {
+    const queryConditions = options?.map(c => (
+        c.type === 'condition'
+            ? where(...c.value)
+            : c.type === 'sorting'
+                ? orderBy(...c.value)
+                : limit(...c.value)
+    ));
+    const q = query(collection(db, col), ...queryConditions);
+
     return getDocs(q)
         .then(qSnap => {
             const docs = [];
@@ -101,6 +117,7 @@ export {
     uploadDoc,
     getLink,
     downloadDocs,
+    downloadDocsV2,
     downloadOneDoc,
     uploadFile,
     deleteDocs,

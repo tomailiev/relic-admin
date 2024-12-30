@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
 
 const getTier = (amount) => {
     return amount < 50
@@ -12,22 +13,18 @@ const getTier = (amount) => {
                     ? 'Artemis $500+'
                     : amount >= 1000 && amount < 2500
                         ? 'Hermes $1000+'
-                        : amount >= 2500 && amount < 7500
+                        : amount >= 2500 && amount < 5000
                             ? 'Athena $2500+'
-                            : amount >= 7500 && amount < 15000
-                                ? 'Apollo $7500+'
-                                : 'Zeus & Hera $15,000+'
+                            : amount >= 5000 && amount < 10000
+                                ? 'Apollo $5000+'
+                                : 'Zeus & Hera $10,000+'
 };
 
-const today = new Date();
-const isYearEnd = (today.getUTCMonth()) > 5;
-const startDate = isYearEnd
-    ? new Date(`07-01-${today.getUTCFullYear()}`)
-    : new Date(`07-01-${today.getUTCFullYear() - 1}`);
+const endDate = new Date();
+const startDate = new Date();
+startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
 
-const endDate = isYearEnd
-    ? new Date(`06-30-${today.getUTCFullYear() + 1}`)
-    : new Date(`06-30-${today.getUTCFullYear()}`);
+
 
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
@@ -68,17 +65,6 @@ const donorColumns = [
         valueGetter: ({ row }) => `${row.donations[row.donations.length - 1].recognitionName}`,
         flex: 2
     },
-    // {
-    //     field: 'type',
-    //     headerName: 'Type',
-    //     valueGetter: ({ row }) => {
-    //         return Array.from(row.donations?.reduce((acc, curr) => {
-    //             acc.add(curr.campaign);
-    //             return acc;
-    //         }, new Set())).join(', ');
-    //     },
-    //     flex: 1.5
-    // },
     {
         field: 'select',
         headerName: 'Select',
@@ -140,6 +126,8 @@ const donorProps = {
     fieldsArray: donorFA,
     nestedArray: donationFA,
     nestedName: 'donations',
+    steps: ['fieldsArray', 'nestedArray', 'preview'],
+    schemas: { fieldsArray: donorSchema, nestedArray: donationSchema }
 };
 
 export default donorProps;

@@ -1,15 +1,19 @@
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
-import { MuiFileInput } from "mui-file-input";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
+import LoadingContext from "../../context/LoadingContext";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+    const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [fileValue, setFileValue] = useState(null);
+
+    useEffect(() => {
+        setUserFields(fields)
+    }, [fields]);
 
     useEffect(() => {
         const submissionStates = {
@@ -21,6 +25,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
     }, [navigation.state]);
 
     function removeError(e) {
+
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
@@ -30,33 +35,22 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
         })
     }
 
-    function handleFileChange(fileInput) {
-        setFileValue(fileInput)
-    }
 
-    async function submitForm(data) {
-        console.log(data);
+    async function submitForm() {
+
         try {
-            const validated = await schema.validate(data, { abortEarly: false });
+            const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
-            // setUserFields(fields);
         } catch (e) {
             console.log(e);
+
             if (e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
                     return { ...p, [c.path]: c.message, };
                 }, {});
+
                 setHasError(errors);
             }
-        }
-    }
-
-    function handleSubmitEvent() {
-        const fileUpload = fieldsArray.find(item => item.type === 'file');
-        if (fileUpload) {
-            submitForm(Object.assign(userFields, { [fileUpload.id]: fileValue }));
-        } else {
-            submitForm(userFields);
         }
     }
 
@@ -66,41 +60,37 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema }) => {
                 <Stack spacing={2}>
                     {fieldsArray.map(({ id, label, type, multiline, options }) => {
                         const props = {
-                            key: id,
                             id: id,
                             name: id,
                             type: type || 'text',
-                            value: type === 'file' ? fileValue : userFields[id],
-                            onChange: type === 'file' ? handleFileChange : handleInputChange,
+                            value: userFields[id],
+                            onChange: handleInputChange,
                             error: !!(hasError[id]),
                             onFocus: removeError,
-                            helperText: hasError[id],
                             label: label,
                             size: 'small',
                             multiline: multiline,
                             variant: 'outlined',
                             // rows: 4
                         }
-                        return type === 'file'
-                            ? <MuiFileInput {...props} error={hasError[id] === 'Please select file'} helperText={hasError[id] === 'Please select file' && hasError[id]} />
-                            : type === 'select'
-                                ? <FormControl key={id}>
-                                    <InputLabel>{label}</InputLabel>
-                                    <Select {...props}>
-                                        {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
-                                    </Select>
-                                    <FormHelperText>{props.helperText}</FormHelperText>
-                                </FormControl>
-                                : <TextField {...props} />
-                    })}
 
+                        return type === 'select'
+                            ? <FormControl key={id}>
+                                <InputLabel shrink>{label}</InputLabel>
+                                <Select {...props}>
+                                    {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+                                </Select>
+                                <FormHelperText>{hasError[id]}</FormHelperText>
+                            </FormControl>
+                            : <TextField {...props} helperText={hasError[id]} InputLabelProps={{ shrink: true }} key={id} />
+                    })}
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoading}
                         name="intent"
                         value="preflight"
-                        onClick={handleSubmitEvent}
+                        onClick={submitForm}
                     >
                         Submit
                     </Button>

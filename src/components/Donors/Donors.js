@@ -21,7 +21,7 @@ const Donors = () => {
                 <Typography variant="h3" my={5}>
                     Donors
                 </Typography>
-                <NavLink to={'/donors/add-donation'} >
+                <NavLink to={'/donors/new-donation'} >
                     <Button variant="contained" endIcon={<AddIcon />}>
                         Add donation
                     </Button>
