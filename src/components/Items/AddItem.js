@@ -56,6 +56,7 @@ const AddItem = (itemProps) => {
         const filePaths = {};
 
         try {
+            setIsLoading(true);
             await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
                 const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
                 filePaths[item.id] = filePath;
@@ -65,8 +66,10 @@ const AddItem = (itemProps) => {
             setSubmission(prev => {
                 return Object.assign(prev || {}, filePaths);
             })
+            setIsLoading(false);
             handleSubmitEvent();
         } catch (error) {
+            setIsLoading(false);
             console.log(error);
 
         }

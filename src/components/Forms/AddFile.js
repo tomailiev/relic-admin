@@ -29,6 +29,8 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     }
 
     function handleFileChange(newValue, id) {
+        console.log(newValue);
+        
         setUserFields(prev => {
             return { ...prev, [id]: newValue }
         });
@@ -40,7 +42,7 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         let shouldSkip = true;
         fieldsArray.forEach(({ id }) => {
 
-            if (!fields[id] || willEdit[id]) shouldSkip = false;
+            if (!fields[id] || fields[id]?.name !== userFields[id]?.name || willEdit[id]) shouldSkip = false;
         })
 
         return shouldSkip;
@@ -94,7 +96,7 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                                     <IconButton edge="end" aria-label="edit" onClick={() => setWillEdit(prev => ({ ...prev, [id]: true }))}>
                                         <Edit />
                                     </IconButton>
-                                }><ListItemText primary={fields[id]} />
+                                }><ListItemText primary={userFields[id]?.name || fields[id]} />
                                 </ListItem>
                                 : <ListItem key={id}>
                                     <MuiFileInput {...props} error={!!(hasError[id])} helperText={hasError[id]} />
