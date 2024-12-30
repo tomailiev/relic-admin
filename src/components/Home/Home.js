@@ -8,6 +8,7 @@ import ErrorFeedback from "../Common/ErrorFeedback";
 import ErrorContext from "../../context/ErrorContext";
 import Header from "../Header/Header";
 import DrawerContent from "../Drawer/DrawerContent";
+import LoadingContext from "../../context/LoadingContext";
 
 
 const time = process.env.NODE_ENV === 'development' ? 10000 : 1200;
@@ -16,6 +17,7 @@ const Home = () => {
 
     const { currentUser } = useContext(UserContext);
     const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
     const theme = useTheme();
@@ -67,50 +69,52 @@ const Home = () => {
 
     return (
         <ErrorContext.Provider value={{ error, setError }}>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}
-                open={navigation.state === 'submitting'}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Dialog
-                open={timeoutModalOpen}
-                onClose={() => setTimeoutModalOpen(false)}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    You will be logged out due to inactivity
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Continue session?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setTimeoutModalOpen(false)}>Continue</Button>
-                </DialogActions>
-            </Dialog>
-            <ErrorFeedback />
-            <Header handler={handleDrawerToggle} />
-            <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
-                <AppDrawer children={<DrawerContent />} />
-            </MenuContext.Provider>
-            <Box ml={sm ? '0px' : '240px'}>
-                <Container sx={{ py: 2 }}>
-                    <Breadcrumbs>
-                        {locationList.map((name, i, arr) => {
-                            return (
-                                i === arr.length - 1
-                                    ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
-                                    : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
-                                        {name || 'home'}
-                                    </NavLink>)
-                        })}
-                    </Breadcrumbs>
-                </Container>
-                <Outlet />
-            </Box>
+            <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+                <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}
+                    open={navigation.state === 'submitting' || isLoading}
+                >
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+                <Dialog
+                    open={timeoutModalOpen}
+                    onClose={() => setTimeoutModalOpen(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        You will be logged out due to inactivity
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Continue session?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => setTimeoutModalOpen(false)}>Continue</Button>
+                    </DialogActions>
+                </Dialog>
+                <ErrorFeedback />
+                <Header handler={handleDrawerToggle} />
+                <MenuContext.Provider value={{ mobileOpen, setMobileOpen }}>
+                    <AppDrawer children={<DrawerContent />} />
+                </MenuContext.Provider>
+                <Box ml={sm ? '0px' : '240px'}>
+                    <Container sx={{ py: 2 }}>
+                        <Breadcrumbs>
+                            {locationList.map((name, i, arr) => {
+                                return (
+                                    i === arr.length - 1
+                                        ? <Typography key={i} variant="body1">{name || 'home'}</Typography>
+                                        : <NavLink key={i} to={arr.slice(0, i + 1).join('/')}>
+                                            {name || 'home'}
+                                        </NavLink>)
+                            })}
+                        </Breadcrumbs>
+                    </Container>
+                    <Outlet />
+                </Box>
+            </LoadingContext.Provider>
         </ErrorContext.Provider>
     );
 };

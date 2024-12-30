@@ -8,6 +8,7 @@ import AddFile from "../Forms/AddFile";
 import AddDynamic from "../Forms/AddDynamic";
 // import SubmissionContext from "../../context/SubmissionContext";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
+import LoadingContext from "../../context/LoadingContext";
 
 
 const AddItem = (itemProps) => {
@@ -15,7 +16,8 @@ const AddItem = (itemProps) => {
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
-    const [ submission, setSubmission ] = useState(null);
+    const { setIsLoading } = useContext(LoadingContext);
+    const [submission, setSubmission] = useState(null);
     const actionData = useActionData();
 
     const labels = {
@@ -85,19 +87,22 @@ const AddItem = (itemProps) => {
     }
 
     async function handleInitialSubmission(initialData) {
+        setIsLoading(true);
 
         try {
             const { data } = await itemProps.initialFn(initialData);
-
             setSubmission(prev => {
                 return Object.assign(prev || {}, data);
             });
+
             setTimeout(() => {
                 handleSubmitEvent();
-
+                setIsLoading(false);
+                
             }, 1000);
 
         } catch (error) {
+            setIsLoading(false);
             console.log(error);
 
         }

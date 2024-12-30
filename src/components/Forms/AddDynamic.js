@@ -1,8 +1,11 @@
 import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
+import LoadingContext from "../../context/LoadingContext";
 
 const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks}) => {
+    const { isLoading } = useContext(LoadingContext);
+
     const navigation = useNavigation();
     
     const [nestedItems, setNestedItems] = useState(fields);
@@ -116,7 +119,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoading}
                         name="intent"
                         value="preflight"
                         onClick={handleSubmitEvent}

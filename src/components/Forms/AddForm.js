@@ -1,14 +1,16 @@
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
+import LoadingContext from "../../context/LoadingContext";
 
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+    const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
     useEffect(() => {
         setUserFields(fields)
     }, [fields]);
@@ -71,7 +73,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             variant: 'outlined',
                             // rows: 4
                         }
-                        
+
                         return type === 'select'
                             ? <FormControl key={id}>
                                 <InputLabel shrink>{label}</InputLabel>
@@ -85,7 +87,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoading}
                         name="intent"
                         value="preflight"
                         onClick={submitForm}

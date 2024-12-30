@@ -1,11 +1,14 @@
 import { Edit } from "@mui/icons-material";
 import { Button, IconButton, List, ListItem, ListItemText, Paper, Stack, } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
+import LoadingContext from "../../context/LoadingContext";
 
 
 const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+    const { isLoading } = useContext(LoadingContext);
+
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
     const [willEdit, setWillEdit] = useState({});
@@ -102,7 +105,7 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || isLoading}
                         name="intent"
                         value="preflight"
                         onClick={submitForm}
