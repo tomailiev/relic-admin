@@ -119,10 +119,10 @@ const tagsSchema = array().of(object({
 }));
 
 const campaignSchema = object({
-    subject: string(),
+    subject: string().required(),
     previewText: string(),
-    to: string(),
-    from: string().email()
+    to: string().required(),
+    from: string().email().required()
 });
 
 const emailComponentSchemas = {
