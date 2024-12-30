@@ -54,12 +54,12 @@ const columnFA = [
 const textFields = {
     id: 'mj-text',
     text: '',
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 300,
     fontStyle: 'normal',
     color: '#000000',
     align: 'left',
-    fontFamily: '',
+    fontFamily: 'Helvetica, sans-serif',
     letterSpacing: '',
     lineHeight: '1.2'
 };
@@ -84,12 +84,12 @@ const customTextFields = {
     venue: '',
     location: '',
     href: '',
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 300,
     fontStyle: 'normal',
     color: '#000000',
     align: 'left',
-    fontFamily: '',
+    fontFamily: 'Helvetica, sans-serif',
     letterSpacing: '',
     lineHeight: '1.2'
 };
@@ -130,16 +130,16 @@ const buttonFields = {
     id: 'mj-button',
     text: '',
     color: '#ffffff',
-    backgroundColor: '#000000',
+    backgroundColor: '#09455a',
     href: '',
-    fontSize: 16,
-    fontWeight: 300,
+    fontSize: 20,
+    fontWeight: 600,
     fontStyle: 'normal',
     textDecoration: 'none',
     width: '',
-    fontFamily: '',
-    border: '',
-    borderRadius: '',
+    fontFamily: 'Helvetica, sans-serif',
+    border: '2px solid #0c6280',
+    borderRadius: '5px',
 };
 
 const buttonFA = [

@@ -128,12 +128,12 @@ const campaignSchema = object({
 const emailComponentSchemas = {
     text: object({
         text: string().required(),
-        fontSize: number().default(16),
+        fontSize: number().default(17),
         fontWeight: number().default(300),
         fontStyle: string().default('normal'),
         color: string(),
         align: string().default('left'),
-        fontFamily: string(),
+        fontFamily: string().default('Helvetica, sans-serif'),
         lineHeight: string(),
         letterSpacing: string()
     }),
@@ -145,7 +145,7 @@ const emailComponentSchemas = {
     }),
     button: object({
         text: string().required(),
-        fontSize: number().default(16),
+        fontSize: number().default(17),
         fontWeight: number().default(300),
         fontStyle: string().default('normal'),
         color: string().default('#ffffff'),
@@ -153,7 +153,7 @@ const emailComponentSchemas = {
         href: string().url(),
         textDecoration: string().default('none'),
         width: string(),
-        fontFamily: string(),
+        fontFamily: string().default('Helvetica, sans-serif'),
         border: string(),
         borderRadius: string(),
     }),
