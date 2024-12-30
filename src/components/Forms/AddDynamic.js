@@ -37,7 +37,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
             handleFormCompletion(validated);
         } catch (e) {
             if (e.inner) {
-                console.log(e.inner);
                 
                 setHasError(e.inner?.reduce((p, c) => {
                     const startChar = c.path?.indexOf('[');
@@ -60,7 +59,6 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }
 
     function removeNestedItem(index) {
-        console.log(nestedItems);
         setNestedItems(prev => prev.slice(0, index).concat(prev.slice(index + 1)));
     }
 

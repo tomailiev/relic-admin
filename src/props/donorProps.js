@@ -20,16 +20,6 @@ const getTier = (amount) => {
                                 : 'Zeus & Hera $10,000+'
 };
 
-// const today = new Date();
-// const isYearEnd = (today.getUTCMonth()) > 5;
-// const startDate = isYearEnd
-//     ? new Date(`07-01-${today.getUTCFullYear()}`)
-//     : new Date(`07-01-${today.getUTCFullYear() - 1}`);
-
-// const endDate = isYearEnd
-//     ? new Date(`06-30-${today.getUTCFullYear() + 1}`)
-//     : new Date(`06-30-${today.getUTCFullYear()}`);
-
 const endDate = new Date();
 const startDate = new Date();
 startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
@@ -75,17 +65,6 @@ const donorColumns = [
         valueGetter: ({ row }) => `${row.donations[row.donations.length - 1].recognitionName}`,
         flex: 2
     },
-    // {
-    //     field: 'type',
-    //     headerName: 'Type',
-    //     valueGetter: ({ row }) => {
-    //         return Array.from(row.donations?.reduce((acc, curr) => {
-    //             acc.add(curr.campaign);
-    //             return acc;
-    //         }, new Set())).join(', ');
-    //     },
-    //     flex: 1.5
-    // },
     {
         field: 'select',
         headerName: 'Select',

@@ -18,7 +18,6 @@ const AddDonation = () => {
     }, [actionData, setError]);
 
     function handleSubmission(data) {
-        console.log(data);
         navigate(data ? `/donors/${data.objectID}/edit` : '/donors/add');
        
     }

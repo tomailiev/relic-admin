@@ -6,21 +6,17 @@ import { httpsCallable } from "firebase/functions";
 function uploadDoc(data, col, id, merge) {
     return id
         ? setDoc(doc(db, col, id), data, { merge })
-        // .then(docRef => console.log("Document written with ID: ", docRef.id))
-        // .catch(e => console.error("Error adding document: ", e))
         : addDoc(collection(db, col), data)
 }
 
 function getLink(url) {
-    // return getDownloadURL(ref(storage, url));
     return getBlob(ref(storage, url));
 }
 
 function uploadFile(file, path) {
     const pathRef = ref(storage, path)
     return uploadBytes(pathRef, file)
-        .then(snap => {
-            console.log(snap);
+        .then(_snap => {
             return pathRef.fullPath;
         })
 }

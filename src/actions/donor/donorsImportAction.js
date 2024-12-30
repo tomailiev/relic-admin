@@ -31,12 +31,5 @@ export default async function donorsImportAction({ request, params }) {
             return Object.assign(e, { error: true, severity: 'error' });
         }
     }
-    // try {
-    //     console.log(updates.fileName);
-    //     const docs = await downloadDocs(collections.csv, ['import', '==', `CSVs/${updates.fileName}`])
-    //     return docs;
-    // } catch (e) {
-    //     console.error(e)
-    //     return Object.assign(e, { error: true, severity: 'error' });
-    // }
+
 }

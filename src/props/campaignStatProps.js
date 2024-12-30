@@ -128,12 +128,6 @@ export const fullColumns = [
             )
         }
     },
-    // {
-    //     field: 'delivered',
-    //     headerName: 'Delivered',
-    //     flex: 1,
-    //     renderCell: (params) => params.row.delivered && <Check />
-    // },
     {
         field: 'open',
         headerName: 'Open',

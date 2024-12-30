@@ -178,9 +178,6 @@ const AddItem = (itemProps) => {
                     <Button variant="contained" onClick={finishSubmission}>
                         Finish
                     </Button>
-                    // : <Button variant="contained" onClick={() => setActiveStep(prev => prev + 1)} disabled={!submission}>
-                    //     Next
-                    // </Button>
                 }
             </Box>
         </Box>

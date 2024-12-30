@@ -19,14 +19,12 @@ const CSVItem = ({ item }) => {
             if (fetcher.state === 'idle' && !fetcher.data) {
                 fetcher.submit({ fileName: item.csvFile?.name || item.id }, { method: 'POST', encType: 'application/json' })
             } else if (fetcher.state === 'idle' && fetcher.data) {
-                console.log(fetcher.data);
 
                 setSubs(fetcher.data.filter(item => {
                     return !(subscribers.docs?.map(subscriber => subscriber.id).includes(item.email))
                 }));
             }
         } else {
-            console.log(location.pathname);
             setSubs(subscribers.docs);
         }
     }, [item.csvFile?.name, item.id, fetcher, subscribers, location.pathname]);
@@ -36,7 +34,6 @@ const CSVItem = ({ item }) => {
             return;
         }
         const newSubs = (subs.filter(({ id }) => model.includes(id)));
-        console.log(newSubs);
 
         setSubmission({ newSubs, final: '1' });
     }

@@ -54,7 +54,6 @@ const DonorItem = ({ item }) => {
 
     useEffect(() => {
         if (actionData) {
-            console.log(actionData);
             if (actionData.code === 'Success') {
                 setModalOpen(false);
                 setError({ severity: 'success', message: 'Sent email' })

@@ -1,29 +1,12 @@
-// import { TextSnippet } from "@mui/icons-material";
-// import { Button } from "@mui/material";
-// import { Link } from "react-router-dom";
 
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CSVSchema } from "../utils/yup/yup-schemas";
 
 const CSVListColumns = [
-    // { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0 },
     { field: 'firstName', headerName: 'First name', flex: 2 },
     { field: 'lastName', headerName: 'Last name', flex: 2 },
     { field: 'email', headerName: 'Email', flex: 2 }
-    // {
-    //     field: 'select',
-    //     headerName: 'Select',
-    //     sortable: false,
-    //     flex: 2,
-    //     renderCell: (params) => (
-    //         <Link to={`/texts/${params.id}`}>
-    //             <Button variant="contained">
-    //                 View
-    //             </Button>
-    //         </Link>
-    //     )
-    // }
 ];
 
 const CSVColumns = [

@@ -29,7 +29,6 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     }
 
     function handleFileChange(newValue, id) {
-        console.log(newValue);
         
         setUserFields(prev => {
             return { ...prev, [id]: newValue }

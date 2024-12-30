@@ -27,7 +27,6 @@ const CampaignItem = ({ item, setEditable }) => {
 
     useEffect(() => {
         if (actionData) {
-            console.log(actionData);
             setError(actionData);
             if (actionData.severity === 'success') {
                 setSendModalOpen(false);
@@ -37,7 +36,6 @@ const CampaignItem = ({ item, setEditable }) => {
     }, [actionData, setError]);
 
     const handleCampaignSend = (testAddresses) => {
-        console.log('sending');
         submit(testAddresses ? { campaignId: item.id, testAddresses } : { campaignId: item.id }, { method: 'POST', encType: 'application/json' })
     }
 

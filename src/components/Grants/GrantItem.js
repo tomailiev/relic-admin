@@ -4,7 +4,6 @@ import { OpenInNew } from "@mui/icons-material";
 
 
 const GrantItem = ({ item }) => {
-    console.log(item.dueMonths);
     
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
