@@ -139,7 +139,7 @@ const buttonFields = {
     width: '',
     fontFamily: 'Helvetica, sans-serif',
     border: '2px solid #0c6280',
-    borderRadius: '5px',
+    borderRadius: 5,
 };
 
 const buttonFA = [
