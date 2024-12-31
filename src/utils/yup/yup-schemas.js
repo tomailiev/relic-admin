@@ -150,7 +150,7 @@ const emailComponentSchemas = {
         fontStyle: string().default('normal'),
         color: string().default('#ffffff'),
         backgroundColor: string().default('#000000'),
-        href: string().url(),
+        href: string().url().required(),
         textDecoration: string().default('none'),
         width: string(),
         fontFamily: string().default('Helvetica, sans-serif'),
