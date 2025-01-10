@@ -32,9 +32,6 @@ function numExtractor(str = '') {
 }
 
 function tierComparator(tierStr1, tierStr2) {
-    if (!tierStr1 || !tierStr2) {
-        return tierStr1 || tierStr2;
-    }
     return numExtractor(tierStr1) - numExtractor(tierStr2);
 }
 
