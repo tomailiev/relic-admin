@@ -27,7 +27,16 @@ startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
 const lastYearStartDate = new Date();
 lastYearStartDate.setUTCFullYear(startDate.getUTCFullYear() - 1);
 
+function numExtractor(str = '') {
+    return Number(Array.from(str).filter(char => char >= '0' && char <= '9').join(''));
+}
 
+function tierComparator(tierStr1, tierStr2) {
+    if (!tierStr1 || !tierStr2) {
+        return tierStr1 || tierStr2;
+    }
+    return numExtractor(tierStr1) - numExtractor(tierStr2);
+}
 
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
@@ -71,7 +80,8 @@ const donorColumns = [
         valueGetter: ({ row }) => getTier(row.donations
             .filter(donation => new Date(donation.date) > startDate && new Date(donation.date) <= endDate)
             .reduce((a, c) => a + c.amount, 0)),
-        flex: 1.5
+        flex: 1.5,
+        sortComparator: tierComparator
     },
     {
         field: 'lastRecognitionName',

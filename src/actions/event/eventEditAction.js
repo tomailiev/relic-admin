@@ -9,7 +9,7 @@ export default async function eventEditAction({ request, params }) {
     try {
         const { id: _, ...rest } = doc;
         await uploadDoc(schematifyEvent(rest), collections.events, doc.id, true);
-        return redirect(`/events/${doc.id}`);
+        return redirect(`/events`);
     } catch (e) {
         console.error(e)
         return Object.assign(e, { error: true, severity: 'error' });

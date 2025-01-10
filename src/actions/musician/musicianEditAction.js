@@ -8,7 +8,7 @@ export default async function musicianEditAction({ request, params }) {
         const { id: _, ...rest } = doc;
         const featured = Number(doc.featured);
         await uploadDoc({ ...rest, featured }, collections.musicians, doc.id, true);
-        return redirect(`/musicians/${doc.id}`);
+        return redirect(`/musicians`);
     } catch (e) {
         return Object.assign(e, { error: true, severity: 'error' });
     }

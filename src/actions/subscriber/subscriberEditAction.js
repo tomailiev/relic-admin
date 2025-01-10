@@ -12,7 +12,7 @@ export default async function subscriberEditAction({ request, params }) {
         const { id: _, history: __, ...rest } = doc;
         const update = schematifySubscriber(rest);
         await uploadDoc(update, collections.subscribers, doc.id, true);
-        return redirect(`/subscribers/${doc.id}`);
+        return redirect(`/subscribers`);
     } catch (e) {
         console.error(e)
         return Object.assign(e, { error: true, severity: 'error' });
