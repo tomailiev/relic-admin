@@ -1,19 +1,47 @@
-import { Typography, Container, Button, Box } from "@mui/material";
+import { Typography, Container, Button, Box, Paper, TextField } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MapView from "./MapView";
 import CustomGridToolbar from "../Common/GridExportToolbar";
 import donorProps from "../../props/donorProps";
 
-
-
+const today = new Date();
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+const oneYearAgoFromTomorrow = new Date(tomorrow);
+oneYearAgoFromTomorrow.setFullYear(oneYearAgoFromTomorrow.getFullYear() - 1);
+const oneYearAgoFromTomorrowDateString = oneYearAgoFromTomorrow.toISOString().substring(0, 10);
+const todayDateString = today.toISOString().substring(0, 10);
 
 const Donors = () => {
 
     const donors = useLoaderData();
     const [mapView, setMapView] = useState(false);
+    const [startDate, setStartDate] = useState(oneYearAgoFromTomorrowDateString);
+    const [endDate, setEndDate] = useState(todayDateString);
+    const [donationsAmount, setDonationsAmount] = useState(0);
+
+    useEffect(() => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        setDonationsAmount(donors
+            .map(donor => donor.donations
+                .filter(donation => new Date(donation.date) >= start && new Date(donation.date) <= end)
+                .reduce((a, c) => a + c.amount, 0))
+            .reduce((a, c) => a + c, 0))
+    }, [donors, endDate, startDate])
+
+    function updateDateValue(e) {
+        if (e.target.name === 'startDate') {
+            setStartDate(e.target.value)
+        } else {
+            setEndDate(e.target.value);
+        }
+
+    }
 
     return (
         <>
@@ -46,6 +74,48 @@ const Donors = () => {
                     >
                         Map view
                     </Button>
+                </Box>
+                <Box>
+                    <Paper>
+                        <Typography my={5} px={1} py={1}>{'Donations from '}
+                            <TextField
+                                id={'startDate'}
+                                name={'startDate'}
+                                type={'date'}
+                                value={startDate}
+                                onChange={updateDateValue}
+                                // error: !!(hasError[id]),
+                                // onFocus: removeError,
+                                label={'Start date'}
+                                size={'small'}
+                                variant={'outlined'}
+                                InputProps={{
+                                    inputProps: {
+                                        max: todayDateString, // Disable dates larger than today
+                                    }
+                                }}
+                            />
+                            {' to '}
+                            <TextField
+                                id={'endDate'}
+                                name={'endDate'}
+                                type={'date'}
+                                value={endDate}
+                                onChange={updateDateValue}
+                                // error: !!(hasError[id]),
+                                // onFocus: removeError,
+                                label={'End date'}
+                                size={'small'}
+                                variant={'outlined'}
+                                InputProps={{
+                                    inputProps: {
+                                        max: todayDateString, // Disable dates larger than today
+                                    }
+                                }}
+                            />
+                            {' $' + donationsAmount}
+                        </Typography>
+                    </Paper>
                 </Box>
                 {mapView
                     ? <MapView donors={donors} />
