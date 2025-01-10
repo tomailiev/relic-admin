@@ -54,7 +54,7 @@ const Donors = () => {
                             <DataGrid
                                 rows={donors}
                                 columns={donorProps.columns}
-                                slots={{toolbar: CustomGridToolbar}}
+                                slots={{ toolbar: CustomGridToolbar }}
                                 initialState={{
                                     sorting: {
                                         sortModel: [donorProps.sorting],
