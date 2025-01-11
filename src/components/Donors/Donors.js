@@ -1,4 +1,4 @@
-import { Typography, Container, Button, Box, Paper, TextField } from "@mui/material";
+import { Typography, Container, Button, Box, Paper, TextField, Stack } from "@mui/material";
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
@@ -26,7 +26,7 @@ const Donors = () => {
     useEffect(() => {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        
+
         setDonationsAmount(donors
             .map(donor => donor.donations
                 .filter(donation => new Date(donation.date) >= start && new Date(donation.date) <= end)
@@ -76,8 +76,9 @@ const Donors = () => {
                     </Button>
                 </Box>
                 <Box>
-                    <Paper>
-                        <Typography my={5} px={1} py={1}>{'Donations from '}
+                    <Paper sx={{my: 2,}}>
+                        <Stack direction={'row'}>
+                            <Typography px={2} pt={2} fontSize={'1.1em'}>{'Total donations from '}</Typography>
                             <TextField
                                 id={'startDate'}
                                 name={'startDate'}
@@ -88,14 +89,14 @@ const Donors = () => {
                                 // onFocus: removeError,
                                 label={'Start date'}
                                 size={'small'}
-                                variant={'outlined'}
+                                variant={'standard'}
                                 InputProps={{
                                     inputProps: {
                                         max: todayDateString, // Disable dates larger than today
                                     }
                                 }}
                             />
-                            {' to '}
+                            <Typography px={2} pt={2} fontSize={'1.1em'}>{' to '}</Typography>
                             <TextField
                                 id={'endDate'}
                                 name={'endDate'}
@@ -106,15 +107,17 @@ const Donors = () => {
                                 // onFocus: removeError,
                                 label={'End date'}
                                 size={'small'}
-                                variant={'outlined'}
+                                variant={'standard'}
                                 InputProps={{
                                     inputProps: {
                                         max: todayDateString, // Disable dates larger than today
                                     }
                                 }}
                             />
-                            {' $' + donationsAmount}
-                        </Typography>
+                            <Typography px={2} pt={2} fontWeight={'bold'} fontSize={'1.1em'}>
+                                {' $' + donationsAmount.toLocaleString()}
+                            </Typography>
+                        </Stack>
                     </Paper>
                 </Box>
                 {mapView
@@ -135,7 +138,7 @@ const Donors = () => {
                             />
                         </Box>
                     </Box>}
-            </Container>
+            </Container >
         </>
     );
 };
