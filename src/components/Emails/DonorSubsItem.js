@@ -1,4 +1,4 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
@@ -8,17 +8,17 @@ import { deschematify } from "../../vars/schemaFunctions";
 const DonorSubsItem = ({ mutateItem }) => {
 
     // const fetcher = useFetcher();
-    const [donors] = useLoaderData();
+    const [donors, subscribers] = useLoaderData();
     const [subs, setSubs] = useState([]);
     // const location = useLocation();
 
     useEffect(() => {
         if (donors) {
             setSubs(donors.filter(({ email }) => {
-                return !!email
+                return !!email && !subscribers.find(({ id }) => id === email)
             }));
         }
-    }, [donors]);
+    }, [donors, subscribers]);
 
     function filterer(model) {
 
@@ -33,7 +33,7 @@ const DonorSubsItem = ({ mutateItem }) => {
         <Container maxWidth="lg" sx={{ my: 3 }}>
             <Box overflow={'scroll'}>
                 <Box minWidth={'800px'} width={'100%'}>
-                    <DataGrid
+                    {subs.length ? <DataGrid
                         checkboxSelection
                         onRowSelectionModelChange={filterer}
                         rows={subs}
@@ -46,6 +46,8 @@ const DonorSubsItem = ({ mutateItem }) => {
                         }}
                         pageSizeOptions={CSVProps.pageSizeOptions}
                     />
+                    : <Typography textAlign={'center'} variant="h5">Already up to date.</Typography>
+                }
                 </Box>
             </Box>
         </Container>
