@@ -76,45 +76,41 @@ const Donors = () => {
                     </Button>
                 </Box>
                 <Box>
-                    <Paper sx={{my: 2,}}>
-                        <Stack direction={'row'}>
-                            <Typography px={2} pt={2} fontSize={'1.1em'}>{'Total donations from '}</Typography>
+                    <Paper sx={{ my: 2, border: '1px solid #e0e0e0', py: 0.2 }}>
+                        <Stack direction={'row'} spacing={1.6} justifyContent={'center'}>
+                            <Typography pt={2} fontSize={'1.1em'}>{'Total donations from '}</Typography>
                             <TextField
                                 id={'startDate'}
                                 name={'startDate'}
                                 type={'date'}
                                 value={startDate}
                                 onChange={updateDateValue}
-                                // error: !!(hasError[id]),
-                                // onFocus: removeError,
                                 label={'Start date'}
                                 size={'small'}
                                 variant={'standard'}
                                 InputProps={{
                                     inputProps: {
-                                        max: todayDateString, // Disable dates larger than today
+                                        max: todayDateString,
                                     }
                                 }}
                             />
-                            <Typography px={2} pt={2} fontSize={'1.1em'}>{' to '}</Typography>
+                            <Typography pt={2} fontSize={'1.1em'}>{' to '}</Typography>
                             <TextField
                                 id={'endDate'}
                                 name={'endDate'}
                                 type={'date'}
                                 value={endDate}
                                 onChange={updateDateValue}
-                                // error: !!(hasError[id]),
-                                // onFocus: removeError,
                                 label={'End date'}
                                 size={'small'}
                                 variant={'standard'}
                                 InputProps={{
                                     inputProps: {
-                                        max: todayDateString, // Disable dates larger than today
+                                        max: todayDateString,
                                     }
                                 }}
                             />
-                            <Typography px={2} pt={2} fontWeight={'bold'} fontSize={'1.1em'}>
+                            <Typography pt={2} fontWeight={'bold'} fontSize={'1.1em'} sx={{textDecoration: 'underline'}}>
                                 {' $' + donationsAmount.toLocaleString()}
                             </Typography>
                         </Stack>
