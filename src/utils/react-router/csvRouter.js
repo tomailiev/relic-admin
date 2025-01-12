@@ -2,7 +2,7 @@ import CSVAddAction from "../../actions/CSV/CSVAddAction";
 import CSVDeleteAction from "../../actions/CSV/CSVDeleteAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import FetchError from "../../components/Common/FetchError";
-import EditCSV from "../../components/Emails/EditCSV";
+import EditCSV from "../../components/CSVs/EditCSV";
 import AddItem from "../../components/Items/AddItem";
 // import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";

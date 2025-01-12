@@ -9,9 +9,9 @@ import Donors from "../../components/Donors/Donors";
 // import EditDonor from "../../components/Donors/EditDonor";
 import donorItemLoader from "../../loaders/donorItemLoader";
 import donorLoader from "../../loaders/donorLoader";
-import ImportDonor from "../../components/Emails/ImportDonor";
-import donorsSubsLoader from "../../loaders/donorsSubsLoader";
-import donorsImportAction from "../../actions/donor/donorsImportAction";
+// import ImportDonor from "../../components/Subscribers/ImportDonor";
+// import donorsSubsLoader from "../../loaders/donorsSubsLoader";
+// import donorsImportAction from "../../actions/donor/donorsImportAction";
 import donorThankAction from "../../actions/donor/donorThankAction";
 import donorTextLoader from "../../loaders/donorTextLoader";
 import donorProps from "../../props/donorProps";
@@ -51,12 +51,6 @@ const donorRouter = [
     element: <LoggedIn component={<EditItem {...donorProps} />} />,
     loader: donorItemLoader,
     action: donorEditAction
-  },
-  {
-    path: 'donors/import',
-    element: <LoggedIn component={<ImportDonor />} />,
-    loader: donorsSubsLoader,
-    action: donorsImportAction
   },
   {
     path: 'donors/text',

@@ -4,7 +4,7 @@ import collections from "../../vars/collections";
 // import { schematify } from "../../vars/schemaFunctions";
 import { arrayUnion } from "firebase/firestore";
 
-export default async function donorsImportAction({ request, params }) {
+export default async function subscriberImportDonorsAction({ request, params }) {
     const docs = await request.json();
     // const updates = Object.fromEntries(doc);
 
