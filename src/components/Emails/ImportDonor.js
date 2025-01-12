@@ -1,18 +1,38 @@
-import { Box, Button, } from "@mui/material"
+import { Box, Button, Container, Typography, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import DonorSubsItem from "./DonorSubsItem";
+import CSVProps from "../../props/CSVProps";
+import { DataGrid } from "@mui/x-data-grid";
+// import { deschematify } from "../../vars/schemaFunctions";
 
 
 
 const ImportDonor = () => {
     const { setError } = useContext(ErrorContext);
     const [submission, setSubmission] = useState(null);
+    const [subs, setSubs] = useState([]);
+
     const submit = useSubmit();
-    // const item = useLoaderData();
-    // const navigate = useNavigate();
     const actionData = useActionData();
+    const [donors, subscribers] = useLoaderData();
+    // const location = useLocation();
+
+    useEffect(() => {
+        if (donors) {
+            setSubs(donors.filter(({ email }) => {
+                return !!email && !subscribers.find(({ id }) => id === email)
+            }));
+        }
+    }, [donors, subscribers]);
+
+    function filterer(model) {
+
+        const newSubs = (subs.filter(({ id }) => model.includes(id)));
+        console.log(newSubs);
+
+        setSubmission(newSubs);
+    }
 
     useEffect(() => {
         if (actionData?.error) {
@@ -21,19 +41,38 @@ const ImportDonor = () => {
     }, [actionData, setError]);
 
     function finishSubmission() {
-        const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/donors/import` })
+        submit(submission, { method: 'POST', action: `/donors/import`, encType: 'application/json' })
     }
 
     return (
         <Box m={4}>
             {/* <ItemSwitch item={item} itemType={itemType} mutateItem={setSubmission} /> */}
-            <DonorSubsItem mutateItem={setSubmission} />
+            <Container maxWidth="lg" sx={{ my: 3 }}>
+                <Box overflow={'scroll'}>
+                    <Box minWidth={'800px'} width={'100%'}>
+                        {subs.length
+                            ? <DataGrid
+                                checkboxSelection
+                                onRowSelectionModelChange={filterer}
+                                rows={subs}
+                                columns={CSVProps.listColumns}
+                                initialState={{
+                                    sorting: {
+                                        sortModel: [CSVProps.sorting],
+                                    },
+                                    pagination: { paginationModel: { pageSize: CSVProps.pageSize } }
+                                }}
+                                pageSizeOptions={CSVProps.pageSizeOptions}
+                            />
+                            : <Typography textAlign={'center'} variant="h5">Already up to date.</Typography>
+                        }
+                    </Box>
+                </Box>
+            </Container>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
                 </Box>
-                <Button variant="contained" onClick={finishSubmission}>
+                <Button variant="contained" onClick={finishSubmission} disabled={!subs.length}>
                     Import
                 </Button>
 
