@@ -1,9 +1,9 @@
 // import { redirect } from "react-router-dom";
 import { redirect } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
-import collections from "../../vars/collections";
-import { schematify } from "../../vars/schemaFunctions";
-import { arrayUnion } from "firebase/firestore";
+// import { uploadDoc } from "../../utils/firebase/firebase-functions";
+// import collections from "../../vars/collections";
+// import { schematify } from "../../vars/schemaFunctions";
+// import { arrayUnion } from "firebase/firestore";
 
 export default async function donorsImportAction({ request, params }) {
     const docs = await request.json();
