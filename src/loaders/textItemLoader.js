@@ -4,10 +4,12 @@ import collections from "../vars/collections";
 export default function textItemLoader({ params }) {
     return downloadOneDoc(collections.texts, 'allTexts')
         .then(allTexts => {
-            return {
-                id: params.textId,
-                key: params.textId,
-                value: allTexts[params.textId]
-            };
+            return allTexts[params.textId] ?
+                {
+                    id: params.textId,
+                    key: params.textId,
+                    value: allTexts[params.textId]
+                }
+                : null;
         });
 }

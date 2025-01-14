@@ -1,8 +1,9 @@
-import { Link, NavLink, useLoaderData, useSubmit, } from "react-router-dom";
-import { Box, Button, Typography } from "@mui/material";
+import { NavLink, useLoaderData, useSubmit, } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
 import ItemSwitch from "./ItemSwitch";
+import NoResource from "../Common/NoResource";
 
 const ItemRoute = ({ name, itemType }) => {
 
@@ -38,18 +39,7 @@ const ItemRoute = ({ name, itemType }) => {
                     </NavLink>}
                 </Box>
             </>
-            : <Box sx={{ p: 2, textAlign: 'center' }}>
-                <Typography variant="h5" my={4}>No resource with this ID exists</Typography>
-                <Link to={`/${itemType}`}>
-                    <Button
-                        color="inherit"
-                        sx={{ mr: 1 }}
-                    >
-                        Back
-                    </Button>
-                </Link>
-
-            </Box>
+            : <NoResource itemType={itemType} />
     );
 };
 

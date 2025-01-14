@@ -4,5 +4,5 @@ import deschematifyGrant from "../vars/deschematifyGrant";
 
 export default async function grantItemLoader({ params }) {
     return await downloadOneDoc(collections.grants, params.grantId)
-        .then(item => deschematifyGrant(item))
+        .then(item => item && deschematifyGrant(item))
 }
