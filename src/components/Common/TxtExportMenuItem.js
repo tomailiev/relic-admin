@@ -43,7 +43,7 @@ function TxtExportMenuItem(props) {
         <MenuItem
             onClick={async () => {
                 const document = getTxt(apiRef);
-                exportBlob(document, `Relic${location.pathname}_${new Date().toLocaleDateString()}.txt`);
+                exportBlob(document, `Relic${location.pathname}_${new Date().toISOString()}.txt`);
                 hideMenu?.();
             }}
         >

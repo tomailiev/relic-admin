@@ -12,7 +12,7 @@ export default async function grantEditAction({ request, params }) {
         const { id: _, ...rest } = doc;
         const update = schematifyGrant(rest);
         await uploadDoc(update, collections.grants, doc.id, true);
-        return redirect(`/grants/${doc.id}`);
+        return redirect(`/grants`);
     } catch (e) {
         console.error(e)
         return Object.assign(e, { error: true, severity: 'error' });

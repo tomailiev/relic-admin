@@ -24,13 +24,22 @@ const endDate = new Date();
 const startDate = new Date();
 startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
 
+const lastYearStartDate = new Date();
+lastYearStartDate.setUTCFullYear(startDate.getUTCFullYear() - 1);
 
+function numExtractor(str = '') {
+    return Number(Array.from(str).filter(char => char >= '0' && char <= '9').join(''));
+}
+
+function tierComparator(tierStr1, tierStr2) {
+    return numExtractor(tierStr1) - numExtractor(tierStr2);
+}
 
 const donorColumns = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },
-    { field: 'address', headerName: 'Address', flex: 1.5 },
+    // { field: 'address', headerName: 'Address', flex: 1.5 },
     { field: 'location', headerName: 'Location', flex: 1.5 },
     {
         field: 'lastDonationDate',
@@ -38,11 +47,22 @@ const donorColumns = [
         flex: 1
     },
     {
-        field: 'lastDonationAmount',
-        headerName: 'Last $ amount',
-        valueFormatter: (params) => `$${params.value}`,
+        field: 'YtDAmount',
+        headerName: 'YtD amount',
+        valueGetter: ({ row }) => `$${(row.donations
+            .filter(donation => new Date(donation.date) > startDate && new Date(donation.date) <= endDate)
+            .reduce((a, c) => a + c.amount, 0))}`,
         flex: 1,
-        sortComparator: (v1, v2) => v1 - v2,
+        sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
+    },
+    {
+        field: 'LastYtDAmount',
+        headerName: 'Last YtD amount',
+        valueGetter: ({ row }) => `$${(row.donations
+            .filter(donation => new Date(donation.date) > lastYearStartDate && new Date(donation.date) <= startDate)
+            .reduce((a, c) => a + c.amount, 0))}`,
+        flex: 1,
+        sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },
     {
         field: 'totalDonationsAmount',
@@ -53,11 +73,12 @@ const donorColumns = [
     },
     {
         field: 'yearEndStatus',
-        headerName: 'Current status',
+        headerName: 'Tier',
         valueGetter: ({ row }) => getTier(row.donations
-            .filter(donation => new Date(donation.date) >= startDate && new Date(donation.date <= endDate))
+            .filter(donation => new Date(donation.date) > startDate && new Date(donation.date) <= endDate)
             .reduce((a, c) => a + c.amount, 0)),
-        flex: 2
+        flex: 1.5,
+        sortComparator: tierComparator
     },
     {
         field: 'lastRecognitionName',

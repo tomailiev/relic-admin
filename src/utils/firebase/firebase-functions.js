@@ -61,10 +61,11 @@ function downloadOneDoc(col, id) {
     // REVISE!!!
     return getDoc(doc(db, col, id))
         .then(item => {
-            if (!item) console.log('Problem loading');
+            if (!item.data()) return null;
+
             return Object.assign({ id: item.id }, item.data());
         })
-        .catch(_e => console.error('no data'));
+        .catch(e => console.error(e));
 }
 
 function deleteOneDoc(collection, docId) {

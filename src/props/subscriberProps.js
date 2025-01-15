@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import schematifySubscriber from "../vars/schematifySubscriber";
 import deschematifySubscriber from "../vars/deschematifySubscriber";
-import SubscriberActionBox from "../components/Emails/SubscriberActionBox";
+import SubscriberActionBox from "../components/Subscribers/SubscriberActionBox";
 import { subscriberSchema, tagsSchema } from "../utils/yup/yup-schemas";
 
 const subscriberColumns = [

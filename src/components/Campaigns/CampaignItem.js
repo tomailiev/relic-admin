@@ -68,7 +68,7 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('delivered', item.delivered)} disabled={!(item.delivered?.length)}><Typography variant="body1">{item.delivered?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid> */}
-                            <Grid item xs={12} md={6} lg={2.4}>
+                            <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Opened</Typography>
                                     <Tooltip title={`${(item.open?.reduce(openReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
@@ -78,7 +78,7 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={2.4}>
+                            <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Clicked</Typography>
                                     <Tooltip title={`${(item.click?.reduce(clickReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
@@ -88,22 +88,28 @@ const CampaignItem = ({ item, setEditable }) => {
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={2.4}>
+                            <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Rejected</Typography>
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('reject', item.reject)} disabled={!(item.reject?.length)}><Typography variant="body1">{item.reject?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={2.4}>
+                            <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Bounced</Typography>
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('bounce', item.bounce)} disabled={!(item.bounce?.length)}><Typography variant="body1">{item.bounce?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={12} md={6} lg={2.4}>
+                            <Grid item xs={12} md={6} lg={2}>
                                 <Paper>
                                     <Typography variant="h6">Unsubscribed</Typography>
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('unsubscribe', item.unsubscribe)} disabled={!(item.unsubscribe?.length)}><Typography variant="body1">{item.unsubscribe?.length || 0}</Typography></Button>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} md={6} lg={2}>
+                                <Paper>
+                                    <Typography variant="h6">Spam</Typography>
+                                    <Button variant="text" onClick={() => handleStatsDialogOpen('spam', item.spam)} disabled={!(item.spam?.length)}><Typography variant="body1">{item.spam?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
                         </Grid>

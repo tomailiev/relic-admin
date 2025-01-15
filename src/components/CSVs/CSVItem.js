@@ -1,18 +1,16 @@
 import { Box, Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
 import CSVProps from "../../props/CSVProps";
 // import { deschematify } from "../../vars/schemaFunctions";
-import SubmissionContext from "../../context/SubmissionContext";
 
-const CSVItem = ({ item }) => {
+const CSVItem = ({ item, mutateItem }) => {
 
     const fetcher = useFetcher();
     const subscribers = useLoaderData();
     const [subs, setSubs] = useState([]);
     const location = useLocation();
-    const { setSubmission } = useContext(SubmissionContext)
 
     useEffect(() => {
         if (!(location.pathname === `/CSVs/${subscribers.id}`)) {
@@ -35,7 +33,7 @@ const CSVItem = ({ item }) => {
         }
         const newSubs = (subs.filter(({ id }) => model.includes(id)));
 
-        setSubmission({ newSubs, final: '1' });
+        mutateItem({ newSubs, final: '1' });
     }
 
 

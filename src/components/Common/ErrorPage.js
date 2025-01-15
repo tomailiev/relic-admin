@@ -1,16 +1,15 @@
-import { useRouteError } from "react-router-dom";
+import { Box, Button, Typography } from "@mui/material";
+import { Link, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
     const error = useRouteError();
-    console.error(error);
-
     return (
-        <div id="error-page">
-            <h1>Oops!</h1>
-            <p>Sorry, an unexpected error has occurred.</p>
-            <p>
-                <i>{error.statusText || error.message}</i>
-            </p>
-        </div>
+        <Box id="error-page" sx={{ textAlign: 'center' }}>
+            <Typography variant="h3" pt={5}>{error.statusText || error.message}</Typography>
+            <Typography variant="h6" py={4}>{error.data}</Typography>
+            <Link to={'/'}>
+                <Button variant={'outlined'}>Home</Button>
+            </Link>
+        </Box>
     );
 }

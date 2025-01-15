@@ -153,6 +153,12 @@ export const fullColumns = [
         renderCell: (params) => params.row.unsubscribe && <Check />
     },
     {
+        field: 'spam',
+        headerName: 'Spam',
+        flex: 1,
+        renderCell: (params) => params.row.spam && <Check />
+    },
+    {
         field: 'reject',
         headerName: 'Reject',
         flex: 1,
@@ -201,6 +207,7 @@ export const campaignStatSummarizer = (campaign) => {
             bounce: campaign.bounce?.map(a => a.email).includes(email),
             reject: campaign.reject?.map(a => a.email).includes(email),
             unsubscribe: campaign.unsubscribe?.map(a => a.email).includes(email),
+            spam: campaign.spam?.map(a => a.email).includes(email),
         })
     }, []);
 }

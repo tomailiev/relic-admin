@@ -38,13 +38,17 @@ const videoFA = [
     { label: 'Title', id: 'title' },
     { label: 'YouTube Id', id: 'youtubeId' },
     { label: 'Thumbail Url', id: 'thumbnail' },
+    { label: 'Program', id: 'program', type: 'select', options: ['Autumn Rising', 'Winter Oasis', 'Enchanted Forest', 'At the Temple of Juno', 'Into the Underworld', 'The Dawn of Time'] },
+    { label: 'Category', id: 'category', type: 'select', options: ['full concert', 'live', 'studio'] }
 ];
 
 const fields = {
     featured: '',
     title: '',
     youtubeId: '',
-    thumbnail: ''
+    thumbnail: '',
+    program: '',
+    category: ''
 }
 
 const initialFields = {

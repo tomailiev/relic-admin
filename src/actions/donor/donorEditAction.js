@@ -9,7 +9,7 @@ export default async function donorEditAction({ request, params }) {
         const doc = await request.json();
         const { id: _, ...rest } = doc;
         await uploadDoc(schematifyDonor(rest), collections.donors, doc.id, true);
-        return redirect(`/donors/${doc.id}`);
+        return redirect(`/donors`);
     } catch (e) {
         console.log(e);
         return Object.assign(e, { error: true, severity: 'error' });

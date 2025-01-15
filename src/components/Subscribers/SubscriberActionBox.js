@@ -14,7 +14,7 @@ const SubscriberActionBox = () => {
                 </Button>
             </NavLink>
             <Box sx={{ flex: '1 1 auto' }} />
-            <NavLink to={'/donors/import'} >
+            <NavLink to={'/subscribers/import-donors'} >
                 <Button
                     color="inherit"
                     variant="outlined"

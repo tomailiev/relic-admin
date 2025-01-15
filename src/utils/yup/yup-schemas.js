@@ -63,7 +63,9 @@ const videoSchema = object({
     featured: number().min(0, 'number is less than 0').max(5, 'number is greater than 5').required('featured required'),
     title: string().required('title required'),
     youtubeId: string().required('youtubeId required'),
-    thumbnail: string().url('valid url required').required('thumbnail is required')
+    thumbnail: string().url('valid url required').required('thumbnail is required'),
+    program: string().required(),
+    category: string().required().oneOf(['full concert', 'live', 'studio'])
 });
 
 const initialVideoSchema = object({

@@ -57,7 +57,7 @@ function DocxExportMenuItem(props) {
         <MenuItem
             onClick={async () => {
                 const document = await getDocx(apiRef);
-                exportBlob(document, `Relic${location.pathname}_${new Date().toLocaleDateString()}.docx`);
+                exportBlob(document, `Relic${location.pathname}_${new Date().toISOString()}.docx`);
                 hideMenu?.();
             }}
         >

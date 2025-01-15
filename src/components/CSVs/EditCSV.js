@@ -1,16 +1,16 @@
 import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import DonorSubsItem from "./DonorSubsItem";
+import ItemSwitch from "../Items/ItemSwitch";
 
 
 
-const ImportDonor = () => {
+const EditCSV = ({ itemType, formType, fieldsArray, nestedArray, nestedName, schematifyFn, deschematifyFn }) => {
     const { setError } = useContext(ErrorContext);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
-    // const item = useLoaderData();
+    const item = useLoaderData();
     // const navigate = useNavigate();
     const actionData = useActionData();
 
@@ -21,15 +21,12 @@ const ImportDonor = () => {
     }, [actionData, setError]);
 
     function finishSubmission() {
-        const formData = new FormData();
-        Object.entries(submission).filter(([key,]) => key !== 'intent' && key !== 'imgSrc').forEach(([key, value]) => formData.append(key, value))
-        submit(formData, { method: 'POST', action: `/donors/import` })
+        submit(submission, { method: 'POST', action: `/${itemType}/${item.id}/edit`, encType: 'application/json' })
     }
 
     return (
         <Box m={4}>
-            {/* <ItemSwitch item={item} itemType={itemType} mutateItem={setSubmission} /> */}
-            <DonorSubsItem mutateItem={setSubmission} />
+            <ItemSwitch item={item} itemType={itemType} mutateItem={setSubmission} />
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Box sx={{ flex: '1 1 auto', mx: 5 }}>
                 </Box>
@@ -42,4 +39,4 @@ const ImportDonor = () => {
     );
 };
 
-export default ImportDonor;
+export default EditCSV;

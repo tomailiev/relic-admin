@@ -28,7 +28,7 @@ const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBo
                         <DataGrid
                             rows={items}
                             columns={columns}
-                            slots={{toolbar: CustomGridToolbar}}
+                            slots={{ toolbar: CustomGridToolbar }}
                             initialState={{
                                 sorting: {
                                     sortModel: [sorting],

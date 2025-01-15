@@ -3,6 +3,7 @@ import DonorItem from "./DonorItem";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
+import NoResource from "../Common/NoResource";
 
 const DonorItemRoute = () => {
 
@@ -16,26 +17,28 @@ const DonorItemRoute = () => {
     };
 
     return (
-        <>
-            <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={`${donor.firstName} ${donor.lastName}`} handleDelete={handleDelete} />
-            <DonorItem item={donor} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
-                <Button
-                    color="inherit"
-                    // disabled={activeStep === 0}
-                    onClick={() => setModalOpen(true)}
-                    sx={{ mr: 1 }}
-                >
-                    Delete
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <NavLink to={'edit'}>
-                    <Button variant="contained">
-                        Edit
+        donor
+            ? <>
+                <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={`${donor.firstName} ${donor.lastName}`} handleDelete={handleDelete} />
+                <DonorItem item={donor} />
+                <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
+                    <Button
+                        color="inherit"
+                        // disabled={activeStep === 0}
+                        onClick={() => setModalOpen(true)}
+                        sx={{ mr: 1 }}
+                    >
+                        Delete
                     </Button>
-                </NavLink>
-            </Box>
-        </>
+                    <Box sx={{ flex: '1 1 auto' }} />
+                    <NavLink to={'edit'}>
+                        <Button variant="contained">
+                            Edit
+                        </Button>
+                    </NavLink>
+                </Box>
+            </>
+            : <NoResource itemType={'donors'} />
     );
 };
 

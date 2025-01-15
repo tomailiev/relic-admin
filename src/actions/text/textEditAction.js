@@ -7,7 +7,7 @@ export default async function textEditAction({ request, params }) {
         const doc = await request.json();
         const { key, value } = doc;
         await uploadDoc({ [key]: value }, collections.texts, 'allTexts', true);
-        return redirect(`/texts/${key}`);
+        return redirect(`/texts`);
     } catch (e) {
         return Object.assign(e, { error: true, severity: 'error' });
     }

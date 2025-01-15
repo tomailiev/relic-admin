@@ -1,6 +1,6 @@
 import CampaignItem from "../Campaigns/CampaignItem";
 import DonorItem from "../Donors/DonorItem";
-import CSVItem from "../Emails/CSVItem";
+import CSVItem from "../CSVs/CSVItem";
 import EventItem from "../Events/EventItem";
 import GrantItem from "../Grants/GrantItem";
 import MusicianItem from "../Musicians/MusicianItem";

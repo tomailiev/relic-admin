@@ -24,9 +24,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    function removeError(e) {
+    function removeError(_e, id) {
 
-        setHasError(prev => ({ ...prev, [e.target.name]: '' }))
+        setHasError(prev => ({ ...prev, [id]: '' }))
     }
 
     function handleInputChange(e) {
@@ -66,7 +66,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             value: userFields[id],
                             onChange: handleInputChange,
                             error: !!(hasError[id]),
-                            onFocus: removeError,
+                            onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
                             multiline: multiline,
