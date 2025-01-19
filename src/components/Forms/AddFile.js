@@ -24,12 +24,20 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
+    useEffect(() => {
+        fieldsArray.forEach(({ id, displayName }) => {
+            if (fields[displayName]) {
+                setUserFields(prev => ({ ...prev, [id]: fields[displayName] }));
+            }
+        })
+    }, [fields, fieldsArray])
+
     function removeError(e) {
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
     function handleFileChange(newValue, id) {
-        
+
         setUserFields(prev => {
             return { ...prev, [id]: newValue }
         });
@@ -52,6 +60,8 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         if (skipSubmit()) return handleFormCompletion();
 
         try {
+            console.log(userFields);
+
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
         } catch (e) {

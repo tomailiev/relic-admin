@@ -6,6 +6,7 @@ import { daysOfWeek } from "../../vars/dateObjects";
 
 
 const EventItem = ({ item }) => {
+    console.log(item);
     
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
