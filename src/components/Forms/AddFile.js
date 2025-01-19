@@ -49,7 +49,13 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         let shouldSkip = true;
         fieldsArray.forEach(({ id }) => {
 
-            if (!fields[id] || fields[id]?.name !== userFields[id]?.name || willEdit[id]) shouldSkip = false;
+            if (
+                !fields[id]
+                || fields[id]?.substring(fields[id].lastIndexOf('/') + 1) !== userFields[id]?.name
+                || willEdit[id]
+            ) {
+                shouldSkip = false;
+            }
         })
 
         return shouldSkip;
