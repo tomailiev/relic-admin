@@ -51,7 +51,10 @@ function downloadDocsV2(col, options = []) {
         .then(qSnap => {
             const docs = [];
             qSnap.forEach(doc => {
-                docs.push(Object.assign({ id: doc.id }, doc.data()));
+                const data = doc.data();
+                if (data) {
+                    docs.push(Object.assign({ id: doc.id }, data));
+                }
             });
             return docs;
         })
