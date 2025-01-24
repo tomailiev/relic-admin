@@ -37,7 +37,7 @@ function downloadDocs(col, condition, sorting) {
         })
 }
 
-function downloadDocsV2(col, options = []) {
+function downloadDocsV2(col, options = [], shouldGetOne) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
             ? where(...c.value)
@@ -56,7 +56,11 @@ function downloadDocsV2(col, options = []) {
                     docs.push(Object.assign({ id: doc.id }, data));
                 }
             });
-            return docs;
+            return docs.length
+                ? shouldGetOne
+                    ? docs[0]
+                    : docs
+                : null;
         })
 }
 
