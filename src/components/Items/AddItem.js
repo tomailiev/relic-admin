@@ -56,7 +56,7 @@ const AddItem = (itemProps) => {
 
         try {
             setIsLoading(true);
-            await Promise.all(itemProps.filesFieldsArray.map(async (item) => {
+            await Promise.all(itemProps.filesFieldsArray.filter(item => !!data[item.id]).map(async (item) => {
                 const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
                 filePaths[item.id] = filePath;
                 filePaths[item.displayName] = data[item.id];

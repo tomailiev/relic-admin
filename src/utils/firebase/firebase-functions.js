@@ -37,7 +37,7 @@ function downloadDocs(col, condition, sorting) {
         })
 }
 
-function downloadDocsV2(col, options = []) {
+function downloadDocsV2(col, options = [], shouldGetOne) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
             ? where(...c.value)
@@ -51,9 +51,16 @@ function downloadDocsV2(col, options = []) {
         .then(qSnap => {
             const docs = [];
             qSnap.forEach(doc => {
-                docs.push(Object.assign({ id: doc.id }, doc.data()));
+                const data = doc.data();
+                if (data) {
+                    docs.push(Object.assign({ id: doc.id }, data));
+                }
             });
-            return docs;
+            return docs.length
+                ? shouldGetOne
+                    ? docs[0]
+                    : docs
+                : null;
         })
 }
 

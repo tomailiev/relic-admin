@@ -56,6 +56,11 @@ const historyColumns = [
         field: 'subject',
         headerName: 'Campaign',
         flex: 2,
+        renderCell: (params) => (
+            <Link to={encodeURI(`/campaigns/?subject=${params.value}`)} >
+                {params.value}
+            </Link>
+        )
     },
     {
         field: 'timestamp',
@@ -109,9 +114,9 @@ const subscriberProps = {
     nestedName: 'tags',
     schematifyFn: schematifySubscriber,
     deschematifyFn: deschematifySubscriber,
-    blankObject: {...subscriberFields, tags: [tagsFields]},
+    blankObject: { ...subscriberFields, tags: [tagsFields] },
     steps: ['fieldsArray', 'nestedArray', 'preview'],
-    schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema}
+    schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema }
 };
 
 export default subscriberProps;

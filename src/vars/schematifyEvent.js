@@ -16,7 +16,7 @@ function schematifyEvent(event) {
         let rest = (({ lng, lat, date, time, ...object }) => object)(p);
         return Object.assign(rest, { time, geocode, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });
     });
-    const { imgSrc: _, ...updatedEvent } = event;
+    const { imgSrc: _, programBook: __, ...updatedEvent } = event;
     return {
         ...updatedEvent,
         performances,

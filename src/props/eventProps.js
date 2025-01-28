@@ -76,6 +76,16 @@ const performanceFA = [
     { label: 'Longitude', id: 'lng', },
 ];
 
+const fileFields = {
+    imageUrl: '',
+    program: ''
+}
+
+const fileFA = [
+    { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' },
+    { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' }
+]
+
 const eventProps = {
     itemType: 'events',
     name: 'title',
@@ -87,8 +97,8 @@ const eventProps = {
     nestedFields: performanceFields,
     fieldsArray: eventFA,
     nestedArray: performanceFA,
-    filesFields: { imageUrl: '' },
-    filesFieldsArray: [{ label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' }],
+    filesFields: fileFields,
+    filesFieldsArray: fileFA,
     nestedName: 'performances',
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,
