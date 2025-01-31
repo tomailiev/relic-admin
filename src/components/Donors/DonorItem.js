@@ -31,7 +31,7 @@ const DonorItem = ({ item }) => {
             sortable: false,
             flex: 1,
             renderCell: (params) => {
-                return <Button variant="contained" disabled={params.row.thanksDisabled || !!params.row.acknowledged} onClick={() => handleThanksClick(params.row.id)}>
+                return <Button variant="contained" disabled={params.row.thanksDisabled} onClick={() => handleThanksClick(params.row.id)}>
                     {params.row.acknowledged ? 'Thanked' : 'Thank'}
                 </Button>
             }
