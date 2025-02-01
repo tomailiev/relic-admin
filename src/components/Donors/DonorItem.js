@@ -6,10 +6,12 @@ import DonorFields from "./DonorFields";
 import ThankDialog from "./ThankDialog";
 import { useActionData, useFetcher, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
+import { getTier } from "../../vars/getTier";
+import { reduceDonations } from "../../vars/reduceDonations";
 
 
 const DonorItem = ({ item }) => {
-
+    
     const columns = [
         { field: 'date', headerName: 'Date', flex: 1 },
         {
@@ -107,6 +109,7 @@ const DonorItem = ({ item }) => {
             <ThankDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend} donationInfo={donationInfo} />
             <Paper sx={{ mx: 8, my: 2, p: 5, }}>
                 <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
+                <Typography variant="body2" textAlign={'center'}>{getTier(reduceDonations(item.donations))}</Typography>
                 <Grid key={item.id} mt={2} container spacing={2} justifyContent="center" sx={{
                     position: 'relative',
                 }}>

@@ -1,31 +1,10 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
+import { getTier } from "../vars/getTier";
+import { reduceDonations } from "../vars/reduceDonations";
+import { oneYearAgoFromToday, twoYearsAgoFromTomorrow } from "../vars/dateObjects";
 
-const getTier = (amount) => {
-    return amount < 50
-        ? ''
-        : amount >= 50 && amount < 200
-            ? 'Muse $50+'
-            : amount >= 200 && amount < 500
-                ? 'Dionysus $200+'
-                : amount >= 500 && amount < 1000
-                    ? 'Artemis $500+'
-                    : amount >= 1000 && amount < 2500
-                        ? 'Hermes $1000+'
-                        : amount >= 2500 && amount < 5000
-                            ? 'Athena $2500+'
-                            : amount >= 5000 && amount < 10000
-                                ? 'Apollo $5000+'
-                                : 'Zeus & Hera $10,000+'
-};
-
-const endDate = new Date();
-const startDate = new Date();
-startDate.setUTCFullYear(endDate.getUTCFullYear() - 1);
-
-const lastYearStartDate = new Date();
-lastYearStartDate.setUTCFullYear(startDate.getUTCFullYear() - 1);
 
 function numExtractor(str = '') {
     return Number(Array.from(str).filter(char => char >= '0' && char <= '9').join(''));
@@ -49,18 +28,14 @@ const donorColumns = [
     {
         field: 'YtDAmount',
         headerName: 'YtD amount',
-        valueGetter: ({ row }) => `$${(row.donations
-            .filter(donation => new Date(donation.date) > startDate && new Date(donation.date) <= endDate)
-            .reduce((a, c) => a + c.amount, 0))}`,
+        valueGetter: ({ row }) => `$${reduceDonations(row.donations)}`,
         flex: 1,
         sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },
     {
         field: 'LastYtDAmount',
         headerName: 'Last YtD amount',
-        valueGetter: ({ row }) => `$${(row.donations
-            .filter(donation => new Date(donation.date) > lastYearStartDate && new Date(donation.date) <= startDate)
-            .reduce((a, c) => a + c.amount, 0))}`,
+        valueGetter: ({ row }) => `$${reduceDonations(row.donations, twoYearsAgoFromTomorrow, oneYearAgoFromToday)}`,
         flex: 1,
         sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },
@@ -74,9 +49,7 @@ const donorColumns = [
     {
         field: 'yearEndStatus',
         headerName: 'Tier',
-        valueGetter: ({ row }) => getTier(row.donations
-            .filter(donation => new Date(donation.date) > startDate && new Date(donation.date) <= endDate)
-            .reduce((a, c) => a + c.amount, 0)),
+        valueGetter: ({ row }) => getTier(reduceDonations(row.donations)),
         flex: 1.5,
         sortComparator: tierComparator
     },
