@@ -37,13 +37,13 @@ function downloadDocs(col, condition, sorting) {
         })
 }
 
-function downloadDocsV2(col, options = [], shouldGetOne) {
+function downloadDocsV2(col, options = []) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
             ? where(...c.value)
             : c.type === 'sorting'
                 ? orderBy(...c.value)
-                : limit(...c.value)
+                : limit(c.value)
     ));
     const q = query(collection(db, col), ...queryConditions);
 
@@ -57,7 +57,7 @@ function downloadDocsV2(col, options = [], shouldGetOne) {
                 }
             });
             return docs.length
-                ? shouldGetOne
+                ? options?.find(item => item.type === 'limit' && item.value === 1)
                     ? docs[0]
                     : docs
                 : null;

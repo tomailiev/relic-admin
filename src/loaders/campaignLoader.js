@@ -7,7 +7,7 @@ export default function campaignLoader({ request }) {
     const subject = url.searchParams.get('subject');
 
     if (subject) {
-        return downloadDocsV2(collections.campaigns, [{ type: 'condition', value: ['subject', '==', decodeURI(subject)] }], true)
+        return downloadDocsV2(collections.campaigns, [{ type: 'condition', value: ['subject', '==', decodeURI(subject)] }, { type: 'limit', value: 1 }])
             .then(campaign => {
                 return campaign
                     ? redirect(`/campaigns/${campaign.id}`)

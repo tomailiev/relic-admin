@@ -6,14 +6,10 @@ import { useEffect, useState } from "react";
 import MapView from "./MapView";
 import CustomGridToolbar from "../Common/GridExportToolbar";
 import donorProps from "../../props/donorProps";
+import { oneYearAgoFromTomorrowDateString, todayDateString } from "../../vars/dateObjects";
+import { reduceDonations } from "../../vars/reduceDonations";
 
-const today = new Date();
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-const oneYearAgoFromTomorrow = new Date(tomorrow);
-oneYearAgoFromTomorrow.setFullYear(oneYearAgoFromTomorrow.getFullYear() - 1);
-const oneYearAgoFromTomorrowDateString = oneYearAgoFromTomorrow.toISOString().substring(0, 10);
-const todayDateString = today.toISOString().substring(0, 10);
+
 
 const Donors = () => {
 
@@ -28,9 +24,7 @@ const Donors = () => {
         const end = new Date(endDate);
 
         setDonationsAmount(donors
-            .map(donor => donor.donations
-                .filter(donation => new Date(donation.date) >= start && new Date(donation.date) <= end)
-                .reduce((a, c) => a + c.amount, 0))
+            .map(donor => reduceDonations(donor.donations, start, end))
             .reduce((a, c) => a + c, 0))
     }, [donors, endDate, startDate])
 
@@ -110,7 +104,7 @@ const Donors = () => {
                                     }
                                 }}
                             />
-                            <Typography pt={2} fontWeight={'bold'} fontSize={'1.1em'} sx={{textDecoration: 'underline'}}>
+                            <Typography pt={2} fontWeight={'bold'} fontSize={'1.1em'} sx={{ textDecoration: 'underline' }}>
                                 {' $' + donationsAmount.toLocaleString()}
                             </Typography>
                         </Stack>
