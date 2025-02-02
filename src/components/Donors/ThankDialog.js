@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Typography, } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import AddForm from "../Forms/AddForm";
 import { donationAcknowledgementSchema } from "../../utils/yup/yup-schemas";
@@ -20,7 +20,7 @@ const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }) => {
     return (
         <Dialog open={open} maxWidth={'lg'} fullWidth="true">
             <DialogTitle>
-                Send Thank You Email
+                {donationInfo?.acknowledged ? 'View Thank You Email' : 'Send Thank You Email'}
                 <IconButton
                     aria-label="close"
                     onClick={() => setOpen(false)}
@@ -34,10 +34,18 @@ const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={fields} />
+                {donationInfo?.acknowledged
+                    ? <Paper sx={{p:2}}>
+                        <Typography py={1}>Sent: {donationInfo.acknowledged.sent}</Typography>
+                        <Typography py={1}>From: {donationInfo.acknowledged.from}</Typography>
+                        <Typography py={1}>To: {donationInfo.acknowledged.to}</Typography>
+                        <Typography py={1}>Subject: {donationInfo.acknowledged.subject}</Typography>
+                        <Typography py={1}>Content: {donationInfo.acknowledged.content}</Typography>
+                    </Paper>
+                    : <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={fields} />}
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => setOpen(false)}>Cancel</Button>
+                <Button onClick={() => setOpen(false)}>{donationInfo?.acknowledged ? 'Close' : 'Cancel'}</Button>
                 {/* <Button onClick={handleSend} autoFocus>
                     Send
                 </Button> */}

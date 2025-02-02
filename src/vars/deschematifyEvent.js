@@ -2,9 +2,9 @@ import { months } from "./dateObjects";
 
 
 export function deschematifyPerformance(p) {
-    
+
     const [month, date, year] = p.date.split(' ');
-    
+
     const index = months.findIndex(m => m === month);
     const modifiedMonth = index >= 9 ? index + 1 : `0${index + 1}`;
     const dateString = date.replace(/\D/g, '');
@@ -28,7 +28,8 @@ export function deschematifyPerformance(p) {
 export function deschematifyEvent(item) {
     const dateObject = item.dateDone.toDate();
     const dateDoneMonth = dateObject.getMonth() >= 9 ? dateObject.getMonth() + 1 : `0${dateObject.getMonth() + 1}`;
-    const dateDone = `${dateObject.getUTCFullYear()}-${dateDoneMonth}-${dateObject.getUTCDate()}`;
+    const dateDoneDate = dateObject.getUTCDate();
+    const dateDone = `${dateObject.getUTCFullYear()}-${dateDoneMonth}-${dateDoneDate > 9 ? dateDoneDate : '0' + dateDoneDate}`;
 
     const performances = item.performances.map(deschematifyPerformance);
 

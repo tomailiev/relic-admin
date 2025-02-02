@@ -1,18 +1,28 @@
-import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link } from "@mui/material";
+import { Avatar, Card, CardMedia, Container, Grid, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography, Link, Button } from "@mui/material";
 import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
 import { daysOfWeek } from "../../vars/dateObjects";
+import { useContext } from "react";
+import ErrorContext from "../../context/ErrorContext";
 // import { deschematifyPerformance } from "../../vars/deschematifyEvent";
 
 
 
 const EventItem = ({ item }) => {
-    
+    const { setError } = useContext(ErrorContext);
+
+    function handleCopyText() {
+        navigator.clipboard.writeText(`https://relicensemble.org/?dialog=programBook&eventId=${item.id}`)
+            .then(() => {
+                setError({ severity: 'success', message: 'Copied link' })
+            })
+    }
+
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Grid key={item.id} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
-                <Grid item md={6} sm={8} xs={12} p={6}>
+                <Grid item md={6} sm={8} xs={12} p={6} textAlign={'center'}>
                     <Card sx={{ textDecoration: 'none' }}>
                         {/* <CardActionArea> */}
                         <CardMedia
@@ -24,6 +34,8 @@ const EventItem = ({ item }) => {
                         ></CardMedia>
                         {/* </CardActionArea> */}
                     </Card>
+                    {item.program && item.id && <Button sx={{ mt: 2 }} size={'large'} variant={'text'} onClick={handleCopyText} >Copy Program Book Link</Button>}
+
                 </Grid>
                 <Grid item md={6}>
                     <Typography variant="h4" mb={2}>

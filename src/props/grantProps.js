@@ -52,6 +52,17 @@ const grantColumns = [
     }
 ];
 
+/*
+name
+dateApplied
+amountApplied
+awarded ?
+dateAwarded
+amountAwarded
+website
+materialsLocation
+*/ 
+
 const grantFields = {
     name: '',
     link: '',

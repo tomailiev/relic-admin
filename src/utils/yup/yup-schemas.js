@@ -15,6 +15,9 @@ const performanceSchema = array().of(object({
 const eventFileSchema = object({
     imageUrl: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
         return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    }),
+    program: mixed().test('is-valid-type', 'Not a valid pdf file', (value) => {
+        return value ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
     })
 })
 

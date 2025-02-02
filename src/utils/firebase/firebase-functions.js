@@ -43,7 +43,7 @@ function downloadDocsV2(col, options = []) {
             ? where(...c.value)
             : c.type === 'sorting'
                 ? orderBy(...c.value)
-                : limit(...c.value)
+                : limit(c.value)
     ));
     const q = query(collection(db, col), ...queryConditions);
 
@@ -51,9 +51,16 @@ function downloadDocsV2(col, options = []) {
         .then(qSnap => {
             const docs = [];
             qSnap.forEach(doc => {
-                docs.push(Object.assign({ id: doc.id }, doc.data()));
+                const data = doc.data();
+                if (data) {
+                    docs.push(Object.assign({ id: doc.id }, data));
+                }
             });
-            return docs;
+            return docs.length
+                ? options?.find(item => item.type === 'limit' && item.value === 1)
+                    ? docs[0]
+                    : docs
+                : null;
         })
 }
 
