@@ -2,6 +2,7 @@ import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { initialVideoSchema, listSchema, videoSchema } from "../utils/yup/yup-schemas";
 import { getVideoInfo } from "../utils/firebase/firebase-functions";
+import listSourceLoader from "../loaders/listSourceLoader";
 
 const listColumns = [
     {
@@ -79,7 +80,7 @@ const listProps = {
     steps: ['initialFieldsArray', 'preview'],
     // editSteps: ['fieldsArray', 'preview'],
     schemas: { initialFieldsArray: listSchema, },
-    // initialFn: getVideoInfo
+    initialFn: listSourceLoader
 };
 
 export default listProps;
