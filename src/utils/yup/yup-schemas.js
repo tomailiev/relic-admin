@@ -231,7 +231,28 @@ const donationAcknowledgementSchema = object({
     from: string().email().oneOf(['aniela@relicensemble.org', 'cullen@relicensemble.org', 'kako@relicensemble.org', 'natalie@relicensemble.org', 'rebecca@relicensemble.org', 'toma@relicensemble.org']).required(),
     subject: string().required(),
     content: string().required()
-})
+});
+
+const operationSchema = object({
+    ticketRevenue: number(),
+    presenterFee: number(),
+    eventDate: string().required(),
+    partnerName: string(),
+    partnerWebsite: string().url(),
+    cashRevenue: number(),
+    totalIncome: number(),
+    title: string().required(),
+    venueName: string().required(),
+    venueAddress: string().required(),
+    eventUrl: string().url().required(),
+    eventDatabaseId: string(),
+    eventbriteId: string(),
+});
+
+const listSchema = object({
+    source: string().required().oneOf('donors', 'subscribers'),
+    name: string().required()
+});
 
 export {
     eventSchema,
@@ -256,4 +277,6 @@ export {
     emailComponentSchemas,
     selectComponentSchema,
     donationAcknowledgementSchema,
+    operationSchema,
+    listSchema
 };
