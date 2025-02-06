@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { initialVideoSchema, listSchema, videoSchema } from "../utils/yup/yup-schemas";
 import { getVideoInfo } from "../utils/firebase/firebase-functions";
 import listSourceLoader from "../loaders/listSourceLoader";
+import donorProps from "./donorProps";
+import subscriberProps from "./subscriberProps";
 
 const listColumns = [
     {
@@ -73,11 +75,13 @@ const listProps = {
     pageSizeOptions: [5, 10, 20],
     // fields: fields,
     // fieldsArray: videoFA,
+    dataFilterColumns: { donors: donorProps.columns, subscribers: subscriberProps.columns },
     initialFieldsArray: initialListFieldsArray,
     initialFields: initialFields,
     formType: 'simple',
     encType: 'application/json',
-    steps: ['initialFieldsArray', 'preview'],
+    steps: ['initialFieldsArray', 'dataFilter', 'preview'],
+    sourceCollectionField: 'source',
     // editSteps: ['fieldsArray', 'preview'],
     schemas: { initialFieldsArray: listSchema, },
     initialFn: listSourceLoader
