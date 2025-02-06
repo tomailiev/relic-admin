@@ -9,6 +9,7 @@ import AddDynamic from "../Forms/AddDynamic";
 // import SubmissionContext from "../../context/SubmissionContext";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
+import FilterData from "../Forms/FilterData";
 
 
 const AddItem = (itemProps) => {
@@ -111,9 +112,15 @@ const AddItem = (itemProps) => {
         }
     }
 
+    async function handleDataFilterSubmission(data) {
+        setSubmission(prev => {
+            return Object.assign(prev || {}, { [itemProps.destinationCollectionField]: data });
+        });
+        handleSubmitEvent();
+    }
+
     function handleSubmitEvent() {
         setActiveStep(prev => ++prev);
-
     }
 
     const steps = {
@@ -143,6 +150,11 @@ const AddItem = (itemProps) => {
             nestedLength={1}
             schema={itemProps.schemas[itemProps.steps[activeStep]]}
             blanks={itemProps.nestedFields}
+        />,
+        dataFilter: <FilterData
+            items={submission}
+            itemProps={itemProps}
+            handleFormCompletion={handleDataFilterSubmission}
         />,
         preview: <ItemSwitch
             item={submission}

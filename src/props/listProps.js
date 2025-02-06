@@ -82,6 +82,7 @@ const listProps = {
     encType: 'application/json',
     steps: ['initialFieldsArray', 'dataFilter', 'preview'],
     sourceCollectionField: 'source',
+    destinationCollectionField: 'members',
     // editSteps: ['fieldsArray', 'preview'],
     schemas: { initialFieldsArray: listSchema, },
     initialFn: listSourceLoader
