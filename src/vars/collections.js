@@ -11,6 +11,7 @@ const collections = {
     images: 'images',
     campaigns: 'campaigns',
     tags: 'tags',
+    lists: 'lists'
 };
 
 export default collections;

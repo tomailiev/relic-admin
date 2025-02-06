@@ -250,7 +250,7 @@ const operationSchema = object({
 });
 
 const listSchema = object({
-    source: string().required().oneOf('donors', 'subscribers'),
+    source: string().required().oneOf(['donors', 'subscribers']),
     name: string().required()
 });
 

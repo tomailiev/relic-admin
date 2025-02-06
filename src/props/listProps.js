@@ -1,7 +1,6 @@
 import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { initialVideoSchema, listSchema, videoSchema } from "../utils/yup/yup-schemas";
-import { getVideoInfo } from "../utils/firebase/firebase-functions";
+import { listSchema, } from "../utils/yup/yup-schemas";
 import listSourceLoader from "../loaders/listSourceLoader";
 import donorProps from "./donorProps";
 import subscriberProps from "./subscriberProps";

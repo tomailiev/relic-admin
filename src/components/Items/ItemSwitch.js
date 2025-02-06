@@ -7,6 +7,7 @@ import MusicianItem from "../Musicians/MusicianItem";
 import SubscriberItem from "../Subscribers/SubscriberItem";
 import TextItem from "../Texts/TextItem";
 import VideoItem from "../Videos/VideoItem";
+import EmailListItem from "../Lists/ListItem";
 
 const ItemSwitch = ({ item, itemType, mutateItem, setEditable }) => {
     const itemComponents = {
@@ -18,7 +19,8 @@ const ItemSwitch = ({ item, itemType, mutateItem, setEditable }) => {
         donors: <DonorItem item={item} />,
         CSVs: <CSVItem item={item} mutateItem={mutateItem} />,
         subscribers: <SubscriberItem item={item} />,
-        campaigns: <CampaignItem item={item} setEditable={setEditable} />
+        campaigns: <CampaignItem item={item} setEditable={setEditable} />,
+        lists: <EmailListItem item={item} />
     }
     return itemComponents[itemType];
 };

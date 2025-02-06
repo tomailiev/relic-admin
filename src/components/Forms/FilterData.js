@@ -1,10 +1,11 @@
 import { Box, Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
-const FilterData = ({ items, itemProps, handleFormCompletion }) => {
-
+const FilterData = ({ item, itemProps, handleFormCompletion }) => {
+    console.log(itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]]);
+    
     function filterer(model) {
-        const newSubs = (subs.filter(({ id }) => model.includes(id)));
+        const newSubs = (item[itemProps.sourceCollectionField].filter(({ id }) => model.includes(id)));
 
         handleFormCompletion({ newSubs, final: '1' });
     }
@@ -16,8 +17,8 @@ const FilterData = ({ items, itemProps, handleFormCompletion }) => {
                     <DataGrid
                         checkboxSelection
                         onRowSelectionModelChange={filterer}
-                        rows={items}
-                        columns={itemProps.dataFilterColumns[itemProps.sourceCollectionField]}
+                        rows={item[itemProps.destinationCollectionField]}
+                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]]}
                         initialState={{
                             sorting: {
                                 sortModel: [itemProps.sorting],

@@ -95,6 +95,8 @@ const AddItem = (itemProps) => {
 
         try {
             const { data } = await itemProps.initialFn(initialData);
+            console.log(data);
+            
             setSubmission(prev => {
                 return Object.assign(prev || {}, data);
             });
@@ -152,7 +154,7 @@ const AddItem = (itemProps) => {
             blanks={itemProps.nestedFields}
         />,
         dataFilter: <FilterData
-            items={submission}
+            item={submission}
             itemProps={itemProps}
             handleFormCompletion={handleDataFilterSubmission}
         />,
