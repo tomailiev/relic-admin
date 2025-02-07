@@ -5,8 +5,8 @@ import collections from "../../vars/collections";
 export default async function listEditAction({ request, params }) {
     try {
         const doc = await request.json();
-        const { id: _, ...rest } = doc;
-        await uploadDoc(rest, collections.lists, doc.id, true);
+        const { id: _, datetime: __, newMembers: ___, ...rest } = doc;
+        await uploadDoc({ ...rest, members: doc.newMembers }, collections.lists, doc.id, true);
         return redirect(`/lists`);
     } catch (e) {
         console.log(e);

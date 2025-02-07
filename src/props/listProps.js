@@ -16,7 +16,7 @@ const listColumns = [
     },
     { field: 'name', headerName: 'Name', flex: 3 },
     { field: 'source', headerName: 'Source', flex: 1 },
-    { field: 'datetime', headerName: 'Date', flex: 1 },
+    { field: 'datetime', headerName: 'Date', flex: 1, valueGetter: ({ row }) => row.datetime?.toDate().toLocaleString() },
     {
         field: 'members', headerName: 'Members #', flex: 1, valueGetter: ({ row }) => {
             return row.members?.length || 0
@@ -42,24 +42,6 @@ const initialListFieldsArray = [
     { label: 'Source', id: 'source', type: 'select', options: ['donors', 'subscribers'] }
 ]
 
-// const videoFA = [
-//     { label: 'Featured priority', id: 'featured', type: 'number' },
-//     { label: 'Title', id: 'title' },
-//     { label: 'YouTube Id', id: 'youtubeId' },
-//     { label: 'Thumbail Url', id: 'thumbnail' },
-//     { label: 'Program', id: 'program', type: 'select', options: ['Autumn Rising', 'Winter Oasis', 'Enchanted Forest', 'At the Temple of Juno', 'Into the Underworld', 'The Dawn of Time'] },
-//     { label: 'Category', id: 'category', type: 'select', options: ['full concert', 'live', 'studio'] }
-// ];
-
-// const fields = {
-//     featured: '',
-//     title: '',
-//     youtubeId: '',
-//     thumbnail: '',
-//     program: '',
-//     category: ''
-// }
-
 const initialFields = {
     name: '',
     source: 'subscribers'
@@ -72,8 +54,6 @@ const listProps = {
     sorting: { field: 'dateTime', sort: 'desc' },
     pageSize: 10,
     pageSizeOptions: [5, 10, 20],
-    // fields: fields,
-    // fieldsArray: videoFA,
     dataFilterColumns: { donors: donorProps.columns, subscribers: subscriberProps.columns },
     initialFieldsArray: initialListFieldsArray,
     initialFields: initialFields,
@@ -82,7 +62,7 @@ const listProps = {
     steps: ['initialFieldsArray', 'dataFilter', 'preview'],
     sourceCollectionField: 'source',
     destinationCollectionField: 'members',
-    // editSteps: ['fieldsArray', 'preview'],
+    tempDestinationField: 'newMembers',
     schemas: { initialFieldsArray: listSchema, },
     initialFn: listSourceLoader
 };

@@ -1,5 +1,5 @@
-import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box, Avatar } from "@mui/material";
-import { Source, CalendarToday } from "@mui/icons-material";
+import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
+import {  CalendarToday } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import listProps from '../../props/listProps'
 
@@ -9,28 +9,18 @@ const EmailListItem = ({ item }) => {
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>
             <Typography variant="h5" textAlign={'center'}>{item.name}</Typography>
-            <Grid key={item.id} container spacing={2} mt={2} justifyContent="center" sx={{
+            <Typography variant="body2" textAlign={'center'}>{item.source}</Typography>
+            <Grid key={item.id} container justifyContent="center" sx={{
                 position: 'relative',
             }}>
-                <Grid item md={6} sm={8} xs={12} p={6}>
-                    <Container disableGutters sx={{ borderRadius: '4px', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} >
-                        <Avatar alt={item?.source} >{item?.source === 'donors' ? 'D' : 'S'}</Avatar>
-                    </Container>
-                </Grid>
                 <Grid item md={6}>
                     <List>
-                        {item.source && <ListItem>
-                            <ListItemIcon>
-                                <Source />
-                            </ListItemIcon>
-                            <ListItemText primary={item.source} />
-                        </ListItem>}
-                        {item.datetime && <ListItem>
+                        <ListItem>
                             <ListItemIcon>
                                 <CalendarToday />
                             </ListItemIcon>
-                            <ListItemText primary={item.datetime.toDate().toString()} />
-                        </ListItem>}
+                            <ListItemText primary={item.datetime.toDate().toUTCString()} />
+                        </ListItem>
                     </List>
                 </Grid>
             </Grid>
@@ -41,15 +31,15 @@ const EmailListItem = ({ item }) => {
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid
-                            rows={item.members}
+                            rows={item.newMembers || item.members}
                             columns={listProps.dataFilterColumns[item.source]}
                             initialState={{
                                 sorting: {
                                     sortModel: [{ field: 'datetime', sort: 'desc' }],
                                 },
-                                pagination: { paginationModel: { pageSize: 5 } }
+                                pagination: { paginationModel: { pageSize: 10 } }
                             }}
-                            pageSizeOptions={[5, 10, 25]}
+                            pageSizeOptions={[10, 25, 50]}
                         />
                     </Box>
                 </Box>

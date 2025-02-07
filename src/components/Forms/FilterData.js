@@ -1,16 +1,22 @@
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const FilterData = ({ item, itemProps, handleFormCompletion }) => {
 
     const [dataItems, setDataItems] = useState([]);
+    const [rowSelectionModel, setRowSelectionModel] = useState([]);
+
+    useEffect(() => {
+        if (item[itemProps.tempDestinationField]) {
+            setRowSelectionModel(item[itemProps.tempDestinationField].map(({ id }) => id));
+        }
+    }, [item, itemProps.tempDestinationField]);
 
     function filterer(model) {
+        setRowSelectionModel(model);
         const newSubs = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
         setDataItems(newSubs)
-
-        // handleFormCompletion({ newSubs, final: '1' });
     }
 
     return (
@@ -19,9 +25,10 @@ const FilterData = ({ item, itemProps, handleFormCompletion }) => {
                 <Box minWidth={'800px'} width={'100%'}>
                     <DataGrid
                         checkboxSelection
+                        rowSelectionModel={rowSelectionModel}
                         onRowSelectionModelChange={filterer}
                         rows={item[itemProps.destinationCollectionField]}
-                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]]}
+                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]].filter(({ field }) => field !== 'select')}
                         initialState={{
                             sorting: {
                                 sortModel: [itemProps.sorting],
@@ -32,9 +39,9 @@ const FilterData = ({ item, itemProps, handleFormCompletion }) => {
                     />
                 </Box>
             </Box>
-            <Box textAlign={'center'}>
+            <Box textAlign={'center'} mt={2}>
 
-            <Button variant={'contained'} onClick={() => handleFormCompletion(dataItems)}>Submit</Button>
+                <Button variant={'contained'} onClick={() => handleFormCompletion(dataItems)}>Submit</Button>
             </Box>
         </Container>
     );

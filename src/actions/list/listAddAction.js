@@ -4,10 +4,11 @@ import collections from "../../vars/collections";
 import { serverTimestamp } from "firebase/firestore";
 
 export default async function listAddAction({ request, params }) {
-    
+
     try {
         const updates = await request.json();
-        const upload = await uploadDoc(Object.assign(updates, { datetime: serverTimestamp() }), collections.lists);
+        const { newMembers: _, ...rest } = updates
+        const upload = await uploadDoc(Object.assign(rest, { datetime: serverTimestamp(), members: updates.newMembers, }), collections.lists);
         console.log(upload);
         return redirect('/lists');
     } catch (e) {

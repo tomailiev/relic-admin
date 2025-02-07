@@ -26,7 +26,7 @@ const AddItem = (itemProps) => {
         fieldsArray: 'Fill out the fields',
         initialFieldsArray: 'Fill out the initial fields',
         nestedArray: `Add ${itemProps.nestedName}`,
-        dataFilter: `Filter ${itemProps.sourceCollectionField}`,
+        dataFilter: `Filter ${itemProps.destinationCollectionField}`,
         preview: 'Preview'
     }
 
@@ -96,8 +96,7 @@ const AddItem = (itemProps) => {
 
         try {
             const { data } = await itemProps.initialFn(initialData);
-            console.log(data);
-            
+
             setSubmission(prev => {
                 return Object.assign(prev || {}, data);
             });
@@ -117,7 +116,7 @@ const AddItem = (itemProps) => {
 
     async function handleDataFilterSubmission(data) {
         setSubmission(prev => {
-            return Object.assign(prev || {}, { [itemProps.destinationCollectionField]: data });
+            return Object.assign(prev || {}, { [itemProps.tempDestinationField]: data });
         });
         handleSubmitEvent();
     }
@@ -134,7 +133,7 @@ const AddItem = (itemProps) => {
             handleFormCompletion={handleFileSubmission}
         />,
         initialFieldsArray: <AddForm
-            fields={itemProps.initialFields}
+            fields={submission || itemProps.initialFields}
             fieldsArray={itemProps.initialFieldsArray}
             schema={itemProps.schemas.initialFieldsArray}
             handleFormCompletion={handleInitialSubmission}
