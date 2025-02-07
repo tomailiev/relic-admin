@@ -29,7 +29,7 @@ const NewCampaign = (itemProps) => {
         });
     }
 
-    function addLists(arr) {
+    function addLists(arr = []) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
         const toField = arrCopy.find(item => item.id === 'to');
         toField.options = toField.options.concat(lists);

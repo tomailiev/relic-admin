@@ -1,5 +1,5 @@
 import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
-import {  CalendarToday } from "@mui/icons-material";
+import { CalendarToday } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import listProps from '../../props/listProps'
 
@@ -15,12 +15,12 @@ const EmailListItem = ({ item }) => {
             }}>
                 <Grid item md={6}>
                     <List>
-                        <ListItem>
+                        {item.datetime && <ListItem>
                             <ListItemIcon>
                                 <CalendarToday />
                             </ListItemIcon>
-                            <ListItemText primary={item.datetime.toDate().toUTCString()} />
-                        </ListItem>
+                            <ListItemText primary={item.datetime?.toDate().toUTCString()} />
+                        </ListItem>}
                     </List>
                 </Grid>
             </Grid>
