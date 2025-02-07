@@ -4,7 +4,7 @@ import collections from "../vars/collections";
 export default function campaignAddLoader() {
     return downloadDocsV2(collections.lists)
         .then(items => {
-            return items.map(({ id, name }) => ({ value: id, display: name }));
+            return items?.map(({ id, name }) => ({ value: id, display: name }));
             // .map(([key, value]) => `${key} (${value})`)
         });
 }
