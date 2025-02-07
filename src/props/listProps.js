@@ -39,7 +39,7 @@ const listColumns = [
 
 const initialListFieldsArray = [
     { label: 'Name', id: 'name' },
-    { label: 'Source', id: 'source', type: 'select', options: ['donors', 'subscribers'] }
+    { label: 'Source', id: 'source', type: 'select', options: [{ value: 'donors' }, { value: 'subscribers' }] }
 ]
 
 const initialFields = {

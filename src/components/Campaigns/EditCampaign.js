@@ -12,7 +12,7 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-    const { tags, campaign } = useLoaderData();
+    const { lists, campaign } = useLoaderData();
 
     useEffect(() => {
         if (actionData?.error) {
@@ -29,10 +29,10 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
         });
     }
 
-    function addTags(arr) {
+    function addLists(arr) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
         const toField = arrCopy.find(item => item.id === 'to');
-        toField.options = toField.options.concat(tags.map(([key]) => key));
+        toField.options = toField.options.concat(lists);
         return arrCopy;
     }
 
@@ -46,7 +46,7 @@ const EditCampaign = ({ itemType, fieldsArray, }) => {
                 campaign.status
                     ? <AddForm
                         fields={!!submission ? submission : campaign}
-                        fieldsArray={addTags(fieldsArray)}
+                        fieldsArray={addLists(fieldsArray)}
                         handleFormCompletion={handleObjectSubmission}
                         schema={campaignSchema}
                     />

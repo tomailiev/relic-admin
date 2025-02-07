@@ -7,11 +7,11 @@ import AddForm from "../Forms/AddForm";
 
 const NewCampaign = (itemProps) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [ submission, setSubmission ] = useState(null);
+    const [submission, setSubmission] = useState(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-    const tags = useLoaderData();
+    const lists = useLoaderData();
 
     useEffect(() => {
         if (actionData?.error) {
@@ -29,10 +29,10 @@ const NewCampaign = (itemProps) => {
         });
     }
 
-    function addTags(arr) {
+    function addLists(arr) {
         const arrCopy = JSON.parse(JSON.stringify(arr));
         const toField = arrCopy.find(item => item.id === 'to');
-        toField.options = toField.options.concat(tags.map(([key]) => key));
+        toField.options = toField.options.concat(lists);
         return arrCopy;
     }
 
@@ -44,7 +44,7 @@ const NewCampaign = (itemProps) => {
         <Box m={4}>
             <AddForm
                 fields={submission || itemProps.fields}
-                fieldsArray={addTags(itemProps[itemProps.steps[activeStep]])}
+                fieldsArray={addLists(itemProps[itemProps.steps[activeStep]])}
                 handleFormCompletion={handleObjectSubmission}
                 schema={itemProps.schemas[itemProps.steps[activeStep]]}
             />

@@ -2,7 +2,7 @@ import { Email, Group, ShortText, Title } from "@mui/icons-material";
 import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, Tooltip } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
-import { useActionData, useSubmit } from "react-router-dom";
+import { Link, useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
 import ErrorContext from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
@@ -72,9 +72,9 @@ const CampaignItem = ({ item, setEditable }) => {
                                 <Paper>
                                     <Typography variant="h6">Opened</Typography>
                                     <Tooltip title={`${(item.open?.reduce(openReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(openReducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(openReducer, []).length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('unique open', item.open?.reduce(openReducer, []))} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.reduce(openReducer, []).length || 0}</Typography></Button>
                                     </Tooltip>
-                                     /
+                                    /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('open', item.open)} disabled={!(item.open?.length)}><Typography variant="body1">{item.open?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
@@ -82,9 +82,9 @@ const CampaignItem = ({ item, setEditable }) => {
                                 <Paper>
                                     <Typography variant="h6">Clicked</Typography>
                                     <Tooltip title={`${(item.click?.reduce(clickReducer, []).length / item.sentTo?.length * 100).toFixed(1)}%`}>
-                                    <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(clickReducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(clickReducer, []).length || 0}</Typography></Button>
+                                        <Button variant="text" onClick={() => handleStatsDialogOpen('unique click', item.click?.reduce(clickReducer, []))} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.reduce(clickReducer, []).length || 0}</Typography></Button>
                                     </Tooltip>
-                                     /
+                                    /
                                     <Button variant="text" onClick={() => handleStatsDialogOpen('click', item.click)} disabled={!(item.click?.length)}><Typography variant="body1">{item.click?.length || 0}</Typography></Button>
                                 </Paper>
                             </Grid>
@@ -131,12 +131,22 @@ const CampaignItem = ({ item, setEditable }) => {
                                     </ListItemIcon>
                                     <ListItemText primary={item.components?.find(val => val.id === 'mj-preview')?.text} />
                                 </ListItem>
-                                <ListItemButton disabled={!item.sentTo?.length} onClick={() => handleStatsDialogOpen('full', campaignStatSummarizer(item))}>
-                                    <ListItemIcon>
-                                        <Group />
-                                    </ListItemIcon>
-                                    <ListItemText primary={`${item.to} (${item.sentTo?.length || 'unknown number'})`} />
-                                </ListItemButton>
+                                {item.sentTo?.length
+                                    ? <ListItemButton onClick={() => handleStatsDialogOpen('full', campaignStatSummarizer(item))}>
+                                        <ListItemIcon>
+                                            <Group />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`${item.to} (${item.sentTo?.length || '0'})`} />
+                                    </ListItemButton>
+                                    : <Link to={item.to === 'All subscribers' ? '/subscribers' : `/lists/${item.to}`}>
+                                        <ListItemButton>
+                                            <ListItemIcon>
+                                                <Group />
+                                            </ListItemIcon>
+                                            <ListItemText primary={item.to === 'All subscribers' ? 'All subscribers' : `List: ${item.to}`} />
+                                        </ListItemButton>
+                                    </Link>
+                                }
                                 <ListItem>
                                     <ListItemIcon>
                                         <Email />

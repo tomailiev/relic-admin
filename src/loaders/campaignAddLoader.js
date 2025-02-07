@@ -1,12 +1,10 @@
-import { downloadOneDoc } from "../utils/firebase/firebase-functions";
+import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default function campaignAddLoader() {
-    return downloadOneDoc(collections.tags, 'allTags')
-        .then(allTags => {
-            return Object.entries(allTags)
-                .filter(([key, value]) => key !== 'id')
-                .sort(([key1, value1], [key2, value2]) => value2 - value1)
-                // .map(([key, value]) => `${key} (${value})`)
+    return downloadDocsV2(collections.lists)
+        .then(items => {
+            return items.map(({ id, name }) => ({ value: id, display: name }));
+            // .map(([key, value]) => `${key} (${value})`)
         });
 }

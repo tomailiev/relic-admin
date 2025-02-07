@@ -78,7 +78,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             ? <FormControl key={id}>
                                 <InputLabel shrink>{label}</InputLabel>
                                 <Select {...props}>
-                                    {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+                                    {options.map(option => <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>)}
                                 </Select>
                                 <FormHelperText>{hasError[id]}</FormHelperText>
                             </FormControl>

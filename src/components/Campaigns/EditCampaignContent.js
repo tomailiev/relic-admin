@@ -8,19 +8,19 @@ import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yu
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
-    'button',
-    'column',
-    'divider',
-    'event',
-    'font',
-    'footer',
-    'header',
-    'image',
-    'preview',
-    'section',
-    'text',
-    'title',
-    'video',
+    { value: 'button' },
+    { value: 'column' },
+    { value: 'divider' },
+    { value: 'event' },
+    { value: 'font' },
+    { value: 'footer' },
+    { value: 'header' },
+    { value: 'image' },
+    { value: 'preview' },
+    { value: 'section' },
+    { value: 'text' },
+    { value: 'title' },
+    { value: 'video' },
     // 'spacer'
 ];
 

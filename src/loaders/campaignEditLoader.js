@@ -1,13 +1,11 @@
-import { downloadOneDoc } from "../utils/firebase/firebase-functions";
+import { downloadDocsV2, downloadOneDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default function campaignEditLoader({ params }) {
-    return Promise.all([downloadOneDoc(collections.tags, 'allTags'), downloadOneDoc(collections.campaigns, params.campaignId)])
-        .then(([allTags, campaign]) => {
+    return Promise.all([downloadDocsV2(collections.lists), downloadOneDoc(collections.campaigns, params.campaignId)])
+        .then(([emailLists, campaign]) => {
             return {
-                tags: Object.entries(allTags)
-                    .filter(([key, _value]) => key !== 'id')
-                    .sort(([, value1], [, value2]) => value2 - value1),
+                lists: emailLists.map(({ id, name }) => ({ value: id, display: name })),
                 campaign
             }
             // .map(([key, value]) => `${key} (${value})`)

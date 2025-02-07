@@ -12,7 +12,7 @@ const campaignColumns = [
         headerName: 'Stats',
         sortable: false,
         flex: 2,
-        renderCell: ({row}) => {
+        renderCell: ({ row }) => {
             return `Open: ${((row.open?.reduce(openReducer, []).length / row.sentTo?.length * 100) || (0)).toFixed(1)}%,
             Click: ${((row.click?.reduce(clickReducer, []).length / row.sentTo?.length * 100) || (0)).toFixed(1)}%`
         }
@@ -43,8 +43,18 @@ const campaignFields = {
 
 const campaignsFA = [
     { label: 'Subject', id: 'subject', },
-    { label: 'To', id: 'to', type: 'select', options: ['All subscribers'] },
-    { label: 'From', id: 'from', type: 'select', options: ['info@relicensemble.org', 'relic@relicensemble.org'] },
+    { label: 'To', id: 'to', type: 'select', options: [{ value: 'All subscribers' }] },
+    {
+        label: 'From', id: 'from', type: 'select', options: [
+            { value: 'info@relicensemble.org' },
+            { value: 'toma@relicensemble.org' },
+            { value: 'rebecca@relicensemble.org' },
+            { value: 'natalie@relicensemble.org' },
+            { value: 'cullen@relicensemble.org' },
+            { value: 'aniela@relicensemble.org' },
+            { value: 'kako@relicensemble.org' },
+        ]
+    },
 ];
 
 const campaignProps = {
