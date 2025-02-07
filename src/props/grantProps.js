@@ -86,7 +86,7 @@ const monthsFA = [
         label: 'Month',
         id: 'dueMonth',
         type: 'select',
-        options: months
+        options: months.map(m => ({ value: m }))
     }
 ]
 
