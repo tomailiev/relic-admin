@@ -26,6 +26,7 @@ const AddItem = (itemProps) => {
         fieldsArray: 'Fill out the fields',
         initialFieldsArray: 'Fill out the initial fields',
         nestedArray: `Add ${itemProps.nestedName}`,
+        dataFilter: `Filter ${itemProps.sourceCollectionField}`,
         preview: 'Preview'
     }
 

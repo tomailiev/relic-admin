@@ -1,13 +1,16 @@
-import { Box, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useState } from "react";
 
 const FilterData = ({ item, itemProps, handleFormCompletion }) => {
-    console.log(itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]]);
-    
-    function filterer(model) {
-        const newSubs = (item[itemProps.sourceCollectionField].filter(({ id }) => model.includes(id)));
 
-        handleFormCompletion({ newSubs, final: '1' });
+    const [dataItems, setDataItems] = useState([]);
+
+    function filterer(model) {
+        const newSubs = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
+        setDataItems(newSubs)
+
+        // handleFormCompletion({ newSubs, final: '1' });
     }
 
     return (
@@ -28,6 +31,10 @@ const FilterData = ({ item, itemProps, handleFormCompletion }) => {
                         pageSizeOptions={itemProps.pageSizeOptions}
                     />
                 </Box>
+            </Box>
+            <Box textAlign={'center'}>
+
+            <Button variant={'contained'} onClick={() => handleFormCompletion(dataItems)}>Submit</Button>
             </Box>
         </Container>
     );

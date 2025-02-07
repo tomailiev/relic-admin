@@ -23,13 +23,13 @@ const EmailListItem = ({ item }) => {
                             <ListItemIcon>
                                 <Source />
                             </ListItemIcon>
-                            <ListItemText primary={item.email} />
+                            <ListItemText primary={item.source} />
                         </ListItem>}
                         {item.datetime && <ListItem>
                             <ListItemIcon>
                                 <CalendarToday />
                             </ListItemIcon>
-                            <ListItemText primary={item.location} />
+                            <ListItemText primary={item.datetime.toDate().toString()} />
                         </ListItem>}
                     </List>
                 </Grid>

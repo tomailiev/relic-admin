@@ -19,7 +19,7 @@ const listColumns = [
     { field: 'datetime', headerName: 'Date', flex: 1 },
     {
         field: 'members', headerName: 'Members #', flex: 1, valueGetter: ({ row }) => {
-            return row.members?.count || 0
+            return row.members?.length || 0
         }
     },
     {
