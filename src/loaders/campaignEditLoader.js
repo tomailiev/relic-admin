@@ -5,7 +5,7 @@ export default function campaignEditLoader({ params }) {
     return Promise.all([downloadDocsV2(collections.lists), downloadOneDoc(collections.campaigns, params.campaignId)])
         .then(([emailLists, campaign]) => {
             return {
-                lists: emailLists?.map(({ id, name }) => ({ value: id, display: name })),
+                lists: emailLists?.map(({ id, name }) => ({ value: id, display: name })) || [],
                 campaign
             }
             // .map(([key, value]) => `${key} (${value})`)
