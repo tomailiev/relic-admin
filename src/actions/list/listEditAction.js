@@ -6,7 +6,7 @@ export default async function listEditAction({ request, params }) {
     try {
         const doc = await request.json();
         const { id: _, datetime: __, newMembers: ___, ...rest } = doc;
-        await uploadDoc({ ...rest, members: doc.newMembers.map(({ email }) => email) }, collections.lists, doc.id, true);
+        await uploadDoc({ ...rest, members: doc.newMembers.map(({ id }) => id) }, collections.lists, doc.id, true);
         return redirect(`/lists`);
     } catch (e) {
         console.log(e);

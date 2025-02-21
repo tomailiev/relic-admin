@@ -8,7 +8,7 @@ export default async function listAddAction({ request, params }) {
     try {
         const updates = await request.json();
         const { newMembers: _, ...rest } = updates
-        const upload = await uploadDoc(Object.assign(rest, { datetime: serverTimestamp(), members: updates.newMembers.map(({ email }) => email), }), collections.lists);
+        const upload = await uploadDoc(Object.assign(rest, { datetime: serverTimestamp(), members: updates.newMembers.map(({ id }) => id), }), collections.lists);
         console.log(upload);
         return redirect('/lists');
     } catch (e) {

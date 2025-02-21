@@ -40,10 +40,12 @@ const campaignFields = {
     from: '',
 };
 
-
 const campaignsFA = [
     { label: 'Subject', id: 'subject', },
-    { label: 'To', id: 'to', type: 'select', options: [{ value: 'All subscribers' }] },
+    {
+        label: 'To', id: 'to', type: 'select', options: [{ value: 'All subscribers' }, { type: 'label', value: 'Donor Tiers' }, { value: 'Zeus & Hera $10,000+' }, { value: 'Apollo $5000+' }, { value: 'Athena $2500+' }, { value: 'Hermes $1000+' }, { value: 'Artemis $500+' }, { value: 'Dionysus $200+' }, { value: 'Muse $50+' }, {type: 'label', value: 'Custom Lists'}
+        ]
+    },
     {
         label: 'From', id: 'from', type: 'select', options: [
             { value: 'info@relicensemble.org' },

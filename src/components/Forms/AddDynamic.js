@@ -3,11 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
 
-const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks}) => {
+const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
-    
+
     const [nestedItems, setNestedItems] = useState(fields);
     const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,7 +23,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
     }, [navigation.state]);
 
     function handleInputChange(e, index, id) {
-        
+
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)
         })
@@ -37,7 +37,7 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
             handleFormCompletion(validated);
         } catch (e) {
             if (e.inner) {
-                
+
                 setHasError(e.inner?.reduce((p, c) => {
                     const startChar = c.path?.indexOf('[');
                     const endChar = c.path?.indexOf(']');
@@ -75,13 +75,13 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                     </Button>
                     <Grid container>
                         {nestedItems?.map((_item, index, arr) => {
-                            
+
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
                                 <Stack spacing={2}>
                                     {nestedArray.map(({ id, label, type, multiline, options }) => {
                                         // const itemId = `[${index}].${id}`;
-                                        
+
                                         const props = {
                                             value: arr[index][id],
                                             id: id,
@@ -100,8 +100,13 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                             ? <FormControl key={id}>
                                                 <InputLabel shrink>{label}</InputLabel>
                                                 <Select {...props}>
-                                                    {options.map((option) => <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>)}
-                                                </Select>
+                                                    {options.map(option => {
+                                                        return option.type && option.type === 'label'
+                                                            ? <Typography variant="subtitle2" sx={{ px: 2, fontWeight: "bold", background: '#cccccc', borderBottom: '1px solid #000000', borderTop: '1px solid #000000' }}>
+                                                                {option.value}
+                                                            </Typography>
+                                                            : <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>
+                                                    })}                                                </Select>
                                                 <FormHelperText>{hasError[index] ? hasError[index][id] : null}</FormHelperText>
                                             </FormControl>
                                             : <TextField {...props} InputLabelProps={{ shrink: true }} key={id} helperText={hasError[index] ? hasError[index][id] : null} />

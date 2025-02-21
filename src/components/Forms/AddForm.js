@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField } from "@mui/material";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
@@ -78,7 +78,13 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                             ? <FormControl key={id}>
                                 <InputLabel shrink>{label}</InputLabel>
                                 <Select {...props}>
-                                    {options.map(option => <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>)}
+                                    {options.map(option => {
+                                        return option.type && option.type === 'label'
+                                            ? <Typography variant="subtitle2" sx={{ px: 2, fontWeight: "bold", background: '#cccccc', borderBottom: '1px solid #000000', borderTop: '1px solid #000000' }}>
+                                                {option.value}
+                                            </Typography>
+                                            : <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>
+                                    })}
                                 </Select>
                                 <FormHelperText>{hasError[id]}</FormHelperText>
                             </FormControl>

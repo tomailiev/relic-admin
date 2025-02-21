@@ -34,9 +34,9 @@ const EmailListItem = ({ item }) => {
                             rows={item.newMembers || item.members}
                             columns={listProps.dataFilterColumns[item.source]}
                             initialState={{
-                                sorting: {
-                                    sortModel: [{ field: 'datetime', sort: 'desc' }],
-                                },
+                                // sorting: {
+                                //     sortModel: [{ field: 'datetime', sort: 'desc' }],
+                                // },
                                 pagination: { paginationModel: { pageSize: 10 } }
                             }}
                             pageSizeOptions={[10, 25, 50]}
