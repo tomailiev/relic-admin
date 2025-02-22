@@ -107,7 +107,7 @@ const DonorItem = ({ item }) => {
     return (
         <>
             <ThankDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend} donationInfo={donationInfo} />
-            <Paper sx={{ mx: 8, my: 2, p: 5, }}>
+            <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
                 <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
                 <Typography variant="body2" textAlign={'center'}>{getTier(reduceDonations(item.donations))}</Typography>
                 <Grid key={item.id} mt={2} container spacing={2} justifyContent="center" sx={{

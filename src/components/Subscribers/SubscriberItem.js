@@ -1,25 +1,21 @@
-import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
-import { Email, LocationOn, Loyalty, Style, ImportContacts, Event } from "@mui/icons-material";
+import { List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
+import { Email, LocationOn, Loyalty, Style, ImportContacts, Event, AutoAwesomeMotion } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import subscriberProps from '../../props/subscriberProps'
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const SubscriberItem = ({ item }) => {
-    
+
     const location = useLocation();
 
     return (
-        <Paper sx={{ mx: 8, my: 2, p: 5, }}>
+        <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
             <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
-            <Grid key={item.id} container spacing={2} mt={2} justifyContent="center" sx={{
+            <Box sx={{
                 position: 'relative',
+                display: 'flex',
+                justifyContent: 'center'
             }}>
-                <Grid item md={6} sm={8} xs={12} p={6}>
-                    <Container disableGutters sx={{ borderRadius: '4px', justifyContent: 'center', display: 'flex', flexDirection: 'row' }} >
-                        <img width={'50%'} src="https://upload.wikimedia.org/wikipedia/commons/f/f9/User_%2889041%29_-_The_Noun_Project.svg" alt="user avatar" />
-                    </Container>
-                </Grid>
-                <Grid item md={6}>
                     <List>
                         {item.email && <ListItem>
                             <ListItemIcon>
@@ -33,11 +29,28 @@ const SubscriberItem = ({ item }) => {
                             </ListItemIcon>
                             <ListItemText primary={item.location} />
                         </ListItem>}
-                        {item.tags && <ListItem>
+                        {item.tags && !!item.lists.length && <ListItem>
                             <ListItemIcon>
                                 <Style />
                             </ListItemIcon>
                             <ListItemText primary={item.tags.map(({ tag }) => tag).join(', ')} />
+                        </ListItem>}
+                        {item.lists && !!item.lists.length && <ListItem>
+                            <ListItemIcon>
+                                <AutoAwesomeMotion />
+                            </ListItemIcon>
+                            <List>
+                                {item.lists.map(list => (
+                                    <ListItem>
+                                        <Typography >
+                                            <Link key={list} to={`/lists/${list}`}>
+                                                {list}
+                                            </Link>
+                                        </Typography>
+                                    </ListItem>
+                                ))}
+
+                            </List>
                         </ListItem>}
                         <ListItem>
                             <ListItemIcon>
@@ -49,7 +62,7 @@ const SubscriberItem = ({ item }) => {
                             <ListItemIcon>
                                 <ImportContacts />
                             </ListItemIcon>
-                            <ListItemText primary={item.origin} />
+                            <ListItemText primary={item.origin} sx={{ overflow: 'clip' }} />
                         </ListItem>
                         <ListItem>
                             <ListItemIcon>
@@ -58,9 +71,7 @@ const SubscriberItem = ({ item }) => {
                             <ListItemText primary={`Contact since ${item.opt_in_time}`} />
                         </ListItem>
                     </List>
-
-                </Grid>
-            </Grid>
+                    </Box>
             {item.history && !location.pathname.endsWith('edit') && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Interactions:

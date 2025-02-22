@@ -1,4 +1,4 @@
-import { Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typography, Box } from "@mui/material";
 import { CalendarToday } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import listProps from '../../props/listProps'
@@ -7,23 +7,23 @@ const EmailListItem = ({ item }) => {
 
 
     return (
-        <Paper sx={{ mx: 8, my: 2, p: 5, }}>
+        <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
             <Typography variant="h5" textAlign={'center'}>{item.name}</Typography>
             <Typography variant="body2" textAlign={'center'}>{item.source}</Typography>
-            <Grid key={item.id} container justifyContent="center" sx={{
+            <Box sx={{
                 position: 'relative',
+                display: 'flex',
+                justifyContent: 'center'
             }}>
-                <Grid item md={6}>
-                    <List>
-                        {item.datetime && <ListItem>
-                            <ListItemIcon>
-                                <CalendarToday />
-                            </ListItemIcon>
-                            <ListItemText primary={item.datetime?.toDate().toUTCString()} />
-                        </ListItem>}
-                    </List>
-                </Grid>
-            </Grid>
+                <List>
+                    {item.datetime && <ListItem>
+                        <ListItemIcon>
+                            <CalendarToday />
+                        </ListItemIcon>
+                        <ListItemText primary={item.datetime?.toDate().toUTCString()} />
+                    </ListItem>}
+                </List>
+            </Box>
             <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Members:

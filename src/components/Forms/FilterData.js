@@ -10,13 +10,14 @@ const FilterData = ({ item, itemProps, handleFormCompletion }) => {
     useEffect(() => {
         if (item[itemProps.tempDestinationField]) {
             setRowSelectionModel(item[itemProps.tempDestinationField].map(({ id }) => id));
+            setDataItems(item[itemProps.tempDestinationField]);
         }
     }, [item, itemProps.tempDestinationField]);
 
     function filterer(model) {
         setRowSelectionModel(model);
-        const newSubs = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
-        setDataItems(newSubs)
+        const newDataItems = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
+        setDataItems(newDataItems)
     }
 
     return (

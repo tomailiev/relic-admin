@@ -54,7 +54,7 @@ const CampaignItem = ({ item, setEditable }) => {
             <SendDialog open={sendModalOpen} setOpen={setSendModalOpen} name={item.subject} handleSend={handleCampaignSend} />
             <TestDialog open={testModalOpen} setOpen={setTestModalOpen} handleSend={handleCampaignSend} />
             <StatsDialog open={statsModalOpen} setOpen={setStatsModalOpen} name={statsName} list={statsList} />
-            <Paper sx={{ mx: 8, my: 2, p: 5, }}>
+            <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
                 {item.status
                     ? <Stack spacing={2}>
                         <Button variant="contained" fullWidth onClick={() => setSendModalOpen(true)}>Send...</Button>
