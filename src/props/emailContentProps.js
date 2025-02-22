@@ -217,6 +217,15 @@ const fontFA = [
     { label: 'Name', id: 'name' },
 ];
 
+const rawFields = {
+    id: 'mj-raw',
+    text: ''
+};
+
+const rawFA = [
+    { label: 'Text', id: 'text', multiline: true }
+]
+
 export const emailContentFields = {
     button: buttonFields,
     column: columnFields,
@@ -231,6 +240,7 @@ export const emailContentFields = {
     text: textFields,
     title: titleFields,
     video: videoFields,
+    raw: rawFields
 };
 
 export const emailContentFieldArrays = {
@@ -247,4 +257,5 @@ export const emailContentFieldArrays = {
     text: textFA,
     title: titleFA,
     video: videoFA,
+    raw: rawFA
 };

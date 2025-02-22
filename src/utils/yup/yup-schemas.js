@@ -220,6 +220,9 @@ const emailComponentSchemas = {
         lineHeight: string(),
         letterSpacing: string()
     }),
+    raw: object({
+        text: string().required()
+    })
 };
 
 const selectComponentSchema = object({

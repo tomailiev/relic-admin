@@ -17,6 +17,7 @@ const options = [
     { value: 'header' },
     { value: 'image' },
     { value: 'preview' },
+    { value: 'raw' },
     { value: 'section' },
     { value: 'text' },
     { value: 'title' },
@@ -44,12 +45,12 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         fSubmit({ components: componentList }, { method: 'post', encType: 'application/json' });
     }, [componentList, fSubmit]);
 
-    useEffect(() => {
+    useEffect(() => {        
         if (fetcher.data?.html) {
             setEmailHtml(fetcher.data.html);
             setEmailMjml(fetcher.data.mjml);
         }
-        if (fetcher.data?.errors.length) {
+        if (fetcher.data?.errors?.length) {
             setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
         }
     }, [fetcher.data, setError]);
