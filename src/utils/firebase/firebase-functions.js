@@ -114,8 +114,8 @@ const registerUser = httpsCallable(functions, 'registerUserV2');
 const checkEmailVerificationStatus = httpsCallable(functions, 'checkEmailVerificationStatusV2');
 const verifyOrReset = httpsCallable(functions, 'verifyOrResetV2');
 const getMjml = httpsCallable(functions, 'getMjmlV2');
-const sendCampaign = httpsCallable(functions, 'sendCampaignV2');
-const acknowledgeDonor = httpsCallable(functions, 'acknowledgeDonor');
+const sendCampaign = httpsCallable(functions, process.env.NODE_ENV === 'development' ? 'sendMockCampaignV2' : 'sendCampaignV2');
+const acknowledgeDonor = httpsCallable(functions, process.env.NODE_ENV === 'development' ? 'acknowledgeMockDonor' : 'acknowledgeDonor');
 
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
