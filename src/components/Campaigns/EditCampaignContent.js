@@ -19,6 +19,7 @@ const options = [
     { value: 'preview' },
     { value: 'raw' },
     { value: 'section' },
+    { value: 'signature' },
     { value: 'text' },
     { value: 'title' },
     { value: 'video' },
@@ -45,7 +46,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
         fSubmit({ components: componentList }, { method: 'post', encType: 'application/json' });
     }, [componentList, fSubmit]);
 
-    useEffect(() => {        
+    useEffect(() => {
         if (fetcher.data?.html) {
             setEmailHtml(fetcher.data.html);
             setEmailMjml(fetcher.data.mjml);

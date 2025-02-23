@@ -224,6 +224,25 @@ const rawFields = {
 
 const rawFA = [
     { label: 'Text', id: 'text', multiline: true }
+];
+
+const signatureFields = {
+    id: 'custom-signature',
+    sender: ''
+};
+
+const signatureFA = [
+    {
+        label: 'Sender', id: 'sender', type: 'select', options: [
+            { value: 'info@relicensemble.org' },
+            { value: 'toma@relicensemble.org' },
+            // { value: 'aniela@relicensemble.org' },
+            // { value: 'kako@relicensemble.org' },
+            // { value: 'natalie@relicensemble.org' },
+            // { value: 'cullen@relicensemble.org' },
+            // { value: 'rebecca@relicensemble.org' }
+        ]
+    }
 ]
 
 export const emailContentFields = {
@@ -240,7 +259,8 @@ export const emailContentFields = {
     text: textFields,
     title: titleFields,
     video: videoFields,
-    raw: rawFields
+    raw: rawFields,
+    signature: signatureFields
 };
 
 export const emailContentFieldArrays = {
@@ -257,5 +277,6 @@ export const emailContentFieldArrays = {
     text: textFA,
     title: titleFA,
     video: videoFA,
-    raw: rawFA
+    raw: rawFA,
+    signature: signatureFA
 };
