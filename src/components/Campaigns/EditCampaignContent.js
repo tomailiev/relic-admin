@@ -8,19 +8,21 @@ import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yu
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
 const options = [
-    'button',
-    'column',
-    'divider',
-    'event',
-    'font',
-    'footer',
-    'header',
-    'image',
-    'preview',
-    'section',
-    'text',
-    'title',
-    'video',
+    { value: 'button' },
+    { value: 'column' },
+    { value: 'divider' },
+    { value: 'event' },
+    { value: 'font' },
+    { value: 'footer' },
+    { value: 'header' },
+    { value: 'image' },
+    { value: 'preview' },
+    { value: 'raw' },
+    { value: 'section' },
+    { value: 'signature' },
+    { value: 'text' },
+    { value: 'title' },
+    { value: 'video' },
     // 'spacer'
 ];
 
@@ -49,7 +51,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }) => {
             setEmailHtml(fetcher.data.html);
             setEmailMjml(fetcher.data.mjml);
         }
-        if (fetcher.data?.errors.length) {
+        if (fetcher.data?.errors?.length) {
             setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n') })
         }
     }, [fetcher.data, setError]);

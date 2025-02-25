@@ -10,6 +10,6 @@ export default async function campaignSendAction({ request, params }) {
             return { severity: 'success', 'message': 'Campaign sent successfully.' };
         })
         .catch(e => {
-            return { severity: 'error', message: e };
+            return { severity: 'error', message: e.message };
         })
 }

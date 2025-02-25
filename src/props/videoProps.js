@@ -38,8 +38,8 @@ const videoFA = [
     { label: 'Title', id: 'title' },
     { label: 'YouTube Id', id: 'youtubeId' },
     { label: 'Thumbail Url', id: 'thumbnail' },
-    { label: 'Program', id: 'program', type: 'select', options: ['Autumn Rising', 'Winter Oasis', 'Enchanted Forest', 'At the Temple of Juno', 'Into the Underworld', 'The Dawn of Time'] },
-    { label: 'Category', id: 'category', type: 'select', options: ['full concert', 'live', 'studio'] }
+    { label: 'Program', id: 'program', type: 'select', options: [{ value: 'Autumn Rising' }, { value: 'Winter Oasis' }, { value: 'Enchanted Forest' }, { value: 'At the Temple of Juno' }, { value: 'Into the Underworld' }, { value: 'The Dawn of Time' }] },
+    { label: 'Category', id: 'category', type: 'select', options: [{ value: 'full concert' }, { value: 'live' }, { value: 'studio' }] }
 ];
 
 const fields = {

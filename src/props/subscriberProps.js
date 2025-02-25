@@ -86,7 +86,7 @@ const subscribersFA = [
     { label: 'First name', id: 'firstName', },
     { label: 'Last name', id: 'lastName', },
     { label: 'Email', id: 'email' },
-    { label: 'Status', id: 'status', type: 'select', options: ['Unsubscribed', 'Subscribed'] },
+    { label: 'Status', id: 'status', type: 'select', options: [{ value: 'Unsubscribed' }, { value: 'Subscribed' }] },
     { label: 'Location', id: 'location', },
 ];
 

@@ -61,7 +61,7 @@ dateAwarded
 amountAwarded
 website
 materialsLocation
-*/ 
+*/
 
 const grantFields = {
     name: '',
@@ -77,7 +77,7 @@ const monthsFields = {
 const grantsFA = [
     { label: 'Name', id: 'name', },
     { label: 'Url', id: 'link' },
-    { label: 'Notification', id: 'notification', type: 'select', options: ['No', 'Yes'] },
+    { label: 'Notification', id: 'notification', type: 'select', options: [{ value: 'No' }, { value: 'Yes' }] },
     { label: 'Description', id: 'description', multiline: true },
 ];
 
@@ -86,7 +86,7 @@ const monthsFA = [
         label: 'Month',
         id: 'dueMonth',
         type: 'select',
-        options: months
+        options: months.map(m => ({ value: m }))
     }
 ]
 

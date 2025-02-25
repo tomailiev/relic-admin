@@ -5,11 +5,11 @@ import YouTube from 'react-youtube';
 const VideoItem = ({ item }) => {
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={{  mx: 1, my: 2, py: 5, px: 3  }}>
             <Grid key={item.youtubeId} container spacing={2} justifyContent="center" sx={{
                 position: 'relative',
             }}>
-                <Grid item md={6} sm={8} xs={12}>
+                <Grid item md={6} sm={10} xs={12}>
                     <YouTube
                         videoId={item.youtubeId}
                         opts={{ height: '300px', width: '100%', }}

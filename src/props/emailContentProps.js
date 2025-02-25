@@ -14,7 +14,7 @@ const sectionFA = [
     { label: 'Border', id: 'border' },
     { label: 'Border radius', id: 'borderRadius', type: 'number' },
     { label: 'Padding', id: 'padding' },
-    { label: 'Text align', id: 'textAlign', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Text align', id: 'textAlign', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
 ];
 
 const columnFields = {
@@ -36,7 +36,7 @@ const dividerFields = {
 };
 
 const dividerFA = [
-    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Align', id: 'align', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
     { label: 'Width', id: 'width', type: 'number' },
     { label: 'Border width', id: 'borderWidth', type: 'number' },
     { label: 'Border color', id: 'borderColor' },
@@ -48,7 +48,7 @@ const columnFA = [
     { label: 'Border', id: 'border' },
     { label: 'Border radius', id: 'borderRadius' },
     { label: 'Padding', id: 'padding' },
-    { label: 'Text align', id: 'textAlign', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Text align', id: 'textAlign', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
 ]
 
 const textFields = {
@@ -67,11 +67,11 @@ const textFields = {
 
 const textFA = [
     { label: 'Text', id: 'text', multiline: true },
-    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
-    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
-    { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
+    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => ({ value: x += 9 })) },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [{ value: 300 }, { value: 400 }, { value: 600 }, { value: 700 }, { value: 900 }] },
+    { label: 'Font style', id: 'fontStyle', type: 'select', options: [{ value: 'normal' }, { value: 'italic' }, { value: 'oblique' }] },
     { label: 'Text color', id: 'color', },
-    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Align', id: 'align', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
     { label: 'Font family', id: 'fontFamily' },
     { label: 'Letter spacing', id: 'letterSpacing', type: 'number' },
     { label: 'Line height', id: 'lineHeight' }
@@ -101,11 +101,11 @@ const customTextFA = [
     { label: 'Venue', id: 'venue' },
     { label: 'Location', id: 'location' },
     { label: 'Link', id: 'href' },
-    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
-    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
-    { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
+    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => ({ value: x += 9 })) },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [{ value: 300 }, { value: 400 }, { value: 600 }, { value: 700 }, { value: 900 }] },
+    { label: 'Font style', id: 'fontStyle', type: 'select', options: [{ value: 'normal' }, { value: 'italic' }, { value: 'oblique' }] },
     { label: 'Text color', id: 'color', },
-    { label: 'Align', id: 'align', type: 'select', options: ['left', 'right', 'center', 'justify'] },
+    { label: 'Align', id: 'align', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
     { label: 'Font family', id: 'fontFamily' },
     { label: 'Letter spacing', id: 'letterSpacing', type: 'number' },
     { label: 'Line height', id: 'lineHeight' }
@@ -147,10 +147,10 @@ const buttonFA = [
     { label: 'Text color', id: 'color', },
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Link', id: 'href' },
-    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => x += 9) },
-    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [300, 400, 600, 700, 900] },
-    { label: 'Font style', id: 'fontStyle', type: 'select', options: ['normal', 'italic', 'oblique'] },
-    { label: 'Text Decoration', id: 'textDecoration', type: 'select', options: ['underline', 'overline', 'none'] },
+    { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => ({ value: x += 9 })) },
+    { label: 'Font weight', id: 'fontWeight', type: 'select', options: [{ value: 300 }, { value: 400 }, { value: 600 }, { value: 700 }, { value: 900 }] },
+    { label: 'Font style', id: 'fontStyle', type: 'select', options: [{ value: 'normal' }, { value: 'italic' }, { value: 'oblique' }] },
+    { label: 'Text Decoration', id: 'textDecoration', type: 'select', options: [{ value: 'underline' }, { value: 'overline' }, { value: 'none' }] },
     { label: 'Width', id: 'width', type: 'number' },
     { label: 'Font family', id: 'fontFamily' },
     { label: 'Border', id: 'border' },
@@ -163,7 +163,7 @@ const headerFields = {
 };
 
 const headerFA = [
-    { label: 'Variant', id: 'variant', type: 'select', options: ['regular'] }
+    { label: 'Variant', id: 'variant', type: 'select', options: [{ value: 'regular' }] }
 ];
 
 const footerFields = {
@@ -173,8 +173,8 @@ const footerFields = {
 };
 
 const footerFA = [
-    { label: 'Variant', id: 'variant', type: 'select', options: ['regular', 'no-button'] },
-    { label: 'Social icons', id: 'socialType', type: 'select', options: ['color', 'bw'] },
+    { label: 'Variant', id: 'variant', type: 'select', options: [{ value: 'regular' }, { value: 'no-button' }] },
+    { label: 'Social icons', id: 'socialType', type: 'select', options: [{ value: 'color' }, { value: 'bw' }] },
 ];
 
 const videoFields = {
@@ -217,6 +217,34 @@ const fontFA = [
     { label: 'Name', id: 'name' },
 ];
 
+const rawFields = {
+    id: 'mj-raw',
+    text: ''
+};
+
+const rawFA = [
+    { label: 'Text', id: 'text', multiline: true }
+];
+
+const signatureFields = {
+    id: 'custom-signature',
+    sender: ''
+};
+
+const signatureFA = [
+    {
+        label: 'Sender', id: 'sender', type: 'select', options: [
+            { value: 'info@relicensemble.org' },
+            { value: 'toma@relicensemble.org' },
+            // { value: 'aniela@relicensemble.org' },
+            // { value: 'kako@relicensemble.org' },
+            // { value: 'natalie@relicensemble.org' },
+            // { value: 'cullen@relicensemble.org' },
+            // { value: 'rebecca@relicensemble.org' }
+        ]
+    }
+]
+
 export const emailContentFields = {
     button: buttonFields,
     column: columnFields,
@@ -231,6 +259,8 @@ export const emailContentFields = {
     text: textFields,
     title: titleFields,
     video: videoFields,
+    raw: rawFields,
+    signature: signatureFields
 };
 
 export const emailContentFieldArrays = {
@@ -247,4 +277,6 @@ export const emailContentFieldArrays = {
     text: textFA,
     title: titleFA,
     video: videoFA,
+    raw: rawFA,
+    signature: signatureFA
 };

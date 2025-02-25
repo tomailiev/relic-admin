@@ -121,7 +121,7 @@ const AddSimpleForm = ({ fields, fieldsArray, handleFormCompletion }) => {
                                 ? <FormControl key={id}>
                                     <InputLabel>{label}</InputLabel>
                                     <Select {...props}>
-                                        {options.map(option => <MenuItem value={option} key={option}>{option}</MenuItem>)}
+                                        {options.map(option => <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>)}
                                     </Select>
                                     <FormHelperText>{props.helperText}</FormHelperText>
                                 </FormControl>
