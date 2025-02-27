@@ -1,10 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage";
+import { FirebaseStorage, getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { connectFunctionsEmulator, getFunctions } from "firebase/functions"
+import { Auth, getAuth } from "firebase/auth";
+import { connectFunctionsEmulator, Functions, getFunctions } from "firebase/functions"
+import { FirebaseApp } from "@firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,13 +22,13 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app: FirebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = process.env.NODE_ENV === 'development' ? getFirestore(app, 'mock-data') :  getFirestore(app);
 // const db = getFirestore(app)
-const storage = process.env.NODE_ENV === 'development' ? getStorage(app, 'gs://relic-mock-storage') : getStorage(app);
-const auth = getAuth(app);
-const functions =  getFunctions(app);
+const storage: FirebaseStorage = process.env.NODE_ENV === 'development' ? getStorage(app, 'gs://relic-mock-storage') : getStorage(app);
+const auth: Auth = getAuth(app);
+const functions: Functions =  getFunctions(app);
 if (process.env.REACT_APP_EMULATORS) {
   connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 }

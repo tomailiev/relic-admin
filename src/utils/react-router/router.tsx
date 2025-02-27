@@ -2,7 +2,7 @@ import Home from '../../components/Home/Home';
 import ErrorPage from '../../components/Common/ErrorPage';
 import Index from '../../components/Index/Index';
 import LogIn from '../../components/LogIn/LogIn';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import Register from '../../components/Register/Register';
 import VerifyReset from '../../components/VerifyReset/VerifyReset';
 import signInAction from '../../actions/user/signInAction';
@@ -22,40 +22,42 @@ import subscriberRouter from './subscriberRouter';
 import campaignRouter from './campaignRouter';
 import listRouter from './listRouter';
 
-const router = createBrowserRouter([
+const routes: RouteObject[] = [
   {
-    path: "/",
-    element: <Home />,
-    errorElement: <ErrorPage />,
-    children: [
+    path: "/", 
+    element: <Home />, 
+    errorElement: <ErrorPage / >, children: [
       {
         index: true,
         element: <Index />,
       },
       {
         path: 'login',
-        element: <LoggedOut component={<LogIn />} />,
-        action: signInAction
+        element: <LoggedOut component={< LogIn />} />,
+  action: signInAction
       },
-      {
-        path: 'register',
-        element: <LoggedOut component={<Register />} />,
-        action: registerAction
-      },
-      {
-        path: 'logout',
-        element: <FetchError />,
-        action: signOutAction
-      },
-      {
-        path: 'verify',
-        element: <LoggedOut component={<VerifyReset />} />,
+{
+  path: 'register',
+    element: <LoggedOut component={
+    <Register />} / >,
+      action: registerAction
+  },
+  {
+    path: 'logout',
+      element: <FetchError />,
+    action: signOutAction
+  },
+  {
+    path: 'verify',
+      element: <LoggedOut component={
+      <VerifyReset />} / >,
         action: verifyResetAction
-      },
-      {
-        path: 'reset',
-        element: <LoggedOut component={<VerifyReset />} />,
-        action: verifyResetAction
+    },
+    {
+      path: 'reset',
+        element: <LoggedOut component={
+        <VerifyReset />} / >,
+          action: verifyResetAction
       },
       ...videoRouter,
       ...musicianRouter,
@@ -68,8 +70,10 @@ const router = createBrowserRouter([
       ...campaignRouter,
       ...listRouter
     ]
-  },
-]);
+    }
+]
+
+    const router = createBrowserRouter(routes);
 
 
-export default router;
+    export default router;

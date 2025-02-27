@@ -3,16 +3,16 @@ import { CssBaseline } from '@mui/material';
 import './App.css';
 import { RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from './utils/firebase/firebase-init';
 import UserContext from './context/UserContext';
 import router from './utils/react-router/router';
 
 
 
-function App() {
+const App: React.FC = () => {
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
