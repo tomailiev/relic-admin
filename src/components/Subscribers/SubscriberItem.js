@@ -29,7 +29,7 @@ const SubscriberItem = ({ item }) => {
                             </ListItemIcon>
                             <ListItemText primary={item.location} />
                         </ListItem>}
-                        {item.tags && !!item.lists.length && <ListItem>
+                        {item.tags && !!item.tags.length && <ListItem>
                             <ListItemIcon>
                                 <Style />
                             </ListItemIcon>
@@ -40,7 +40,7 @@ const SubscriberItem = ({ item }) => {
                                 <AutoAwesomeMotion />
                             </ListItemIcon>
                             <List>
-                                {item.lists.map(list => (
+                                {item.lists?.map(list => (
                                     <ListItem>
                                         <Typography >
                                             <Link key={list} to={`/lists/${list}`}>
