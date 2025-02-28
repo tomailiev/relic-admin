@@ -4,6 +4,7 @@ import { donationSchema, donorSchema } from "../utils/yup/yup-schemas";
 import { getTier } from "../vars/getTier";
 import { reduceDonations } from "../vars/reduceDonations";
 import { oneYearAgoFromToday, twoYearsAgoFromTomorrow } from "../vars/dateObjects";
+import { GridColDef } from "@mui/x-data-grid";
 
 
 function numExtractor(str = '') {
@@ -14,7 +15,7 @@ function tierComparator(tierStr1, tierStr2) {
     return numExtractor(tierStr1) - numExtractor(tierStr2);
 }
 
-const donorColumns = [
+const donorColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },

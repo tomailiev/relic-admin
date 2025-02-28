@@ -1,3 +1,4 @@
+import { RouteObject } from "react-router-dom";
 import CSVAddAction from "../../actions/CSV/CSVAddAction";
 import CSVDeleteAction from "../../actions/CSV/CSVDeleteAction";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
@@ -13,7 +14,7 @@ import csvLoader from "../../loaders/csvLoader";
 import subscriberLoader from "../../loaders/subscriberLoader";
 import CSVProps from "../../props/CSVProps";
 
-const csvRouter = [
+const csvRouter: RouteObject = [
     {
         path: 'CSVs',
         element: <LoggedIn component={<Items {...CSVProps} />} />,

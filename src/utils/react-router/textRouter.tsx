@@ -10,8 +10,9 @@ import Items from "../../components/Items/Items";
 import textItemLoader from "../../loaders/textItemLoader";
 import textLoader from "../../loaders/textLoader";
 import textProps from "../../props/textProps";
+import { RouteObject } from "react-router-dom";
 
-const textRouter = [
+const textRouter: RouteObject = [
     {
         path: 'texts',
         element: <LoggedIn component={<Items {...textProps} />} />,

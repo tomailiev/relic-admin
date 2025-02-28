@@ -2,8 +2,9 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { clickReducer, openReducer } from "./campaignStatProps";
 import { campaignSchema } from "../utils/yup/yup-schemas";
+import { GridColDef } from "@mui/x-data-grid";
 
-const campaignColumns = [
+const campaignColumns: GridColDef[] = [
     { field: 'subject', headerName: 'Subject', flex: 2 },
     { field: 'status', headerName: 'Status', flex: 1, valueGetter: ({ row }) => row.status ? 'Draft' : 'Sent' },
     { field: 'datetime', headerName: 'Date', flex: 1, valueGetter: ({ row }) => row.datetime.toDate() },

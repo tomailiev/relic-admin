@@ -2,14 +2,15 @@
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CSVSchema } from "../utils/yup/yup-schemas";
+import { GridColDef } from "@mui/x-data-grid";
 
-const CSVListColumns = [
+const CSVListColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 2 },
     { field: 'lastName', headerName: 'Last name', flex: 2 },
     { field: 'email', headerName: 'Email', flex: 2 }
 ];
 
-const CSVColumns = [
+const CSVColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 4 },
     {
         field: 'select',

@@ -1,3 +1,4 @@
+import { RouteObject } from "react-router-dom";
 import campaignAddAction from "../../actions/campaign/campaignAddAction";
 import campaignDeleteAction from "../../actions/campaign/campaignDeleteAction";
 import campaignEditAction from "../../actions/campaign/campaignEditAction";
@@ -16,7 +17,7 @@ import campaignItemLoader from "../../loaders/campaignItemLoader";
 import campaignLoader from "../../loaders/campaignLoader";
 import campaignProps from "../../props/campaignProps";
 
-const campaignRouter = [
+const campaignRouter: RouteObject = [
     {
         path: 'campaigns',
         element: <LoggedIn component={<Items {...campaignProps} />} />,

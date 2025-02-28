@@ -18,8 +18,9 @@ import donorProps from "../../props/donorProps";
 import AddItem from "../../components/Items/AddItem";
 import donorAddAction from "../../actions/donor/donorAddAction";
 import EditItem from "../../components/Items/EditItem";
+import { RouteObject } from "react-router-dom";
 
-const donorRouter = [
+const donorRouter: RouteObject = [
   {
     path: 'donors',
     element: <LoggedIn component={<Donors />} />,

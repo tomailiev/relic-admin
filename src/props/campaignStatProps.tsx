@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { Link as ExternalLink } from '@mui/material';
 import { Check } from "@mui/icons-material";
+import { GridColDef } from "@mui/x-data-grid";
 
-export const multiColumns = [
+export const multiColumns: GridColDef[] = [
     {
         field: 'email',
         headerName: 'Email address',
@@ -23,7 +24,7 @@ export const multiColumns = [
     }
 ];
 
-export const clickColumns = [
+export const clickColumns: GridColDef[] = [
     {
         field: 'email',
         headerName: 'Email address',
@@ -58,7 +59,7 @@ export const clickColumns = [
 
 export const clickSorting = { field: 'link', sort: 'asc' };
 
-export const uniqueOpenColumns = [
+export const uniqueOpenColumns: GridColDef[] = [
     {
         field: 'email',
         headerName: 'Email address',
@@ -86,7 +87,7 @@ export const uniqueOpenColumns = [
 
 export const uniqueOpenSorting = { field: 'count', sort: 'desc' };
 
-export const uniqueClickColumns = [
+export const uniqueClickColumns: GridColDef[] = [
     {
         field: 'email',
         headerName: 'Email address',
@@ -115,7 +116,7 @@ export const uniqueClickColumns = [
 
 export const uniqueClickSorting = { field: 'links', sort: 'desc' }
 
-export const fullColumns = [
+export const fullColumns: GridColDef[] = [
     {
         field: 'email',
         headerName: 'Email address',

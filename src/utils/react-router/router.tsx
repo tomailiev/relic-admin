@@ -24,9 +24,9 @@ import listRouter from './listRouter';
 
 const routes: RouteObject[] = [
   {
-    path: "/", 
-    element: <Home />, 
-    errorElement: <ErrorPage / >, children: [
+    path: "/",
+    element: <Home />,
+    errorElement: <ErrorPage />, children: [
       {
         index: true,
         element: <Index />,
@@ -34,30 +34,30 @@ const routes: RouteObject[] = [
       {
         path: 'login',
         element: <LoggedOut component={< LogIn />} />,
-  action: signInAction
+        action: signInAction
       },
-{
-  path: 'register',
-    element: <LoggedOut component={
-    <Register />} / >,
-      action: registerAction
-  },
-  {
-    path: 'logout',
-      element: <FetchError />,
-    action: signOutAction
-  },
-  {
-    path: 'verify',
-      element: <LoggedOut component={
-      <VerifyReset />} / >,
-        action: verifyResetAction
-    },
-    {
-      path: 'reset',
+      {
+        path: 'register',
         element: <LoggedOut component={
-        <VerifyReset />} / >,
-          action: verifyResetAction
+          <Register />} />,
+        action: registerAction
+      },
+      {
+        path: 'logout',
+        element: <FetchError />,
+        action: signOutAction
+      },
+      {
+        path: 'verify',
+        element: <LoggedOut component={
+          <VerifyReset />} />,
+        action: verifyResetAction
+      },
+      {
+        path: 'reset',
+        element: <LoggedOut component={
+          <VerifyReset />} />,
+        action: verifyResetAction
       },
       ...videoRouter,
       ...musicianRouter,
@@ -70,10 +70,10 @@ const routes: RouteObject[] = [
       ...campaignRouter,
       ...listRouter
     ]
-    }
+  }
 ]
 
-    const router = createBrowserRouter(routes);
+const router = createBrowserRouter(routes);
 
 
-    export default router;
+export default router;
