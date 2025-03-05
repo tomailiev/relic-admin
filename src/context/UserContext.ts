@@ -1,11 +1,11 @@
 import { User } from "firebase/auth";
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction } from "react";
 
-interface UserContextType {
+export interface UserContextType {
     currentUser: User | null;
-    setCurrentUser: (user: User | null) => void;
+    setCurrentUser: Dispatch<SetStateAction<User | null>>;
 }
 
-const UserContext = createContext<UserContextType | null>(null);
+const UserContext = createContext<UserContextType>({ currentUser: null, setCurrentUser: () => { } });
 
 export default UserContext;

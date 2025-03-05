@@ -2,7 +2,7 @@
 import { CssBaseline } from '@mui/material';
 import './App.css';
 import { RouterProvider } from 'react-router-dom';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from './utils/firebase/firebase-init';
 import UserContext from './context/UserContext';
@@ -10,7 +10,7 @@ import router from './utils/react-router/router';
 
 
 
-const App: React.FC = () => {
+const App = (): ReactElement => {
 
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 

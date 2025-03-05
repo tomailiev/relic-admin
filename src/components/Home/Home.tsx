@@ -17,8 +17,8 @@ const Home = () => {
 
     const { currentUser } = useContext(UserContext);
     const [error, setError] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState<true | false>(false);
+    const [mobileOpen, setMobileOpen] = useState<true | false>(false);
     const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.down('md'));

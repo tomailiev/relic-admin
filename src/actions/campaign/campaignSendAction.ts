@@ -7,7 +7,7 @@ export default async function campaignSendAction({ request, params }) {
         })
         .then(doc => {
             console.log(doc);
-            return { severity: 'success', 'message': 'Campaign sent successfully.' };
+            return { severity: 'success', message: 'Campaign sent successfully.' };
         })
         .catch(e => {
             return { severity: 'error', message: e.message };
