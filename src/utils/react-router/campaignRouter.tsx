@@ -17,7 +17,7 @@ import campaignItemLoader from "../../loaders/campaignItemLoader";
 import campaignLoader from "../../loaders/campaignLoader";
 import campaignProps from "../../props/campaignProps";
 
-const campaignRouter: RouteObject = [
+const campaignRouter: RouteObject[] = [
     {
         path: 'campaigns',
         element: <LoggedIn component={<Items {...campaignProps} />} />,

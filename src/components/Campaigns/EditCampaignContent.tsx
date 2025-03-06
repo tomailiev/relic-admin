@@ -6,6 +6,7 @@ import { emailContentFieldArrays, emailContentFields } from "../../props/emailCo
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { ItemProps } from "../../types/fnProps";
 
 const options = [
     { value: 'button' },
@@ -26,7 +27,7 @@ const options = [
     // 'spacer'
 ];
 
-const EditCampaignContent = ({ itemType, fieldsArray, }) => {
+const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
     const { campaign } = useLoaderData();
 
     const [activeStep, setActiveStep] = useState(0);

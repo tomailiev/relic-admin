@@ -1,3 +1,5 @@
+import { FieldsArrayItem } from "../types/fnProps";
+
 const sectionFields = {
     id: 'mj-section',
     backgroundColor: '',
@@ -8,7 +10,7 @@ const sectionFields = {
     textAlign: 'left'
 };
 
-const sectionFA = [
+const sectionFA: FieldsArrayItem[] = [
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Background Url', id: 'backgroundUrl' },
     { label: 'Border', id: 'border' },
@@ -35,14 +37,14 @@ const dividerFields = {
     borderColor: '#000000'
 };
 
-const dividerFA = [
+const dividerFA: FieldsArrayItem[] = [
     { label: 'Align', id: 'align', type: 'select', options: [{ value: 'left' }, { value: 'right' }, { value: 'center' }, { value: 'justify' }] },
     { label: 'Width', id: 'width', type: 'number' },
     { label: 'Border width', id: 'borderWidth', type: 'number' },
     { label: 'Border color', id: 'borderColor' },
 ]
 
-const columnFA = [
+const columnFA: FieldsArrayItem[] = [
     { label: 'Background color', id: 'backgroundColor' },
     { label: 'Background Url', id: 'backgroundUrl' },
     { label: 'Border', id: 'border' },
@@ -65,7 +67,7 @@ const textFields = {
 };
 
 
-const textFA = [
+const textFA: FieldsArrayItem[] = [
     { label: 'Text', id: 'text', multiline: true },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => ({ value: x += 9 })) },
     { label: 'Font weight', id: 'fontWeight', type: 'select', options: [{ value: 300 }, { value: 400 }, { value: 600 }, { value: 700 }, { value: 900 }] },
@@ -95,7 +97,7 @@ const customTextFields = {
 };
 
 
-const customTextFA = [
+const customTextFA: FieldsArrayItem[] = [
     { label: 'Title', id: 'title', },
     { label: 'Date & time', id: 'dateTime' },
     { label: 'Venue', id: 'venue' },
@@ -119,7 +121,7 @@ const imageFields = {
     alt: ''
 }
 
-const imageFA = [
+const imageFA: FieldsArrayItem[] = [
     { label: 'Source', id: 'src' },
     { label: 'Link', id: 'href' },
     { label: 'Width', id: 'width', type: 'number' },
@@ -142,7 +144,7 @@ const buttonFields = {
     borderRadius: 5,
 };
 
-const buttonFA = [
+const buttonFA: FieldsArrayItem[] = [
     { label: 'Text', id: 'text', },
     { label: 'Text color', id: 'color', },
     { label: 'Background color', id: 'backgroundColor' },
@@ -162,7 +164,7 @@ const headerFields = {
     variant: 'regular'
 };
 
-const headerFA = [
+const headerFA: FieldsArrayItem[] = [
     { label: 'Variant', id: 'variant', type: 'select', options: [{ value: 'regular' }] }
 ];
 
@@ -172,7 +174,7 @@ const footerFields = {
     socialType: 'color'
 };
 
-const footerFA = [
+const footerFA: FieldsArrayItem[] = [
     { label: 'Variant', id: 'variant', type: 'select', options: [{ value: 'regular' }, { value: 'no-button' }] },
     { label: 'Social icons', id: 'socialType', type: 'select', options: [{ value: 'color' }, { value: 'bw' }] },
 ];
@@ -183,7 +185,7 @@ const videoFields = {
     thumbnail: '',
 };
 
-const videoFA = [
+const videoFA: FieldsArrayItem[] = [
     { label: 'Video Id', id: 'videoId' },
     { label: 'Thumbnail', id: 'thumbnail' }
 ];
@@ -193,7 +195,7 @@ const previewFields = {
     text: ''
 };
 
-const previewFA = [
+const previewFA: FieldsArrayItem[] = [
     { label: 'Text', id: 'text', }
 ];
 
@@ -202,7 +204,7 @@ const titleFields = {
     text: ''
 };
 
-const titleFA = [
+const titleFA: FieldsArrayItem[] = [
     { label: 'Text', id: 'text', }
 ];
 
@@ -212,7 +214,7 @@ const fontFields = {
     name: ''
 };
 
-const fontFA = [
+const fontFA: FieldsArrayItem[] = [
     { label: 'Link', id: 'href', },
     { label: 'Name', id: 'name' },
 ];
@@ -222,7 +224,7 @@ const rawFields = {
     text: ''
 };
 
-const rawFA = [
+const rawFA: FieldsArrayItem[] = [
     { label: 'Text', id: 'text', multiline: true }
 ];
 
@@ -231,7 +233,7 @@ const signatureFields = {
     sender: ''
 };
 
-const signatureFA = [
+const signatureFA: FieldsArrayItem[] = [
     {
         label: 'Sender', id: 'sender', type: 'select', options: [
             { value: 'info@relicensemble.org' },

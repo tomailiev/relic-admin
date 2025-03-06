@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { dueMonthsSchema, grantSchema } from "../utils/yup/yup-schemas";
 import { months } from "../vars/dateObjects";
 import { GridColDef } from "@mui/x-data-grid";
+import { ItemProps } from "../types/fnProps";
 
 const grantColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 2 },
@@ -91,14 +92,13 @@ const monthsFA = [
     }
 ]
 
-const grantProps = {
+const grantProps: ItemProps = {
     itemType: 'grants',
     name: 'name',
     columns: grantColumns,
     sorting: { field: 'name', sort: 'desc' },
     pageSize: 10,
     pageSizeOptions: [10, 20, 30],
-    formType: 'dynamic',
     fields: grantFields,
     nestedFields: monthsFields,
     fieldsArray: grantsFA,

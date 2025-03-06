@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
+import { ItemProps } from "../types/fnProps";
 
 const eventColumns: GridColDef[] = [
     {
@@ -87,7 +88,7 @@ const fileFA = [
     { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' }
 ]
 
-const eventProps = {
+const eventProps: ItemProps = {
     itemType: 'events',
     name: 'title',
     columns: eventColumns,

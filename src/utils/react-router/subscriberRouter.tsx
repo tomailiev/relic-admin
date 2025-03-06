@@ -15,7 +15,7 @@ import subscriberImportDonorsAction from "../../actions/subscriber/subscriberImp
 import subscriberDonorLoader from "../../loaders/subscriberDonorLoader";
 import { RouteObject } from "react-router-dom";
 
-const subscriberRouter: RouteObject = [
+const subscriberRouter: RouteObject[] = [
   {
     path: 'subscribers',
     element: <LoggedIn component={<Items {...subscriberProps} />} />,

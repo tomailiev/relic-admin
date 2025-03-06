@@ -12,7 +12,7 @@ import listDeleteAction from "../../actions/list/listDeleteAction";
 import listEditAction from "../../actions/list/listEditAction";
 import { RouteObject } from "react-router-dom";
 
-const listRouter: RouteObject = [
+const listRouter: RouteObject[] = [
     {
         path: 'lists',
         element: <LoggedIn component={<Items {...listProps} />} />,

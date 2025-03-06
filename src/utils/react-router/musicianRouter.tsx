@@ -12,7 +12,7 @@ import musicianLoader from "../../loaders/musicianLoader";
 import musicianProps from "../../props/musicianProps";
 import { RouteObject } from "react-router-dom";
 
-const musicianRouter: RouteObject = [
+const musicianRouter: RouteObject[] = [
     {
         path: 'musicians',
         element: <LoggedIn component={<Items {...musicianProps} />} />,

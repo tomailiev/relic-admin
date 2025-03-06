@@ -12,7 +12,7 @@ import eventLoader from "../../loaders/eventLoader";
 import eventProps from "../../props/eventProps";
 import { RouteObject } from "react-router-dom";
 
-const eventRouter: RouteObject = [
+const eventRouter: RouteObject[] = [
   {
     path: 'events',
     element: <LoggedIn component={<Items {...eventProps} />} />,

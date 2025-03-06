@@ -4,9 +4,10 @@ import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
+import { ItemProps } from "../../types/fnProps";
 
 
-const EditCampaign = ({ itemType, fieldsArray }) => {
+const EditCampaign = ({ itemType, fieldsArray }: ItemProps) => {
     const [submission, setSubmission] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();

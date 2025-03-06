@@ -1,9 +1,9 @@
 // import { redirect } from "react-router-dom";
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { downloadDocsV2, uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 
-export default async function CSVAddAction({ request, params }) {
+export default async function CSVAddAction({ request, params }: ActionFunctionArgs) {
     // const doc = await request.formData();
     // const updates = Object.fromEntries(doc);
     const updates = await request.json();

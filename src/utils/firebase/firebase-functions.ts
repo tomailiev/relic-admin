@@ -53,14 +53,14 @@ interface LimitOption {
 }
 
 
-function downloadDocsV2(col: string, options: (ConditionOption | SortingOption | LimitOption)[]) {
+function downloadDocsV2(col: string, options?: (ConditionOption | SortingOption | LimitOption)[]) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
             ? where(...c.value)
             : c.type === 'sorting'
                 ? orderBy(...c.value)
                 : limit(c.value)
-    ));
+    )) || [];
     const q = query(collection(db, col), ...queryConditions);
 
     return getDocs(q)
@@ -73,9 +73,7 @@ function downloadDocsV2(col: string, options: (ConditionOption | SortingOption |
                 }
             });
             return docs.length
-                ? options?.find(item => item.type === 'limit' && item.value === 1)
-                    ? docs[0]
-                    : docs
+                ? docs
                 : null;
         })
 }

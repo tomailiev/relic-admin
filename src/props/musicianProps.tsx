@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { musicianFileSchema, musicianSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
+import { ItemProps } from "../types/fnProps";
 
 const musicianColumns: GridColDef[] = [
     {
@@ -49,19 +50,17 @@ const musicianFA = [
 
 const musicianFilesFA = [{ label: 'Avatar', id: 'pic', type: 'file', path: `${collections.images}/musicians`, displayName: 'imgSrc' }];
 
-const musicianProps = {
+const musicianProps: ItemProps = {
     itemType: 'musicians',
     name: 'name',
     columns: musicianColumns,
     sorting: { field: 'newTitle', sort: 'asc' },
     pageSize: 15,
     pageSizeOptions: [5, 15, 30],
-    formType: 'simple',
     fields: fields,
     fieldsArray: musicianFA,
     filesFields: {pic: ''},
     filesFieldsArray: musicianFilesFA,
-    encType: 'application/json',
     steps: ['files', 'fieldsArray', 'preview'],
     schemas: { files: musicianFileSchema, fieldsArray: musicianSchema }
 };

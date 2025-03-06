@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { newTextSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
+import { ItemProps } from "../types/fnProps";
 
 const textColumns: GridColDef[] = [
     { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <TextSnippet /> },
@@ -33,17 +34,15 @@ const textFA = [
     { label: 'Value', id: 'value', multiline: true }
 ];
 
-const textProps = {
+const textProps: ItemProps = {
     itemType: 'texts',
     name: 'id',
     columns: textColumns,
     sorting: { field: 'id', sort: 'asc' },
     pageSize: 25,
     pageSizeOptions: [10, 25, 50],
-    formType: 'simple', 
     fields: fields,
     fieldsArray: textFA,
-    encType: 'application/json',
     steps: ['fieldsArray', 'preview'],
     schemas: { fieldsArray: newTextSchema }
 };

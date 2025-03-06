@@ -12,7 +12,7 @@ import videoLoader from "../../loaders/videoLoader";
 import videoProps from "../../props/videoProps";
 import { RouteObject } from "react-router-dom";
 
-const videoRouter: RouteObject = [
+const videoRouter: RouteObject[] = [
     {
         path: 'videos',
         element: <LoggedIn component={<Items {...videoProps} />} />,

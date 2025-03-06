@@ -12,7 +12,7 @@ import grantLoader from "../../loaders/grantLoader";
 import grantProps from "../../props/grantProps";
 import { RouteObject } from "react-router-dom";
 
-const grantRouter: RouteObject = [
+const grantRouter: RouteObject[] = [
     {
         path: 'grants',
         element: <LoggedIn component={<Items {...grantProps} />} />,

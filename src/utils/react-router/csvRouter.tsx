@@ -14,7 +14,7 @@ import csvLoader from "../../loaders/csvLoader";
 import subscriberLoader from "../../loaders/subscriberLoader";
 import CSVProps from "../../props/CSVProps";
 
-const csvRouter: RouteObject = [
+const csvRouter: RouteObject[] = [
     {
         path: 'CSVs',
         element: <LoggedIn component={<Items {...CSVProps} />} />,
