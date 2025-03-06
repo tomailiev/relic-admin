@@ -6,7 +6,7 @@ import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
 
 
-const EditCampaign = ({ itemType, fieldsArray, }) => {
+const EditCampaign = ({ itemType, fieldsArray }) => {
     const [submission, setSubmission] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();

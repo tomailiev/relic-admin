@@ -3,17 +3,17 @@ import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/stora
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
 
-function uploadDoc(data, col, id, merge) {
+function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
     return id
         ? setDoc(doc(db, col, id), data, { merge })
         : addDoc(collection(db, col), data)
 }
 
-function getLink(url) {
+function getLink(url: string) {
     return getBlob(ref(storage, url));
 }
 
-function uploadFile(file, path) {
+function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string) {
     const pathRef = ref(storage, path)
     return uploadBytes(pathRef, file)
         .then(_snap => {
@@ -80,7 +80,7 @@ function downloadDocsV2(col: string, options: (ConditionOption | SortingOption |
         })
 }
 
-function downloadOneDoc(col, id) {
+function downloadOneDoc(col: string, id: string) {
     // REVISE!!!
     return getDoc(doc(db, col, id))
         .then(item => {
@@ -91,17 +91,17 @@ function downloadOneDoc(col, id) {
         .catch(e => console.error(e));
 }
 
-function deleteOneDoc(collection, docId) {
+function deleteOneDoc(collection: string, docId: string) {
     return deleteDoc(doc(db, collection, docId))
 }
 
-function deleteOneField(collection, docId, field) {
+function deleteOneField(collection: string, docId: string, field: string) {
     return updateDoc(doc(db, collection, docId), {
         [field]: deleteField()
     });
 }
 
-function deleteDocs(col, condition) {
+function deleteDocs(col: string, condition: [string, WhereFilterOp, string]) {
     const q = condition
         ? query(collection(db, col), where(...condition))
         : query(collection(db, col));
@@ -116,11 +116,11 @@ function deleteDocs(col, condition) {
         });
 }
 
-function deleteFile(path) {
+function deleteFile(path: string) {
     return deleteObject(ref(storage, path));
 }
 
-function getFileList(path) {
+function getFileList(path: string) {
     const listRef = ref(storage, path);
     return listAll(listRef);
 }
@@ -140,7 +140,7 @@ const acknowledgeDonor = httpsCallable(functions, process.env.NODE_ENV === 'deve
 export {
     uploadDoc,
     getLink,
-    downloadDocs,
+    // downloadDocs,
     downloadDocsV2,
     downloadOneDoc,
     uploadFile,

@@ -4,7 +4,7 @@ import getCoordinates from "./getCoordinates";
 import loader from "./maps-init";
 
 
-async function getMap(mapRef, address, location) {
+async function getMap(mapRef: HTMLElement, address, location) {
     const position = await getCoordinates(address, location);
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');

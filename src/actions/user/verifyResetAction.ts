@@ -1,7 +1,8 @@
 import { emailSchema } from "../../utils/yup/yup-schemas";
 import { verifyOrReset } from "../../utils/firebase/firebase-functions";
+import { ActionFunctionArgs } from "react-router-dom";
 
-export default async function verifyResetAction({ request, params }) {
+export default async function verifyResetAction({ request, params }: ActionFunctionArgs) {
     try {
         const doc = await request.formData();
         const updates = Object.fromEntries(doc);

@@ -65,7 +65,7 @@ const RegisterForm = () => {
                     {alertMessage}
                 </Alert>
             </Collapse>
-            {!errorData?.result && <Form method="post" id="contact-form">
+            {!errorData?.result && <Form method="post" id="contact-form" encType="application/json">
                 <Stack spacing={3}>
                     {userProps.registerFA.map(({ id, label, type }) => (
                         <TextField

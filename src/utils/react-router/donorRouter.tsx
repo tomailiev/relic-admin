@@ -1,4 +1,4 @@
-import donationAddAction from "../../actions/donor/donationAddAction";
+// import donationAddAction from "../../actions/donor/donationAddAction";
 import donorDeleteAction from "../../actions/donor/donorDeleteAction";
 import donorEditAction from "../../actions/donor/donorEditAction";
 import FetchError from "../../components/Common/FetchError";
@@ -20,7 +20,7 @@ import donorAddAction from "../../actions/donor/donorAddAction";
 import EditItem from "../../components/Items/EditItem";
 import { RouteObject } from "react-router-dom";
 
-const donorRouter: RouteObject = [
+const donorRouter: RouteObject[] = [
   {
     path: 'donors',
     element: <LoggedIn component={<Donors />} />,
@@ -29,7 +29,7 @@ const donorRouter: RouteObject = [
   {
     path: 'donors/new-donation',
     element: <LoggedIn component={<AddDonation />} />,
-    action: donationAddAction
+    // action: donationAddAction
   },
   {
     path: 'donors/add',

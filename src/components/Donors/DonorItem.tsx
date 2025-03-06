@@ -1,18 +1,19 @@
 import { Box, Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { createRef, useContext, useEffect, useState } from "react";
 import { getMap } from "../../utils/google-maps/getMap";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 import ThankDialog from "./ThankDialog";
 import { useActionData, useFetcher, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import { getTier } from "../../vars/getTier";
 import { reduceDonations } from "../../vars/reduceDonations";
+import { DonorItemProps } from "../../types/itemProps";
 
 
-const DonorItem = ({ item }) => {
+const DonorItem = ({ item }: DonorItemProps) => {
     
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'date', headerName: 'Date', flex: 1 },
         {
             field: 'amount',

@@ -1,13 +1,13 @@
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 import schematifyGrant from "../../vars/schematifyGrant";
 
 
 
-export default async function grantEditAction({ request, params }) {
+export default async function grantEditAction({ request }: ActionFunctionArgs) {
     const doc = await request.json();
-    
+
     try {
         const { id: _, ...rest } = doc;
         const update = schematifyGrant(rest);
@@ -15,6 +15,9 @@ export default async function grantEditAction({ request, params }) {
         return redirect(`/grants`);
     } catch (e) {
         console.error(e)
-        return Object.assign(e, { error: true, severity: 'error' });
+        if (e instanceof Error) {
+            return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+        }
+        return { error: true, severity: 'error', message: 'Unknown error' };
     }
 }

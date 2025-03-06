@@ -1,10 +1,10 @@
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { getMjml, uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 
 
 
-export default async function campaignEditContentAction({ request, params }) {
+export default async function campaignEditContentAction({ request }: ActionFunctionArgs) {
     try {
         const res = await request.json();
         if (res.id) {

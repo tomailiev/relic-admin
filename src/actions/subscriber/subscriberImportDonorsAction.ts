@@ -1,10 +1,11 @@
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 // import { schematify } from "../../vars/schemaFunctions";
 import { arrayUnion } from "firebase/firestore";
+import { Subscriber } from "../../types/DB";
 
-export default async function subscriberImportDonorsAction({ request, params }) {
+export default async function subscriberImportDonorsAction({ request, params }: ActionFunctionArgs) {
     const docs = await request.json();
     // const updates = Object.fromEntries(doc);
 
@@ -13,7 +14,7 @@ export default async function subscriberImportDonorsAction({ request, params }) 
         // return redirect('/subscribers')
         try {
             // const { newSubs } = schematify(updates, 'newSubs')
-            const uploadQueue = docs.map(item => {
+            const uploadQueue = docs.map((item: Subscriber) => {
                 return uploadDoc({
                     email: item.email.toLowerCase(),
                     firstName: item.firstName,
@@ -28,8 +29,11 @@ export default async function subscriberImportDonorsAction({ request, params }) 
             await Promise.all(uploadQueue);
             return redirect('/subscribers');
         } catch (e) {
-            return Object.assign(e, { error: true, severity: 'error' });
-        }
+            if (e instanceof Error) {
+                return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+            }
+            return { error: true, severity: 'error', message: 'Unknown error' };
+            }
     }
 
 }

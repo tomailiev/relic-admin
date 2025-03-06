@@ -10,7 +10,7 @@ export type EventItemProps = {
     item: Event & WithId
 };
 
-type ListWithNewMembers = Omit<List, 'members'> & { newMembers: [Donor | Subscriber], members: [Donor | Subscriber] }
+type ListWithNewMembers = Omit<List, 'members'> & { newMembers: (Donor & WithId | Subscriber & WithId)[], members: (Donor | Subscriber)[] }
 
 export type ListItemProps = {
     item: ListWithNewMembers & WithId
@@ -18,4 +18,8 @@ export type ListItemProps = {
 
 export type VideoItemProps = {
     item: Video & WithId
+}
+
+export type DonorItemProps = {
+    item: Donor & WithId
 }

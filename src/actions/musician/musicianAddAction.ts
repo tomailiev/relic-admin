@@ -1,8 +1,8 @@
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 
-export default async function musicianAddAction({ request, params }) {
+export default async function musicianAddAction({ request }: ActionFunctionArgs) {
 
     try {
         const updates = await request.json();
@@ -11,6 +11,9 @@ export default async function musicianAddAction({ request, params }) {
         console.log(upload);
         return redirect('/musicians')
     } catch (e) {
-        return Object.assign(e, { error: true, severity: 'error' });
+        if (e instanceof Error) {
+            return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+        }
+        return { error: true, severity: 'error', message: 'Unknown error' };
     }
 }

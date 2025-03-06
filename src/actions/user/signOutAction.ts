@@ -1,8 +1,8 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase/firebase-init";
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 
-export default function signOutAction({ _request, _params }) {
+export default function signOutAction({ request, params }: ActionFunctionArgs) {
     return signOut(auth)
         .then(() => redirect('/'))
         .catch(e => {

@@ -1,9 +1,9 @@
-import { redirect } from "react-router-dom";
+import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 import schematifyDonor from "../../vars/schematifyDonor";
 
-export default async function donorEditAction({ request, params }) {
+export default async function donorEditAction({ request }: ActionFunctionArgs) {
     
     try {
         const doc = await request.json();
@@ -11,7 +11,9 @@ export default async function donorEditAction({ request, params }) {
         await uploadDoc(schematifyDonor(rest), collections.donors, doc.id, true);
         return redirect(`/donors`);
     } catch (e) {
-        console.log(e);
-        return Object.assign(e, { error: true, severity: 'error' });
+        if (e instanceof Error) {
+            return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+        }
+        return { error: true, severity: 'error', message: 'Unknown error' };
     }
 }
