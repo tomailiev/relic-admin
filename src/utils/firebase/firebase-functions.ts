@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit, WhereFilterOp, OrderByDirection } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
@@ -21,23 +21,39 @@ function uploadFile(file, path) {
         })
 }
 
-function downloadDocs(col, condition, sorting) {
-    const q = sorting
-        ? query(collection(db, col), where(...condition), orderBy(...sorting))
-        : condition
-            ? query(collection(db, col), where(...condition))
-            : query(collection(db, col));
-    return getDocs(q)
-        .then(qSnap => {
-            const docs = [];
-            qSnap.forEach(doc => {
-                docs.push(Object.assign({ id: doc.id }, doc.data()));
-            });
-            return docs;
-        })
+// function downloadDocs(col: string, condition, sorting) {
+//     const q = sorting
+//         ? query(collection(db, col), where(...condition), orderBy(...sorting))
+//         : condition
+//             ? query(collection(db, col), where(...condition))
+//             : query(collection(db, col));
+//     return getDocs(q)
+//         .then(qSnap => {
+//             const docs = [];
+//             qSnap.forEach(doc => {
+//                 docs.push(Object.assign({ id: doc.id }, doc.data()));
+//             });
+//             return docs;
+//         })
+// }
+
+interface ConditionOption {
+    type: 'condition',
+    value: [string, WhereFilterOp, string]
+};
+
+interface SortingOption {
+    type: 'sorting',
+    value: [string, OrderByDirection]
+};
+
+interface LimitOption {
+    type: 'limit',
+    value: number
 }
 
-function downloadDocsV2(col, options = []) {
+
+function downloadDocsV2(col: string, options: (ConditionOption | SortingOption | LimitOption)[]) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
             ? where(...c.value)
@@ -49,7 +65,7 @@ function downloadDocsV2(col, options = []) {
 
     return getDocs(q)
         .then(qSnap => {
-            const docs = [];
+            const docs: any[] = [];
             qSnap.forEach(doc => {
                 const data = doc.data();
                 if (data) {

@@ -5,7 +5,7 @@ import { Backdrop, Box, Breadcrumbs, Button, CircularProgress, Container, Dialog
 import MenuContext from "../../context/MenuContext";
 import UserContext from "../../context/UserContext";
 import ErrorFeedback from "../Common/ErrorFeedback";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import Header from "../Header/Header";
 import DrawerContent from "../Drawer/DrawerContent";
 import LoadingContext from "../../context/LoadingContext";
@@ -16,7 +16,7 @@ const time = process.env.NODE_ENV === 'development' ? 10000 : 1200;
 const Home = () => {
 
     const { currentUser } = useContext(UserContext);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<AppErrorType | null>(null);
     const [isLoading, setIsLoading] = useState<true | false>(false);
     const [mobileOpen, setMobileOpen] = useState<true | false>(false);
     const [timeoutModalOpen, setTimeoutModalOpen] = useState(false);
@@ -25,7 +25,7 @@ const Home = () => {
     const location = useLocation();
     const navigation = useNavigation();
     const submit = useSubmit();
-    const [locationList, setLocationList] = useState([]);
+    const [locationList, setLocationList] = useState<string[]>([]);
 
     useEffect(() => {
         setLocationList(location.pathname === '/'
@@ -35,7 +35,8 @@ const Home = () => {
 
 
     useEffect(() => {
-        let timer;
+        let timer: ReturnType<typeof setTimeout> = setTimeout(() => { }, 100)
+
         if ((currentUser && navigation.state === 'idle') && !timeoutModalOpen) {
             timer = setTimeout(() => {
                 setTimeoutModalOpen(true);
@@ -49,7 +50,7 @@ const Home = () => {
     }, [currentUser, navigation.state, timeoutModalOpen]);
 
     useEffect(() => {
-        let timer;
+        let timer: ReturnType<typeof setTimeout> = setTimeout(() => { }, 100)
         if (timeoutModalOpen) {
             timer = setTimeout(() => {
                 submit(null, { method: 'post', action: '/logout' });
@@ -58,7 +59,6 @@ const Home = () => {
         } else {
             clearTimeout(timer);
         }
-
         return (() => clearTimeout(timer));
     }, [timeoutModalOpen, submit]);
 

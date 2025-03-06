@@ -2,8 +2,9 @@ import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
 import { getVideoInfo } from "../utils/firebase/firebase-functions";
+import { GridColDef } from "@mui/x-data-grid";
 
-const videoColumns = [
+const videoColumns: GridColDef[] = [
     {
         field: 'icon',
         headerName: 'Avatar',

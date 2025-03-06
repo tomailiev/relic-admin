@@ -11,7 +11,7 @@ function numExtractor(str = '') {
     return Number(Array.from(str).filter(char => char >= '0' && char <= '9').join(''));
 }
 
-function tierComparator(tierStr1, tierStr2) {
+function tierComparator(tierStr1: string, tierStr2: string) {
     return numExtractor(tierStr1) - numExtractor(tierStr2);
 }
 
@@ -43,7 +43,7 @@ const donorColumns: GridColDef[] = [
     {
         field: 'totalDonationsAmount',
         headerName: 'Total $ amount',
-        valueGetter: ({ row }) => `$${row.donations?.reduce((acc, curr) => acc + curr.amount, 0)}`,
+        valueGetter: ({ row }) => `$${row.donations?.reduce((acc: number, curr: { amount: number }) => acc + curr.amount, 0)}`,
         flex: 1,
         sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },

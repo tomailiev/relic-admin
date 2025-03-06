@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
 
-type AppErrorType = {
+export type AppErrorType = {
     message: string,
     severity: 'success' | 'error'
 }

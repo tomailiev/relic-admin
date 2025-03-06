@@ -2,14 +2,15 @@ import { Avatar, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { musicianFileSchema, musicianSchema } from "../utils/yup/yup-schemas";
+import { GridColDef } from "@mui/x-data-grid";
 
-const musicianColumns = [
+const musicianColumns: GridColDef[] = [
     {
         field: 'icon',
         headerName: 'Avatar',
         sortable: false, flex: 0,
         renderCell: (params) => {
-            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.name} />
+            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
         }
     },
     // { field: 'id', headerName: 'ID', flex: 2 },

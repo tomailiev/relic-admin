@@ -1,8 +1,8 @@
 import { Grid, Paper, Typography, } from "@mui/material";
 import YouTube from 'react-youtube';
-// import youtubeIcon from '../../assets/yt_icon_rgb.png'
+import { VideoItemProps } from "../../types/itemProps";
 
-const VideoItem = ({ item }) => {
+const VideoItem = ({ item }: VideoItemProps) => {
 
     return (
         <Paper sx={{  mx: 1, my: 2, py: 5, px: 3  }}>

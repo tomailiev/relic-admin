@@ -6,7 +6,7 @@ import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
 import { NavLink, useNavigation, useSubmit } from "react-router-dom";
 
-const Header = ({ handler }) => {
+const Header = ({ handler }: { handler: () => void }) => {
 
     const { currentUser } = useContext(UserContext);
     const navigation = useNavigation();
@@ -18,7 +18,7 @@ const Header = ({ handler }) => {
         submit(null, { method: 'post', action: '/logout' });
     }
 
-    const handleClick = (e) => {
+    const handleClick = () => {
         setOpen(prev => !prev);
     };
 

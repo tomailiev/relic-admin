@@ -3,11 +3,12 @@ import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumb
 import { daysOfWeek } from "../../vars/dateObjects";
 import { useContext } from "react";
 import ErrorContext from "../../context/ErrorContext";
+import { EventItemProps } from "../../types/itemProps";
 // import { deschematifyPerformance } from "../../vars/deschematifyEvent";
 
 
 
-const EventItem = ({ item }) => {
+const EventItem = ({ item }: EventItemProps) => {
     const { setError } = useContext(ErrorContext);
 
     function handleCopyText() {
@@ -49,7 +50,7 @@ const EventItem = ({ item }) => {
                             Performances:
                         </Typography>
                         <List>
-                            {item.performances && item.performances.sort((a, b) => a.id - b.id).map(({ id, date, time, location, venue, url }) => {
+                            {item.performances && item.performances.sort((a, b) => Number(a.id) - Number(b.id)).map(({ id, date, time, location, venue, url }) => {
                                 return (
                                     <Link key={id} href={url} target={'_blank'} underline={'none'}>
                                         <ListItem button>

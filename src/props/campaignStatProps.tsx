@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { Link as ExternalLink } from '@mui/material';
 import { Check } from "@mui/icons-material";
 import { GridColDef } from "@mui/x-data-grid";
+import { Timestamp } from "firebase/firestore";
+import { Campaign } from "../types/DB";
 
 export const multiColumns: GridColDef[] = [
     {
@@ -81,7 +83,7 @@ export const uniqueOpenColumns: GridColDef[] = [
         field: 'timestamps',
         headerName: 'Timestamps',
         flex: 2,
-        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate()).join('\n')
+        valueGetter: ({ row }) => row.timestamps.map((ts: Timestamp) => ts.toDate()).join('\n')
     }
 ];
 
@@ -110,7 +112,7 @@ export const uniqueClickColumns: GridColDef[] = [
         field: 'timestamps',
         headerName: 'Timestamps',
         flex: 2,
-        valueGetter: ({ row }) => row.timestamps.map(ts => ts.toDate())
+        valueGetter: ({ row }) => row.timestamps.map((ts: Timestamp) => ts.toDate())
     }
 ];
 
@@ -169,7 +171,7 @@ export const fullColumns: GridColDef[] = [
 
 export const fullSorting = { field: 'open', sort: 'desc' };
 
-export const openReducer = (a, c) => {
+export const openReducer = (a: {email: string, count: number, timestamps: Timestamp[]}[], c: {email: string, timestamp: Timestamp}) => {
     const item = a.find(sub => sub.email === c.email);
     if (!item) {
         return a.concat({
@@ -183,7 +185,7 @@ export const openReducer = (a, c) => {
     return a;
 }
 
-export const clickReducer = (a, c) => {
+export const clickReducer = (a: { email: string, timestamps: Timestamp[], links: string[] }[], c: { email: string, timestamp: Timestamp, link: string }) => {
     const item = a.find(sub => sub.email === c.email);
     if (!item) {
         return a.concat({
@@ -193,12 +195,22 @@ export const clickReducer = (a, c) => {
         });
     }
     item.timestamps.push(c.timestamp);
-    item.links.push(c.link);    
+    item.links.push(c.link);
     return a;
 }
 
-export const campaignStatSummarizer = (campaign) => {
-    return campaign.sentTo.reduce((a, c) => {
+interface SubscriberCampaignStat {
+    email: string,
+    open: boolean,
+    click: boolean,
+    bounce: boolean,
+    reject: boolean,
+    unsubscribe: boolean,
+    spam: boolean
+};
+
+export const campaignStatSummarizer = (campaign: Campaign) => {
+    return campaign.sentTo.reduce((a: SubscriberCampaignStat[], c) => {
         const email = c.email;
         return a.concat({
             email,

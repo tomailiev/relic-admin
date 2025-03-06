@@ -4,14 +4,15 @@ import schematifyEvent from "../vars/schematifyEvent";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
+import { GridColDef } from "@mui/x-data-grid";
 
-const eventColumns = [
+const eventColumns: GridColDef[] = [
     {
         field: 'icon',
         headerName: 'Avatar',
         sortable: false, flex: 0,
         renderCell: (params) => {
-            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.name} />
+            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
         }
     },
     { field: 'title', headerName: 'Title', flex: 2 },

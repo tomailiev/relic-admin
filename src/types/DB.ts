@@ -1,0 +1,131 @@
+import { Timestamp } from "firebase/firestore"
+
+export interface WithId {
+    id: string
+};
+
+export interface Video {
+    category: string,
+    featured: number,
+    program: string,
+    thumbnail: string,
+    title: string,
+    youtubeId: string
+};
+
+export interface Musician {
+    bio: string,
+    featured: number,
+    newTitle: string,
+    name: string,
+    pic: string
+}
+
+export interface Performance {
+    date: string,
+    day: string,
+    geocode: { lat: number, lng: number },
+    id: string,
+    location: string,
+    time: string,
+    url: string,
+    venue: string
+};
+
+export interface Event {
+    dateDone: Timestamp,
+    description: string,
+    imageUrl: string,
+    title: string,
+    performances: Performance[],
+    program: string
+};
+
+export interface Grant {
+    description: string,
+    dueMonths: number[],
+    link: string,
+    name: string,
+    notification: number
+};
+
+export interface List {
+    datetime: Timestamp,
+    members: string[],
+    name: string,
+    source: 'subscribers' | 'donors'
+};
+
+export interface Donation {
+    amount: number,
+    campaign: string,
+    comment: string,
+    date: string,
+    recognitionName: string,
+    acknowledged: {
+        content: string,
+        from: string,
+        sent: string,
+        subject: string,
+        to: string
+    }
+}
+
+export interface Donor {
+    address: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    lastDonationAmount: number,
+    lastDonationDate: string,
+    location: string,
+    phone: string,
+    tier: string,
+    donations: Donation[]
+}
+
+interface CampaignAnalyticsEvent {
+    email: string,
+    timestamp: Timestamp
+}
+
+export interface Campaign {
+    bounce: (CampaignAnalyticsEvent & { bounceType: string })[],
+    click: (CampaignAnalyticsEvent & { link: string })[],
+    delivered: CampaignAnalyticsEvent[],
+    open: CampaignAnalyticsEvent[],
+    unsubscribe: CampaignAnalyticsEvent[],
+    reject: CampaignAnalyticsEvent[],
+    spam: CampaignAnalyticsEvent[],
+    sentTo: { email: string, firstName: string, lastName: string }[],
+    status: 0 | 1,
+    subject: string,
+    to: string,
+    mjml: string,
+    messageId: string,
+    lastTestId: string,
+    html: string,
+    from: string,
+    datetime: Timestamp,
+    components: { id: string }[]
+};
+
+interface SubscriberHistoryEvent {
+    event: string,
+    subject: string,
+    timestamp: Timestamp
+};
+
+export interface Subscriber {
+    email: string,
+    firstName: string,
+    lastName: string,
+    imported: string,
+    location: string,
+    opt_in_time: string,
+    origin: string,
+    status: 0 | 1,
+    history: SubscriberHistoryEvent[],
+    tags: string[],
+    lists: string[]
+};

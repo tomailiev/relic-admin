@@ -4,8 +4,9 @@ import schematifySubscriber from "../vars/schematifySubscriber";
 import deschematifySubscriber from "../vars/deschematifySubscriber";
 import SubscriberActionBox from "../components/Subscribers/SubscriberActionBox";
 import { subscriberSchema, tagsSchema } from "../utils/yup/yup-schemas";
+import { GridColDef } from "@mui/x-data-grid";
 
-const subscriberColumns = [
+const subscriberColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 2 },
@@ -46,7 +47,7 @@ const subscriberColumns = [
     }
 ];
 
-const historyColumns = [
+const historyColumns: GridColDef[] = [
     {
         field: 'event',
         headerName: 'Event',

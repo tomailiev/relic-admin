@@ -2,8 +2,9 @@ import { List, ListItem, ListItemIcon, ListItemText, Paper, Container, Typograph
 import { CalendarToday } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import listProps from '../../props/listProps'
+import { ListItemProps } from "../../types/itemProps";
 
-const EmailListItem = ({ item }) => {
+const EmailListItem = ({ item }: ListItemProps) => {
 
 
     return (

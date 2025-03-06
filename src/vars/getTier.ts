@@ -1,4 +1,4 @@
-export const getTier = (amount) => {
+export const getTier = (amount: number) => {
     return amount < 50
         ? ''
         : amount >= 50 && amount < 200

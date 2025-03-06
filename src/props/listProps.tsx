@@ -4,8 +4,9 @@ import { listSchema, } from "../utils/yup/yup-schemas";
 import listSourceLoader from "../loaders/listSourceLoader";
 import donorProps from "./donorProps";
 import subscriberProps from "./subscriberProps";
+import { GridColDef } from "@mui/x-data-grid";
 
-const listColumns = [
+const listColumns: GridColDef[] = [
     {
         field: 'icon',
         headerName: 'Avatar',
