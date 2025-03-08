@@ -1,5 +1,5 @@
 import { Box, Button, Container } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 
 const FilterData = ({ item, itemProps, handleFormCompletion }) => {
@@ -29,7 +29,7 @@ const FilterData = ({ item, itemProps, handleFormCompletion }) => {
                         rowSelectionModel={rowSelectionModel}
                         onRowSelectionModelChange={filterer}
                         rows={item[itemProps.destinationCollectionField]}
-                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]].filter(({ field }) => field !== 'select')}
+                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]].filter(({ field }: GridColDef) => field !== 'select')}
                         initialState={{
                             sorting: {
                                 sortModel: [itemProps.sorting],

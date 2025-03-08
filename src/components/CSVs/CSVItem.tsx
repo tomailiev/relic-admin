@@ -45,7 +45,7 @@ const CSVItem = ({ item, mutateItem }) => {
                         checkboxSelection={location.pathname !== `/CSVs/${subscribers.id}`}
                         onRowSelectionModelChange={filterer}
                         rows={subs}
-                        columns={CSVProps.listColumns}
+                        columns={CSVProps.dataFilterColumns?.subscribers}
                         initialState={{
                             sorting: {
                                 sortModel: [CSVProps.sorting],

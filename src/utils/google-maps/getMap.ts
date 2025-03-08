@@ -2,9 +2,10 @@ import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 import getCoordinates from "./getCoordinates";
 import loader from "./maps-init";
+import { DonorItemProps } from "../../types/itemProps";
 
 
-async function getMap(mapRef: HTMLElement, address, location) {
+async function getMap(mapRef: HTMLElement, address: string, location: string) {
     const position = await getCoordinates(address, location);
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');
@@ -35,7 +36,7 @@ async function getMap(mapRef: HTMLElement, address, location) {
     return infoWindow;
 }
 
-async function getMultiMap(mapRef, items,) {
+async function getMultiMap(mapRef: HTMLElement, items: DonorItemProps['item'][],) {
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');
 

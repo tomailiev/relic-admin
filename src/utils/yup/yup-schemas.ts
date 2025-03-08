@@ -8,16 +8,16 @@ const performanceSchema = array().of(object({
     location: string().required('location required'),
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
-    lat: number('value needs to be a number'),
-    lng: number('value needs to be a number')
+    lat: number(),
+    lng: number()
 })).min(1);
 
 const eventFileSchema = object({
     imageUrl: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
-        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
     }),
     program: mixed().test('is-valid-type', 'Not a valid pdf file', (value) => {
-        return value ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
+        return value && value instanceof File ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
     })
 })
 
@@ -37,7 +37,7 @@ const musicianSchema = object({
 
 const musicianFileSchema = object({
     pic: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
-        return value && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        return value && value instanceof File &&  ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
     })
 })
 
@@ -53,7 +53,7 @@ const emailSchema = object({
 const newUserSchema = object({
     email: string().required().email(),
     password: string().required('Password is required').min(6, 'Password must be at least 6 characters long'),
-    passwordConfirmation: string().oneOf([ref('password'), null], 'Passwords must match')
+    passwordConfirmation: string().oneOf([ref('password'), undefined], 'Passwords must match')
 });
 
 
@@ -106,7 +106,7 @@ const dueMonthsSchema = array().of(object({
 
 const CSVSchema = object().shape({
     csv: mixed().required('CSV file upload required').test('is-valid-type', 'Not a valid CSV file', (value) => {
-        return value && (value.name?.toLowerCase())?.endsWith('.csv');
+        return value && value instanceof File && (value.name.toLowerCase()).endsWith('.csv');
     })
 });
 

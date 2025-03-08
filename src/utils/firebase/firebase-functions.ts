@@ -39,7 +39,7 @@ function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string) {
 
 interface ConditionOption {
     type: 'condition',
-    value: [string, WhereFilterOp, string]
+    value: [string, WhereFilterOp, unknown]
 };
 
 interface SortingOption {

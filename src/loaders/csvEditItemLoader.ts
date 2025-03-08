@@ -1,7 +1,8 @@
+import { LoaderFunctionArgs } from "react-router-dom";
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
-export default async function csvEditItemLoader({ params }) {
+export default async function csvEditItemLoader({ params }: LoaderFunctionArgs) {
     try {
         const docs = await downloadDocsV2(collections.subscribers, [{ value: ['imported', '==', `CSVs/${params.CSVId}`], type: 'condition' }])
         return { docs, id: params.CSVId };

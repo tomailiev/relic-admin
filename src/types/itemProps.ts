@@ -1,4 +1,4 @@
-import { Donor, Event, List, Subscriber, Video, WithId } from "./DB"
+import { Campaign, Donor, Event, List, Subscriber, Video, WithId } from "./DB"
 
 type SubscriberWithTags = Omit<Subscriber, 'tags'> & { tags: [{ tag: string }] }
 
@@ -22,4 +22,9 @@ export type VideoItemProps = {
 
 export type DonorItemProps = {
     item: Donor & WithId
-}
+};
+
+export type CampaignItemProps = {
+    item: Campaign & WithId
+};
+

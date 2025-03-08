@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import ItemSwitch from "../Items/ItemSwitch";
+import { ItemProps } from "../../types/fnProps";
 
 
 
-const EditCSV = ({ itemType, formType, fieldsArray, nestedArray, nestedName, schematifyFn, deschematifyFn }) => {
+const EditCSV = ({ itemType, fieldsArray, nestedArray, nestedName, }: ItemProps) => {
     const { setError } = useContext(ErrorContext);
     const [submission, setSubmission] = useState(null);
     const submit = useSubmit();

@@ -1,6 +1,6 @@
 import loader from "./maps-init";
 
-export default function getCoordinates(address, location) {
+export default function getCoordinates(address: string, location: string) {
     return loader.importLibrary('geocoding')
         .then(({ Geocoder }) => {
             const geocoder = new Geocoder();
