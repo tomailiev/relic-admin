@@ -3,7 +3,7 @@ import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 const donorLoader: LoaderFunction = () => {
-    return downloadDocsV2(collections.donors)
+    return downloadDocsV2('donors')
         .catch(e => {
             return [{ firstName: 'Error', lastName: e.code, recognitionName: e.message, id: e.code, error: true }];
         })

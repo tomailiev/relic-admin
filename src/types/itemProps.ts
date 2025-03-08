@@ -3,28 +3,28 @@ import { Campaign, Donor, Event, List, Subscriber, Video, WithId } from "./DB"
 type SubscriberWithTags = Omit<Subscriber, 'tags'> & { tags: [{ tag: string }] }
 
 export type SubscriberItemProps = {
-    item: SubscriberWithTags & WithId
+    item: SubscriberWithTags
 };
 
 export type EventItemProps = {
-    item: Event & WithId
+    item: Event
 };
 
-type ListWithNewMembers = Omit<List, 'members'> & { newMembers: (Donor & WithId | Subscriber & WithId)[], members: (Donor | Subscriber)[] }
+type ListWithNewMembers = Omit<List, 'members'> & { newMembers: (Donor | Subscriber)[], members: (Donor | Subscriber)[] }
 
 export type ListItemProps = {
-    item: ListWithNewMembers & WithId
+    item: ListWithNewMembers
 };
 
 export type VideoItemProps = {
-    item: Video & WithId
+    item: Video
 }
 
 export type DonorItemProps = {
-    item: Donor & WithId
+    item: Donor
 };
 
 export type CampaignItemProps = {
-    item: Campaign & WithId
+    item: Campaign
 };
 

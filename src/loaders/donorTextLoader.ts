@@ -3,7 +3,7 @@ import { downloadOneDoc } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default function donorTextLoader({ params }: LoaderFunctionArgs) {
-    return downloadOneDoc(collections.texts, 'secureTexts')
+    return downloadOneDoc('texts', 'secureTexts')
         .then(({ donorEmailContent, donorEmailSubject }) => {
             return {
                 content: donorEmailContent,

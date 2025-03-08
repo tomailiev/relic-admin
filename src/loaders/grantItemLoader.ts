@@ -4,6 +4,10 @@ import collections from "../vars/collections";
 import deschematifyGrant from "../vars/deschematifyGrant";
 
 export default async function grantItemLoader({ params }: LoaderFunctionArgs) {
-    return await downloadOneDoc(collections.grants, params.grantId)
+    const docId = params.grantId
+    if (!docId) {
+        return { error: true, severity: 'error', message: 'No ID' };
+    }
+    return await downloadOneDoc('grants', docId)
         .then(item => item && deschematifyGrant(item))
 }

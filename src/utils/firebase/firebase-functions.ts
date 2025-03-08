@@ -2,6 +2,7 @@ import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timest
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
+import { AnyItemType, Grant, ItemTypeMap } from "../../types/DB";
 
 function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
     return id
@@ -53,6 +54,11 @@ interface LimitOption {
 }
 
 
+function downloadDocsV2<K extends keyof ItemTypeMap>(
+    col: K, 
+    options?: (ConditionOption | SortingOption | LimitOption)[]
+): Promise<ItemTypeMap[K][] | null> 
+
 function downloadDocsV2(col: string, options?: (ConditionOption | SortingOption | LimitOption)[]) {
     const queryConditions = options?.map(c => (
         c.type === 'condition'
@@ -64,7 +70,7 @@ function downloadDocsV2(col: string, options?: (ConditionOption | SortingOption 
     const q = query(collection(db, col), ...queryConditions);
 
     return getDocs(q)
-        .then(qSnap => {
+        .then((qSnap) => {
             const docs: any[] = [];
             qSnap.forEach(doc => {
                 const data = doc.data();
@@ -72,11 +78,11 @@ function downloadDocsV2(col: string, options?: (ConditionOption | SortingOption 
                     docs.push(Object.assign({ id: doc.id }, data));
                 }
             });
-            return docs.length
-                ? docs
-                : null;
+            return docs.length ? docs : null;
         })
 }
+
+function downloadOneDoc<K extends keyof ItemTypeMap>(col: K, id: string): Promise<ItemTypeMap[K]>
 
 function downloadOneDoc(col: string, id: string) {
     // REVISE!!!

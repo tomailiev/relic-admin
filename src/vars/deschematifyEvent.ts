@@ -1,7 +1,8 @@
+import { Event, Performance } from "../types/DB";
 import { months } from "./dateObjects";
 
 
-export function deschematifyPerformance(p) {
+export function deschematifyPerformance(p: Performance) {
 
     const [month, date, year] = p.date.split(' ');
 
@@ -25,7 +26,7 @@ export function deschematifyPerformance(p) {
     return Object.assign(rest, { time, date: completeDate, });
 }
 
-export function deschematifyEvent(item) {
+export function deschematifyEvent(item: Event) {
     const dateObject = item.dateDone.toDate();
     const dateDoneMonth = dateObject.getMonth() >= 9 ? dateObject.getMonth() + 1 : `0${dateObject.getMonth() + 1}`;
     const dateDoneDate = dateObject.getUTCDate();

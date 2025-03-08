@@ -10,7 +10,8 @@ export interface Video {
     program: string,
     thumbnail: string,
     title: string,
-    youtubeId: string
+    youtubeId: string,
+    id?: string
 };
 
 export interface Musician {
@@ -18,7 +19,8 @@ export interface Musician {
     featured: number,
     newTitle: string,
     name: string,
-    pic: string
+    pic: string,
+    id?: string
 }
 
 export interface Performance {
@@ -38,7 +40,8 @@ export interface Event {
     imageUrl: string,
     title: string,
     performances: Performance[],
-    program: string
+    program: string,
+    id?: string
 };
 
 export interface Grant {
@@ -46,16 +49,18 @@ export interface Grant {
     dueMonths: number[],
     link: string,
     name: string,
-    notification: number
+    notification: number,
+    id?: string
 };
 
 export interface List {
     datetime: Timestamp,
     members: string[],
     name: string,
-    source: 'subscribers' | 'donors'
+    source: 'subscribers' | 'donors',
+    id?: string
 };
-
+ 
 export interface Donation {
     amount: number,
     campaign: string,
@@ -81,7 +86,8 @@ export interface Donor {
     location: string,
     phone: string,
     tier: string,
-    donations: Donation[]
+    donations: Donation[],
+    id?: string
 }
 
 interface CampaignAnalyticsEvent {
@@ -107,7 +113,8 @@ export interface Campaign {
     html: string,
     from: string,
     datetime: Timestamp,
-    components: { id: string }[]
+    components: { id: string }[],
+    id?: string
 };
 
 interface SubscriberHistoryEvent {
@@ -127,5 +134,30 @@ export interface Subscriber {
     status: 0 | 1,
     history: SubscriberHistoryEvent[],
     tags: string[],
-    lists: string[]
+    lists: string[],
+    id?: string
+};
+
+export interface CSV {
+    csv: string
+}
+
+export interface Text {
+    key: string,
+    value: string
+}
+
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber;
+
+export type ItemTypeMap = {
+    'videos': Video;
+    'musicians': Musician;
+    'events': Event;
+    'grants': Grant;
+    'lists': List;
+    'donors': Donor;
+    'campaigns': Campaign;
+    'subscribers': Subscriber;
+    'CSVs': CSV;
+    'texts': Text
 };
