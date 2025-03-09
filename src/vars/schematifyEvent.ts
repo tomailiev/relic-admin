@@ -1,8 +1,9 @@
 import { Timestamp } from "firebase/firestore";
 import { months, daysOfWeek } from "./dateObjects";
+import { DeEvent, Event } from "../types/DB";
 
 
-function schematifyEvent(event) {
+function schematifyEvent(event: DeEvent): Event {
     
     const performances = event.performances.map((p) => {
         const fullDate = new Date(p.date);
@@ -10,8 +11,8 @@ function schematifyEvent(event) {
         const month = months[fullDate.getUTCMonth()];
         const date = fullDate.getUTCDate();
         const [hours, minutes] = p.time.split(':');
-        const timeSuffix = hours > 11 ? 'pm' : 'am';
-        const time = `${hours === '12' ? 12 : hours % 12}:${minutes}${timeSuffix}`;
+        const timeSuffix = Number(hours) > 11 ? 'pm' : 'am';
+        const time = `${hours === '12' ? 12 : Number(hours) % 12}:${minutes}${timeSuffix}`;
         const geocode = { lng: Number(p.lng), lat: Number(p.lat) };
         let rest = (({ lng, lat, date, time, ...object }) => object)(p);
         return Object.assign(rest, { time, geocode, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });

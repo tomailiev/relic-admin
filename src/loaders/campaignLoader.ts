@@ -7,7 +7,7 @@ export default function campaignLoader({ request }: LoaderFunctionArgs) {
     const subject = url.searchParams.get('subject');
 
     if (subject) {
-        return downloadDocsV2(collections.campaigns, [{ type: 'condition', value: ['subject', '==', decodeURI(subject)] }, { type: 'limit', value: 1 }])
+        return downloadDocsV2('campaigns', [{ type: 'condition', value: ['subject', '==', decodeURI(subject)] }, { type: 'limit', value: 1 }])
             .then(campaigns => {
                 return campaigns
                     ? redirect(`/campaigns/${campaigns[0].id}`)
@@ -19,7 +19,7 @@ export default function campaignLoader({ request }: LoaderFunctionArgs) {
 
     }
 
-    return downloadDocsV2(collections.campaigns)
+    return downloadDocsV2('campaigns')
         // .then(docs => ({ docs: docs.map(doc => doc.email) }))
         .catch(e => {
             return [{ name: 'Error', link: e.code, id: e.code, error: true }];

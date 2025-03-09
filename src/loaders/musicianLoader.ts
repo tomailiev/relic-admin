@@ -2,7 +2,7 @@ import { downloadDocsV2, getLink } from "../utils/firebase/firebase-functions";
 import collections from "../vars/collections";
 
 export default function musicianLoader() {
-    return downloadDocsV2(collections.musicians)
+    return downloadDocsV2('musicians')
         .then(items => {
             const modifiedItems = items.map((item) => {
                 return getLink(item.pic)

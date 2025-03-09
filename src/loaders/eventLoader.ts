@@ -4,8 +4,11 @@ import collections from "../vars/collections";
 // , ['dateDone', '>', new Date(1970)], ['dateDone', 'desc']
 
 export default function eventLoader() {
-    return downloadDocsV2(collections.events)
+    return downloadDocsV2('events')
         .then(items => {
+            if (!items) {
+                return items;
+            }
             const modifiedItems = items.map((item) => {
                 return getLink(item.imageUrl)
                     .then(imgSrc => Object.assign(item, { imgSrc }))

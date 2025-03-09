@@ -11,22 +11,27 @@ export default async function CSVAddAction({ request, params }: ActionFunctionAr
         try {
             console.log(updates.newSubs);
 
-            const uploadQueue = updates.newSubs?.map(doc => {
+            const uploadQueue = updates.newSubs?.map((doc: any) => {
                 return uploadDoc({ ...doc, tags: doc.tags.replaceAll('"', '').toLowerCase().split(','), status: Number(doc.status), id: doc.email.toLowerCase(), email: doc.email.toLowerCase() }, collections.subscribers, doc.email.toLowerCase(), true)
             });
             await Promise.all(uploadQueue);
             return redirect('/subscribers');
         } catch (e) {
-            return Object.assign(e, { error: true, severity: 'error' });
+            if (e instanceof Error) {
+                return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+            }
+            return { error: true, severity: 'error', message: 'Unknown error' };
         }
     }
     try {
-        const docs = await downloadDocsV2(collections.csv, [{ value: ['imported', '==', `CSVs/${updates.fileName}`], type: 'condition' }]);
+        const docs = await downloadDocsV2('CSVs', [{ value: ['imported', '==', `CSVs/${updates.fileName}`], type: 'condition' }]);
         console.log(docs);
 
         return docs;
     } catch (e) {
-        console.error(e)
-        return Object.assign(e, { error: true, severity: 'error' });
+        if (e instanceof Error) {
+            return Object.assign({ message: e.message }, { error: true, severity: 'error' });
+        }
+        return { error: true, severity: 'error', message: 'Unknown error' };
     }
 }

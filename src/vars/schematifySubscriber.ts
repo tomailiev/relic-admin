@@ -1,5 +1,6 @@
+import { DeschematifiedSubscriber, Subscriber } from "../types/DB";
 
-export default function schematifySubscriber(item) {
+export default function schematifySubscriber(item: DeschematifiedSubscriber): Subscriber {
     const subAddition = {
         imported: 'admin',
         id: item.email.toLowerCase(),

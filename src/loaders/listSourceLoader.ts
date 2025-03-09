@@ -1,9 +1,8 @@
 import { List } from "../types/DB";
 import { ListItemProps } from "../types/itemProps";
 import { downloadDocsV2, downloadOneDoc } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
-export default async function listSourceLoader({ source, name, id }: ListItemProps['item']) {
+export default async function listSourceLoader({ source, name, id }: List) {
     console.log(id);
 
     try {

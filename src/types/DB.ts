@@ -26,12 +26,17 @@ export interface Musician {
 export interface Performance {
     date: string,
     day: string,
-    geocode: { lat: number, lng: number },
+    geocode?: { lat: number, lng: number },
     id: string,
     location: string,
     time: string,
     url: string,
     venue: string
+};
+
+export interface DePerformance extends Omit<Performance, 'geocode'> {
+    lng?: number,
+    lat?: number
 };
 
 export interface Event {
@@ -44,6 +49,13 @@ export interface Event {
     id?: string
 };
 
+export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'> {
+    dateDone: string,
+    performances: DePerformance[],
+    imgSrc?: File,
+    programBook?: File
+}
+
 export interface Grant {
     description: string,
     dueMonths: number[],
@@ -53,6 +65,11 @@ export interface Grant {
     id?: string
 };
 
+export interface DeschematifiedGrant extends Omit<Grant, 'dueMonths' | 'notification'> {
+    dueMonths: { dueMonth: string }[],
+    notification: string
+}
+
 export interface List {
     datetime: Timestamp,
     members: string[],
@@ -60,7 +77,7 @@ export interface List {
     source: 'subscribers' | 'donors',
     id?: string
 };
- 
+
 export interface Donation {
     amount: number,
     campaign: string,
@@ -138,13 +155,19 @@ export interface Subscriber {
     id?: string
 };
 
+export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags'> {
+    status: string,
+    tags: {tag: string}[]
+}
+
 export interface CSV {
     csv: string
 }
 
 export interface Text {
     key: string,
-    value: string
+    value: string,
+    id?: string
 }
 
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber;
