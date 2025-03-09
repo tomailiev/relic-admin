@@ -140,6 +140,11 @@ interface SubscriberHistoryEvent {
     timestamp: Timestamp
 };
 
+interface SubHistoryDateTime extends Omit<SubscriberHistoryEvent, 'timestamp'> {
+    timestamp: Date
+};
+
+
 export interface Subscriber {
     email: string,
     firstName: string,
@@ -155,9 +160,10 @@ export interface Subscriber {
     id?: string
 };
 
-export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags'> {
+export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags'| 'history'> {
     status: string,
-    tags: {tag: string}[]
+    tags: {tag: string}[],
+    history: SubHistoryDateTime[]
 }
 
 export interface CSV {
@@ -184,3 +190,9 @@ export type ItemTypeMap = {
     'CSVs': CSV;
     'texts': Text
 };
+
+export type DeschematifiedItemTypeMap = {
+    grants: DeschematifiedGrant;
+    subscribers: DeschematifiedSubscriber;
+    event: DeEvent
+}

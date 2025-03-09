@@ -1,6 +1,5 @@
 import { LoaderFunction } from "react-router-dom";
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
 const donorLoader: LoaderFunction = () => {
     return downloadDocsV2('donors')

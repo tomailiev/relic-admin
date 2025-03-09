@@ -59,8 +59,6 @@ const listProps: ItemProps = {
     dataFilterColumns: { donors: donorProps.columns, subscribers: subscriberProps.columns },
     initialFieldsArray: initialListFieldsArray,
     initialFields: initialFields,
-    formType: 'simple',
-    encType: 'application/json',
     steps: ['initialFieldsArray', 'dataFilter', 'preview'],
     sourceCollectionField: 'source',
     destinationCollectionField: 'members',

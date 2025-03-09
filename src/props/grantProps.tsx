@@ -106,7 +106,6 @@ const grantProps: ItemProps = {
     nestedName: 'dueMonths',
     schematifyFn: schematifyGrant,
     deschematifyFn: deschematifyGrant,
-    encType: 'application/json',
     steps: ['fieldsArray', 'nestedArray', 'preview'],
     schemas: { fieldsArray: grantSchema, nestedArray: dueMonthsSchema }
 };

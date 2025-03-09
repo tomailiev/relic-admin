@@ -104,11 +104,10 @@ const subscriberProps: ItemProps = {
     name: 'email',
     actionBox: <SubscriberActionBox />,
     columns: subscriberColumns,
-    historyColumns: historyColumns,
+    dataFilterColumns: {history: historyColumns},
     sorting: { field: 'opt_in_time', sort: 'desc' },
     pageSize: 50,
     pageSizeOptions: [25, 50, 100],
-    formType: 'dynamic',
     fields: subscriberFields,
     nestedFields: tagsFields,
     fieldsArray: subscribersFA,
@@ -116,7 +115,6 @@ const subscriberProps: ItemProps = {
     nestedName: 'tags',
     schematifyFn: schematifySubscriber,
     deschematifyFn: deschematifySubscriber,
-    blankObject: { ...subscriberFields, tags: [tagsFields] },
     steps: ['fieldsArray', 'nestedArray', 'preview'],
     schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema }
 };

@@ -1,6 +1,7 @@
 import { GridColDef, GridSortingInitialState, GridSortItem, GridSortModel } from "@mui/x-data-grid"
 import { ReactElement } from "react"
 import { AnyObject, ArraySchema, ObjectSchema } from "yup"
+import { AnyItemType, ItemTypeMap } from "./DB"
 
 export interface FieldsArrayItem {
     label: string,
@@ -19,7 +20,7 @@ export interface ItemProps {
     pageSizeOptions: [number, number, number],
     steps: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
     schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', ObjectSchema<AnyObject> | ArraySchema<AnyObject[] | undefined, AnyObject, "", "">>>,
-    dataFilterColumns?: object,
+    dataFilterColumns?: {[key: string]: GridColDef[]},
     initialFieldsArray?: FieldsArrayItem[],
     initialFields?: object,
     fieldsArray?: FieldsArrayItem[],
@@ -34,5 +35,7 @@ export interface ItemProps {
     destinationCollectionField?: string,
     tempDestinationField?: string,
     actionBox?: ReactElement
-    initialFn?: () => {},
+    initialFn?: (item?: any) => {},
+    schematifyFn?: (item: any) => {},
+    deschematifyFn?: (item: any) => {}
 }
