@@ -5,6 +5,7 @@ import ErrorContext from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
 import { ItemProps } from "../../types/fnProps";
+import { Campaign, List } from "../../types/DB";
 
 
 const EditCampaign = ({ itemType, fieldsArray }: ItemProps) => {
@@ -13,7 +14,7 @@ const EditCampaign = ({ itemType, fieldsArray }: ItemProps) => {
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData();
-    const { lists, campaign } = useLoaderData();
+    const { lists, campaign } = useLoaderData() as {lists: List[], campaign: Campaign};
 
     useEffect(() => {
         if (actionData?.error) {

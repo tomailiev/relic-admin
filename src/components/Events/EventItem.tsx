@@ -4,11 +4,12 @@ import { daysOfWeek } from "../../vars/dateObjects";
 import { useContext } from "react";
 import ErrorContext from "../../context/ErrorContext";
 import { EventItemProps } from "../../types/itemProps";
+import { DeEvent, Event } from "../../types/DB";
 // import { deschematifyPerformance } from "../../vars/deschematifyEvent";
 
 
 
-const EventItem = ({ item }: EventItemProps) => {
+const EventItem = ({ item }: { item: Event }) => {
     const { setError } = useContext(ErrorContext);
 
     function handleCopyText() {
@@ -26,13 +27,13 @@ const EventItem = ({ item }: EventItemProps) => {
                 <Grid item md={6} sm={8} xs={12} p={6} textAlign={'center'}>
                     <Card sx={{ textDecoration: 'none' }}>
                         {/* <CardActionArea> */}
-                        <CardMedia
+                        {item.imgSrc && <CardMedia
                             component="img"
                             // width="70%"
                             // height={150}
                             image={URL.createObjectURL(item.imgSrc)}
                             alt="event image"
-                        ></CardMedia>
+                        ></CardMedia>}
                         {/* </CardActionArea> */}
                     </Card>
                     {item.program && item.id && <Button sx={{ mt: 2 }} size={'large'} variant={'text'} onClick={handleCopyText} >Copy Program Book Link</Button>}

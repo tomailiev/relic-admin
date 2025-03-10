@@ -1,9 +1,10 @@
 import { Button, Container, Grid, Paper, Typography } from "@mui/material";
 import { OpenInNew } from "@mui/icons-material";
+import { DeschematifiedGrant } from "../../types/DB";
 
 
 
-const GrantItem = ({ item }) => {
+const GrantItem = ({ item }: {item: DeschematifiedGrant}) => {
     
     return (
         <Paper sx={{ mx: 8, my: 2, p: 5, }}>

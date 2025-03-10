@@ -20,7 +20,8 @@ export interface Musician {
     newTitle: string,
     name: string,
     pic: string,
-    id?: string
+    id?: string,
+    imgSrc?: File
 }
 
 export interface Performance {
@@ -46,7 +47,8 @@ export interface Event {
     title: string,
     performances: Performance[],
     program: string,
-    id?: string
+    id?: string,
+    imgSrc?: File 
 };
 
 export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'> {

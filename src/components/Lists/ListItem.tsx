@@ -31,7 +31,7 @@ const EmailListItem = ({ item }: ListItemProps) => {
                 </Typography>
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
-                        <DataGrid
+                        {listProps.dataFilterColumns && <DataGrid
                             rows={item.newMembers || item.members}
                             columns={listProps.dataFilterColumns[item.source]}
                             initialState={{
@@ -41,7 +41,7 @@ const EmailListItem = ({ item }: ListItemProps) => {
                                 pagination: { paginationModel: { pageSize: 10 } }
                             }}
                             pageSizeOptions={[10, 25, 50]}
-                        />
+                        />}
                     </Box>
                 </Box>
             </Container>

@@ -18,71 +18,71 @@ const SubscriberItem = ({ item }: SubscriberItemProps) => {
                 display: 'flex',
                 justifyContent: 'center'
             }}>
-                    <List>
-                        {item.email && <ListItem>
-                            <ListItemIcon>
-                                <Email />
-                            </ListItemIcon>
-                            <ListItemText primary={item.email} />
-                        </ListItem>}
-                        {item.location && <ListItem>
-                            <ListItemIcon>
-                                <LocationOn />
-                            </ListItemIcon>
-                            <ListItemText primary={item.location} />
-                        </ListItem>}
-                        {item.tags && !!item.lists.length && <ListItem>
-                            <ListItemIcon>
-                                <Style />
-                            </ListItemIcon>
-                            <ListItemText primary={item.tags.map(({ tag }) => tag).join(', ')} />
-                        </ListItem>}
-                        {item.lists && !!item.lists.length && <ListItem>
-                            <ListItemIcon>
-                                <AutoAwesomeMotion />
-                            </ListItemIcon>
-                            <List>
-                                {item.lists.map(list => (
-                                    <ListItem>
-                                        <Typography >
-                                            <Link key={list} to={`/lists/${list}`}>
-                                                {list}
-                                            </Link>
-                                        </Typography>
-                                    </ListItem>
-                                ))}
+                <List>
+                    {item.email && <ListItem>
+                        <ListItemIcon>
+                            <Email />
+                        </ListItemIcon>
+                        <ListItemText primary={item.email} />
+                    </ListItem>}
+                    {item.location && <ListItem>
+                        <ListItemIcon>
+                            <LocationOn />
+                        </ListItemIcon>
+                        <ListItemText primary={item.location} />
+                    </ListItem>}
+                    {item.tags && !!item.lists.length && <ListItem>
+                        <ListItemIcon>
+                            <Style />
+                        </ListItemIcon>
+                        <ListItemText primary={item.tags.map(({ tag }) => tag).join(', ')} />
+                    </ListItem>}
+                    {item.lists && !!item.lists.length && <ListItem>
+                        <ListItemIcon>
+                            <AutoAwesomeMotion />
+                        </ListItemIcon>
+                        <List>
+                            {item.lists.map(list => (
+                                <ListItem>
+                                    <Typography >
+                                        <Link key={list} to={`/lists/${list}`}>
+                                            {list}
+                                        </Link>
+                                    </Typography>
+                                </ListItem>
+                            ))}
 
-                            </List>
-                        </ListItem>}
-                        <ListItem>
-                            <ListItemIcon>
-                                <Loyalty />
-                            </ListItemIcon>
-                            <ListItemText primary={item.status} />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <ImportContacts />
-                            </ListItemIcon>
-                            <ListItemText primary={item.origin} sx={{ overflow: 'clip' }} />
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <Event />
-                            </ListItemIcon>
-                            <ListItemText primary={`Contact since ${item.opt_in_time}`} />
-                        </ListItem>
-                    </List>
-                    </Box>
+                        </List>
+                    </ListItem>}
+                    <ListItem>
+                        <ListItemIcon>
+                            <Loyalty />
+                        </ListItemIcon>
+                        <ListItemText primary={item.status} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <ImportContacts />
+                        </ListItemIcon>
+                        <ListItemText primary={item.origin} sx={{ overflow: 'clip' }} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <Event />
+                        </ListItemIcon>
+                        <ListItemText primary={`Contact since ${item.opt_in_time}`} />
+                    </ListItem>
+                </List>
+            </Box>
             {item.history && !location.pathname.endsWith('edit') && <Container maxWidth={false} disableGutters>
                 <Typography variant="h6" mt={2}>
                     Interactions:
                 </Typography>
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
-                        <DataGrid
+                        {subscriberProps.dataFilterColumns?.history && <DataGrid
                             rows={item.history?.map((historyItem, i) => ({ ...historyItem, id: i, }))}
-                            columns={subscriberProps.historyColumns}
+                            columns={subscriberProps.dataFilterColumns?.history}
                             initialState={{
                                 sorting: {
                                     sortModel: [{ field: 'timestamp', sort: 'desc' }],
@@ -91,7 +91,7 @@ const SubscriberItem = ({ item }: SubscriberItemProps) => {
                             }}
                             pageSizeOptions={[5, 10, 25]}
 
-                        />
+                        />}
                     </Box>
                 </Box>
             </Container>}

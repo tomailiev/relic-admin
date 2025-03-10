@@ -1,8 +1,8 @@
 import { Drawer } from "@mui/material";
-import { useContext } from "react";
+import { ReactElement, useContext } from "react";
 import MenuContext from "../../context/MenuContext";
 
-const AppDrawer = ({ children, }) => {
+const AppDrawer = ({ children }: {children: ReactElement}) => {
 
     const { mobileOpen, setMobileOpen } = useContext(MenuContext);
 

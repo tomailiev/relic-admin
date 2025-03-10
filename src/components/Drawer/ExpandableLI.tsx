@@ -1,11 +1,12 @@
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { ExpandLess, ExpandMore, Folder, FolderOpen } from "@mui/icons-material";
-import { useContext, useState } from "react";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { ReactElement, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import MenuContext from "../../context/MenuContext";
 import UserContext from "../../context/UserContext";
+import { MenuType } from "../../types/menu";
 
-const ExpandableLI = ({ menuTitle, subMenu, icon }) => {
+const ExpandableLI = ({ menuTitle, subMenu, icon }: { menuTitle: string, subMenu: MenuType[], icon: ReactElement }) => {
 
     const { currentUser } = useContext(UserContext);
     const { setMobileOpen } = useContext(MenuContext);
@@ -29,7 +30,7 @@ const ExpandableLI = ({ menuTitle, subMenu, icon }) => {
                     {subMenu.map(({ title, path, iconActive, iconInactive }) => (
                         <NavLink key={title} to={path} >
                             {({ isActive, }) => {
-                                const icon = isActive ? iconActive || <FolderOpen /> : iconInactive || <Folder />;
+                                const icon = isActive ? iconActive : iconInactive;
                                 return <ListItemButton sx={{ pl: 4 }} onClick={() => setMobileOpen(false)}>
                                     <ListItemIcon>
                                         {icon}

@@ -1,8 +1,9 @@
 import { Button, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import { useContext } from "react";
 import ErrorContext from "../../context/ErrorContext";
+import { Musician } from "../../types/DB";
 
-const MusicianItem = ({ item }) => {
+const MusicianItem = ({ item }: { item: Musician }) => {
     const { setError } = useContext(ErrorContext);
 
     function handleCopyText() {
@@ -18,11 +19,11 @@ const MusicianItem = ({ item }) => {
             }}>
                 <Grid item md={6} sm={8} xs={12} p={6} textAlign={'center'}>
                     <Card sx={{ textDecoration: 'none' }}>
-                        <CardMedia
+                        {item.imgSrc && <CardMedia
                             component="img"
                             image={URL.createObjectURL(item.imgSrc)}
                             alt="musician dmage"
-                        ></CardMedia>
+                        ></CardMedia>}
                     </Card>
                     {item.id && <Button sx={{ mt: 2 }} size={'large'} variant={'text'} onClick={handleCopyText} >Copy Musician Link</Button>}
                 </Grid>

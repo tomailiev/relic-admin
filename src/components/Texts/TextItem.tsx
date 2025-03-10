@@ -1,8 +1,9 @@
 import { Paper, Typography, Box } from "@mui/material";
+import { Text } from "../../types/DB";
 
 
 
-const TextItem = ({ item }) => {
+const TextItem = ({ item }: {item: Text}) => {
 
 
     return (
