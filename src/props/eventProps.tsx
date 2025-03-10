@@ -104,8 +104,6 @@ const eventProps: ItemProps = {
     nestedName: 'performances',
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,
-    formType: 'dynamic',
-    encType: 'application/json',
     steps: ['files', 'fieldsArray', 'nestedArray', 'preview'],
     schemas: { files: eventFileSchema, fieldsArray: eventSchema, nestedArray: performanceSchema }
 };

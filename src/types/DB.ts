@@ -154,7 +154,7 @@ export interface Subscriber {
     opt_in_time: string,
     origin: string,
     status: 0 | 1,
-    history: SubscriberHistoryEvent[],
+    history?: SubscriberHistoryEvent[],
     tags: string[],
     lists: string[],
     id?: string
@@ -163,7 +163,7 @@ export interface Subscriber {
 export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags'| 'history'> {
     status: string,
     tags: {tag: string}[],
-    history: SubHistoryDateTime[]
+    history?: SubHistoryDateTime[]
 }
 
 export interface CSV {
@@ -171,10 +171,8 @@ export interface CSV {
 }
 
 export interface Text {
-    key: string,
-    value: string,
-    id?: string
-}
+    [key: string]: string
+};
 
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber;
 

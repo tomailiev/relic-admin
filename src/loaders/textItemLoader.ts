@@ -1,15 +1,19 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { downloadOneDoc } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
-export default function textItemLoader({ params }:LoaderFunctionArgs) {
+export default function textItemLoader({ params }: LoaderFunctionArgs) {
     return downloadOneDoc('texts', 'allTexts')
         .then(allTexts => {
-            return allTexts[params.textId] ?
+            const docId = params.textId;
+            if (!docId) {
+                return { error: true, severity: 'error', message: 'No ID' };
+            }
+            
+            return allTexts[docId] ?
                 {
-                    id: params.textId,
-                    key: params.textId,
-                    value: allTexts[params.textId]
+                    id: docId,
+                    key: docId,
+                    value: allTexts[docId]
                 }
                 : null;
         });

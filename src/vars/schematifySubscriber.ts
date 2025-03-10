@@ -8,5 +8,6 @@ export default function schematifySubscriber(item: DeschematifiedSubscriber): Su
     }
     const tags = item.tags.map(({ tag }) => tag);
     const status = item.status === 'Subscribed' ? 1 : 0;
-    return { ...item, tags, status, ...subAddition };
+    const {history: _, ...rest} = item;
+    return { ...rest, tags, status, ...subAddition };
 };

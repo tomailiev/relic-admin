@@ -1,8 +1,7 @@
 import { Text } from "../types/DB";
 import { downloadOneDoc } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
-export default function textLoader() {
+export default function textLoader(): Promise<Text[]> {
     return downloadOneDoc('texts', 'allTexts')
         .then(allTexts => {
             return Object.entries(allTexts)

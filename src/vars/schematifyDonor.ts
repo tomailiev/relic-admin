@@ -1,8 +1,15 @@
+import { Donation, Donor } from "../types/DB";
 import normalizePhoneNumber from "./normalizePhoneNumber";
 
-export default function schematifyDonor(item) {
-    const lastDonation = { lastDonationAmount: '', lastDonationDate: '' }
-    const donations = item.donations.map((donation) => {
+type DonationProps = {
+    lastDonationAmount: string | number,
+    lastDonationDate: string
+};
+
+export default function schematifyDonor(item: Donor) {
+
+    const lastDonation: DonationProps = { lastDonationAmount: '', lastDonationDate: '' }
+    const donations = item.donations.map((donation: Donation) => {
         if (!lastDonation.lastDonationDate || new Date(donation.date) > new Date(lastDonation.lastDonationDate)) {
             lastDonation.lastDonationDate = donation.date;
             lastDonation.lastDonationAmount = Number(donation.amount);

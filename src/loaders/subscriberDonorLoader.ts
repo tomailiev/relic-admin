@@ -1,5 +1,4 @@
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
 export default function subscriberDonorLoader() {
     return Promise.all([downloadDocsV2('donors'), downloadDocsV2('subscribers')])
