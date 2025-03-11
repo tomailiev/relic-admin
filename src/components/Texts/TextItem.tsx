@@ -3,15 +3,14 @@ import { Text } from "../../types/DB";
 
 
 
-const TextItem = ({ item }: {item: Text}) => {
+const TextItem = ({ item }: { item: Text }) => {
 
 
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5, }}>
             <Typography variant="h5">{item.key}</Typography>
-            {typeof item.value === 'string'
-                ? <Typography> {item.value} </Typography>
-                : item.value.map(({ infoTitle, infoText }) => {
+            <Typography> {item.value} </Typography>
+            {/* : item.value.map(({ infoTitle, infoText }) => {
                     return (
                         <Box pt={2}>
                             <Typography variant="h6">
@@ -23,9 +22,9 @@ const TextItem = ({ item }: {item: Text}) => {
                         </Box>
 
                     )
-                })
+                }) */}
 
-            }
+            {/* } */}
 
         </Paper>
     );

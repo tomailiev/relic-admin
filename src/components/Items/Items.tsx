@@ -3,12 +3,13 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from "@mui/x-data-grid";
 import CustomGridToolbar from "../Common/GridExportToolbar";
+import { ItemTypeMap } from "../../types/DB";
 import { ItemProps } from "../../types/fnProps";
 
 
-const Items = ({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBox }: ItemProps) => {
+const Items = <T extends keyof ItemTypeMap>({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBox }: { itemType: T } & ItemProps) => {
 
-    const items: unknown = useLoaderData();
+    const items = useLoaderData() as ItemTypeMap[T][];
 
     return (
         <>

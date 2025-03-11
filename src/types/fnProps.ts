@@ -12,7 +12,7 @@ export interface FieldsArrayItem {
 }
 
 export interface ItemProps {
-    itemType: string,
+    itemType: keyof ItemTypeMap,
     name: string,
     columns: GridColDef[],
     sorting: GridSortItem,
@@ -20,7 +20,7 @@ export interface ItemProps {
     pageSizeOptions: [number, number, number],
     steps: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
     schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', ObjectSchema<AnyObject> | ArraySchema<AnyObject[] | undefined, AnyObject, "", "">>>,
-    dataFilterColumns?: {[key: string]: GridColDef[]},
+    dataFilterColumns?: { [key: string]: GridColDef[] },
     initialFieldsArray?: FieldsArrayItem[],
     initialFields?: object,
     fieldsArray?: FieldsArrayItem[],

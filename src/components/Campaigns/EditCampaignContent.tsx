@@ -7,6 +7,7 @@ import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { ItemProps } from "../../types/fnProps";
+import { Campaign } from "../../types/DB";
 
 const options = [
     { value: 'button' },
@@ -28,7 +29,7 @@ const options = [
 ];
 
 const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
-    const { campaign } = useLoaderData();
+    const { campaign } = useLoaderData() as { campaign: Campaign };
 
     const [activeStep, setActiveStep] = useState(0);
     const [component, setComponent] = useState(null);

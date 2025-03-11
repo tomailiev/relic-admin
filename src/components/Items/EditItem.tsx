@@ -1,7 +1,8 @@
 import { useLoaderData, } from "react-router-dom";
 import AddItem from "./AddItem";
+import { ItemProps } from "../../types/fnProps";
 
-const EditItem = (itemProps) => {
+const EditItem = (itemProps: ItemProps) => {
     const item = useLoaderData();
 
     return (

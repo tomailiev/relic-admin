@@ -1,13 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 
 const TestDialog = ({ open, setOpen, handleSend }) => {
 
     const [textValue, setTextValue] = useState('');
 
-    function handleChange(e) {
+    function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setTextValue(e.target.value);
     }
 

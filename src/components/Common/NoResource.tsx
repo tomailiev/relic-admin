@@ -1,7 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { ItemProps } from "../../types/fnProps";
 
-const NoResource = ({itemType}) => {
+const NoResource = ({itemType}: ItemProps) => {
     
     return (
         <Box sx={{ p: 2, textAlign: 'center' }}>

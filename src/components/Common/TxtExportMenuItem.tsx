@@ -1,14 +1,16 @@
 import { MenuItem } from "@mui/material";
-import { gridFilteredSortedRowIdsSelector, gridVisibleColumnFieldsSelector, useGridApiContext } from "@mui/x-data-grid";
+import { GridCsvExportOptions, GridExportDisplayOptions, GridExportMenuItemProps, GridFileExportOptions, gridFilteredSortedRowIdsSelector, gridVisibleColumnFieldsSelector, useGridApiContext } from "@mui/x-data-grid";
+import { GridApiCommunity } from "@mui/x-data-grid/internals";
+import { RefObject } from "react";
 import { useLocation } from "react-router-dom";
 
-function getTxt(apiRef) {
+function getTxt(apiRef: RefObject<GridApiCommunity>) {
 
     const filteredSortedRowIds = gridFilteredSortedRowIdsSelector(apiRef);
     const visibleColumnsField = gridVisibleColumnFieldsSelector(apiRef);
 
     const data = filteredSortedRowIds.map((id) => {
-        const row = {};
+        const row: {[key: string]: unknown} = {};
         visibleColumnsField.forEach((field) => {
             row[field] = apiRef.current.getCellParams(id, field).value;
         });
@@ -20,7 +22,7 @@ function getTxt(apiRef) {
     return doc;
 };
 
-const exportBlob = (blob, filename) => {
+const exportBlob = (blob: Blob, filename: string) => {
     // Save the blob in a json file
     const url = URL.createObjectURL(blob);
 
@@ -34,11 +36,10 @@ const exportBlob = (blob, filename) => {
     });
 }
 
-function TxtExportMenuItem(props) {
+function TxtExportMenuItem(props: GridExportMenuItemProps<GridFileExportOptions & GridExportDisplayOptions>) {
     const apiRef = useGridApiContext();
     const location = useLocation();
     const { hideMenu } = props;
-
     return (
         <MenuItem
             onClick={async () => {
