@@ -8,8 +8,11 @@ import SubscriberItem from "../Subscribers/SubscriberItem";
 import TextItem from "../Texts/TextItem";
 import VideoItem from "../Videos/VideoItem";
 import EmailListItem from "../Lists/ListItem";
+import { ItemTypeMap } from "../../types/DB";
+import { Dispatch, SetStateAction } from "react";
 
-const ItemSwitch = ({ item, itemType, mutateItem, setEditable }) => {
+const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, setEditable }: { itemType: T; item: ItemTypeMap[T]; setEditable: Dispatch<SetStateAction<boolean>>, mutateItem: Dispatch<SetStateAction<void>> }) => {
+    
     const itemComponents = {
         musicians: <MusicianItem item={item} />,
         events: <EventItem item={item} />,

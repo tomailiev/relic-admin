@@ -4,13 +4,15 @@ import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
 import ItemSwitch from "./ItemSwitch";
 import NoResource from "../Common/NoResource";
+import { ItemProps } from "../../types/fnProps";
+import { ItemTypeMap } from "../../types/DB";
 
-const ItemRoute = ({ name, itemType }) => {
+const ItemRoute = <T extends keyof ItemTypeMap>({ name, itemType }: { itemType: T } & ItemProps) => {
 
 
     const [modalOpen, setModalOpen] = useState(false);
     const [isEditable, setIsEditable] = useState(true);
-    const item = useLoaderData();
+    const item = useLoaderData() as ItemTypeMap[T];
     const submit = useSubmit();
 
     const handleDelete = () => {

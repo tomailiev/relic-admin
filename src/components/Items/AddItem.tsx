@@ -10,9 +10,10 @@ import AddDynamic from "../Forms/AddDynamic";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
 import FilterData from "../Forms/FilterData";
+import { ItemProps } from "../../types/fnProps";
 
 
-const AddItem = (itemProps) => {
+const AddItem = (itemProps: ItemProps) => {
 
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();

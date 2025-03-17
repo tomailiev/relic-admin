@@ -60,7 +60,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
 
 
 
-    function addComponentToList(comp) {
+    function addComponentToList(comp: { index?: number, id: string } & { [key: string]: string }) {
         setComponent(null);
         if (editedComponent) {
             setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index + 1)))
@@ -70,7 +70,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
         }
     }
 
-    function selectComponent(comp) {
+    function selectComponent(comp: { index?: number, id: string } & { [key: string]: string }) {
         setComponent(null);
         setEditedComponent(null);
         setTimeout(() => {
@@ -86,21 +86,21 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
         }, 250);
     }
 
-    function deleteComponent(i) {
+    function deleteComponent(i: number) {
         setComponent(null);
         setEditedComponent(null);
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i + 1)))
     }
 
-    function moveComponentUp(i) {
+    function moveComponentUp(i: number) {
         setComponentList(prev => prev.slice(0, i - 1).concat(prev.slice(i - 1, i + 1).reverse()).concat(prev.slice(i + 1)));
     }
 
-    function copyComponent(i) {
+    function copyComponent(i: number) {
         setComponentList(prev => prev.concat(prev[i]));
     }
 
-    function moveComponentDown(i) {
+    function moveComponentDown(i: number) {
         setComponentList(prev => prev.slice(0, i).concat(prev.slice(i, i + 2).reverse()).concat(prev.slice(i + 2)));
     }
 

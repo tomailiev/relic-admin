@@ -48,7 +48,7 @@ export interface Event {
     performances: Performance[],
     program: string,
     id?: string,
-    imgSrc?: File 
+    imgSrc?: File
 };
 
 export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'> {
@@ -132,7 +132,7 @@ export interface Campaign {
     html: string,
     from: string,
     datetime: Timestamp,
-    components: { id: string }[],
+    components: ({ id: string, index?: number } & { [key: string]: string })[],
     id?: string
 };
 
@@ -162,9 +162,9 @@ export interface Subscriber {
     id?: string
 };
 
-export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags'| 'history'> {
+export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 'tags' | 'history'> {
     status: string,
-    tags: {tag: string}[],
+    tags: { tag: string }[],
     history?: SubHistoryDateTime[]
 }
 
