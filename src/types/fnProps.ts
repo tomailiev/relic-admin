@@ -37,5 +37,6 @@ export interface ItemProps {
     actionBox?: ReactElement
     initialFn?: (item?: any) => {},
     schematifyFn?: (item: any) => {},
-    deschematifyFn?: (item: any) => {}
+    deschematifyFn?: (item: any) => {},
+    item?: AnyItemType
 }

@@ -1,4 +1,5 @@
 import { Timestamp } from "firebase/firestore"
+import { ListWithNewMembers } from "./itemProps"
 
 export interface WithId {
     id: string
@@ -183,10 +184,13 @@ export type ItemTypeMap = {
     'musicians': Musician;
     'events': Event;
     'grants': Grant;
+    'deschematifiedGrants': DeschematifiedGrant;
     'lists': List;
+    'listsWithNewMembers': ListWithNewMembers;
     'donors': Donor;
     'campaigns': Campaign;
     'subscribers': Subscriber;
+    'deschematifiedSubscribers': DeschematifiedSubscriber;
     'CSVs': CSV;
     'texts': Text
 };

@@ -1,21 +1,23 @@
 import { Box, Button, Container, Typography, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import CSVProps from "../../props/CSVProps";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
+import { Donor, Subscriber } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 // import { deschematify } from "../../vars/schemaFunctions";
 
 
 
 const ImportDonor = () => {
     const { setError } = useContext(ErrorContext);
-    const [submission, setSubmission] = useState(null);
-    const [subs, setSubs] = useState([]);
+    const [submission, setSubmission] = useState<Donor[] | null>(null);
+    const [subs, setSubs] = useState<Donor[]>([]);
 
     const submit = useSubmit();
-    const actionData = useActionData();
-    const [donors, subscribers] = useLoaderData();
+    const actionData = useActionData() as AppErrorType;
+    const [donors, subscribers] = useLoaderData() as [Donor[], Subscriber[]];
     // const location = useLocation();
 
     useEffect(() => {
@@ -26,12 +28,13 @@ const ImportDonor = () => {
         }
     }, [donors, subscribers]);
 
-    function filterer(model) {
+    function filterer(model: GridRowSelectionModel) {
 
-        const newSubs = (subs.filter(({ id }) => model.includes(id)));
+        const newSubs = (subs.filter(({ id }) => id && model.includes(id)));
         console.log(newSubs);
-
-        setSubmission(newSubs);
+        if (newSubs) {
+            setSubmission(newSubs);
+        }
     }
 
     useEffect(() => {
@@ -41,7 +44,7 @@ const ImportDonor = () => {
     }, [actionData, setError]);
 
     function finishSubmission() {
-        submit(submission, { method: 'POST', action: `/donors/import`, encType: 'application/json' })
+        submit(submission as SubmitTarget, { method: 'POST', action: `/donors/import`, encType: 'application/json' })
     }
 
     return (
@@ -55,7 +58,7 @@ const ImportDonor = () => {
                                 checkboxSelection
                                 onRowSelectionModelChange={filterer}
                                 rows={subs}
-                                columns={CSVProps.listColumns}
+                                columns={CSVProps.dataFilterColumns?.subscribers || []}
                                 initialState={{
                                     sorting: {
                                         sortModel: [CSVProps.sorting],

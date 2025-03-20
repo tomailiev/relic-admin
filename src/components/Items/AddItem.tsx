@@ -1,7 +1,7 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useSubmit } from "react-router-dom";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
 import AddForm from "../Forms/AddForm";
 import AddFile from "../Forms/AddFile";
@@ -11,6 +11,8 @@ import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
 import FilterData from "../Forms/FilterData";
 import { ItemProps } from "../../types/fnProps";
+import { AnyItemType } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
 const AddItem = (itemProps: ItemProps) => {
@@ -19,8 +21,8 @@ const AddItem = (itemProps: ItemProps) => {
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const { setIsLoading } = useContext(LoadingContext);
-    const [submission, setSubmission] = useState(null);
-    const actionData = useActionData();
+    const [submission, setSubmission] = useState<null | AnyItemType>(null);
+    const actionData = useActionData() as AppErrorType | null;
 
     const labels = {
         files: 'Upload files',
@@ -32,7 +34,9 @@ const AddItem = (itemProps: ItemProps) => {
     }
 
     useEffect(() => {
-        setSubmission(itemProps.item);
+        if (itemProps.item) {
+            setSubmission(itemProps.item);
+        }
     }, [itemProps.item]);
 
     useEffect(() => {
@@ -47,10 +51,10 @@ const AddItem = (itemProps: ItemProps) => {
 
     function finishSubmission() {
 
-        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
+        submit(submission as SubmitTarget, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
     }
 
-    async function handleFileSubmission(data) {
+    async function handleFileSubmission(data: object | null) {
         if (!data) {
             return handleSubmitEvent();
         }
@@ -77,7 +81,7 @@ const AddItem = (itemProps: ItemProps) => {
         }
     }
 
-    function handleObjectSubmission(data) {
+    function handleObjectSubmission(data: AnyItemType | null) {
 
         setSubmission(prev => {
             return Object.assign(prev || {}, data);

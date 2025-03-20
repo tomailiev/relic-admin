@@ -3,10 +3,10 @@ import { Email, LocationOn, Loyalty, Style, ImportContacts, Event, AutoAwesomeMo
 import { DataGrid } from "@mui/x-data-grid";
 import subscriberProps from '../../props/subscriberProps'
 import { Link, useLocation } from "react-router-dom";
-import { SubscriberItemProps } from "../../types/itemProps";
+import { DeschematifiedSubscriber } from "../../types/DB";
 
 
-const SubscriberItem = ({ item }: SubscriberItemProps) => {
+const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
 
     const location = useLocation();
 
