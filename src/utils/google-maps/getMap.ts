@@ -5,7 +5,7 @@ import loader from "./maps-init";
 import { DonorItemProps } from "../../types/itemProps";
 
 
-async function getMap(mapRef: HTMLElement, address: string, location: string) {
+async function getMap(mapRef: HTMLDivElement, address: string, location: string) {
     const position = await getCoordinates(address, location);
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');

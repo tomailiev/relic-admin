@@ -9,10 +9,12 @@ import ErrorContext from "../../context/ErrorContext";
 import { getTier } from "../../vars/getTier";
 import { reduceDonations } from "../../vars/reduceDonations";
 import { DonorItemProps } from "../../types/itemProps";
+import { SubmitTarget } from "react-router-dom/dist/dom";
+import { DonationInfo } from "../../types/dialog";
 
 
 const DonorItem = ({ item }: DonorItemProps) => {
-    
+
     const columns: GridColDef[] = [
         { field: 'date', headerName: 'Date', flex: 1 },
         {
@@ -43,9 +45,9 @@ const DonorItem = ({ item }: DonorItemProps) => {
 
     const { setError } = useContext(ErrorContext);
     const [modalOpen, setModalOpen] = useState(false);
-    const [donationInfo, setDonationInfo] = useState(null);
+    const [donationInfo, setDonationInfo] = useState<DonationInfo | null>(null);
     const submit = useSubmit();
-    const actionData = useActionData();
+    const actionData = useActionData() as { code: string };
 
     const fetcher = useFetcher();
 
@@ -59,14 +61,14 @@ const DonorItem = ({ item }: DonorItemProps) => {
         if (actionData) {
             if (actionData.code === 'Success') {
                 setModalOpen(false);
-                setError({ severity: 'success', message: 'Sent email' })
+                setError({ severity: 'success', message: 'Sent email', error: true })
             } else {
-                setError({ severity: 'error', message: 'Something went wrong' })
+                setError({ severity: 'error', message: 'Something went wrong', error: true })
             }
         }
     }, [actionData, setError]);
 
-    function handleSend(emailInfo) {
+    function handleSend(emailInfo: { email: string, from: string, content: string, subject: string }) {
         // to, from, content, donorId, donationIndex
         const update = {
             to: emailInfo.email,
@@ -74,13 +76,13 @@ const DonorItem = ({ item }: DonorItemProps) => {
             content: emailInfo.content,
             subject: emailInfo.subject,
             donorId: item.id,
-            donationIndex: donationInfo.index
+            donationIndex: donationInfo?.index
         }
 
-        submit(update, { method: 'POST', encType: 'application/json', action: `/donors/${item.id}` });
+        submit(update as SubmitTarget, { method: 'POST', encType: 'application/json', action: `/donors/${item.id}` });
     }
 
-    function handleThanksClick(i) {
+    function handleThanksClick(i: number) {
         const recognitionName = item.donations[i].recognitionName === '(anonymous)'
             ? `${item.firstName} ${item.lastName}`
             : item.donations[i].recognitionName;
@@ -96,13 +98,15 @@ const DonorItem = ({ item }: DonorItemProps) => {
         setModalOpen(true);
     }
 
-    const mapRef = createRef();
+    const mapRef = createRef<HTMLDivElement>();
     useEffect(() => {
-        getMap(mapRef.current, item.address, item.location)
-            .then(infoWindow => {
-                infoWindow.setContent(`${item.address || ''} ${item.location || ''}`)
-            })
-            .catch(e => console.log(e))
+        if (mapRef.current) {
+            getMap(mapRef.current, item.address, item.location)
+                .then(infoWindow => {
+                    infoWindow.setContent(`${item.address || ''} ${item.location || ''}`)
+                })
+                .catch(e => console.log(e))
+        }
     }, [item, mapRef]);
 
     return (

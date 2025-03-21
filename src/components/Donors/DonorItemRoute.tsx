@@ -4,12 +4,13 @@ import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import DeleteDialog from "../Common/DeleteDialog";
 import NoResource from "../Common/NoResource";
+import { Donor } from "../../types/DB";
 
 const DonorItemRoute = () => {
 
 
     const [modalOpen, setModalOpen] = useState(false);
-    const donor = useLoaderData();
+    const donor = useLoaderData() as Donor;
     const submit = useSubmit();
 
     const handleDelete = () => {

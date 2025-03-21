@@ -97,6 +97,7 @@ export interface Donation {
 }
 
 export interface Donor {
+    lists: string[]
     address: string,
     email: string,
     firstName: string,

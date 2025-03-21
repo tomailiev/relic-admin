@@ -10,11 +10,12 @@ export interface ActionDialog extends CommonDialog {
 };
 
 export interface DonationInfo {
+    index: number;
     email: string;
     subject: string;
     content: string;
     recognitionName: string;
-    amount: string;
+    amount: number;
     acknowledged?: {
         to: string;
         from: string;

@@ -6,7 +6,7 @@ import { donationAcknowledgementProps } from "../../props/donationAcknowledgemen
 import { CommonDialog, DonationInfo } from "../../types/dialog";
 
 
-const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo, handleSend: () => {} }) => {
+const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo | null, handleSend: (emailInfo: { email: string, from: string, content: string, subject: string }) => void }) => {
 
     const fields = {
         email: donationInfo?.email,
@@ -15,7 +15,7 @@ const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog 
         content: donationInfo?.content
             .replaceAll('\\n', '\n')
             .replace('{recognitionName}', donationInfo?.recognitionName)
-            .replace('{amount}', donationInfo?.amount)
+            .replace('{amount}', donationInfo?.amount.toString())
     }
 
     return (

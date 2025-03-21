@@ -1,8 +1,9 @@
 import { AutoAwesomeMotion, Email, LocationCity, LocationOn, Smartphone } from "@mui/icons-material";
 import { List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Donor } from "../../types/DB";
 
-const DonorFields = ({ donor }) => {
+const DonorFields = ({ donor }: {donor: Donor}) => {
 
     return (
         <List>

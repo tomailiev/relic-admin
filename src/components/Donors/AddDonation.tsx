@@ -2,13 +2,14 @@ import { Box, } from "@mui/material"
 import { useContext, useEffect } from "react";
 import { useActionData, useNavigate, } from "react-router-dom";
 import SearchDonor from "./SearchDonor";
+// @ts-ignore
 import { InstantSearch } from "react-instantsearch";
 import searchClient from "../../utils/algolia/algolia";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 
 const AddDonation = () => {
     const { setError } = useContext(ErrorContext);
-    const actionData = useActionData();
+    const actionData = useActionData() as AppErrorType;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,9 +18,9 @@ const AddDonation = () => {
         }
     }, [actionData, setError]);
 
-    function handleSubmission(data) {
+    function handleSubmission(data: { objectID: string } | null) {
         navigate(data ? `/donors/${data.objectID}/edit` : '/donors/add');
-       
+
     }
 
 

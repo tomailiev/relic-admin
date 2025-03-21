@@ -1,16 +1,19 @@
 import { Autocomplete, Box, Button, Paper, TextField } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
+// @ts-ignore
 import { useHits, useSearchBox } from "react-instantsearch";
 
-const SearchDonor = ({ handleDonor }) => {
+const SearchDonor = ({ handleDonor }: {handleDonor: (data: { objectID: string } | null) => void}) => {
 
     const { hits } = useHits();
     const { query, refine, } = useSearchBox();
     const [inputValue, setInputValue] = useState(query);
-    const [donor, setDonor] = useState(null);
+    const [donor, setDonor] = useState<{
+        firstName: string; lastName: string; email: string; objectID: string;
+    } | null>(null);
     const [searchStatus, setSearchStatus] = useState(false);
 
-    function setQuery(e) {
+    function setQuery(e: ChangeEvent<HTMLInputElement>) {
         setInputValue(e.currentTarget.value);
         if (e.currentTarget.value.length >= 4) {
             setSearchStatus(true);
@@ -18,10 +21,15 @@ const SearchDonor = ({ handleDonor }) => {
         refine(e.currentTarget.value);
     }
 
-    function handleChange(_e, o) {
+    function handleChange(_e: SyntheticEvent, value: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        objectID: string;
+    } | null) {
 
-        setDonor(o);
-        setSearchStatus(!!o);
+        setDonor(value);
+        setSearchStatus(!!value);
     }
 
     return (
@@ -41,7 +49,7 @@ const SearchDonor = ({ handleDonor }) => {
             <Autocomplete
                 value={donor}
                 options={hits || []}
-                getOptionLabel={(option) => `${option.firstName} ${option.lastName}, ${option.email}`}
+                getOptionLabel={(option: { firstName: string, lastName: string, email: string }) => `${option.firstName} ${option.lastName}, ${option.email}`}
                 renderInput={(params) => <TextField {...params} value={inputValue} onChange={setQuery} label="Search donors" />}
                 onChange={handleChange}
             />
