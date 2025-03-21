@@ -3,16 +3,18 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
-import { ItemProps } from "../../types/fnProps";
+import { FieldsArrayItem, ItemProps } from "../../types/fnProps";
+import { Campaign } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
 const NewCampaign = (itemProps: ItemProps) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState(null);
+    const [submission, setSubmission] = useState<Campaign | null>(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData() as AppErrorType;
-    const lists = useLoaderData();
+    const lists = useLoaderData() as { value: string, display: string }[];
 
     useEffect(() => {
         if (actionData?.error) {
@@ -23,29 +25,31 @@ const NewCampaign = (itemProps: ItemProps) => {
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
 
-    function handleObjectSubmission(data) {
+    function handleObjectSubmission(data: Campaign) {
 
         setSubmission(prev => {
             return Object.assign(prev || {}, data);
         });
     }
 
-    function addLists(arr = []) {
-        const arrCopy = JSON.parse(JSON.stringify(arr));
+    function addLists(arr: FieldsArrayItem[] | undefined) {
+        const arrCopy: FieldsArrayItem[] = JSON.parse(JSON.stringify(arr));
         const toField = arrCopy.find(item => item.id === 'to');
-        toField.options = toField.options.concat(lists);
+        if (toField && toField.options) {
+            toField.options = toField.options.concat(lists);
+        }
         return arrCopy;
     }
 
     function finishSubmission() {
-        submit(submission, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' });
+        submit(submission as SubmitTarget, { method: 'POST', action: `/${itemProps.itemType}/add`, encType: 'application/json' });
     }
 
     return (
         <Box m={4}>
             <AddForm
                 fields={submission || itemProps.fields}
-                fieldsArray={addLists(itemProps[itemProps.steps[activeStep]])}
+                fieldsArray={addLists(itemProps.fieldsArray)}
                 handleFormCompletion={handleObjectSubmission}
                 schema={itemProps.schemas[itemProps.steps[activeStep]]}
             />
