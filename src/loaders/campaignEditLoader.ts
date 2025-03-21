@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { downloadDocsV2, downloadOneDoc } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
 export default function campaignEditLoader({ params }: LoaderFunctionArgs) {
     const docId = params.campaignId

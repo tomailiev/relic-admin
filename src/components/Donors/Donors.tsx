@@ -2,18 +2,19 @@ import { Typography, Container, Button, Box, Paper, TextField, Stack } from "@mu
 import { NavLink, useLoaderData } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import MapView from "./MapView";
 import CustomGridToolbar from "../Common/GridExportToolbar";
 import donorProps from "../../props/donorProps";
 import { oneYearAgoFromTomorrowDateString, todayDateString } from "../../vars/dateObjects";
 import { reduceDonations } from "../../vars/reduceDonations";
+import { Donor } from "../../types/DB";
 
 
 
 const Donors = () => {
 
-    const donors = useLoaderData();
+    const donors = useLoaderData() as Donor[];
     const [mapView, setMapView] = useState(false);
     const [startDate, setStartDate] = useState(oneYearAgoFromTomorrowDateString);
     const [endDate, setEndDate] = useState(todayDateString);
@@ -28,7 +29,7 @@ const Donors = () => {
             .reduce((a, c) => a + c, 0))
     }, [donors, endDate, startDate])
 
-    function updateDateValue(e) {
+    function updateDateValue(e: ChangeEvent<HTMLInputElement>) {
         if (e.target.name === 'startDate') {
             setStartDate(e.target.value)
         } else {

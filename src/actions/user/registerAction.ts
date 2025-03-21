@@ -1,7 +1,8 @@
 import { newUserSchema } from "../../utils/yup/yup-schemas";
 import { registerUser } from "../../utils/firebase/firebase-functions";
+import { ActionFunctionArgs } from "react-router-dom";
 
-export default function registerAction({ request, params }) {
+export default function registerAction({ request, params }: ActionFunctionArgs) {
     return request.formData()
         .then(doc => {
             const updates = Object.fromEntries(doc);

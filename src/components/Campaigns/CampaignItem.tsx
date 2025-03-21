@@ -35,7 +35,7 @@ const CampaignItem = ({ item, setEditable }) => {
         }
     }, [actionData, setError]);
 
-    const handleCampaignSend = (testAddresses) => {
+    const handleCampaignSend = (testAddresses: string | null) => {
         submit(testAddresses ? { campaignId: item.id, testAddresses } : { campaignId: item.id }, { method: 'POST', encType: 'application/json' })
     }
 

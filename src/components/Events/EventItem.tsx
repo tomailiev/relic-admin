@@ -15,7 +15,7 @@ const EventItem = ({ item }: { item: Event }) => {
     function handleCopyText() {
         navigator.clipboard.writeText(`https://relicensemble.org/?dialog=programBook&eventId=${item.id}`)
             .then(() => {
-                setError({ severity: 'success', message: 'Copied link' })
+                setError({ severity: 'success', message: 'Copied link', error: true })
             })
     }
 

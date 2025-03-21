@@ -2,9 +2,10 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, 
 import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from "@mui/x-data-grid";
 import { clickColumns, fullColumns, multiColumns, uniqueOpenColumns, uniqueClickColumns, clickSorting, fullSorting, uniqueClickSorting, uniqueOpenSorting } from "../../props/campaignStatProps";
+import { CommonDialog } from "../../types/dialog";
 
 
-const StatsDialog = ({ open, setOpen, name, list }) => {
+const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string, list: any[]}) => {
 
     const columns = {
         click: clickColumns,

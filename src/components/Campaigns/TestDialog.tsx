@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ChangeEvent, useState } from "react";
+import { CommonDialog } from "../../types/dialog";
 
 
-const TestDialog = ({ open, setOpen, handleSend }) => {
+const TestDialog = ({ open, setOpen, handleSend }: CommonDialog & { handleSend: (textValue: string) => void }) => {
 
     const [textValue, setTextValue] = useState('');
 

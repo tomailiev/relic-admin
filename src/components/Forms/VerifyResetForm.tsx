@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import userProps from "../../props/userProps";
 
 
-const VerifyResetForm = ({ reason }) => {
+const VerifyResetForm = ({ reason }: { reason: string }) => {
     const errorData = useActionData();
     const navigation = useNavigation();
     const submit = useSubmit();

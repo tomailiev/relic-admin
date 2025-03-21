@@ -1,13 +1,16 @@
 import { Container } from "@mui/material";
 import { getMultiMap } from "../../utils/google-maps/getMap";
 import { createRef, useEffect } from "react";
+import { Donor } from "../../types/DB";
 
-const MapView = ({ donors }) => {
-    const mapRef = createRef();
+const MapView = ({ donors }: { donors: Donor[] }) => {
+    const mapRef = createRef<HTMLDivElement>();
 
     useEffect(() => {
-        getMultiMap(mapRef.current, donors)
-            .catch(e => console.log(e))
+        if (mapRef.current) {
+            getMultiMap(mapRef.current, donors)
+                .catch(e => console.log(e))
+        }
     }, [donors, mapRef]);
 
     return (

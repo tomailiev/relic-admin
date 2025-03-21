@@ -1,5 +1,5 @@
 import { Alert, Box, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ReactElement } from "react";
 import { Form, NavLink, useActionData, useNavigation } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import userProps from "../../props/userProps";
@@ -12,7 +12,7 @@ const SignInForm = () => {
     const [hasError, setHasError] = useState(userProps.loginFields);
     const [userFields, setUserFields] = useState(userProps.loginFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [alertMessage, setAlertMessage] = useState('');
+    const [alertMessage, setAlertMessage] = useState<string | ReactElement>('');
 
     useEffect(() => {
         if (errorData) {

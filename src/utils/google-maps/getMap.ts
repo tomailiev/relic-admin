@@ -36,7 +36,7 @@ async function getMap(mapRef: HTMLElement, address: string, location: string) {
     return infoWindow;
 }
 
-async function getMultiMap(mapRef: HTMLElement, items: DonorItemProps['item'][],) {
+async function getMultiMap(mapRef: HTMLDivElement, items: DonorItemProps['item'][],) {
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');
 

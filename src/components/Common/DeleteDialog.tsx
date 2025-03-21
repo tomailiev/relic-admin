@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { CommonDialog } from "../../types/dialog";
 
 
-const DeleteDialog = ({ open, setOpen, name, handleDelete }: { open: boolean, setOpen: Dispatch<SetStateAction<boolean>>, name: string, handleDelete: () => void }) => {
+const DeleteDialog = ({ open, setOpen, name, handleDelete }: { name: string, handleDelete: () => void } & CommonDialog) => {
 
     const [textValue, setTextValue] = useState('');
 

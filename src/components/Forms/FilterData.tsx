@@ -1,20 +1,22 @@
 import { Box, Button, Container } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRowId, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
+import { AnyItemType } from "../../types/DB";
+import { ItemProps } from "../../types/fnProps";
 
-const FilterData = ({ item, itemProps, handleFormCompletion }) => {
+const FilterData = ({ item, itemProps, handleFormCompletion }: {item: AnyItemType, itemProps: ItemProps, handleFormCompletion: (data: object) => void}) => {
 
     const [dataItems, setDataItems] = useState([]);
-    const [rowSelectionModel, setRowSelectionModel] = useState([]);
+    const [rowSelectionModel, setRowSelectionModel] = useState<GridRowId[]>([]);
 
     useEffect(() => {
-        if (item[itemProps.tempDestinationField]) {
+        if (itemProps.tempDestinationField && item[itemProps.tempDestinationField]) {
             setRowSelectionModel(item[itemProps.tempDestinationField].map(({ id }) => id));
             setDataItems(item[itemProps.tempDestinationField]);
         }
     }, [item, itemProps.tempDestinationField]);
 
-    function filterer(model) {
+    function filterer(model: GridRowSelectionModel) {
         setRowSelectionModel(model);
         const newDataItems = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
         setDataItems(newDataItems)
