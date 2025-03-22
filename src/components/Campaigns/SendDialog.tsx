@@ -1,10 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ChangeEvent, useState } from "react";
-import { ActionDialog } from "../../types/dialog";
+import { ActionDialog, CommonDialog } from "../../types/dialog";
 
 
-const SendDialog = ({ open, setOpen, name, handleSend }: ActionDialog & { name: string }) => {
+const SendDialog = ({ open, setOpen, name, handleSend }: CommonDialog & { name: string, handleSend: (testAddresses: string | null) => void }) => {
 
     const [textValue, setTextValue] = useState('');
 
@@ -45,7 +45,7 @@ const SendDialog = ({ open, setOpen, name, handleSend }: ActionDialog & { name: 
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setOpen(false)}>Cancel</Button>
-                <Button disabled={textValue !== name} onClick={() => handleSend()} autoFocus>
+                <Button disabled={textValue !== name} onClick={() => handleSend(null)} autoFocus>
                     Send
                 </Button>
             </DialogActions>

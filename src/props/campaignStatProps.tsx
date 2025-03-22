@@ -3,7 +3,7 @@ import { Link as ExternalLink } from '@mui/material';
 import { Check } from "@mui/icons-material";
 import { GridColDef } from "@mui/x-data-grid";
 import { Timestamp } from "firebase/firestore";
-import { Campaign } from "../types/DB";
+import { Campaign, SubscriberCampaignStat } from "../types/DB";
 
 export const multiColumns: GridColDef[] = [
     {
@@ -199,15 +199,6 @@ export const clickReducer = (a: { email: string, timestamps: Timestamp[], links:
     return a;
 }
 
-interface SubscriberCampaignStat {
-    email: string,
-    open: boolean,
-    click: boolean,
-    bounce: boolean,
-    reject: boolean,
-    unsubscribe: boolean,
-    spam: boolean
-};
 
 export const campaignStatSummarizer = (campaign: Campaign) => {
     return campaign.sentTo.reduce((a: SubscriberCampaignStat[], c) => {

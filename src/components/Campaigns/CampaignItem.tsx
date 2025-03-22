@@ -1,24 +1,26 @@
 import { Email, Group, ShortText, Title } from "@mui/icons-material";
 import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, Tooltip } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
 import { Link, useActionData, useSubmit } from "react-router-dom";
 import TestDialog from "./TestDialog";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import StatsDialog from "./StatsDialog";
 import { openReducer, clickReducer, campaignStatSummarizer } from "../../props/campaignStatProps";
+import { Campaign, statListType, SubscriberCampaignStat } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
-const CampaignItem = ({ item, setEditable }) => {
+const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Dispatch<SetStateAction<boolean>> }) => {
 
     const { setError } = useContext(ErrorContext);
     const [sendModalOpen, setSendModalOpen] = useState(false);
     const [testModalOpen, setTestModalOpen] = useState(false);
     const [statsModalOpen, setStatsModalOpen] = useState(false);
-    const [statsList, setStatsList] = useState([]);
+    const [statsList, setStatsList] = useState <statListType | SubscriberCampaignStat[]> ([]);
     const [statsName, setStatsName] = useState('');
-    const [query, setQuery] = useState('desktop');
-    const actionData = useActionData();
+    const [query, setQuery] = useState<'desktop' | 'mobile'>('desktop');
+    const actionData = useActionData() as AppErrorType;
     const submit = useSubmit();
 
     useEffect(() => {
@@ -36,14 +38,14 @@ const CampaignItem = ({ item, setEditable }) => {
     }, [actionData, setError]);
 
     const handleCampaignSend = (testAddresses: string | null) => {
-        submit(testAddresses ? { campaignId: item.id, testAddresses } : { campaignId: item.id }, { method: 'POST', encType: 'application/json' })
+        submit(testAddresses ? { campaignId: item.id, testAddresses } as SubmitTarget : { campaignId: item.id } as SubmitTarget, { method: 'POST', encType: 'application/json' })
     }
 
-    const handleQueryChange = (e, newQuery) => {
+    const handleQueryChange = (e: MouseEvent<HTMLElement>, newQuery: 'desktop' | 'mobile') => {
         setQuery(newQuery);
     }
 
-    const handleStatsDialogOpen = (name, list) => {
+    const handleStatsDialogOpen = (name: string, list: statListType | SubscriberCampaignStat[]) => {
         setStatsList(list);
         setStatsName(name);
         setStatsModalOpen(true);

@@ -209,3 +209,20 @@ export type DeschematifiedItemTypeMap = {
     subscribers: DeschematifiedSubscriber;
     event: DeEvent
 }
+
+
+export type TimestampType =
+    | { timestamp: Timestamp; timestamps?: never }
+    | { timestamps: Timestamp[]; timestamp?: never };
+
+export type statListType = ({ email: string, links?: string[], count?: number } & TimestampType)[];
+
+export interface SubscriberCampaignStat {
+    email: string,
+    open: boolean,
+    click: boolean,
+    bounce: boolean,
+    reject: boolean,
+    unsubscribe: boolean,
+    spam: boolean
+};

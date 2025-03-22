@@ -3,9 +3,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import { DataGrid } from "@mui/x-data-grid";
 import { clickColumns, fullColumns, multiColumns, uniqueOpenColumns, uniqueClickColumns, clickSorting, fullSorting, uniqueClickSorting, uniqueOpenSorting } from "../../props/campaignStatProps";
 import { CommonDialog } from "../../types/dialog";
+import { statListType, SubscriberCampaignStat } from "../../types/DB";
 
 
-const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string, list: any[]}) => {
+const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string, list: statListType | SubscriberCampaignStat[]}) => {
 
     const columns = {
         click: clickColumns,
