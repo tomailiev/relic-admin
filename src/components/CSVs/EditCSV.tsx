@@ -1,19 +1,21 @@
 import { Box, Button, } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "../Items/ItemSwitch";
 import { ItemProps } from "../../types/fnProps";
+import { AnyItemType, CSVItem, Subscriber } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
 
 const EditCSV = ({ itemType, fieldsArray, nestedArray, nestedName, }: ItemProps) => {
     const { setError } = useContext(ErrorContext);
-    const [submission, setSubmission] = useState(null);
+    const [submission, setSubmission] = useState<AnyItemType | null>(null);
     const submit = useSubmit();
-    const item = useLoaderData();
+    const item = useLoaderData() as { docs: Subscriber[], id: string };
     // const navigate = useNavigate();
-    const actionData = useActionData();
+    const actionData = useActionData() as AppErrorType;
 
     useEffect(() => {
         if (actionData?.error) {
@@ -22,7 +24,7 @@ const EditCSV = ({ itemType, fieldsArray, nestedArray, nestedName, }: ItemProps)
     }, [actionData, setError]);
 
     function finishSubmission() {
-        submit(submission, { method: 'POST', action: `/${itemType}/${item.id}/edit`, encType: 'application/json' })
+        submit(submission as SubmitTarget, { method: 'POST', action: `/${itemType}/${item.id}/edit`, encType: 'application/json' })
     }
 
     return (

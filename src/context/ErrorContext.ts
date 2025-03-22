@@ -4,7 +4,8 @@ import { createContext, Dispatch, SetStateAction } from "react";
 export type AppErrorType = {
     message: string,
     severity: 'success' | 'error',
-    error: boolean
+    error?: boolean,
+    code?: string
 }
 
 interface ErrorContextType {

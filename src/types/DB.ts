@@ -171,14 +171,21 @@ export interface DeschematifiedSubscriber extends Omit<Subscriber, 'status' | 't
 }
 
 export interface CSV {
-    csv: string
+    csv: string,
+    csvFile?: File,
+    id?: string
 }
 
 export interface Text {
     [key: string]: string
 };
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber;
+export interface CSVItem {
+    docs: Subscriber[];
+    id: string;
+}
+
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem;
 
 export type ItemTypeMap = {
     'videos': Video;
@@ -193,6 +200,7 @@ export type ItemTypeMap = {
     'subscribers': Subscriber;
     'deschematifiedSubscribers': DeschematifiedSubscriber;
     'CSVs': CSV;
+    'CSVItems': CSVItem
     'texts': Text
 };
 

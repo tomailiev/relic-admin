@@ -1,7 +1,8 @@
 import { MenuItem } from "@mui/material";
 import { GridExportDisplayOptions, GridExportMenuItemProps, GridFileExportOptions, gridFilteredSortedRowIdsSelector, gridVisibleColumnFieldsSelector, useGridApiContext } from "@mui/x-data-grid";
 import { GridApiCommunity } from "@mui/x-data-grid/internals";
-import { Document, } from "docx";
+// @ts-ignore
+import { Document, Paragraph, TextRun, Packer } from "docx";
 import { RefObject } from "react";
 import { useLocation } from "react-router-dom";
 

@@ -1,13 +1,13 @@
 import { useContext, useEffect } from "react";
-import ErrorContext from "../../context/ErrorContext";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import { useActionData } from "react-router-dom";
 import { Container, Typography } from "@mui/material";
 
 const FetchError = () => {
     const { setError } = useContext(ErrorContext);
-    const actionData = useActionData();
+    const actionData = useActionData() as AppErrorType;
 
-    function formatErrorCode(errorCode) {
+    function formatErrorCode(errorCode: string | undefined) {
         return errorCode ? errorCode.replace('-', ' ') : '';
     }
 

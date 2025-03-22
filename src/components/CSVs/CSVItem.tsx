@@ -1,24 +1,26 @@
 import { Box, Container } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
+import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
 import CSVProps from "../../props/CSVProps";
+import { AnyItemType, CSV, CSVItem, Subscriber } from "../../types/DB";
+import { SubmitTarget } from "react-router-dom/dist/dom";
 // import { deschematify } from "../../vars/schemaFunctions";
 
-const CSVItem = ({ item, mutateItem }) => {
+const CSVItem = ({ item, mutateItem }: { item: CSV, mutateItem: Dispatch<SetStateAction<{ newSubs: Subscriber[], final: string } | null>> }) => {
 
     const fetcher = useFetcher();
-    const subscribers = useLoaderData();
-    const [subs, setSubs] = useState([]);
+    const subscribers = useLoaderData() as CSVItem;
+    const [subs, setSubs] = useState<Subscriber[]>([]);
     const location = useLocation();
 
     useEffect(() => {
         if (!(location.pathname === `/CSVs/${subscribers.id}`)) {
             if (fetcher.state === 'idle' && !fetcher.data) {
-                fetcher.submit({ fileName: item.csvFile?.name || item.id }, { method: 'POST', encType: 'application/json' })
+                fetcher.submit({ fileName: item.csvFile?.name || item.id } as SubmitTarget, { method: 'POST', encType: 'application/json' })
             } else if (fetcher.state === 'idle' && fetcher.data) {
 
-                setSubs(fetcher.data.filter(item => {
+                setSubs(fetcher.data.filter((item: { email: string }) => {
                     return !(subscribers.docs?.map(subscriber => subscriber.id).includes(item.email))
                 }));
             }
@@ -27,11 +29,11 @@ const CSVItem = ({ item, mutateItem }) => {
         }
     }, [item.csvFile?.name, item.id, fetcher, subscribers, location.pathname]);
 
-    function filterer(model) {
+    function filterer(model: GridRowSelectionModel) {
         if (location.pathname === `/CSVs/${subscribers.id}`) {
             return;
         }
-        const newSubs = (subs.filter(({ id }) => model.includes(id)));
+        const newSubs = (subs.filter(({ id }) => id && model.includes(id)));
 
         mutateItem({ newSubs, final: '1' });
     }
@@ -45,7 +47,7 @@ const CSVItem = ({ item, mutateItem }) => {
                         checkboxSelection={location.pathname !== `/CSVs/${subscribers.id}`}
                         onRowSelectionModelChange={filterer}
                         rows={subs}
-                        columns={CSVProps.dataFilterColumns?.subscribers}
+                        columns={CSVProps.dataFilterColumns?.subscribers || []}
                         initialState={{
                             sorting: {
                                 sortModel: [CSVProps.sorting],
