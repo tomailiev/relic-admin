@@ -7,7 +7,8 @@ import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { ItemProps } from "../../types/fnProps";
-import { Campaign } from "../../types/DB";
+import { Campaign, CampaignComponent } from "../../types/DB";
+import { AnyMJMLComponent, AnyMJMLKey } from "../../types/campaignComponents";
 
 const options = [
     { value: 'button' },
@@ -28,13 +29,14 @@ const options = [
     // 'spacer'
 ];
 
+
 const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
     const { campaign } = useLoaderData() as { campaign: Campaign };
 
     const [activeStep, setActiveStep] = useState(0);
-    const [component, setComponent] = useState(null);
-    const [componentList, setComponentList] = useState(campaign?.components || []);
-    const [editedComponent, setEditedComponent] = useState(null);
+    const [component, setComponent] = useState<AnyMJMLKey | null>(null);
+    const [componentList, setComponentList] = useState<AnyMJMLComponent[]>(campaign?.components || []);
+    const [editedComponent, setEditedComponent] = useState<AnyMJMLComponent | null>(null);
     const [emailHtml, setEmailHtml] = useState(campaign?.html || '');
     const [emailMjml, setEmailMjml] = useState(campaign?.mjml || '');
 
@@ -45,7 +47,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
     const fSubmit = fetcher.submit;
 
     useEffect(() => {
-        fSubmit({ components: componentList }, { method: 'post', encType: 'application/json' });
+        fSubmit(JSON.stringify({ components: componentList }), { method: 'post', encType: 'application/json' });
     }, [componentList, fSubmit]);
 
     useEffect(() => {
@@ -54,23 +56,23 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
             setEmailMjml(fetcher.data.mjml);
         }
         if (fetcher.data?.errors?.length) {
-            setError({ severity: 'error', message: fetcher.data.errors.map(e => e.message).join(';\n'), error: true })
+            setError({ severity: 'error', message: fetcher.data.errors.map((e: Error) => e.message).join(';\n'), error: true })
         }
     }, [fetcher.data, setError]);
 
 
 
-    function addComponentToList(comp: { index?: number, id: string } & { [key: string]: string }) {
+    function addComponentToList(comp: AnyMJMLComponent) {
         setComponent(null);
         if (editedComponent) {
-            setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index + 1)))
+            setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index ? comp.index + 1 : prev.length + 1)))
             setEditedComponent(null);
         } else {
             setComponentList(prev => prev.concat(comp));
         }
     }
 
-    function selectComponent(comp: { index?: number, id: string } & { [key: string]: string }) {
+    function selectComponent(comp: { component: AnyMJMLKey }) {
         setComponent(null);
         setEditedComponent(null);
         setTimeout(() => {
@@ -78,10 +80,10 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
         }, 250);
     }
 
-    function editComponent(i) {
+    function editComponent(i: number) {
         setComponent(null);
         setTimeout(() => {
-            setComponent(componentList[i].id.substring(componentList[i].id.lastIndexOf('-') + 1));
+            setComponent(componentList[i].id.substring(componentList[i].id.lastIndexOf('-') + 1) as AnyMJMLKey);
             setEditedComponent({ ...componentList[i], index: i });
         }, 250);
     }
@@ -106,7 +108,17 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
 
     function finishSubmission() {
         const formData = { ...campaign, components: componentList, html: emailHtml, mjml: emailMjml }
-        submit(formData, { method: 'POST', encType: 'application/json', })
+        submit(JSON.stringify(formData), { method: 'POST', encType: 'application/json', })
+    }
+
+    function getComponentTitle(comp: AnyMJMLComponent) {
+        return 'text' in comp
+            ? comp.text
+            : 'variant' in comp
+                ? comp.variant
+                : 'src' in comp
+                    ? comp.src
+                    : comp.id
     }
 
     return (
@@ -128,7 +140,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
                                 key={`${componentItem.id}_${i}`}
                                 sx={{ borderRadius: '3px', border: '1px solid black' }}
                             >
-                                <ListItemText primary={componentItem.id} secondary={<Typography variant="body2" overflow={'hidden'}>{componentItem.text || componentItem.variant || componentItem.src}</Typography>} />
+                                <ListItemText primary={componentItem.id} secondary={<Typography variant="body2" overflow={'hidden'}>{getComponentTitle(componentItem)}</Typography>} />
                                 <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
                                     <KeyboardArrowUp />
                                 </IconButton>

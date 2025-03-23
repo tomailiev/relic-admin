@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 import { ListWithNewMembers } from "./itemProps"
+import { AnyMJMLComponent } from "./campaignComponents"
 
 export interface WithId {
     id: string
@@ -116,6 +117,11 @@ interface CampaignAnalyticsEvent {
     timestamp: Timestamp
 }
 
+export type CampaignComponent = {
+    id: string,
+    index?: number
+}
+
 export interface Campaign {
     bounce: (CampaignAnalyticsEvent & { bounceType: string })[],
     click: (CampaignAnalyticsEvent & { link: string })[],
@@ -134,7 +140,7 @@ export interface Campaign {
     html: string,
     from: string,
     datetime: Timestamp,
-    components: ({ id: string, index?: number } & { [key: string]: string })[],
+    components: AnyMJMLComponent[],
     id?: string
 };
 

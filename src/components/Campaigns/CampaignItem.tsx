@@ -9,6 +9,7 @@ import StatsDialog from "./StatsDialog";
 import { openReducer, clickReducer, campaignStatSummarizer } from "../../props/campaignStatProps";
 import { Campaign, statListType, SubscriberCampaignStat } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
+import { MJMLPreview } from "../../types/campaignComponents";
 
 
 const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Dispatch<SetStateAction<boolean>> }) => {
@@ -49,6 +50,11 @@ const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Disp
         setStatsList(list);
         setStatsName(name);
         setStatsModalOpen(true);
+    }
+
+    function getPreviewText() {
+        const previewComp = item.components?.find(val => val.id === 'mj-preview');
+        return (previewComp && 'text' in previewComp) ? previewComp.text : 'No Preview';
     }
 
     return (
@@ -131,7 +137,7 @@ const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Disp
                                     <ListItemIcon>
                                         <ShortText />
                                     </ListItemIcon>
-                                    <ListItemText primary={item.components?.find(val => val.id === 'mj-preview')?.text} />
+                                    <ListItemText primary={getPreviewText()} />
                                 </ListItem>
                                 {item.sentTo?.length
                                     ? <ListItemButton onClick={() => handleStatsDialogOpen('full', campaignStatSummarizer(item))}>

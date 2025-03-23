@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Link as ExternalLink } from '@mui/material';
 import { Check } from "@mui/icons-material";
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef, GridSortItem } from "@mui/x-data-grid";
 import { Timestamp } from "firebase/firestore";
 import { Campaign, SubscriberCampaignStat } from "../types/DB";
 
@@ -59,7 +59,7 @@ export const clickColumns: GridColDef[] = [
     }
 ];
 
-export const clickSorting = { field: 'link', sort: 'asc' };
+export const clickSorting: GridSortItem = { field: 'link', sort: 'asc' };
 
 export const uniqueOpenColumns: GridColDef[] = [
     {
@@ -87,7 +87,7 @@ export const uniqueOpenColumns: GridColDef[] = [
     }
 ];
 
-export const uniqueOpenSorting = { field: 'count', sort: 'desc' };
+export const uniqueOpenSorting: GridSortItem = { field: 'count', sort: 'desc' };
 
 export const uniqueClickColumns: GridColDef[] = [
     {
@@ -116,7 +116,7 @@ export const uniqueClickColumns: GridColDef[] = [
     }
 ];
 
-export const uniqueClickSorting = { field: 'links', sort: 'desc' }
+export const uniqueClickSorting: GridSortItem = { field: 'links', sort: 'desc' }
 
 export const fullColumns: GridColDef[] = [
     {
@@ -169,7 +169,7 @@ export const fullColumns: GridColDef[] = [
     },
 ];
 
-export const fullSorting = { field: 'open', sort: 'desc' };
+export const fullSorting: GridSortItem = { field: 'open', sort: 'desc' };
 
 export const openReducer = (a: {email: string, count: number, timestamps: Timestamp[]}[], c: {email: string, timestamp: Timestamp}) => {
     const item = a.find(sub => sub.email === c.email);

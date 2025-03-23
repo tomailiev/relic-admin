@@ -6,11 +6,11 @@ import { CommonDialog } from "../../types/dialog";
 import { statListType, SubscriberCampaignStat } from "../../types/DB";
 
 
-const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string, list: statListType | SubscriberCampaignStat[]}) => {
+const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & { name: string, list: statListType | SubscriberCampaignStat[] }) => {
 
     const columns = {
-        click: clickColumns,
-        full: fullColumns,
+        'full': fullColumns,
+        'click': clickColumns,
         'unique click': uniqueClickColumns,
         'unique open': uniqueOpenColumns
     };
@@ -20,6 +20,10 @@ const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string
         full: fullSorting,
         'unique click': uniqueClickSorting,
         'unique open': uniqueOpenSorting
+    }
+
+    function hasProperty<T extends object>(obj: T, key: string | number | symbol): key is keyof T {
+        return key in obj;
     }
 
     return (
@@ -43,11 +47,11 @@ const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & {name: string
                     <Box minWidth={'800px'} width={'100%'}>
                         <DataGrid
                             rows={list.map((item, i) => ({ ...item, id: i }))}
-                            columns={columns[name] || multiColumns}
+                            columns={hasProperty(columns, name) ? columns[name] : multiColumns}
                             // getRowHeight={({densityFactor}) => densityFactor * 50}
                             initialState={{
                                 sorting: {
-                                    sortModel: [sorting[name] || { field: 'timestamp', sort: 'desc' }],
+                                    sortModel: [hasProperty(sorting, name) ? sorting[name] : { field: 'timestamp', sort: 'desc' }],
                                 },
                                 // density: 'comfortable'
                             }}
