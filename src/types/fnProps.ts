@@ -7,7 +7,7 @@ export interface FieldsArrayItem {
     label: string,
     id: string,
     type?: string,
-    options?: { value: string | number, label?: string }[],
+    options?: { value: string | number, label?: string, type?: string, display?: string }[],
     multiline?: boolean
 }
 

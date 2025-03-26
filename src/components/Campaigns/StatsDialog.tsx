@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { clickColumns, fullColumns, multiColumns, uniqueOpenColumns, uniqueClickColumns, clickSorting, fullSorting, uniqueClickSorting, uniqueOpenSorting } from "../../props/campaignStatProps";
 import { CommonDialog } from "../../types/dialog";
 import { statListType, SubscriberCampaignStat } from "../../types/DB";
+import hasProperty from "../../vars/hasProperty";
 
 
 const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & { name: string, list: statListType | SubscriberCampaignStat[] }) => {
@@ -22,9 +23,6 @@ const StatsDialog = ({ open, setOpen, name, list }: CommonDialog & { name: strin
         'unique open': uniqueOpenSorting
     }
 
-    function hasProperty<T extends object>(obj: T, key: string | number | symbol): key is keyof T {
-        return key in obj;
-    }
 
     return (
         <Dialog open={open} maxWidth={'lg'} fullWidth={true}>

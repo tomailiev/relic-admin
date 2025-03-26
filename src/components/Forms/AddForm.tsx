@@ -1,10 +1,13 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography } from "@mui/material";
+import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
+import { FieldsArrayItem, ItemProps } from "../../types/fnProps";
+import { Schema, ValidationError } from "yup";
+import hasProperty from "../../vars/hasProperty";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: ItemProps & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
@@ -24,16 +27,19 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    function removeError(_e, id) {
+    function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
 
         setHasError(prev => ({ ...prev, [id]: '' }))
     }
 
-    function handleInputChange(e) {
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>): void;
+    function handleInputChange(e: SelectChangeEvent<unknown>): void;
+    function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown>) {
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }
         })
     }
+
 
 
     async function submitForm() {
@@ -43,10 +49,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             handleFormCompletion(validated);
         } catch (e) {
             console.log(e);
-
-            if (e.inner) {
+            if (e instanceof ValidationError && e.inner) {
                 const errors = e.inner?.reduce((p, c) => {
-                    return { ...p, [c.path]: c.message, };
+                    return c.path ? { ...p, [c.path]: c.message, } : p;
                 }, {});
 
                 setHasError(errors);
@@ -58,14 +63,28 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         <Paper sx={{ mx: 4, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray.map(({ id, label, type, multiline, options }) => {
-                        const props = {
+                    {fieldsArray && fieldsArray.map(({ id, label, type, multiline, options }: FieldsArrayItem) => {
+                        const props: TextFieldProps = {
                             id: id,
                             name: id,
                             type: type || 'text',
-                            value: userFields[id],
+                            value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: !!(hasError[id]),
+                            error: hasProperty(hasError, id),
+                            onFocus: (e) => removeError(e, id),
+                            label: label,
+                            size: 'small',
+                            multiline: multiline,
+                            variant: 'outlined',
+                            // rows: 4
+                        }
+                        const selectProps: SelectProps = {
+                            id: id,
+                            name: id,
+                            type: type || 'text',
+                            value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
+                            onChange: handleInputChange,
+                            error: hasProperty(hasError, id),
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
@@ -77,8 +96,8 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                         return type === 'select'
                             ? <FormControl key={id}>
                                 <InputLabel shrink>{label}</InputLabel>
-                                <Select {...props}>
-                                    {options.map(option => {
+                                <Select {...selectProps}>
+                                    {options && options.map(option => {
                                         return option.type && option.type === 'label'
                                             ? <Typography key={option.value} variant="subtitle2" sx={{ px: 2, fontWeight: "bold", background: '#cccccc', borderBottom: '1px solid #000000', borderTop: '1px solid #000000' }}>
                                                 {option.value}
@@ -86,9 +105,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
                                             : <MenuItem value={option.value} key={option.value}>{option.display || option.value}</MenuItem>
                                     })}
                                 </Select>
-                                <FormHelperText>{hasError[id]}</FormHelperText>
+                                <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} helperText={hasError[id]} InputLabelProps={{ shrink: true }} key={id} />
+                            : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"
