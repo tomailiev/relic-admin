@@ -1,14 +1,16 @@
-import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, Stack, TextField, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
+import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography } from "@mui/material";
+import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
+import { ItemProps } from "../../types/fnProps";
+import { Schema, ValidationError } from "yup";
 
-const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }) => {
+const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: ItemProps & { handleFormCompletion: (data: object) => void, schema: Schema<object>, nestedLength: number, blanks: object }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
 
-    const [nestedItems, setNestedItems] = useState(fields);
+    const [nestedItems, setNestedItems] = useState([fields]);
     const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -22,7 +24,9 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    function handleInputChange(e, index, id) {
+    function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, index: number, id: string): void;
+    function handleInputChange(e: SelectChangeEvent<unknown>, index: number, id: string): void;
+    function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent<unknown>, index: number, id: string) {
 
         setNestedItems((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: e.target.value } : item)
@@ -36,15 +40,19 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
             const validated = await schema.validate(nestedItems, { abortEarly: false });
             handleFormCompletion(validated);
         } catch (e) {
-            if (e.inner) {
+            if (e instanceof ValidationError) {
 
-                setHasError(e.inner?.reduce((p, c) => {
+                setHasError(e.inner?.reduce((p: { [key: string]: string }[], c) => {
                     const startChar = c.path?.indexOf('[');
                     const endChar = c.path?.indexOf(']');
-                    const index = Number(c.path?.substring(startChar + 1, endChar));
-                    const prop = c.path?.substring(endChar + 2);
-                    if (!p[index]) p[index] = {};
-                    p[index][prop] = c.message;
+                    if (startChar && endChar) {
+                        const index = Number(c.path?.substring(startChar + 1, endChar));
+                        const prop = c.path?.substring(endChar + 2);
+                        if (!p[index]) p[index] = {};
+                        if (prop) {
+                            p[index][prop] = c.message;
+                        }
+                    }
                     return p;
                 }, []))
             }
@@ -52,13 +60,13 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
 
     }
 
-    function removeError(e, index, id) {
+    function removeError(e: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>, index: number, id: string) {
         setHasError((prev) => {
             return prev.map((item, i) => i === index ? { ...item, [id]: '' } : item)
         })
     }
 
-    function removeNestedItem(index) {
+    function removeNestedItem(index: number) {
         setNestedItems(prev => prev.slice(0, index).concat(prev.slice(index + 1)));
     }
 
@@ -74,15 +82,29 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                         Add {nestedName}
                     </Button>
                     <Grid container>
-                        {nestedItems?.map((_item, index, arr) => {
+                        {nestedItems?.map((_item, index: number, arr: any[]) => {
 
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
                                 <Stack spacing={2}>
-                                    {nestedArray.map(({ id, label, type, multiline, options }) => {
+                                    {nestedArray?.map(({ id, label, type, multiline, options }) => {
                                         // const itemId = `[${index}].${id}`;
 
-                                        const props = {
+                                        const props: TextFieldProps = {
+                                            value: arr[index][id],
+                                            id: id,
+                                            name: id,
+                                            type: type || 'text',
+                                            onChange: (e) => handleInputChange(e, index, id),
+                                            error: !!(hasError[index] ? hasError[index][id] : null),
+                                            onFocus: (e) => removeError(e, index, id),
+                                            label: label,
+                                            size: 'small',
+                                            multiline: multiline,
+                                            variant: 'outlined',
+                                            rows: 4,
+                                        }
+                                        const selectProps: SelectProps = {
                                             value: arr[index][id],
                                             id: id,
                                             name: id,
@@ -99,8 +121,8 @@ const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nes
                                         return type === 'select'
                                             ? <FormControl key={id}>
                                                 <InputLabel shrink>{label}</InputLabel>
-                                                <Select {...props}>
-                                                    {options.map(option => {
+                                                <Select {...selectProps}>
+                                                    {options?.map(option => {
                                                         return option.type && option.type === 'label'
                                                             ? <Typography key={option.value} variant="subtitle2" sx={{ px: 2, fontWeight: "bold", background: '#cccccc', borderBottom: '1px solid #000000', borderTop: '1px solid #000000' }}>
                                                                 {option.value}
