@@ -6,6 +6,7 @@ import ItemSwitch from "./ItemSwitch";
 import NoResource from "../Common/NoResource";
 import { ItemProps } from "../../types/fnProps";
 import { ItemTypeMap } from "../../types/DB";
+import hasProperty from "../../vars/hasProperty";
 
 const ItemRoute = <T extends keyof ItemTypeMap>({ name, itemType }: { itemType: T } & ItemProps) => {
 
@@ -22,7 +23,7 @@ const ItemRoute = <T extends keyof ItemTypeMap>({ name, itemType }: { itemType: 
     return (
         item
             ? <>
-                <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={item[name]} handleDelete={handleDelete} />
+                <DeleteDialog open={modalOpen} setOpen={setModalOpen} name={hasProperty(item, name) && typeof item[name] === 'string' ? item[name] : ''} handleDelete={handleDelete} />
                 <ItemSwitch itemType={itemType} item={item} setEditable={setIsEditable} />
                 <Box sx={{ display: 'flex', flexDirection: 'row', px: 4, py: 1 }}>
                     <Button
