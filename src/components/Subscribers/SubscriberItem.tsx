@@ -80,9 +80,9 @@ const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
                 </Typography>
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
-                        {subscriberProps.dataFilterColumns?.history && <DataGrid
+                        {subscriberProps.specialColumns && <DataGrid
                             rows={item.history?.map((historyItem, i) => ({ ...historyItem, id: i, }))}
-                            columns={subscriberProps.dataFilterColumns?.history}
+                            columns={subscriberProps.specialColumns}
                             initialState={{
                                 sorting: {
                                     sortModel: [{ field: 'timestamp', sort: 'desc' }],

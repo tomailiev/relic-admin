@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
 
 const eventColumns: GridColDef[] = [
     {
@@ -88,7 +88,7 @@ const fileFA = [
     { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' }
 ]
 
-const eventProps: ItemProps = {
+const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields = {
     itemType: 'events',
     name: 'title',
     columns: eventColumns,
@@ -105,7 +105,9 @@ const eventProps: ItemProps = {
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,
     steps: ['files', 'fieldsArray', 'nestedArray', 'preview'],
-    schemas: { files: eventFileSchema, fieldsArray: eventSchema, nestedArray: performanceSchema }
+    filesSchema: eventFileSchema,
+    fieldsArraySchema: eventSchema,
+    nestedArraySchema: performanceSchema
 };
 
 export default eventProps;

@@ -20,34 +20,39 @@ export interface ItemProps {
     pageSize: number,
     pageSizeOptions: [number, number, number],
     steps: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
-    schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', Schema>>,
+    // schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', Schema>>,
     editSteps?: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
     actionBox?: ReactElement
     schematifyFn?: (item: any) => {},
     deschematifyFn?: (item: any) => {},
-    item?: AnyItemType
+    item?: AnyItemType,
+    specialColumns?: GridColDef[]
 };
 
 export interface ItemWithFields extends ItemProps {
     fieldsArray: FieldsArrayItem[],
     fields: object,
+    fieldsArraySchema: Schema
 }
 
 export interface ItemWithNestedFields extends ItemProps {
     nestedFields: object,
     nestedArray: FieldsArrayItem[],
     nestedName: string,
+    nestedArraySchema: Schema
 }
 
 export interface ItemWithFileFields extends ItemProps {
     filesFields: object,
     filesFieldsArray: FieldsArrayItem[],
+    filesSchema: Schema
 }
 
 export interface ItemWithInitialFields extends ItemProps {
     initialFieldsArray: FieldsArrayItem[],
     initialFields: object,
     initialFn: (item?: any) => {},
+    initialFieldsArraySchema: Schema
 }
 
 export interface ItemWithDataColumns extends ItemProps {

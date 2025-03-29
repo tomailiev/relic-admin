@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { dueMonthsSchema, grantSchema } from "../utils/yup/yup-schemas";
 import { months } from "../vars/dateObjects";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 const grantColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 2 },
@@ -92,7 +92,7 @@ const monthsFA = [
     }
 ]
 
-const grantProps: ItemProps = {
+const grantProps: ItemWithFields & ItemWithNestedFields = {
     itemType: 'grants',
     name: 'name',
     columns: grantColumns,
@@ -107,7 +107,8 @@ const grantProps: ItemProps = {
     schematifyFn: schematifyGrant,
     deschematifyFn: deschematifyGrant,
     steps: ['fieldsArray', 'nestedArray', 'preview'],
-    schemas: { fieldsArray: grantSchema, nestedArray: dueMonthsSchema }
+    fieldsArraySchema: grantSchema,
+    nestedArraySchema: dueMonthsSchema
 };
 
 export default grantProps;

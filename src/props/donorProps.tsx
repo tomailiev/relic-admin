@@ -5,7 +5,7 @@ import { getTier } from "../vars/getTier";
 import { reduceDonations } from "../vars/reduceDonations";
 import { oneYearAgoFromToday, twoYearsAgoFromTomorrow } from "../vars/dateObjects";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 
 function numExtractor(str = '') {
@@ -110,7 +110,7 @@ const donationFields = {
     comment: ''
 };
 
-const donorProps: ItemProps = {
+const donorProps: ItemWithFields & ItemWithNestedFields = {
     itemType: 'donors',
     name: 'email',
     columns: donorColumns,
@@ -123,7 +123,8 @@ const donorProps: ItemProps = {
     nestedArray: donationFA,
     nestedName: 'donations',
     steps: ['fieldsArray', 'nestedArray', 'preview'],
-    schemas: { fieldsArray: donorSchema, nestedArray: donationSchema }
+    fieldsArraySchema: donorSchema,
+    nestedArraySchema: donationSchema
 };
 
 export default donorProps;

@@ -5,7 +5,7 @@ import deschematifySubscriber from "../vars/deschematifySubscriber";
 import SubscriberActionBox from "../components/Subscribers/SubscriberActionBox";
 import { subscriberSchema, tagsSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithDataColumns, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 const subscriberColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
@@ -99,12 +99,12 @@ const tagsFA = [
     }
 ]
 
-const subscriberProps: ItemProps = {
+const subscriberProps: ItemWithFields & ItemWithNestedFields = {
     itemType: 'subscribers',
     name: 'email',
     actionBox: <SubscriberActionBox />,
     columns: subscriberColumns,
-    dataFilterColumns: {history: historyColumns},
+    // dataFilterColumns: {history: historyColumns},
     sorting: { field: 'opt_in_time', sort: 'desc' },
     pageSize: 50,
     pageSizeOptions: [25, 50, 100],
@@ -116,7 +116,8 @@ const subscriberProps: ItemProps = {
     schematifyFn: schematifySubscriber,
     deschematifyFn: deschematifySubscriber,
     steps: ['fieldsArray', 'nestedArray', 'preview'],
-    schemas: { fieldsArray: subscriberSchema, nestedArray: tagsSchema }
+    fieldsArraySchema: subscriberSchema,
+    nestedArraySchema: tagsSchema
 };
 
 export default subscriberProps;

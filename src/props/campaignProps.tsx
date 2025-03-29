@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { clickReducer, openReducer } from "./campaignStatProps";
 import { campaignSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFields } from "../types/fnProps";
 
 const campaignColumns: GridColDef[] = [
     { field: 'subject', headerName: 'Subject', flex: 2 },
@@ -61,7 +61,7 @@ const campaignsFA = [
     },
 ];
 
-const campaignProps: ItemProps = {
+const campaignProps: ItemWithFields = {
     itemType: 'campaigns',
     name: 'subject',
     columns: campaignColumns,
@@ -71,7 +71,7 @@ const campaignProps: ItemProps = {
     fields: campaignFields,
     fieldsArray: campaignsFA,
     steps: ['fieldsArray'],
-    schemas: { fieldsArray: campaignSchema }
+    fieldsArraySchema: campaignSchema
 };
 
 export default campaignProps;

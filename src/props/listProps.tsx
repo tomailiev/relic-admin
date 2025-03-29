@@ -63,7 +63,7 @@ const listProps: ItemWithDataColumns & ItemWithInitialFields = {
     sourceCollectionField: 'source',
     destinationCollectionField: 'members',
     tempDestinationField: 'newMembers',
-    schemas: { initialFieldsArray: listSchema, },
+    initialFieldsArraySchema: listSchema,
     initialFn: listSourceLoader
 };
 

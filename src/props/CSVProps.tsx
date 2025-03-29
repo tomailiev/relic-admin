@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CSVSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFileFields } from "../types/fnProps";
 
 const CSVListColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 2 },
@@ -36,18 +36,18 @@ const csvFA = [
     { label: 'CSV', id: 'csv', type: 'file', path: 'CSVs', displayName: 'csvFile' },
 ];
 
-const CSVProps: ItemProps = {
+const CSVProps: ItemWithFileFields = {
     itemType: 'CSVs',
     name: 'id',
     columns: CSVColumns,
-    dataFilterColumns: { subscribers: CSVListColumns },
+    specialColumns: CSVListColumns,
     sorting: { field: 'id', sort: 'asc' },
     pageSize: 25,
     pageSizeOptions: [10, 25, 50],
     filesFields: fields,
     filesFieldsArray: csvFA,
     steps: ['files', 'preview'],
-    schemas: { files: CSVSchema }
+    filesSchema: CSVSchema
 };
 
 export default CSVProps;

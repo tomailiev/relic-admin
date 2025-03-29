@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
 import { getVideoInfo } from "../utils/firebase/firebase-functions";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps } from "../types/fnProps";
+import { ItemProps, ItemWithFields, ItemWithInitialFields } from "../types/fnProps";
 
 const videoColumns: GridColDef[] = [
     {
@@ -57,7 +57,7 @@ const initialFields = {
     url: '',
 }
 
-const videoProps: ItemProps = {
+const videoProps: ItemWithFields & ItemWithInitialFields = {
     itemType: 'videos',
     name: 'youtubeId',
     columns: videoColumns,
@@ -70,7 +70,8 @@ const videoProps: ItemProps = {
     initialFields: initialFields,
     steps: ['initialFieldsArray', 'fieldsArray', 'preview'],
     editSteps: ['fieldsArray', 'preview'],
-    schemas: { initialFieldsArray: initialVideoSchema, fieldsArray: videoSchema },
+    initialFieldsArraySchema: initialVideoSchema,
+    fieldsArraySchema: videoSchema,
     initialFn: getVideoInfo
 };
 
