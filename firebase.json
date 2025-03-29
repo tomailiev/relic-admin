@@ -9,6 +9,10 @@
     ],
     "rewrites": [
       {
+        "source": "/sitemap.xml",
+        "destination": "serveSitemapV2"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
