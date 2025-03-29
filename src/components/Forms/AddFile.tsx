@@ -1,12 +1,15 @@
 import { Edit } from "@mui/icons-material";
 import { Button, IconButton, List, ListItem, ListItemText, Paper, Stack, } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
-import { useContext, useEffect, useState } from "react";
+import { FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
+import { Schema, ValidationError } from "yup";
+import { ItemProps } from "../../types/fnProps";
+import hasProperty from "../../vars/hasProperty";
 
 
-const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
+const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }: ItemProps & { handleFormCompletion: (data: object | null) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
@@ -25,45 +28,51 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
     }, [navigation.state]);
 
     useEffect(() => {
-        fieldsArray.forEach(({ id, displayName }) => {
-            if (fields[displayName]) {
-                setUserFields(prev => ({ ...prev, [id]: fields[displayName] }));
-            }
-        })
+        if (fieldsArray && fields) {
+            fieldsArray.forEach(({ id, displayName }) => {
+                if (!!displayName && hasProperty(fields, displayName) && fields[displayName]) {
+                    setUserFields(prev => ({ ...prev, [id]: fields[displayName] }));
+                }
+            })
+        }
     }, [fields, fieldsArray])
 
-    function removeError(e) {
+    function removeError(e: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) {
         setHasError(prev => ({ ...prev, [e.target.name]: '' }))
     }
 
-    function handleFileChange(newValue, id) {
+    function handleFileChange(newValue: File | null, id: string) {
 
-        setUserFields(prev => {
-            return { ...prev, [id]: newValue }
-        });
+        if (newValue) {
+            setUserFields(prev => {
+                return { ...prev, [id]: newValue }
+            });
 
-        setWillEdit(prev => ({ ...prev, [id]: false }))
+            setWillEdit(prev => ({ ...prev, [id]: false }))
+        }
     }
 
     function skipSubmit() {
         let shouldSkip = true;
-        fieldsArray.forEach(({ id }) => {
-
-            if (
-                !fields[id]
-                || fields[id]?.substring(fields[id].lastIndexOf('/') + 1) !== userFields[id]?.name
-                || willEdit[id]
-            ) {
-                shouldSkip = false;
-            }
-        })
+        if (fieldsArray && fields) {
+            fieldsArray.forEach(({ id }) => {
+                if (!userFields || !hasProperty(userFields, id)) return;
+                if (
+                    !hasProperty(fields, id)
+                    || (fields[id] as string)?.substring((fields[id] as string).lastIndexOf('/') + 1) !== (userFields[id] as File).name
+                    || willEdit[id]
+                ) {
+                    shouldSkip = false;
+                }
+            })
+        }
 
         return shouldSkip;
     }
 
     async function submitForm() {
 
-        if (skipSubmit()) return handleFormCompletion();
+        if (skipSubmit()) return handleFormCompletion(null);
 
         try {
             console.log(userFields);
@@ -73,9 +82,9 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
         } catch (e) {
             console.log(e);
 
-            if (e.inner) {
+            if (e instanceof ValidationError) {
                 const errors = e.inner?.reduce((p, c) => {
-                    return { ...p, [c.path]: c.message, };
+                    return c.path ? { ...p, [c.path]: c.message, } : p;
                 }, {});
 
                 setHasError(errors);
@@ -89,32 +98,32 @@ const AddFile = ({ fields, fieldsArray, handleFormCompletion, schema, }) => {
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     <List>
-                        {fieldsArray.map(({ id, label, type, multiline }) => {
+                        {fieldsArray?.map(({ id, label, type, multiline }) => {
                             const props = {
                                 id: id,
                                 name: id,
                                 type: type || 'file',
-                                value: userFields[id],
-                                onChange: (newValue) => handleFileChange(newValue, id),
-                                error: !!(hasError[id]),
+                                value: (!!userFields && hasProperty(userFields, id)) ? userFields[id] as File : null,
+                                onChange: (newValue: File | null) => handleFileChange(newValue, id),
+                                error: !!(hasProperty(hasError, id)),
                                 onFocus: removeError,
-                                helperText: hasError[id],
+                                helperText: hasProperty(hasError, id) && hasError[id],
                                 label: label,
-                                size: 'small',
+                                size: 'small' as 'small' | 'medium',
                                 multiline: multiline,
-                                variant: 'outlined',
+                                variant: 'outlined' as "outlined" | "filled" | "standard",
                                 // rows: 4
                             }
 
-                            return (fields[id] && !willEdit[id])
+                            return ((fields && hasProperty(fields, id)) && !willEdit[id])
                                 ? <ListItem key={id} secondaryAction={
                                     <IconButton edge="end" aria-label="edit" onClick={() => setWillEdit(prev => ({ ...prev, [id]: true }))}>
                                         <Edit />
                                     </IconButton>
-                                }><ListItemText primary={userFields[id]?.name || fields[id]} />
+                                }><ListItemText primary={userFields && (userFields[id] as File)?.name || fields[id]} />
                                 </ListItem>
                                 : <ListItem key={id}>
-                                    <MuiFileInput {...props} error={!!(hasError[id])} helperText={hasError[id]} />
+                                    <MuiFileInput {...props} error={hasProperty(hasError, id)} helperText={hasProperty(hasError, id) && hasError[id]} />
                                 </ListItem>
 
                         })}

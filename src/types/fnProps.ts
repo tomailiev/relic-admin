@@ -8,7 +8,8 @@ export interface FieldsArrayItem {
     id: string,
     type?: string,
     options?: { value: string | number, label?: string, type?: string, display?: string }[],
-    multiline?: boolean
+    multiline?: boolean,
+    displayName?: string
 }
 
 export interface ItemProps {
