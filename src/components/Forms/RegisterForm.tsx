@@ -1,24 +1,25 @@
 import { Alert, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Form, useActionData, useNavigation } from "react-router-dom";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Form, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import userProps from "../../props/userProps";
+import hasProperty from "../../vars/hasProperty";
+import { newUserSchema } from "../../utils/yup/yup-schemas";
+import { ValidationError } from "yup";
 
 const RegisterForm = () => {
-    const errorData = useActionData();
+    const errorData = useActionData() as { result?: string, code?: string };
     const navigation = useNavigation();
+    const submit = useSubmit();
 
-    const [hasError, setHasError] = useState(userProps.registerFields);
+    const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(userProps.registerFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
     useEffect(() => {
         if (errorData) {
-            if (errorData.errorType === 'Validation error') {
-                setHasError(errorData);
-
-            } else if (errorData.code) {
+            if (errorData.code) {
                 errorData.code === 'functions/permission-denied'
                     ? setAlertMessage('This email address is not permitted to create an account')
                     : setAlertMessage(errorData.code);
@@ -27,7 +28,7 @@ const RegisterForm = () => {
             }
         }
     }, [errorData]);
- 
+
     useEffect(() => {
         const submissionStates = {
             submitting: true,
@@ -37,10 +38,26 @@ const RegisterForm = () => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state])
 
-    function handleInputChange(e) {
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         setUserFields(prev => {
             return { ...prev, [e.target.id]: e.target.value }
         })
+    }
+
+    async function submitForm() {
+        try {
+            const validated = await newUserSchema.validate(userFields, { abortEarly: false });
+            submit(validated, { encType: 'application/json', method: 'post' });
+        } catch (e) {
+            console.log(e);
+            if (e instanceof ValidationError && e.inner) {
+                const errors = e.inner?.reduce((p, c) => {
+                    return c.path ? { ...p, [c.path]: c.message, } : p;
+                }, {});
+
+                setHasError(errors);
+            }
+        }
     }
 
     return (
@@ -65,7 +82,7 @@ const RegisterForm = () => {
                     {alertMessage}
                 </Alert>
             </Collapse>
-            {!errorData?.result && <Form method="post" id="contact-form" encType="application/json">
+            {!errorData?.result && <Form method="post" id="contact-form">
                 <Stack spacing={3}>
                     {userProps.registerFA.map(({ id, label, type }) => (
                         <TextField
@@ -73,11 +90,11 @@ const RegisterForm = () => {
                             id={id}
                             name={id}
                             type={type || 'text'}
-                            error={!!hasError[id]}
-                            value={userFields[id]}
+                            error={hasProperty(hasError, id)}
+                            value={hasProperty(userFields, id) && userFields[id]}
                             onFocus={() => { setHasError(prev => ({ ...prev, [id]: '' })); setAlertMessage('') }}
                             onChange={handleInputChange}
-                            helperText={hasError[id]}
+                            helperText={hasProperty(hasError, id) && hasError[id]}
                             label={label}
                             variant="outlined"
                             size="small"
@@ -90,7 +107,7 @@ const RegisterForm = () => {
                         variant="contained"
                         color="primary"
                         disabled={isSubmitting}
-                        type="submit"
+                        onClick={submitForm}
                     >
                         Register
                     </Button>

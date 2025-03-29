@@ -1,6 +1,6 @@
 import { GridColDef, GridSortingInitialState, GridSortItem, GridSortModel } from "@mui/x-data-grid"
 import { ReactElement } from "react"
-import { AnyObject, ArraySchema, ObjectSchema } from "yup"
+import { AnyObject, ArraySchema, ObjectSchema, Schema } from "yup"
 import { AnyItemType, ItemTypeMap } from "./DB"
 
 export interface FieldsArrayItem {
@@ -20,24 +20,39 @@ export interface ItemProps {
     pageSize: number,
     pageSizeOptions: [number, number, number],
     steps: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
-    schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', ObjectSchema<AnyObject> | ArraySchema<AnyObject[] | undefined, AnyObject, "", "">>>,
-    dataFilterColumns?: { [key: string]: GridColDef[] },
-    initialFieldsArray?: FieldsArrayItem[],
-    initialFields?: object,
-    fieldsArray?: FieldsArrayItem[],
-    fields?: object,
-    nestedFields?: object,
-    nestedArray?: FieldsArrayItem[],
-    nestedName?: string,
-    filesFields?: object,
-    filesFieldsArray?: FieldsArrayItem[],
+    schemas: Partial<Record<'initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files', Schema>>,
     editSteps?: ('initialFieldsArray' | 'fieldsArray' | 'dataFilter' | 'preview' | 'nestedArray' | 'files')[],
-    sourceCollectionField?: string,
-    destinationCollectionField?: string,
-    tempDestinationField?: string,
     actionBox?: ReactElement
-    initialFn?: (item?: any) => {},
     schematifyFn?: (item: any) => {},
     deschematifyFn?: (item: any) => {},
     item?: AnyItemType
+};
+
+export interface ItemWithFields extends ItemProps {
+    fieldsArray: FieldsArrayItem[],
+    fields: object,
+}
+
+export interface ItemWithNestedFields extends ItemProps {
+    nestedFields: object,
+    nestedArray: FieldsArrayItem[],
+    nestedName: string,
+}
+
+export interface ItemWithFileFields extends ItemProps {
+    filesFields: object,
+    filesFieldsArray: FieldsArrayItem[],
+}
+
+export interface ItemWithInitialFields extends ItemProps {
+    initialFieldsArray: FieldsArrayItem[],
+    initialFields: object,
+    initialFn: (item?: any) => {},
+}
+
+export interface ItemWithDataColumns extends ItemProps {
+    dataFilterColumns: { [key: string]: GridColDef[] },
+    sourceCollectionField: string,
+    destinationCollectionField: string,
+    tempDestinationField: string,
 }

@@ -1,28 +1,17 @@
-import { emailSchema } from "../../utils/yup/yup-schemas";
 import { verifyOrReset } from "../../utils/firebase/firebase-functions";
 import { ActionFunctionArgs } from "react-router-dom";
 
 export default async function verifyResetAction({ request, params }: ActionFunctionArgs) {
     try {
-        const doc = await request.formData();
-        const updates = Object.fromEntries(doc);
-        const { email, reason } = await emailSchema.validate(updates, { abortEarly: false });
-        const { data } = await verifyOrReset({ email, reason });
+        const { email, reason } = await request.json();
+        const { data } = await verifyOrReset({ email, reason }) as { data: { code: string } };
         if (data.code === 'Success') {
             return { result: 'Email sent!' }
         } else {
             return { result: 'Possible error!' }
         }
     } catch (e) {
-        if (e.inner) {
-            const errors = e.inner.reduce((p, c) => {
-                return { ...p, [c.path]: c.message, errorType: 'Validation error' };
-            }, {});
-            console.log(errors);
-            return errors
-        }
         console.log(e);
-        return Object.assign(e, { errorType: 'Error' });
-
+        return e;
     }
 }

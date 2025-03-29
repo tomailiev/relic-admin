@@ -2,15 +2,15 @@ import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper,
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
-import { ItemProps } from "../../types/fnProps";
+import { ItemProps, ItemWithNestedFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 
-const AddDynamic = ({ fields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: ItemProps & { handleFormCompletion: (data: object) => void, schema: Schema<object>, nestedLength: number, blanks: object }) => {
+const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: ItemWithNestedFields & { handleFormCompletion: (data: object) => void, schema: Schema, nestedLength: number, blanks: object }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
 
-    const [nestedItems, setNestedItems] = useState([fields]);
+    const [nestedItems, setNestedItems] = useState([nestedFields]);
     const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
 

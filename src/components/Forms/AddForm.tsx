@@ -2,12 +2,12 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Selec
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
-import { FieldsArrayItem, ItemProps } from "../../types/fnProps";
+import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: ItemProps & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: ItemWithFields & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});

@@ -1,24 +1,26 @@
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef, GridRowId, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { AnyItemType } from "../../types/DB";
-import { ItemProps } from "../../types/fnProps";
+import { AnyItemType, Subscriber } from "../../types/DB";
+import { ItemProps, ItemWithDataColumns } from "../../types/fnProps";
+import hasProperty from "../../vars/hasProperty";
 
-const FilterData = ({ item, itemProps, handleFormCompletion }: {item: AnyItemType, itemProps: ItemProps, handleFormCompletion: (data: object) => void}) => {
+const FilterData = ({ item, itemProps, handleFormCompletion }: { item: object, itemProps: ItemWithDataColumns, handleFormCompletion: (data: object) => void }) => {
 
-    const [dataItems, setDataItems] = useState([]);
+    const [dataItems, setDataItems] = useState<any[]>([]);
     const [rowSelectionModel, setRowSelectionModel] = useState<GridRowId[]>([]);
 
     useEffect(() => {
-        if (itemProps.tempDestinationField && item[itemProps.tempDestinationField]) {
-            setRowSelectionModel(item[itemProps.tempDestinationField].map(({ id }) => id));
-            setDataItems(item[itemProps.tempDestinationField]);
+        const tempField = itemProps.tempDestinationField;
+        if (hasProperty(item, tempField)) {
+            setRowSelectionModel((item[tempField] as any[]).map(({ id }) => id));
+            setDataItems(item[tempField]);
         }
     }, [item, itemProps.tempDestinationField]);
 
     function filterer(model: GridRowSelectionModel) {
         setRowSelectionModel(model);
-        const newDataItems = (item[itemProps.destinationCollectionField].filter(({ id }) => model.includes(id)));
+        const newDataItems = (hasProperty(item, itemProps.destinationCollectionField) ? (item[itemProps.destinationCollectionField] as any[]).filter(({ id }: { id: string }) => model.includes(id)) : []);
         setDataItems(newDataItems)
     }
 
@@ -30,8 +32,8 @@ const FilterData = ({ item, itemProps, handleFormCompletion }: {item: AnyItemTyp
                         checkboxSelection
                         rowSelectionModel={rowSelectionModel}
                         onRowSelectionModelChange={filterer}
-                        rows={item[itemProps.destinationCollectionField]}
-                        columns={itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]].filter(({ field }: GridColDef) => field !== 'select')}
+                        rows={hasProperty(item, itemProps.destinationCollectionField) ? item[itemProps.destinationCollectionField] : []}
+                        columns={hasProperty(item, itemProps.sourceCollectionField) ? itemProps.dataFilterColumns[item[itemProps.sourceCollectionField]].filter(({ field }: GridColDef) => field !== 'select') : []}
                         initialState={{
                             sorting: {
                                 sortModel: [itemProps.sorting],

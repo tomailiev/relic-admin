@@ -10,12 +10,12 @@ import AddDynamic from "../Forms/AddDynamic";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
 import FilterData from "../Forms/FilterData";
-import { ItemProps } from "../../types/fnProps";
+import { ItemProps, ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithInitialFields, ItemWithNestedFields } from "../../types/fnProps";
 import { AnyItemType } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
-const AddItem = (itemProps: ItemProps) => {
+const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns) => {
 
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();
@@ -89,7 +89,7 @@ const AddItem = (itemProps: ItemProps) => {
         handleSubmitEvent()
     }
 
-    function handleArraySubmission(data) {
+    function handleArraySubmission(data: AnyItemType) {
         setSubmission(prev => {
             return Object.assign(prev || {}, { [itemProps.nestedName]: data });
         });

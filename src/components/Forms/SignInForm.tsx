@@ -1,25 +1,26 @@
 import { Alert, Box, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
-import { useEffect, useState, ReactElement } from "react";
-import { Form, NavLink, useActionData, useNavigation } from "react-router-dom";
+import { useEffect, useState, ReactElement, ChangeEvent } from "react";
+import { Form, NavLink, useActionData, useNavigation, useSubmit } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import userProps from "../../props/userProps";
+import { ValidationError } from "yup";
+import { userSchema } from "../../utils/yup/yup-schemas";
+import hasProperty from "../../vars/hasProperty";
 
 
 const SignInForm = () => {
-    const errorData = useActionData();
+    const errorData = useActionData() as { result?: string, code?: string };
     const navigation = useNavigation();
+    const submit = useSubmit();
 
-    const [hasError, setHasError] = useState(userProps.loginFields);
+    const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(userProps.loginFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState<string | ReactElement>('');
 
     useEffect(() => {
         if (errorData) {
-            if (errorData.errorType === 'Validation error') {
-                setHasError(errorData);
-
-            } else if (errorData.code) {
+            if (errorData.code) {
                 errorData.code === 'functions/not-found' || errorData.code === 'auth/wrong-password'
                     ? setAlertMessage('Email or password not recognized')
                     : errorData.code === 'verify'
@@ -38,10 +39,26 @@ const SignInForm = () => {
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state])
 
-    function handleInputChange(e) {
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
         setUserFields(prev => {
             return { ...prev, [e.target.id]: e.target.value }
         })
+    }
+
+    async function submitForm() {
+        try {
+            const validated = await userSchema.validate(userFields, { abortEarly: false });
+            submit(validated, { encType: 'application/json', method: 'post' });
+        } catch (e) {
+            console.log(e);
+            if (e instanceof ValidationError && e.inner) {
+                const errors = e.inner?.reduce((p, c) => {
+                    return c.path ? { ...p, [c.path]: c.message, } : p;
+                }, {});
+
+                setHasError(errors);
+            }
+        }
     }
 
     return (
@@ -75,11 +92,11 @@ const SignInForm = () => {
                             id={id}
                             name={id}
                             type={type || 'text'}
-                            error={!!hasError[id]}
-                            value={userFields[id]}
+                            error={hasProperty(hasError, id)}
+                            value={hasProperty(userFields, id) && userFields[id]}
                             onFocus={() => { setHasError(prev => ({ ...prev, [id]: '' })); setAlertMessage('') }}
                             onChange={handleInputChange}
-                            helperText={hasError[id]}
+                            helperText={hasProperty(hasError, id) && hasError[id]}
                             label={label}
                             variant="outlined"
                             size="small"
@@ -92,7 +109,7 @@ const SignInForm = () => {
                         variant="contained"
                         color="primary"
                         disabled={isSubmitting}
-                        type="submit"
+                        onClick={submitForm}
                     >
                         Log in
                     </Button>
