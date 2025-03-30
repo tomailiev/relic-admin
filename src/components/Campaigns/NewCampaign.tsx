@@ -3,14 +3,14 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
-import { FieldsArrayItem, ItemProps } from "../../types/fnProps";
+import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
 import { Campaign } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
-const NewCampaign = (itemProps: ItemProps) => {
+const NewCampaign = (itemProps: ItemWithFields) => {
     const [activeStep, setActiveStep] = useState(0);
-    const [submission, setSubmission] = useState<Campaign | null>(null);
+    const [submission, setSubmission] = useState<object | null>(null);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const actionData = useActionData() as AppErrorType;
@@ -25,7 +25,7 @@ const NewCampaign = (itemProps: ItemProps) => {
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
 
-    function handleObjectSubmission(data: Campaign) {
+    function handleObjectSubmission(data: object) {
 
         setSubmission(prev => {
             return Object.assign(prev || {}, data);
@@ -51,7 +51,7 @@ const NewCampaign = (itemProps: ItemProps) => {
                 fields={submission || itemProps.fields}
                 fieldsArray={addLists(itemProps.fieldsArray)}
                 handleFormCompletion={handleObjectSubmission}
-                schema={itemProps.schemas[itemProps.steps[activeStep]]}
+                schema={itemProps.fieldsArraySchema}
             />
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button

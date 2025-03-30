@@ -1,6 +1,6 @@
-import { GridColDef, GridSortingInitialState, GridSortItem, GridSortModel } from "@mui/x-data-grid"
+import { GridColDef, GridSortItem } from "@mui/x-data-grid"
 import { ReactElement } from "react"
-import { AnyObject, ArraySchema, ObjectSchema, Schema } from "yup"
+import { Schema } from "yup"
 import { AnyItemType, ItemTypeMap } from "./DB"
 
 export interface FieldsArrayItem {
@@ -9,7 +9,11 @@ export interface FieldsArrayItem {
     type?: string,
     options?: { value: string | number, label?: string, type?: string, display?: string }[],
     multiline?: boolean,
-    displayName?: string
+}
+
+export interface FileFieldsArrayItem extends FieldsArrayItem {
+    path: string,
+    displayName: string
 }
 
 export interface ItemProps {
@@ -44,7 +48,7 @@ export interface ItemWithNestedFields extends ItemProps {
 
 export interface ItemWithFileFields extends ItemProps {
     filesFields: object,
-    filesFieldsArray: FieldsArrayItem[],
+    filesFieldsArray: FileFieldsArrayItem[],
     filesSchema: Schema
 }
 

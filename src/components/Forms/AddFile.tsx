@@ -9,7 +9,7 @@ import { ItemProps, ItemWithFields, ItemWithFileFields } from "../../types/fnPro
 import hasProperty from "../../vars/hasProperty";
 
 
-const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, }: ItemWithFileFields & { handleFormCompletion: (data: object | null) => void, schema: Schema<object> }) => {
+const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFileFields> & { handleFormCompletion: (data: object | null) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();

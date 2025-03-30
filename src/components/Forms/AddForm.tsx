@@ -7,7 +7,7 @@ import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: ItemWithFields & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});

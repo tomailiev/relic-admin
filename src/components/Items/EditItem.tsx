@@ -1,9 +1,9 @@
 import { useLoaderData, } from "react-router-dom";
 import AddItem from "./AddItem";
-import { ItemProps } from "../../types/fnProps";
+import { ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithInitialFields, ItemWithNestedFields } from "../../types/fnProps";
 import { AnyItemType } from "../../types/DB";
 
-const EditItem = (itemProps: ItemProps) => {
+const EditItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns) => {
     const item = useLoaderData() as AnyItemType;
 
     return (

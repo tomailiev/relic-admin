@@ -7,7 +7,7 @@ import { AnyItemType, CSV, CSVItem, Subscriber } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 // import { deschematify } from "../../vars/schemaFunctions";
 
-const CSVItem = ({ item, mutateItem }: { item: CSV, mutateItem: Dispatch<SetStateAction<{ newSubs: Subscriber[], final: string } | null>> }) => {
+const CSVItem = ({ item, mutateItem }: { item: CSV, mutateItem: Dispatch<SetStateAction<object | null>> }) => {
 
     const fetcher = useFetcher();
     const subscribers = useLoaderData() as CSVItem;

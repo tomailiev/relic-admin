@@ -58,7 +58,7 @@ const ImportDonor = () => {
                                 checkboxSelection
                                 onRowSelectionModelChange={filterer}
                                 rows={subs}
-                                columns={CSVProps.dataFilterColumns?.subscribers || []}
+                                columns={CSVProps.specialColumns || []}
                                 initialState={{
                                     sorting: {
                                         sortModel: [CSVProps.sorting],

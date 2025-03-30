@@ -4,13 +4,13 @@ import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
-import { FieldsArrayItem, ItemProps } from "../../types/fnProps";
+import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
 import { Campaign, List } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
-const EditCampaign = ({ itemType, fieldsArray }: ItemProps) => {
-    const [submission, setSubmission] = useState<Campaign | null>(null);
+const EditCampaign = ({ itemType, fieldsArray }: ItemWithFields) => {
+    const [submission, setSubmission] = useState<object | null>(null);
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
@@ -25,7 +25,7 @@ const EditCampaign = ({ itemType, fieldsArray }: ItemProps) => {
 
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
-    function handleObjectSubmission(data: Campaign) {
+    function handleObjectSubmission(data: object) {
 
         setSubmission(prev => {
             return Object.assign(prev || {}, data);

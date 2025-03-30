@@ -13,6 +13,7 @@ import FilterData from "../Forms/FilterData";
 import { ItemProps, ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithInitialFields, ItemWithNestedFields } from "../../types/fnProps";
 import { AnyItemType } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
+import hasProperty from "../../vars/hasProperty";
 
 
 const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns) => {
@@ -21,7 +22,7 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
     const submit = useSubmit();
     const { setError } = useContext(ErrorContext);
     const { setIsLoading } = useContext(LoadingContext);
-    const [submission, setSubmission] = useState<null | AnyItemType>(null);
+    const [submission, setSubmission] = useState<object | null>(null);
     const actionData = useActionData() as AppErrorType | null;
 
     const labels = {
@@ -59,14 +60,16 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
             return handleSubmitEvent();
         }
 
-        const filePaths = {};
+        const filePaths: { [key: string]: string } = {};
 
         try {
             setIsLoading(true);
-            await Promise.all(itemProps.filesFieldsArray.filter(item => !!data[item.id]).map(async (item) => {
-                const filePath = await uploadFile(data[item.id], `${item.path}/${data[item.id]?.name}`);
-                filePaths[item.id] = filePath;
-                filePaths[item.displayName] = data[item.id];
+            await Promise.all(itemProps.filesFieldsArray.filter(item => !!hasProperty(data, item.id)).map(async (item) => {
+                if (hasProperty(data, item.id)) {
+                    const filePath = await uploadFile(data[item.id], `${item.path}/${(data[item.id] as File)?.name}`);
+                    filePaths[item.id] = filePath;
+                    filePaths[item.displayName] = data[item.id];
+                }
                 return item;
             }));
             setSubmission(prev => {
@@ -81,7 +84,7 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
         }
     }
 
-    function handleObjectSubmission(data: AnyItemType | null) {
+    function handleObjectSubmission(data: object | null) {
 
         setSubmission(prev => {
             return Object.assign(prev || {}, data);
@@ -89,18 +92,18 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
         handleSubmitEvent()
     }
 
-    function handleArraySubmission(data: AnyItemType) {
+    function handleArraySubmission(data: object) {
         setSubmission(prev => {
             return Object.assign(prev || {}, { [itemProps.nestedName]: data });
         });
         handleSubmitEvent();
     }
 
-    async function handleInitialSubmission(initialData) {
+    async function handleInitialSubmission(initialData: object) {
         setIsLoading(true);
 
         try {
-            const { data } = await itemProps.initialFn(initialData);
+            const { data } = await itemProps.initialFn(initialData) as { data: object };
 
             setSubmission(prev => {
                 return Object.assign(prev || {}, data);
@@ -119,7 +122,7 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
         }
     }
 
-    async function handleDataFilterSubmission(data) {
+    async function handleDataFilterSubmission(data: object) {
         setSubmission(prev => {
             return Object.assign(prev || {}, { [itemProps.tempDestinationField]: data });
         });
@@ -132,39 +135,39 @@ const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFil
 
     const steps = {
         files: <AddFile
-            fields={submission || itemProps.filesFields}
-            fieldsArray={itemProps.filesFieldsArray}
-            schema={itemProps.schemas.files}
+            filesFields={submission || itemProps.filesFields}
+            filesFieldsArray={itemProps.filesFieldsArray}
+            schema={itemProps.filesSchema}
             handleFormCompletion={handleFileSubmission}
         />,
         initialFieldsArray: <AddForm
             fields={submission || itemProps.initialFields}
             fieldsArray={itemProps.initialFieldsArray}
-            schema={itemProps.schemas.initialFieldsArray}
+            schema={itemProps.initialFieldsArraySchema}
             handleFormCompletion={handleInitialSubmission}
         />,
         fieldsArray: <AddForm
             fields={submission || itemProps.fields}
-            fieldsArray={itemProps[itemProps.steps[activeStep]]}
+            fieldsArray={itemProps.fieldsArray}
             handleFormCompletion={handleObjectSubmission}
-            schema={itemProps.schemas[itemProps.steps[activeStep]]}
+            schema={itemProps.fieldsArraySchema}
         />,
         nestedArray: <AddDynamic
-            fields={submission && submission[itemProps.nestedName] ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
+            nestedFields={submission && hasProperty(submission, itemProps.nestedName) ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
             nestedArray={itemProps.nestedArray}
             nestedName={itemProps.nestedName}
             handleFormCompletion={handleArraySubmission}
             nestedLength={1}
-            schema={itemProps.schemas[itemProps.steps[activeStep]]}
+            schema={itemProps.nestedArraySchema}
             blanks={itemProps.nestedFields}
         />,
         dataFilter: <FilterData
-            item={submission}
+            item={submission || {}}
             itemProps={itemProps}
             handleFormCompletion={handleDataFilterSubmission}
         />,
         preview: <ItemSwitch
-            item={submission}
+            item={submission as AnyItemType}
             itemType={itemProps.itemType}
             mutateItem={setSubmission}
         />

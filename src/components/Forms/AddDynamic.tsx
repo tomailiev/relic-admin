@@ -5,7 +5,7 @@ import LoadingContext from "../../context/LoadingContext";
 import { ItemProps, ItemWithNestedFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 
-const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: ItemWithNestedFields & { handleFormCompletion: (data: object) => void, schema: Schema, nestedLength: number, blanks: object }) => {
+const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: Partial<ItemWithNestedFields> & { handleFormCompletion: (data: object) => void, schema: Schema, nestedLength: number, blanks: object }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();

@@ -68,13 +68,13 @@ const DonorItem = ({ item }: DonorItemProps) => {
         }
     }, [actionData, setError]);
 
-    function handleSend(emailInfo: { email: string, from: string, content: string, subject: string }) {
+    function handleSend(data: { email: string, from: string, content: string, subject: string }) {
         // to, from, content, donorId, donationIndex
         const update = {
-            to: emailInfo.email,
-            from: emailInfo.from,
-            content: emailInfo.content,
-            subject: emailInfo.subject,
+            to: data.email,
+            from: data.from,
+            content: data.content,
+            subject: data.subject,
             donorId: item.id,
             donationIndex: donationInfo?.index
         }
@@ -111,7 +111,7 @@ const DonorItem = ({ item }: DonorItemProps) => {
 
     return (
         <>
-            <ThankDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend} donationInfo={donationInfo} />
+            <ThankDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} donationInfo={donationInfo} />
             <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
                 <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
                 <Typography variant="body2" textAlign={'center'}>{getTier(reduceDonations(item.donations))}</Typography>

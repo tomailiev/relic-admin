@@ -6,7 +6,7 @@ import { emailContentFieldArrays, emailContentFields } from "../../props/emailCo
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { ItemProps } from "../../types/fnProps";
+import { ItemProps, ItemWithFields } from "../../types/fnProps";
 import { Campaign, CampaignComponent } from "../../types/DB";
 import { AnyMJMLComponent, AnyMJMLKey } from "../../types/campaignComponents";
 
@@ -30,7 +30,7 @@ const options = [
 ];
 
 
-const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
+const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     const { campaign } = useLoaderData() as { campaign: Campaign };
 
     const [activeStep, setActiveStep] = useState(0);
@@ -125,14 +125,14 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemProps) => {
         <Box m={4}>
             {
                 campaign.status
-                    ? <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent} schema={selectComponentSchema} />
+                    ? <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent as (data: object) => void} schema={selectComponentSchema} />
                     : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
             }
             <Grid container spacing={2}>
                 <Grid item md={12} lg={4}>
                     {component && <>
                         <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
-                        <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList} schema={emailComponentSchemas[component]} />
+                        <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList as (data: object) => void} schema={emailComponentSchemas[component]} />
                     </>}
                     {componentList && <List dense={true}>
                         {componentList.map((componentItem, i, arr) => {

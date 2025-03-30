@@ -3,15 +3,15 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "../Items/ItemSwitch";
-import { ItemProps } from "../../types/fnProps";
+import { ItemProps, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../../types/fnProps";
 import { AnyItemType, CSVItem, Subscriber } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 
 
-const EditCSV = ({ itemType, fieldsArray, nestedArray, nestedName, }: ItemProps) => {
+const EditCSV = ({ itemType, }: ItemWithFileFields) => {
     const { setError } = useContext(ErrorContext);
-    const [submission, setSubmission] = useState<AnyItemType | null>(null);
+    const [submission, setSubmission] = useState<object | null>(null);
     const submit = useSubmit();
     const item = useLoaderData() as { docs: Subscriber[], id: string };
     // const navigate = useNavigate();

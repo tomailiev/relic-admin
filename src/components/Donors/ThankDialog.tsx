@@ -6,7 +6,7 @@ import { donationAcknowledgementProps } from "../../props/donationAcknowledgemen
 import { CommonDialog, DonationInfo } from "../../types/dialog";
 
 
-const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo | null, handleSend: (emailInfo: { email: string, from: string, content: string, subject: string }) => void }) => {
+const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo | null, handleSend: (data: object) => void }) => {
 
     const fields = {
         email: donationInfo?.email,
