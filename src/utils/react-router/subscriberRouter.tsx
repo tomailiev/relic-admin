@@ -14,6 +14,7 @@ import ImportDonor from "../../components/Subscribers/ImportDonor";
 import subscriberImportDonorsAction from "../../actions/subscriber/subscriberImportDonorsAction";
 import subscriberDonorLoader from "../../loaders/subscriberDonorLoader";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const subscriberRouter: RouteObject[] = [
   {
@@ -23,7 +24,7 @@ const subscriberRouter: RouteObject[] = [
   },
   {
     path: 'subscribers/add',
-    element: <LoggedIn component={<AddItem {...subscriberProps} />} />,
+    element: <LoggedIn component={<AddItem {...subscriberProps as ItemWithAllProps} />} />,
     action: subscriberAddAction
   },
   {
@@ -38,7 +39,7 @@ const subscriberRouter: RouteObject[] = [
   },
   {
     path: 'subscribers/:subscriberId/edit',
-    element: <LoggedIn component={<EditItem {...subscriberProps} />} />,
+    element: <LoggedIn component={<EditItem {...subscriberProps as ItemWithAllProps} />} />,
     loader: subscriberItemLoader,
     action: subscriberEditAction
   },

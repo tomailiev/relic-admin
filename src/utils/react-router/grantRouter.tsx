@@ -11,6 +11,7 @@ import grantItemLoader from "../../loaders/grantItemLoader";
 import grantLoader from "../../loaders/grantLoader";
 import grantProps from "../../props/grantProps";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const grantRouter: RouteObject[] = [
     {
@@ -20,7 +21,7 @@ const grantRouter: RouteObject[] = [
       },
       {
         path: 'grants/add',
-        element: <LoggedIn component={<AddItem {...grantProps} />} />,
+        element: <LoggedIn component={<AddItem {...grantProps as ItemWithAllProps} />} />,
         action: grantAddAction
       },
       {
@@ -35,7 +36,7 @@ const grantRouter: RouteObject[] = [
       },
       {
         path: 'grants/:grantId/edit',
-        element: <LoggedIn component={<EditItem {...grantProps} />} />,
+        element: <LoggedIn component={<EditItem {...grantProps as ItemWithAllProps} />} />,
         loader: grantItemLoader,
         action: grantEditAction
       },

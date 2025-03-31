@@ -11,6 +11,7 @@ import listItemLoader from "../../loaders/listItemLoader";
 import listDeleteAction from "../../actions/list/listDeleteAction";
 import listEditAction from "../../actions/list/listEditAction";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const listRouter: RouteObject[] = [
     {
@@ -20,7 +21,7 @@ const listRouter: RouteObject[] = [
     },
     {
         path: 'lists/add',
-        element: <LoggedIn component={<AddItem {...listProps} />} />,
+        element: <LoggedIn component={<AddItem {...listProps as ItemWithAllProps} />} />,
         action: listAddAction,
     },
     {
@@ -35,7 +36,7 @@ const listRouter: RouteObject[] = [
     },
     {
         path: 'lists/:listId/edit',
-        element: <LoggedIn component={<EditItem {...listProps} />} />,
+        element: <LoggedIn component={<EditItem {...listProps as ItemWithAllProps} />} />,
         loader: listItemLoader,
         action: listEditAction
     },

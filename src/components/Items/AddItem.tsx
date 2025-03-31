@@ -10,13 +10,13 @@ import AddDynamic from "../Forms/AddDynamic";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
 import FilterData from "../Forms/FilterData";
-import { ItemProps, ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithInitialFields, ItemWithNestedFields } from "../../types/fnProps";
+import { ItemWithAllProps} from "../../types/fnProps";
 import { AnyItemType } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 import hasProperty from "../../vars/hasProperty";
 
 
-const AddItem = (itemProps: ItemWithFields & ItemWithInitialFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns) => {
+const AddItem = (itemProps: ItemWithAllProps) => {
 
     const [activeStep, setActiveStep] = useState(0);
     const submit = useSubmit();

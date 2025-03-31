@@ -65,3 +65,5 @@ export interface ItemWithDataColumns extends ItemProps {
     destinationCollectionField: string,
     tempDestinationField: string,
 }
+
+export type ItemWithAllProps = ItemWithFields & ItemWithInitialFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns;

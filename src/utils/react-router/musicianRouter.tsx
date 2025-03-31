@@ -11,6 +11,7 @@ import musicianItemLoader from "../../loaders/musicianItemLoader";
 import musicianLoader from "../../loaders/musicianLoader";
 import musicianProps from "../../props/musicianProps";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const musicianRouter: RouteObject[] = [
     {
@@ -20,7 +21,7 @@ const musicianRouter: RouteObject[] = [
       },
       {
         path: 'musicians/add',
-        element: <LoggedIn component={<AddItem {...musicianProps} />} />,
+        element: <LoggedIn component={<AddItem {...musicianProps as ItemWithAllProps} />} />,
         action: musicianAddAction,
       },
       {
@@ -35,7 +36,7 @@ const musicianRouter: RouteObject[] = [
       },
       {
         path: 'musicians/:musicianId/edit',
-        element: <LoggedIn component={<EditItem {...musicianProps} />} />,
+        element: <LoggedIn component={<EditItem {...musicianProps as ItemWithAllProps} />} />,
         loader: musicianItemLoader,
         action: musicianEditAction
       },

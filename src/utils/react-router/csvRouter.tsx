@@ -13,6 +13,7 @@ import csvItemLoader from "../../loaders/csvItemLoader";
 import csvLoader from "../../loaders/csvLoader";
 import subscriberLoader from "../../loaders/subscriberLoader";
 import CSVProps from "../../props/CSVProps";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const csvRouter: RouteObject[] = [
     {
@@ -22,7 +23,7 @@ const csvRouter: RouteObject[] = [
     },
     {
         path: 'CSVs/add',
-        element: <LoggedIn component={<AddItem {...CSVProps} />} />,
+        element: <LoggedIn component={<AddItem {...CSVProps as ItemWithAllProps} />} />,
         action: CSVAddAction,
         loader: subscriberLoader
     },

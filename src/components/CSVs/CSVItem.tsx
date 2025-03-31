@@ -3,14 +3,14 @@ import { DataGrid, GridRowSelectionModel } from "@mui/x-data-grid";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useLocation } from "react-router-dom";
 import CSVProps from "../../props/CSVProps";
-import { AnyItemType, CSV, CSVItem, Subscriber } from "../../types/DB";
+import { CSV, CSVItem as CSVItemType, Subscriber } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 // import { deschematify } from "../../vars/schemaFunctions";
 
 const CSVItem = ({ item, mutateItem }: { item: CSV, mutateItem: Dispatch<SetStateAction<object | null>> }) => {
 
     const fetcher = useFetcher();
-    const subscribers = useLoaderData() as CSVItem;
+    const subscribers = useLoaderData() as CSVItemType;
     const [subs, setSubs] = useState<Subscriber[]>([]);
     const location = useLocation();
 

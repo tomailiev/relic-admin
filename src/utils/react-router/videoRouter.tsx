@@ -11,6 +11,7 @@ import videoItemLoader from "../../loaders/videoItemLoader";
 import videoLoader from "../../loaders/videoLoader";
 import videoProps from "../../props/videoProps";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const videoRouter: RouteObject[] = [
     {
@@ -20,7 +21,7 @@ const videoRouter: RouteObject[] = [
       },
       {
         path: 'videos/add',
-        element: <LoggedIn component={<AddItem {...videoProps} />} />,
+        element: <LoggedIn component={<AddItem {...videoProps as ItemWithAllProps} />} />,
         action: videoAddAction,
       },
       {
@@ -35,7 +36,7 @@ const videoRouter: RouteObject[] = [
       },
       {
         path: 'videos/:videoId/edit',
-        element: <LoggedIn component={<EditItem {...videoProps} />} />,
+        element: <LoggedIn component={<EditItem {...videoProps as ItemWithAllProps} />} />,
         loader: videoItemLoader,
         action: videoEditAction
       },

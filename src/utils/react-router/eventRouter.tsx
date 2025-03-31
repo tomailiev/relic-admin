@@ -11,6 +11,7 @@ import eventItemLoader from "../../loaders/eventItemLoader";
 import eventLoader from "../../loaders/eventLoader";
 import eventProps from "../../props/eventProps";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const eventRouter: RouteObject[] = [
   {
@@ -20,7 +21,7 @@ const eventRouter: RouteObject[] = [
   },
   {
     path: 'events/add',
-    element: <LoggedIn component={<AddItem {...eventProps} />} />,
+    element: <LoggedIn component={<AddItem {...eventProps as ItemWithAllProps} />} />,
     action: eventAddAction
   },
   {
@@ -35,7 +36,7 @@ const eventRouter: RouteObject[] = [
   },
   {
     path: 'events/:eventId/edit',
-    element: <LoggedIn component={<EditItem {...eventProps} />} />,
+    element: <LoggedIn component={<EditItem {...eventProps as ItemWithAllProps} />} />,
     loader: eventItemLoader,
     action: eventEditAction
   },

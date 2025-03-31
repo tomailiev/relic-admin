@@ -11,6 +11,7 @@ import textItemLoader from "../../loaders/textItemLoader";
 import textLoader from "../../loaders/textLoader";
 import textProps from "../../props/textProps";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const textRouter: RouteObject[] = [
     {
@@ -20,7 +21,7 @@ const textRouter: RouteObject[] = [
       },
       {
         path: 'texts/add',
-        element: <LoggedIn component={<AddItem {...textProps} />} />,
+        element: <LoggedIn component={<AddItem {...textProps as ItemWithAllProps} />} />,
         action: textAddAction
       },
       {
@@ -35,7 +36,7 @@ const textRouter: RouteObject[] = [
       },
       {
         path: 'texts/:textId/edit',
-        element: <LoggedIn component={<EditItem {...textProps} />} />,
+        element: <LoggedIn component={<EditItem {...textProps as ItemWithAllProps} />} />,
         loader: textItemLoader,
         action: textEditAction
       },

@@ -19,6 +19,7 @@ import AddItem from "../../components/Items/AddItem";
 import donorAddAction from "../../actions/donor/donorAddAction";
 import EditItem from "../../components/Items/EditItem";
 import { RouteObject } from "react-router-dom";
+import { ItemWithAllProps } from "../../types/fnProps";
 
 const donorRouter: RouteObject[] = [
   {
@@ -33,7 +34,7 @@ const donorRouter: RouteObject[] = [
   },
   {
     path: 'donors/add',
-    element: <LoggedIn component={<AddItem {...donorProps} />} />,
+    element: <LoggedIn component={<AddItem {...donorProps as ItemWithAllProps} />} />,
     action: donorAddAction
   },
   {
@@ -49,7 +50,7 @@ const donorRouter: RouteObject[] = [
   },
   {
     path: 'donors/:donorId/edit',
-    element: <LoggedIn component={<EditItem {...donorProps} />} />,
+    element: <LoggedIn component={<EditItem {...donorProps as ItemWithAllProps} />} />,
     loader: donorItemLoader,
     action: donorEditAction
   },
