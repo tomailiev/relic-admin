@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { initialVideoSchema, videoSchema } from "../utils/yup/yup-schemas";
 import { getVideoInfo } from "../utils/firebase/firebase-functions";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields, ItemWithInitialFields } from "../types/fnProps";
+import { ItemWithFields, ItemWithInitialFields } from "../types/fnProps";
 
 const videoColumns: GridColDef[] = [
     {

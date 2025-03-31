@@ -1,5 +1,4 @@
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
 export default function campaignAddLoader() {
     return downloadDocsV2('lists')

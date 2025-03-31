@@ -5,7 +5,7 @@ import { getTier } from "../vars/getTier";
 import { reduceDonations } from "../vars/reduceDonations";
 import { oneYearAgoFromToday, twoYearsAgoFromTomorrow } from "../vars/dateObjects";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
+import { ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 
 function numExtractor(str = '') {

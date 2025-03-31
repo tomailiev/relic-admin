@@ -5,7 +5,7 @@ import { FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
 import { Schema, ValidationError } from "yup";
-import { ItemProps, ItemWithFields, ItemWithFileFields } from "../../types/fnProps";
+import { ItemWithFileFields } from "../../types/fnProps";
 import hasProperty from "../../vars/hasProperty";
 
 
@@ -120,7 +120,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                                     <IconButton edge="end" aria-label="edit" onClick={() => setWillEdit(prev => ({ ...prev, [id]: true }))}>
                                         <Edit />
                                     </IconButton>
-                                }><ListItemText primary={userFields && (userFields[id] as File)?.name || filesFields[id]} />
+                                }><ListItemText primary={(userFields && (userFields[id] as File)?.name) || filesFields[id]} />
                                 </ListItem>
                                 : <ListItem key={id}>
                                     <MuiFileInput {...props} error={hasProperty(hasError, id)} helperText={hasProperty(hasError, id) && hasError[id]} />

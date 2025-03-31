@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, redirect } from "react-router-dom";
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 
 export default function campaignLoader({ request }: LoaderFunctionArgs) {
     const url = new URL(request.url);

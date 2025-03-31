@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { CommonDialog } from "../../types/dialog";
 
 

@@ -5,7 +5,7 @@ import listSourceLoader from "../loaders/listSourceLoader";
 import donorProps from "./donorProps";
 import subscriberProps from "./subscriberProps";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithDataColumns, ItemWithInitialFields } from "../types/fnProps";
+import { ItemWithDataColumns, ItemWithInitialFields } from "../types/fnProps";
 
 const listColumns: GridColDef[] = [
     {

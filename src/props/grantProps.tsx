@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { dueMonthsSchema, grantSchema } from "../utils/yup/yup-schemas";
 import { months } from "../vars/dateObjects";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
+import { ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 const grantColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 2 },

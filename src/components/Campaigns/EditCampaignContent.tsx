@@ -6,8 +6,8 @@ import { emailContentFieldArrays, emailContentFields } from "../../props/emailCo
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
 import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
-import { ItemProps, ItemWithFields } from "../../types/fnProps";
-import { Campaign, CampaignComponent } from "../../types/DB";
+import { ItemWithFields } from "../../types/fnProps";
+import { Campaign } from "../../types/DB";
 import { AnyMJMLComponent, AnyMJMLKey } from "../../types/campaignComponents";
 
 const options = [

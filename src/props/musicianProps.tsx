@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { musicianFileSchema, musicianSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields, ItemWithFileFields } from "../types/fnProps";
+import { ItemWithFields, ItemWithFileFields } from "../types/fnProps";
 
 const musicianColumns: GridColDef[] = [
     {

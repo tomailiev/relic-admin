@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ItemProps } from "../../types/fnProps";
 import { ItemTypeMap } from "../../types/DB";
 
 const NoResource = <T extends keyof ItemTypeMap>({ itemType }: { itemType: T }) => {

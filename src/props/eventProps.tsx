@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
+import { ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
 
 const eventColumns: GridColDef[] = [
     {

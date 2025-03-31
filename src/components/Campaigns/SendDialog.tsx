@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { ChangeEvent, useState } from "react";
-import { ActionDialog, CommonDialog } from "../../types/dialog";
+import { CommonDialog } from "../../types/dialog";
 
 
 const SendDialog = ({ open, setOpen, name, handleSend }: CommonDialog & { name: string, handleSend: (testAddresses: string | null) => void }) => {

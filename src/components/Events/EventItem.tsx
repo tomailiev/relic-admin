@@ -3,8 +3,7 @@ import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumb
 import { daysOfWeek } from "../../vars/dateObjects";
 import { useContext } from "react";
 import ErrorContext from "../../context/ErrorContext";
-import { EventItemProps } from "../../types/itemProps";
-import { DeEvent, Event } from "../../types/DB";
+import { Event } from "../../types/DB";
 // import { deschematifyPerformance } from "../../vars/deschematifyEvent";
 
 

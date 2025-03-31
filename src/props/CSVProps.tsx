@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { CSVSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFileFields } from "../types/fnProps";
+import { ItemWithFileFields } from "../types/fnProps";
 
 const CSVListColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 2 },

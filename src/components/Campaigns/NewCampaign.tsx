@@ -3,8 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
-import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
-import { Campaign } from "../../types/DB";
+import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 

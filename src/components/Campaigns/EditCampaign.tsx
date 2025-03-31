@@ -4,9 +4,8 @@ import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import AddForm from "../Forms/AddForm";
 import { campaignSchema } from "../../utils/yup/yup-schemas";
-import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
-import { Campaign, List } from "../../types/DB";
-import { SubmitTarget } from "react-router-dom/dist/dom";
+import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
+import { Campaign } from "../../types/DB";
 
 
 const EditCampaign = ({ itemType, fieldsArray }: ItemWithFields) => {

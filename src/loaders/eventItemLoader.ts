@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { downloadOneDoc, getLink } from "../utils/firebase/firebase-functions";
-import collections from "../vars/collections";
 import { deschematifyEvent } from "../vars/deschematifyEvent";
 
 export default async function eventItemLoader({ params }: LoaderFunctionArgs) {

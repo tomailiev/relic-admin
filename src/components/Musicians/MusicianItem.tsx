@@ -1,6 +1,6 @@
 import { Button, Card, CardMedia, Grid, Paper, Typography } from "@mui/material";
 import { useContext } from "react";
-import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
+import ErrorContext from "../../context/ErrorContext";
 import { Musician } from "../../types/DB";
 
 const MusicianItem = ({ item }: { item: Musician }) => {

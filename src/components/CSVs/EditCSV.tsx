@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "../Items/ItemSwitch";
-import { ItemProps, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../../types/fnProps";
-import { AnyItemType, CSVItem, Subscriber } from "../../types/DB";
+import { ItemWithFileFields } from "../../types/fnProps";
+import { Subscriber } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 
 

@@ -1,8 +1,7 @@
 import { Box, Button, Container } from "@mui/material";
 import { DataGrid, GridColDef, GridRowId, GridRowSelectionModel } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { AnyItemType, Subscriber } from "../../types/DB";
-import { ItemProps, ItemWithDataColumns } from "../../types/fnProps";
+import { ItemWithDataColumns } from "../../types/fnProps";
 import hasProperty from "../../vars/hasProperty";
 
 const FilterData = ({ item, itemProps, handleFormCompletion }: { item: object, itemProps: ItemWithDataColumns, handleFormCompletion: (data: object) => void }) => {

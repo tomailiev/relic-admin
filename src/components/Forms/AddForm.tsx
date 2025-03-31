@@ -2,7 +2,7 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Selec
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
-import { FieldsArrayItem, ItemProps, ItemWithFields } from "../../types/fnProps";
+import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
 

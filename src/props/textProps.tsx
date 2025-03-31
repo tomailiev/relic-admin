@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { newTextSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemProps, ItemWithFields } from "../types/fnProps";
+import { ItemWithFields } from "../types/fnProps";
 
 const textColumns: GridColDef[] = [
     { field: 'icon', headerName: 'Avatar', sortable: false, flex: 0, renderCell: () => <TextSnippet /> },

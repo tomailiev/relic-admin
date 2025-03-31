@@ -8,7 +8,7 @@ import SubscriberItem from "../Subscribers/SubscriberItem";
 import TextItem from "../Texts/TextItem";
 import VideoItem from "../Videos/VideoItem";
 import EmailListItem from "../Lists/ListItem";
-import { AnyItemType, ItemTypeMap } from "../../types/DB";
+import { ItemTypeMap } from "../../types/DB";
 import { Dispatch, SetStateAction } from "react";
 import hasProperty from "../../vars/hasProperty";
 

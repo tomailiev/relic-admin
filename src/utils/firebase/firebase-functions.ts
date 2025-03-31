@@ -2,7 +2,7 @@ import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timest
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
-import { AnyItemType, Grant, ItemTypeMap } from "../../types/DB";
+import { ItemTypeMap } from "../../types/DB";
 
 function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
     return id
