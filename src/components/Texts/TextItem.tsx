@@ -4,8 +4,7 @@ import { Text } from "../../types/DB";
 
 
 const TextItem = ({ item }: { item: Text }) => {
-
-
+    
     return (
         <Paper sx={{ mx: 4, my: 2, p: 5, }}>
             <Typography variant="h5">{item.key}</Typography>

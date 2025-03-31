@@ -2,7 +2,7 @@ import { LoaderFunctionArgs } from "react-router-dom";
 import { downloadOneDoc } from "../utils/firebase/firebase-functions";
 
 export default function textItemLoader({ params }: LoaderFunctionArgs) {
-    return downloadOneDoc('texts', 'allTexts')
+    return downloadOneDoc('textContent', 'allTexts')
         .then(allTexts => {
             const docId = params.textId;
             if (!docId) {

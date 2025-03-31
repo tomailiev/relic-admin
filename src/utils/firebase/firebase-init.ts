@@ -1,11 +1,11 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { Analytics, getAnalytics } from "firebase/analytics";
-import { FirebaseStorage, getStorage } from "firebase/storage";
-import { Firestore, getFirestore } from "firebase/firestore";
-import { Auth, getAuth } from "firebase/auth";
-import { connectFunctionsEmulator, Functions, getFunctions } from "firebase/functions"
-import { FirebaseApp, FirebaseOptions } from "@firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions"
+import { FirebaseOptions } from "@firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,14 +22,14 @@ const firebaseConfig: FirebaseOptions = {
 };
 
 // Initialize Firebase
-const app: FirebaseApp = initializeApp(firebaseConfig);
-const analytics: Analytics = getAnalytics(app);
-const db: Firestore = process.env.NODE_ENV === 'development' ? getFirestore(app, 'mock-data') :  getFirestore(app);
+const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+const db = process.env.NODE_ENV === 'development' ? getFirestore(app, 'mock-data') : getFirestore(app);
 // const db = getFirestore(app)
-const storage: FirebaseStorage = process.env.NODE_ENV === 'development' ? getStorage(app, 'gs://relic-mock-storage') : getStorage(app);
-const auth: Auth = getAuth(app);
-const functions: Functions =  getFunctions(app);
+const storage = process.env.NODE_ENV === 'development' ? getStorage(app, 'gs://relic-mock-storage') : getStorage(app);
+const auth = getAuth(app);
+const functions = getFunctions(app);
 if (process.env.REACT_APP_EMULATORS) {
   connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 }
-export { db, analytics, storage, firebaseConfig, auth, functions };
+export { db, storage, firebaseConfig, auth, functions };

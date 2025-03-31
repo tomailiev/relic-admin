@@ -2,7 +2,7 @@ import { Text } from "../types/DB";
 import { downloadOneDoc } from "../utils/firebase/firebase-functions";
 
 export default function textLoader(): Promise<Text[]> {
-    return downloadOneDoc('texts', 'allTexts')
+    return downloadOneDoc('textContent', 'allTexts')
         .then(allTexts => {
             return Object.entries(allTexts)
                 .filter(([key,]) => key !== 'id')

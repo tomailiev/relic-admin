@@ -35,7 +35,7 @@ const textFA = [
 ];
 
 const textProps: ItemWithFields = {
-    itemType: 'texts',
+    itemType: 'textContent',
     name: 'id',
     columns: textColumns,
     sorting: { field: 'id', sort: 'asc' },
