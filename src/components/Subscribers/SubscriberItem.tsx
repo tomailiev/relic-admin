@@ -42,7 +42,7 @@ const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
                             <AutoAwesomeMotion />
                         </ListItemIcon>
                         <List>
-                            {item.lists.map(list => (
+                            {item.lists?.map(list => (
                                 <ListItem>
                                     <Typography >
                                         <Link key={list} to={`/lists/${list}`}>
