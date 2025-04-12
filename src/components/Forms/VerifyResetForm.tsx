@@ -92,7 +92,7 @@ const VerifyResetForm = ({ reason }: { reason: string }) => {
                             id={id}
                             name={id}
                             type={'text'}
-                            error={hasProperty(hasError, id)}
+                            error={hasProperty(hasError, id) && hasError[id]}
                             value={hasProperty(userFields, id) && userFields[id]}
                             onFocus={() => { setHasError(prev => ({ ...prev, [id]: '' })); setAlertMessage('') }}
                             onChange={handleInputChange}
