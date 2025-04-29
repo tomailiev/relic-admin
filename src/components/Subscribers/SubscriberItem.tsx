@@ -31,7 +31,7 @@ const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
                         </ListItemIcon>
                         <ListItemText primary={item.location} />
                     </ListItem>}
-                    {item.tags && !!item.lists.length && <ListItem>
+                    {item.tags && !!item.tags.length && <ListItem>
                         <ListItemIcon>
                             <Style />
                         </ListItemIcon>

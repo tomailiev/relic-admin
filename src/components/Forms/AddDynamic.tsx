@@ -10,7 +10,7 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
 
     const navigation = useNavigation();
 
-    const [nestedItems, setNestedItems] = useState([nestedFields]);
+    const [nestedItems, setNestedItems] = useState(nestedFields as Array<any>);
     const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,23 +36,33 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
 
     async function handleSubmitEvent() {
 
+        
         try {
             const validated = await schema.validate(nestedItems, { abortEarly: false });
+            console.log(validated);
+            
             handleFormCompletion(validated);
         } catch (e) {
+            
             if (e instanceof ValidationError) {
 
                 setHasError(e.inner?.reduce((p: { [key: string]: string }[], c) => {
+                    
                     const startChar = c.path?.indexOf('[');
                     const endChar = c.path?.indexOf(']');
-                    if (startChar && endChar) {
+                    
+                    
+                    if ((startChar || startChar === 0) && endChar) {
+                        
                         const index = Number(c.path?.substring(startChar + 1, endChar));
                         const prop = c.path?.substring(endChar + 2);
+                        
                         if (!p[index]) p[index] = {};
                         if (prop) {
                             p[index][prop] = c.message;
                         }
                     }
+                    
                     return p;
                 }, []))
             }

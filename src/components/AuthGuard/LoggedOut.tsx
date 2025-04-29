@@ -2,11 +2,8 @@ import { ReactElement, useContext } from "react";
 import UserContext from "../../context/UserContext";
 import { Navigate } from "react-router-dom";
 
-type LoggedOutProps = {
-    component: ReactElement
-}
 
-const LoggedOut = ({ component }: LoggedOutProps): ReactElement => {
+const LoggedOut = ({ component }: { component: ReactElement }): ReactElement => {
     const { currentUser } = useContext(UserContext);
 
     return (
