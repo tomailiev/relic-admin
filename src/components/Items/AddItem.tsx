@@ -65,10 +65,12 @@ const AddItem = (itemProps: ItemWithAllProps) => {
         try {
             setIsLoading(true);
             await Promise.all(itemProps.filesFieldsArray.filter(item => !!hasProperty(data, item.id)).map(async (item) => {
-                if (hasProperty(data, item.id)) {
+                if (hasProperty(data, item.id) && data[item.id]) {
                     const filePath = await uploadFile(data[item.id], `${item.path}/${(data[item.id] as File)?.name}`);
                     filePaths[item.id] = filePath;
                     filePaths[item.displayName] = data[item.id];
+                } else if (hasProperty(data, item.id) && !data[item.id]) {
+                    filePaths[item.id] = data[item.id]
                 }
                 return item;
             }));

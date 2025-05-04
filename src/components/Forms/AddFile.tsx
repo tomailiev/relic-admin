@@ -17,6 +17,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
     const [willEdit, setWillEdit] = useState({});
     const [userFields, setUserFields] = useState(filesFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [shouldSkip, setShouldSkip] = useState(true);
 
     useEffect(() => {
         const submissionStates = {
@@ -38,11 +39,11 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
     }, [filesFields, filesFieldsArray])
 
     function removeError(e: FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) {
-        setHasError(prev => ({ ...prev, [e.target.name]: '' }))
+
+        setHasError(prev => ({ ...prev, [e.target.name]: null }))
     }
 
     function handleFileChange(newValue: File | null, id: string) {
-
         if (newValue) {
             setUserFields(prev => {
                 return { ...prev, [id]: newValue }
@@ -52,27 +53,34 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
         }
     }
 
-    function skipSubmit() {
-        let shouldSkip = true;
+    useEffect(() => {
+        let skippable = true;
         if (filesFieldsArray && filesFields) {
             filesFieldsArray.forEach(({ id }) => {
+                console.log(userFields);
+                
                 if (!userFields || !hasProperty(userFields, id)) return;
-                if (
-                    !hasProperty(filesFields, id)
-                    || (filesFields[id] as string)?.substring((filesFields[id] as string).lastIndexOf('/') + 1) !== (userFields[id] as File).name
-                    || willEdit[id]
-                ) {
-                    shouldSkip = false;
+                if (hasProperty(filesFields, id)) {
+
+                    if (
+                        !filesFields[id]
+                        || (filesFields[id] as string)?.substring((filesFields[id] as string).lastIndexOf('/') + 1) !== (userFields[id] as File).name
+                        || willEdit[id]
+                    ) {
+                        skippable = false;
+                    }
+
                 }
             })
+            setShouldSkip(skippable);
         }
 
-        return shouldSkip;
-    }
+    }, [filesFields, filesFieldsArray, userFields, willEdit])
+
 
     async function submitForm() {
 
-        if (skipSubmit()) return handleFormCompletion(null);
+        if (shouldSkip) return handleFormCompletion(null);
 
         try {
             console.log(userFields);
@@ -105,9 +113,9 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                                 type: type || 'file',
                                 value: (!!userFields && hasProperty(userFields, id)) ? userFields[id] as File : null,
                                 onChange: (newValue: File | null) => handleFileChange(newValue, id),
-                                error: !!(hasProperty(hasError, id)),
+                                error: !!(hasProperty(hasError, id) && hasError[id]),
                                 onFocus: removeError,
-                                helperText: hasProperty(hasError, id) && hasError[id],
+                                helperText: (hasProperty(hasError, id) && hasError[id]) || '',
                                 label: label,
                                 size: 'small' as 'small' | 'medium',
                                 multiline: multiline,
@@ -115,7 +123,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                                 // rows: 4
                             }
 
-                            return ((filesFields && hasProperty(filesFields, id)) && !willEdit[id])
+                            return ((filesFields && hasProperty(filesFields, id) && filesFields[id]) && !willEdit[id])
                                 ? <ListItem key={id} secondaryAction={
                                     <IconButton edge="end" aria-label="edit" onClick={() => setWillEdit(prev => ({ ...prev, [id]: true }))}>
                                         <Edit />
@@ -123,7 +131,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                                 }><ListItemText primary={(userFields && (userFields[id] as File)?.name) || filesFields[id]} />
                                 </ListItem>
                                 : <ListItem key={id}>
-                                    <MuiFileInput {...props} error={hasProperty(hasError, id)} helperText={hasProperty(hasError, id) && hasError[id]} />
+                                    <MuiFileInput {...props} />
                                 </ListItem>
 
                         })}
@@ -136,7 +144,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                         value="preflight"
                         onClick={submitForm}
                     >
-                        {skipSubmit() ? 'Skip' : 'Submit'}
+                        {shouldSkip ? 'Skip' : 'Submit'}
                     </Button>
                 </Stack>
             </Form>
