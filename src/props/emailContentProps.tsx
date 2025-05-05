@@ -238,7 +238,7 @@ const signatureFA: FieldsArrayItem[] = [
         label: 'Sender', id: 'sender', type: 'select', options: [
             { value: 'info@relicensemble.org' },
             { value: 'toma@relicensemble.org' },
-            // { value: 'aniela@relicensemble.org' },
+            { value: 'aniela@relicensemble.org' },
             // { value: 'kako@relicensemble.org' },
             // { value: 'natalie@relicensemble.org' },
             // { value: 'cullen@relicensemble.org' },
