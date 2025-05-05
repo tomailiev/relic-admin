@@ -224,7 +224,7 @@ const emailComponentSchemas = {
         text: string().required()
     }),
     signature: object({
-        sender: string().email().required().oneOf(['info@relicensemble.org', 'toma@relicensemble.org'])
+        sender: string().email().required().oneOf(['info@relicensemble.org', 'toma@relicensemble.org', 'aniela@relicensemble.org'])
     })
 };
 
