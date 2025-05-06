@@ -23,12 +23,8 @@ const AddFileDialog = ({ open, setOpen, id }: CommonDialog & { id: string }) => 
             if (data && hasProperty(data, file) && data[file]) {
                 const filePath = await uploadFile(data[file] as File, `/static/campaigns/${id}/${(data[file] as File).name}`, publicStorage);
                 console.log(filePath);
-                setTextValue('Upload successful');
                 setIsLoading(false);
-                setTimeout(() => {
-                    setOpen(false);
-                    setTextValue('');
-                }, 1000)
+                setTextValue('Upload successful');
             }
 
             // handleSubmitEvent();
@@ -39,13 +35,20 @@ const AddFileDialog = ({ open, setOpen, id }: CommonDialog & { id: string }) => 
         }
     }
 
+    function closeDialog() {
+        setOpen(false);
+        setTimeout(() => {
+            setTextValue('');
+        }, 400);
+    }
+
     return (
-        <Dialog open={open}>
+        <Dialog open={open} maxWidth={'sm'} fullWidth={true}>
             <DialogTitle>
                 File Upload
                 <IconButton
                     aria-label="close"
-                    onClick={() => setOpen(false)}
+                    onClick={closeDialog}
                     sx={{
                         position: 'absolute',
                         right: 8,

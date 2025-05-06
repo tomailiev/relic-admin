@@ -10,6 +10,7 @@ import { ItemWithFields } from "../../types/fnProps";
 import { Campaign } from "../../types/DB";
 import { AnyMJMLComponent, AnyMJMLKey } from "../../types/campaignComponents";
 import AddFileDialog from "./AddFileDialog";
+import FilesDialog from "./FilesDialog";
 
 const options = [
     { value: 'button' },
@@ -36,6 +37,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
 
     const [activeStep, setActiveStep] = useState(0);
     const [fileUploadOpen, setFileUploadOpen] = useState(false);
+    const [filesListOpen, setFilesListOpen] = useState(false);
     const [component, setComponent] = useState<AnyMJMLKey | null>(null);
     const [componentList, setComponentList] = useState<AnyMJMLComponent[]>(campaign?.components || []);
     const [editedComponent, setEditedComponent] = useState<AnyMJMLComponent | null>(null);
@@ -126,6 +128,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     return (
         <>
             <AddFileDialog id={campaign.id || 'undefined'} open={fileUploadOpen} setOpen={setFileUploadOpen} />
+            <FilesDialog id={campaign.id || 'undefined'} open={filesListOpen} setOpen={setFilesListOpen} />
             <Box m={4}>
                 {
                     campaign.status
@@ -133,9 +136,9 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
                         : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
                 }
                 <Grid container spacing={2}>
-                    <Grid item lg={12} textAlign={'center'}>
+                    <Grid item xs={12} textAlign={'center'}>
                         <ButtonGroup variant="outlined">
-                            <Button>Files</Button>
+                            <Button onClick={() => setFilesListOpen(true)}>Files</Button>
                             <Button onClick={() => setFileUploadOpen(true)}>Add File</Button>
                         </ButtonGroup>
 
