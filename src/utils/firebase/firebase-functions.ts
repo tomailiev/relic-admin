@@ -10,12 +10,12 @@ function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
         : addDoc(collection(db, col), data)
 }
 
-function getLink(url: string) {
-    return getBlob(ref(storage, url));
+function getLink(url: string, bucket = storage) {
+    return getBlob(ref(bucket, url));
 }
 
-function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string) {
-    const pathRef = ref(storage, path)
+function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string, bucket = storage) {
+    const pathRef = ref(bucket, path)
     return uploadBytes(pathRef, file)
         .then(_snap => {
             return pathRef.fullPath;
@@ -120,12 +120,12 @@ function deleteDocs(col: string, condition: [string, WhereFilterOp, string]) {
         });
 }
 
-function deleteFile(path: string) {
-    return deleteObject(ref(storage, path));
+function deleteFile(path: string, bucket = storage) {
+    return deleteObject(ref(bucket, path));
 }
 
-function getFileList(path: string) {
-    const listRef = ref(storage, path);
+function getFileList(path: string, bucket = storage) {
+    const listRef = ref(bucket, path);
     return listAll(listRef);
 }
 

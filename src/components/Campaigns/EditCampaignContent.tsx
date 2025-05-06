@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material"
+import { Box, Button, ButtonGroup, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
@@ -129,6 +129,13 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
                     : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
             }
             <Grid container spacing={2}>
+                <Grid item lg={12} textAlign={'center'}>
+                    <ButtonGroup variant="outlined">
+                        <Button>Files</Button>
+                        <Button>Add File</Button>
+                    </ButtonGroup>
+
+                </Grid>
                 <Grid item md={12} lg={4}>
                     {component && <>
                         <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
