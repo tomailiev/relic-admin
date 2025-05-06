@@ -15,19 +15,24 @@ const FilesDialog = ({ open, setOpen, id }: CommonDialog & { id: string }) => {
     const [filesList, setFilesList] = useState<{ name: string, uri: string }[]>([]);
 
     useEffect(() => {
-        setIsLoading(true);
-        getFileList(`/static/campaigns/${id}/`, publicStorage)
-            .then(value => {
-                setIsLoading(false);
-                setFilesList(value.items.map(item => ({ name: item.name, uri: encodeURI(`https://storage.googleapis.com/${item.bucket}/${item.fullPath}`) })));
-            })
-            .catch(e => {
-                setIsLoading(false);
-                console.log(e);
-            });
+        if (open) {
+            setIsLoading(true);
+            getFileList(`/static/campaigns/${id}/`, publicStorage)
+                .then(value => {
+                    setIsLoading(false);
+                    setFilesList(value.items.map(item => ({ name: item.name, uri: encodeURI(`https://storage.googleapis.com/${item.bucket}/${item.fullPath}`) })));
+                })
+                .catch(e => {
+                    setIsLoading(false);
+                    console.log(e);
+                });
+        } else {
+            setTimeout(() => {
+                setFilesList([]);
+            }, 400);
+        }
 
-        return () => setFilesList([]);
-    }, [id, setIsLoading])
+    }, [id, setIsLoading, open])
 
     function closeDialog() {
         setOpen(false);

@@ -245,9 +245,19 @@ const signatureFA: FieldsArrayItem[] = [
             // { value: 'rebecca@relicensemble.org' }
         ]
     }
+];
+
+const attachmentFields = {
+    id: 'custom-attachment',
+    uri: ''
+};
+
+const attachmentFA: FieldsArrayItem[] = [
+    {label: "URL", id: 'uri'}
 ]
 
 export const emailContentFields = {
+    attachment: attachmentFields,
     button: buttonFields,
     column: columnFields,
     divider: dividerFields,
@@ -266,6 +276,7 @@ export const emailContentFields = {
 };
 
 export const emailContentFieldArrays = {
+    attachment: attachmentFA,
     button: buttonFA,
     column: columnFA,
     divider: dividerFA,

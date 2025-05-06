@@ -13,6 +13,7 @@ import AddFileDialog from "./AddFileDialog";
 import FilesDialog from "./FilesDialog";
 
 const options = [
+    { value: 'attachment' },
     { value: 'button' },
     { value: 'column' },
     { value: 'divider' },
@@ -43,6 +44,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     const [editedComponent, setEditedComponent] = useState<AnyMJMLComponent | null>(null);
     const [emailHtml, setEmailHtml] = useState(campaign?.html || '');
     const [emailMjml, setEmailMjml] = useState(campaign?.mjml || '');
+    const [attachments, setAttachments] = useState(campaign?.attachments || [])
 
     // const [submission, setSubmission] = useState(null);
     const fetcher = useFetcher();
@@ -58,6 +60,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
         if (fetcher.data?.html) {
             setEmailHtml(fetcher.data.html);
             setEmailMjml(fetcher.data.mjml);
+            setAttachments(fetcher.data.attachments);
         }
         if (fetcher.data?.errors?.length) {
             setError({ severity: 'error', message: fetcher.data.errors.map((e: Error) => e.message).join(';\n'), error: true })
@@ -111,7 +114,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     }
 
     function finishSubmission() {
-        const formData = { ...campaign, components: componentList, html: emailHtml, mjml: emailMjml }
+        const formData = { ...campaign, components: componentList, html: emailHtml, mjml: emailMjml, attachments }
         submit(JSON.stringify(formData), { method: 'POST', encType: 'application/json', })
     }
 

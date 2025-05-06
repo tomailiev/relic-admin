@@ -137,6 +137,9 @@ const campaignSchema = object({
 });
 
 const emailComponentSchemas = {
+    attachment: object({
+        uri: string().required()
+    }),
     text: object({
         text: string().required(),
         fontSize: number().default(17),
