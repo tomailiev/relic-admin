@@ -1,14 +1,15 @@
-import { Box, Button, ButtonGroup, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Grid, IconButton, List, ListItem, ListItemText, Typography } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import { emailContentFieldArrays, emailContentFields } from "../../props/emailContentProps";
 import AddForm from "../Forms/AddForm";
 import { emailComponentSchemas, selectComponentSchema } from "../../utils/yup/yup-schemas";
-import { ContentCopy, Delete, Edit, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import { ContentCopy, Delete, Edit, ExpandMoreRounded, KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 import { ItemWithFields } from "../../types/fnProps";
 import { Campaign } from "../../types/DB";
 import { AnyMJMLComponent, AnyMJMLKey } from "../../types/campaignComponents";
+import AddFileDialog from "./AddFileDialog";
 
 const options = [
     { value: 'button' },
@@ -34,6 +35,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     const { campaign } = useLoaderData() as { campaign: Campaign };
 
     const [activeStep, setActiveStep] = useState(0);
+    const [fileUploadOpen, setFileUploadOpen] = useState(false);
     const [component, setComponent] = useState<AnyMJMLKey | null>(null);
     const [componentList, setComponentList] = useState<AnyMJMLComponent[]>(campaign?.components || []);
     const [editedComponent, setEditedComponent] = useState<AnyMJMLComponent | null>(null);
@@ -122,71 +124,82 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     }
 
     return (
-        <Box m={4}>
-            {
-                campaign.status
-                    ? <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent as (data: object) => void} schema={selectComponentSchema} />
-                    : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
-            }
-            <Grid container spacing={2}>
-                <Grid item lg={12} textAlign={'center'}>
-                    <ButtonGroup variant="outlined">
-                        <Button>Files</Button>
-                        <Button>Add File</Button>
-                    </ButtonGroup>
+        <>
+            <AddFileDialog id={campaign.id || 'undefined'} open={fileUploadOpen} setOpen={setFileUploadOpen} />
+            <Box m={4}>
+                {
+                    campaign.status
+                        ? <AddForm fields={{ component: '' }} fieldsArray={[{ label: 'Component', id: 'component', type: 'select', options: options }]} handleFormCompletion={selectComponent as (data: object) => void} schema={selectComponentSchema} />
+                        : <Box height={'100px'}><Typography textAlign={'center'} variant="h5">Campaign was already sent and cannot be edited</Typography></Box>
+                }
+                <Grid container spacing={2}>
+                    <Grid item lg={12} textAlign={'center'}>
+                        <ButtonGroup variant="outlined">
+                            <Button>Files</Button>
+                            <Button onClick={() => setFileUploadOpen(true)}>Add File</Button>
+                        </ButtonGroup>
 
+                    </Grid>
+                    <Grid item md={12} lg={4}>
+                        {component && <>
+                            <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
+                            <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList as (data: object) => void} schema={emailComponentSchemas[component]} />
+                        </>}
+                        {componentList && <Accordion>
+                            <AccordionSummary expandIcon={<ExpandMoreRounded />}>
+                                <Typography variant="h5">Components</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <List dense={true}>
+                                    {componentList.map((componentItem, i, arr) => {
+                                        return <ListItem
+                                            key={`${componentItem.id}_${i}`}
+                                            sx={{ border: '1px solid black' }}
+                                        >
+                                            <ListItemText primary={<Typography variant="body1" fontWeight={'bold'}>{componentItem.id}</Typography>} secondary={<Typography variant="body2" overflow={'hidden'}>{getComponentTitle(componentItem)}</Typography>} />
+                                            <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
+                                                <KeyboardArrowUp />
+                                            </IconButton>
+                                            <IconButton disabled={i === arr.length - 1} edge="end" aria-label="down" onClick={() => moveComponentDown(i)}>
+                                                <KeyboardArrowDown />
+                                            </IconButton>
+                                            <IconButton edge="end" aria-label="edit" onClick={() => editComponent(i)}>
+                                                <Edit />
+                                            </IconButton>
+                                            <IconButton edge="end" aria-label="copy" onClick={() => copyComponent(i)}>
+                                                <ContentCopy />
+                                            </IconButton>
+                                            <IconButton edge="end" aria-label="delete" onClick={() => deleteComponent(i)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </ListItem>
+                                    })}
+                                </List>
+                            </AccordionDetails>
+                        </Accordion>
+                        }
+                    </Grid>
+                    <Grid item md={12} lg={8}>
+                        {emailHtml && <iframe title="emailHtml" srcDoc={emailHtml} style={{ height: '800px', width: '800px', maxWidth: '100%' }} />}
+                    </Grid>
                 </Grid>
-                <Grid item md={12} lg={4}>
-                    {component && <>
-                        <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
-                        <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList as (data: object) => void} schema={emailComponentSchemas[component]} />
-                    </>}
-                    {componentList && <List dense={true}>
-                        {componentList.map((componentItem, i, arr) => {
-                            return <ListItem
-                                key={`${componentItem.id}_${i}`}
-                                sx={{ borderRadius: '3px', border: '1px solid black' }}
-                            >
-                                <ListItemText primary={componentItem.id} secondary={<Typography variant="body2" overflow={'hidden'}>{getComponentTitle(componentItem)}</Typography>} />
-                                <IconButton disabled={i === 0} edge="end" aria-label="up" onClick={() => moveComponentUp(i)}>
-                                    <KeyboardArrowUp />
-                                </IconButton>
-                                <IconButton disabled={i === arr.length - 1} edge="end" aria-label="down" onClick={() => moveComponentDown(i)}>
-                                    <KeyboardArrowDown />
-                                </IconButton>
-                                <IconButton edge="end" aria-label="edit" onClick={() => editComponent(i)}>
-                                    <Edit />
-                                </IconButton>
-                                <IconButton edge="end" aria-label="copy" onClick={() => copyComponent(i)}>
-                                    <ContentCopy />
-                                </IconButton>
-                                <IconButton edge="end" aria-label="delete" onClick={() => deleteComponent(i)}>
-                                    <Delete />
-                                </IconButton>
-                            </ListItem>
-                        })}
-                    </List>}
-                </Grid>
-                <Grid item md={12} lg={8}>
-                    {emailHtml && <iframe title="emailHtml" srcDoc={emailHtml} style={{ height: '800px', width: '800px', maxWidth: '100%' }} />}
-                </Grid>
-            </Grid>
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                    color="inherit"
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep(prev => prev - 1)}
-                    sx={{ mr: 1 }}
-                >
-                    Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                    <Button
+                        color="inherit"
+                        disabled={activeStep === 0}
+                        onClick={() => setActiveStep(prev => prev - 1)}
+                        sx={{ mr: 1 }}
+                    >
+                        Back
+                    </Button>
+                    <Box sx={{ flex: '1 1 auto' }}>
+                    </Box>
+                    <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status}>
+                        Save & Preview
+                    </Button>
                 </Box>
-                <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status}>
-                    Save & Preview
-                </Button>
             </Box>
-        </Box>
+        </>
     );
 };
 

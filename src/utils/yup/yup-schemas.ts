@@ -110,6 +110,12 @@ const CSVSchema = object().shape({
     })
 });
 
+const publicFileSchema = object().shape({
+    file: mixed().required().test('is-file', 'Not a valid file', (value) => {
+        return value && value instanceof File
+    })
+})
+
 const subscriberSchema = object({
     email: string().required().email(),
     firstName: string().required(),
@@ -284,5 +290,6 @@ export {
     selectComponentSchema,
     donationAcknowledgementSchema,
     operationSchema,
-    listSchema
+    listSchema,
+    publicFileSchema
 };
