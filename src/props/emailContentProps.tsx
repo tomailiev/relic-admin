@@ -1,4 +1,5 @@
 import { FieldsArrayItem } from "../types/fnProps";
+import RichTextEditor from 'react-rte'
 
 const sectionFields = {
     id: 'mj-section',
@@ -55,7 +56,7 @@ const columnFA: FieldsArrayItem[] = [
 
 const textFields = {
     id: 'mj-text',
-    text: '',
+    text: RichTextEditor.createEmptyValue(),
     fontSize: 17,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -68,7 +69,7 @@ const textFields = {
 
 
 const textFA: FieldsArrayItem[] = [
-    { label: 'Text', id: 'text', multiline: true },
+    { label: 'Text', id: 'text', multiline: true, type: 'rich-text' },
     { label: 'Font size', id: 'fontSize', type: 'select', options: [...Array(29).keys()].map(x => ({ value: x += 9 })) },
     { label: 'Font weight', id: 'fontWeight', type: 'select', options: [{ value: 300 }, { value: 400 }, { value: 600 }, { value: 700 }, { value: 900 }] },
     { label: 'Font style', id: 'fontStyle', type: 'select', options: [{ value: 'normal' }, { value: 'italic' }, { value: 'oblique' }] },
@@ -221,11 +222,11 @@ const fontFA: FieldsArrayItem[] = [
 
 const rawFields = {
     id: 'mj-raw',
-    text: ''
+    text: RichTextEditor.createEmptyValue()
 };
 
 const rawFA: FieldsArrayItem[] = [
-    { label: 'Text', id: 'text', multiline: true }
+    { label: 'Text', id: 'text', multiline: true, type: 'rich-text' }
 ];
 
 const signatureFields = {

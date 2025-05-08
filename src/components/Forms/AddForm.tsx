@@ -5,7 +5,14 @@ import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
+import RichTextEditor, { EditorValue, ToolbarConfig } from "react-rte";
 
+// const toolbarConfig: ToolbarConfig = {
+//     display: ['BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'INLINE_STYLE_BUTTONS', 'LINK_BUTTONS'],
+//     INLINE_STYLE_BUTTONS: [
+//         {}
+//     ]
+// }
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
@@ -40,11 +47,57 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
         })
     }
 
+    function handleRichTextInputChange(value: EditorValue, id: string) {
+        setUserFields(prev => {
+            return { ...prev, [id]: value }
+        })
 
+    }
+
+    function getRTEValue(id: string) {
+        if (userFields && hasProperty(userFields, id) && userFields[id]) {
+            if (typeof userFields[id] === 'string') {
+                return RichTextEditor.createValueFromString(userFields[id], 'html');
+            } else {
+                return userFields[id];
+            }
+        } else {
+            return RichTextEditor.createEmptyValue();
+        }
+    }
 
     async function submitForm() {
+        const updates: { [key: string]: string } = {}
+        fieldsArray?.filter(el => el.type === 'rich-text').forEach(({ id }) => {
+            if (userFields && hasProperty(userFields, id)) {
+                updates[id] = (userFields[id] as EditorValue).toString('html', {
+                    inlineStyles: {
+                        BOLD: {
+                            element: 'span',
+                            style: { fontWeight: 'bold' },
+                        },
+                        ITALIC: {
+                            element: 'span',
+                            style: { fontStyle: 'italic' },
+                        },
+                        UNDERLINE: {
+                            element: 'span',
+                            style: { textDecoration: 'underline' }
+                        },
+                        STRIKETHROUGH: {
+                            element: 'span',
+                            style: { textDecoration: 'line-through' }
+                        }
+                    },
+                });
+            }
+        });
 
+        setUserFields(prev => ({ ...prev, ...updates }));
+        console.log(userFields);
+        
         try {
+
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);
         } catch (e) {
@@ -58,7 +111,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
             }
         }
     }
-
     return (
         <Paper sx={{ mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
@@ -70,7 +122,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: hasProperty(hasError, id)  && hasError[id],
+                            error: hasProperty(hasError, id) && hasError[id],
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
@@ -84,7 +136,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: !!(hasProperty(hasError, id)  && hasError[id]),
+                            error: !!(hasProperty(hasError, id) && hasError[id]),
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
@@ -107,7 +159,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 </Select>
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
+                            : type === 'rich-text'
+                                ? <RichTextEditor key={id} value={getRTEValue(id)} onChange={(value) => handleRichTextInputChange(value, id)} />
+                                : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"
