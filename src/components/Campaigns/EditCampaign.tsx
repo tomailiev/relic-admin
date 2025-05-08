@@ -67,7 +67,7 @@ const EditCampaign = ({ itemType, fieldsArray }: ItemWithFields) => {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }}>
                 </Box>
-                <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status}>
+                <Button variant="contained" onClick={finishSubmission} disabled={!campaign.status || !submission}>
                     Edit content
                 </Button>
             </Box>
