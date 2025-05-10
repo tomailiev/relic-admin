@@ -6,6 +6,8 @@ import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
 import RichTextEditor, { EditorValue, ToolbarConfig } from "react-rte";
+import { options } from "../../utils/rte/ImportOptions";
+import { ContentBlock } from "draft-js";
 
 // const toolbarConfig: ToolbarConfig = {
 //     display: ['BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'INLINE_STYLE_BUTTONS', 'LINK_BUTTONS'],
@@ -20,6 +22,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [willSubmit, setWillSubmit] = useState(false);
 
     useEffect(() => {
         setUserFields(fields)
@@ -33,6 +36,29 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
         }
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
+
+    useEffect(() => {
+        const transmitData = async () => {
+            try {
+
+                const validated = await schema.validate(userFields, { abortEarly: false });
+                handleFormCompletion(validated);
+            } catch (e) {
+                console.log(e);
+                if (e instanceof ValidationError && e.inner) {
+                    const errors = e.inner?.reduce((p, c) => {
+                        return c.path ? { ...p, [c.path]: c.message, } : p;
+                    }, {});
+
+                    setHasError(errors);
+                }
+            }
+        };
+
+        if (willSubmit && userFields && !Object.values(userFields).find(val => val instanceof EditorValue)) {
+            transmitData();
+        }
+    }, [handleFormCompletion, schema, userFields, willSubmit]);
 
     function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
 
@@ -57,7 +83,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     function getRTEValue(id: string) {
         if (userFields && hasProperty(userFields, id) && userFields[id]) {
             if (typeof userFields[id] === 'string') {
-                return RichTextEditor.createValueFromString(userFields[id], 'html');
+                return RichTextEditor.createValueFromString(userFields[id], 'html', options);
             } else {
                 return userFields[id];
             }
@@ -89,28 +115,41 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             style: { textDecoration: 'line-through' }
                         }
                     },
+                    blockRenderers: {
+                        'unstyled': (block) => {
+                            const align = block.getData().get('textAlign');
+                            switch (align) {
+                                case 'ALIGN_RIGHT':
+                                    return `<div style="text-align: right;">${block.getText()}</div>`
+                                case 'ALIGN_CENTER':
+                                    return `<div style="text-align: center;">${block.getText()}</div>`
+                                case 'ALIGN_JUSTIFY':
+                                    return `<div style="text-align: justify;">${block.getText()}</div>`
+                                default:
+                                    return `<div style="text-align: left;">${block.getText()}</div>`;
+                            }
+
+                        },
+                    }
                 });
             }
         });
 
-        setUserFields(prev => ({ ...prev, ...updates }));
-        console.log(userFields);
-        
-        try {
+        setUserFields(prev => ({ ...prev, ...updates }))
+        setWillSubmit(true);
 
-            const validated = await schema.validate(userFields, { abortEarly: false });
-            handleFormCompletion(validated);
-        } catch (e) {
-            console.log(e);
-            if (e instanceof ValidationError && e.inner) {
-                const errors = e.inner?.reduce((p, c) => {
-                    return c.path ? { ...p, [c.path]: c.message, } : p;
-                }, {});
-
-                setHasError(errors);
-            }
-        }
     }
+
+    // const blockStyleFn = (block: ContentBlock) => {
+    //     const type = block.getType();
+    //     const align = block.getData().get('textAlign');
+    //     console.log(align);
+
+    //     if (align === 'right-align') return 'align-right';
+    //     if (type === 'center-align') return 'align-center';
+    //     return '';
+    // };
+
     return (
         <Paper sx={{ mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
