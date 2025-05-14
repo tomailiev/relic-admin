@@ -1,5 +1,4 @@
 import { FieldsArrayItem } from "../types/fnProps";
-import RichTextEditor from 'react-rte'
 
 const sectionFields = {
     id: 'mj-section',
@@ -56,7 +55,7 @@ const columnFA: FieldsArrayItem[] = [
 
 const textFields = {
     id: 'mj-text',
-    text: RichTextEditor.createEmptyValue(),
+    text: '',
     fontSize: 17,
     fontWeight: 300,
     fontStyle: 'normal',
@@ -222,7 +221,7 @@ const fontFA: FieldsArrayItem[] = [
 
 const rawFields = {
     id: 'mj-raw',
-    text: RichTextEditor.createEmptyValue()
+    text: ''
 };
 
 const rawFA: FieldsArrayItem[] = [

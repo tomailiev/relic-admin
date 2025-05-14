@@ -5,16 +5,7 @@ import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
-import RichTextEditor, { EditorValue, ToolbarConfig } from "react-rte";
-import { options } from "../../utils/rte/ImportOptions";
-import { ContentBlock } from "draft-js";
 
-// const toolbarConfig: ToolbarConfig = {
-//     display: ['BLOCK_ALIGNMENT_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'INLINE_STYLE_BUTTONS', 'LINK_BUTTONS'],
-//     INLINE_STYLE_BUTTONS: [
-//         {}
-//     ]
-// }
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
     const { isLoading } = useContext(LoadingContext);
@@ -55,7 +46,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
             }
         };
 
-        if (willSubmit && userFields && !Object.values(userFields).find(val => val instanceof EditorValue)) {
+        if (willSubmit && userFields) {
             transmitData();
         }
     }, [handleFormCompletion, schema, userFields, willSubmit]);
@@ -73,82 +64,10 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
         })
     }
 
-    function handleRichTextInputChange(value: EditorValue, id: string) {
-        setUserFields(prev => {
-            return { ...prev, [id]: value }
-        })
-
-    }
-
-    function getRTEValue(id: string) {
-        if (userFields && hasProperty(userFields, id) && userFields[id]) {
-            if (typeof userFields[id] === 'string') {
-                return RichTextEditor.createValueFromString(userFields[id], 'html', options);
-            } else {
-                return userFields[id];
-            }
-        } else {
-            return RichTextEditor.createEmptyValue();
-        }
-    }
-
     async function submitForm() {
-        const updates: { [key: string]: string } = {}
-        fieldsArray?.filter(el => el.type === 'rich-text').forEach(({ id }) => {
-            if (userFields && hasProperty(userFields, id)) {
-                updates[id] = (userFields[id] as EditorValue).toString('html', {
-                    inlineStyles: {
-                        BOLD: {
-                            element: 'span',
-                            style: { fontWeight: 'bold' },
-                        },
-                        ITALIC: {
-                            element: 'span',
-                            style: { fontStyle: 'italic' },
-                        },
-                        UNDERLINE: {
-                            element: 'span',
-                            style: { textDecoration: 'underline' }
-                        },
-                        STRIKETHROUGH: {
-                            element: 'span',
-                            style: { textDecoration: 'line-through' }
-                        }
-                    },
-                    blockRenderers: {
-                        'unstyled': (block) => {
-                            const align = block.getData().get('textAlign');
-                            switch (align) {
-                                case 'ALIGN_RIGHT':
-                                    return `<div style="text-align: right;">${block.getText()}</div>`
-                                case 'ALIGN_CENTER':
-                                    return `<div style="text-align: center;">${block.getText()}</div>`
-                                case 'ALIGN_JUSTIFY':
-                                    return `<div style="text-align: justify;">${block.getText()}</div>`
-                                default:
-                                    return `<div style="text-align: left;">${block.getText()}</div>`;
-                            }
-
-                        },
-                    }
-                });
-            }
-        });
-
-        setUserFields(prev => ({ ...prev, ...updates }))
         setWillSubmit(true);
 
     }
-
-    // const blockStyleFn = (block: ContentBlock) => {
-    //     const type = block.getType();
-    //     const align = block.getData().get('textAlign');
-    //     console.log(align);
-
-    //     if (align === 'right-align') return 'align-right';
-    //     if (type === 'center-align') return 'align-center';
-    //     return '';
-    // };
 
     return (
         <Paper sx={{ mx: 2, my: 2, p: 5 }}>
@@ -198,9 +117,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 </Select>
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
-                            : type === 'rich-text'
-                                ? <RichTextEditor key={id} value={getRTEValue(id)} onChange={(value) => handleRichTextInputChange(value, id)} />
-                                : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
+                            : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"
