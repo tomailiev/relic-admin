@@ -5,7 +5,7 @@ import { useHits, useSearchBox } from "react-instantsearch";
 
 const SearchDonor = ({ handleDonor }: {handleDonor: (data: { objectID: string } | null) => void}) => {
 
-    const { hits } = useHits();
+    const { hits }: {hits: { firstName: string; lastName: string; email: string; objectID: string }[]} = useHits();
     const { query, refine, } = useSearchBox();
     const [inputValue, setInputValue] = useState(query);
     const [donor, setDonor] = useState<{

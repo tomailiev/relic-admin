@@ -5,6 +5,8 @@ import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
+import Tiptap from "./Tiptap";
+import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
@@ -13,7 +15,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [willSubmit, setWillSubmit] = useState(false);
 
     useEffect(() => {
         setUserFields(fields)
@@ -28,10 +29,26 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
-    useEffect(() => {
-        const transmitData = async () => {
-            try {
 
+    function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
+
+        setHasError(prev => ({ ...prev, [id]: '' }))
+    }
+
+    function handleInputChange(e: ChangeEvent<HTMLInputElement>): void;
+    function handleInputChange(e: SelectChangeEvent<unknown>): void;
+    function handleInputChange(e: SimulatedEvent): void;
+    function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
+        console.log(e.target.value);
+        
+        setUserFields(prev => {
+            return { ...prev, [e.target.name]: e.target.value }
+        })
+    }
+
+
+    async function submitForm() {
+        try {
                 const validated = await schema.validate(userFields, { abortEarly: false });
                 handleFormCompletion(validated);
             } catch (e) {
@@ -44,29 +61,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                     setHasError(errors);
                 }
             }
-        };
-
-        if (willSubmit && userFields) {
-            transmitData();
-        }
-    }, [handleFormCompletion, schema, userFields, willSubmit]);
-
-    function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
-
-        setHasError(prev => ({ ...prev, [id]: '' }))
-    }
-
-    function handleInputChange(e: ChangeEvent<HTMLInputElement>): void;
-    function handleInputChange(e: SelectChangeEvent<unknown>): void;
-    function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown>) {
-        setUserFields(prev => {
-            return { ...prev, [e.target.name]: e.target.value }
-        })
-    }
-
-    async function submitForm() {
-        setWillSubmit(true);
-
     }
 
     return (
@@ -117,7 +111,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 </Select>
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
+                            : type === 'rich-text'
+                                ? <Tiptap key={id} content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} />
+                                : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"
