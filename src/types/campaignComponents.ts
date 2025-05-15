@@ -93,6 +93,10 @@ export interface MJMLSignature extends CampaignComponent {
     sender: string;
 };
 
+export interface MJMLAttachment extends CampaignComponent {
+    uri: string;
+}
+
 export type AnyMJMLComponent = MJMLButton
     | MJMLColumn
     | MJMLCustomText
@@ -108,5 +112,6 @@ export type AnyMJMLComponent = MJMLButton
     | MJMLText
     | MJMLTitle
     | MJMLVideo
+    | MJMLAttachment
 
-export type AnyMJMLKey = 'button' | 'column' | 'divider' | 'event' | 'font' | 'footer' | 'header' | 'image' | 'preview' | 'raw' | 'section' | 'signature' | 'text' | 'title' | 'video';
+export type AnyMJMLKey = 'attachment' | 'button' | 'column' | 'divider' | 'event' | 'font' | 'footer' | 'header' | 'image' | 'preview' | 'raw' | 'section' | 'signature' | 'text' | 'title' | 'video';
