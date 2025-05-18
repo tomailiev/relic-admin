@@ -39,7 +39,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     function handleInputChange(e: SelectChangeEvent<unknown>): void;
     function handleInputChange(e: SimulatedEvent): void;
     function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
-        console.log(e.target.value);
         
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }

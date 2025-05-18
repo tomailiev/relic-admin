@@ -1,4 +1,7 @@
 import { useCurrentEditor } from "@tiptap/react"
+import TipTapAlignmentButtons from "./TipTapAlignmentButtons";
+import TipTapFontButtons from "./TipTapFontButtons";
+import BlockTypeSelect from "./TipTapBlockTypeSelect";
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor()
@@ -18,7 +21,7 @@ const MenuBar = () => {
 
         // empty
         if (url === '') {
-            editor.chain().focus().extendMarkRange('link').unsetLink()
+            editor.chain().extendMarkRange('link').unsetLink()
                 .run()
 
             return
@@ -26,7 +29,7 @@ const MenuBar = () => {
 
         // update link
         try {
-            editor.chain().focus().extendMarkRange('link').setLink({ href: url })
+            editor.chain().extendMarkRange('link').setLink({ href: url.includes(':') ? url : `https://${url}` })
                 .run()
         } catch (e) {
             console.log(e);
@@ -34,67 +37,19 @@ const MenuBar = () => {
         }
     }
 
+
     return (
         <div className="control-group">
             <div className="button-group">
+                <TipTapFontButtons />
+                {/* <TipTapTextBlockSelect /> */}
+                <BlockTypeSelect />
                 <button
-                    onClick={() => editor.chain().focus().toggleBold().run()}
+                    onClick={() => editor.chain().toggleCode().run()}
                     disabled={
                         !editor.can()
                             .chain()
-                            .focus()
-                            .toggleBold()
-                            .run()
-                    }
-                    className={editor.isActive('bold') ? 'is-active' : ''}
-                >
-                    Bold
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleItalic().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
-                            .toggleItalic()
-                            .run()
-                    }
-                    className={editor.isActive('italic') ? 'is-active' : ''}
-                >
-                    Italic
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleStrike().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
-                            .toggleStrike()
-                            .run()
-                    }
-                    className={editor.isActive('strike') ? 'is-active' : ''}
-                >
-                    Strike
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleUnderline().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
-                            .toggleUnderline()
-                            .run()
-                    }
-                    className={editor.isActive('underline') ? 'is-active' : ''}
-                >
-                    Underline
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().toggleCode().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
+                            
                             .toggleCode()
                             .run()
                     }
@@ -102,13 +57,13 @@ const MenuBar = () => {
                 >
                     Code
                 </button>
-                <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+                <button onClick={() => editor.chain().unsetAllMarks().run()}>
                     Clear marks
                 </button>
-                <button onClick={() => editor.chain().focus().clearNodes().run()}>
+                <button onClick={() => editor.chain().clearNodes().run()}>
                     Clear nodes
                 </button>
-                <button
+                {/* <button
                     onClick={() => editor.chain().focus().setParagraph().run()}
                     className={editor.isActive('paragraph') ? 'is-active' : ''}
                 >
@@ -149,43 +104,43 @@ const MenuBar = () => {
                     className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
                 >
                     H6
-                </button>
+                </button> */}
                 <button
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    onClick={() => editor.chain().toggleBulletList().run()}
                     className={editor.isActive('bulletList') ? 'is-active' : ''}
                 >
                     Bullet list
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    onClick={() => editor.chain().toggleOrderedList().run()}
                     className={editor.isActive('orderedList') ? 'is-active' : ''}
                 >
                     Ordered list
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+                    onClick={() => editor.chain().toggleCodeBlock().run()}
                     className={editor.isActive('codeBlock') ? 'is-active' : ''}
                 >
                     Code block
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                    onClick={() => editor.chain().toggleBlockquote().run()}
                     className={editor.isActive('blockquote') ? 'is-active' : ''}
                 >
                     Blockquote
                 </button>
-                <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+                <button onClick={() => editor.chain().setHorizontalRule().run()}>
                     Horizontal rule
                 </button>
-                <button onClick={() => editor.chain().focus().setHardBreak().run()}>
+                <button onClick={() => editor.chain().setHardBreak().run()}>
                     Hard break
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().undo().run()}
+                    onClick={() => editor.chain().undo().run()}
                     disabled={
                         !editor.can()
                             .chain()
-                            .focus()
+                            
                             .undo()
                             .run()
                     }
@@ -193,11 +148,11 @@ const MenuBar = () => {
                     Undo
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().redo().run()}
+                    onClick={() => editor.chain().redo().run()}
                     disabled={
                         !editor.can()
                             .chain()
-                            .focus()
+                            
                             .redo()
                             .run()
                     }
@@ -208,35 +163,12 @@ const MenuBar = () => {
                     Set link
                 </button>
                 <button
-                    onClick={() => editor.chain().focus().unsetLink().run()}
+                    onClick={() => editor.chain().unsetLink().run()}
                     disabled={!editor.isActive('link')}
                 >
                     Unset link
                 </button>
-                <button
-                    onClick={() => editor.chain().focus().setTextAlign('left').run()}
-                    className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}
-                >
-                    Left
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setTextAlign('center').run()}
-                    className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}
-                >
-                    Center
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setTextAlign('right').run()}
-                    className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}
-                >
-                    Right
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-                    className={editor.isActive({ textAlign: 'justify' }) ? 'is-active' : ''}
-                >
-                    Justify
-                </button>
+                <TipTapAlignmentButtons />
             </div>
         </div>
     )
