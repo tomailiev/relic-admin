@@ -1,4 +1,4 @@
-import { FormatBold, FormatItalic, FormatStrikethrough, FormatUnderlinedRounded } from "@mui/icons-material";
+import { Code, FormatBold, FormatItalic, FormatQuote, FormatStrikethrough, FormatUnderlinedRounded } from "@mui/icons-material";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useCurrentEditor } from "@tiptap/react";
 
@@ -13,14 +13,18 @@ const TipTapFontButtons = () => {
         bold: editor.chain().toggleBold,
         italic: editor.chain().toggleItalic,
         underline: editor.chain().toggleUnderline,
-        strike: editor.chain().toggleStrike
+        strike: editor.chain().toggleStrike,
+        code: editor.chain().toggleCode,
+        blockquote: editor.chain().toggleBlockquote
     };
 
     const disableButtonFunctions = {
         bold: !editor.can().chain().toggleBold().run(),
         italic: !editor.can().chain().toggleItalic().run(),
         underline: !editor.can().chain().toggleUnderline().run(),
-        strike: !editor.can().chain().toggleStrike().run()
+        strike: !editor.can().chain().toggleStrike().run(),
+        code: !editor.can().chain().toggleCode().run(),
+        blockquote: !editor.can().chain().toggleBlockquote().run()
     }
 
     return (
@@ -63,6 +67,24 @@ const TipTapFontButtons = () => {
                 selected={editor.isActive('strike')}
             >
                 <FormatStrikethrough />
+            </ToggleButton>
+            <ToggleButton
+                disabled={disableButtonFunctions.code}
+                onClick={() => toggleFunctions.code().run()}
+                value="code"
+                aria-label="code"
+                selected={editor.isActive('code')}
+            >
+                <Code />
+            </ToggleButton>
+            <ToggleButton
+                disabled={disableButtonFunctions.blockquote}
+                onClick={() => toggleFunctions.blockquote().run()}
+                value="blockquote"
+                aria-label="blockquote"
+                selected={editor.isActive('blockquote')}
+            >
+                <FormatQuote />
             </ToggleButton>
             {/* <ToggleButton value="color" aria-label="color" disabled>
                 <FormatColorFillIcon />
