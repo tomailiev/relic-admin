@@ -5,6 +5,8 @@ import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
+import Tiptap from "./Tiptap";
+import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
 const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
@@ -27,6 +29,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
         setIsSubmitting(submissionStates[navigation.state]);
     }, [navigation.state]);
 
+
     function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
 
         setHasError(prev => ({ ...prev, [id]: '' }))
@@ -34,33 +37,33 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
 
     function handleInputChange(e: ChangeEvent<HTMLInputElement>): void;
     function handleInputChange(e: SelectChangeEvent<unknown>): void;
-    function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown>) {
+    function handleInputChange(e: SimulatedEvent): void;
+    function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
+        
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }
         })
     }
 
 
-
     async function submitForm() {
-
         try {
-            const validated = await schema.validate(userFields, { abortEarly: false });
-            handleFormCompletion(validated);
-        } catch (e) {
-            console.log(e);
-            if (e instanceof ValidationError && e.inner) {
-                const errors = e.inner?.reduce((p, c) => {
-                    return c.path ? { ...p, [c.path]: c.message, } : p;
-                }, {});
+                const validated = await schema.validate(userFields, { abortEarly: false });
+                handleFormCompletion(validated);
+            } catch (e) {
+                console.log(e);
+                if (e instanceof ValidationError && e.inner) {
+                    const errors = e.inner?.reduce((p, c) => {
+                        return c.path ? { ...p, [c.path]: c.message, } : p;
+                    }, {});
 
-                setHasError(errors);
+                    setHasError(errors);
+                }
             }
-        }
     }
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={{ mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     {fieldsArray && fieldsArray.map(({ id, label, type, multiline, options }: FieldsArrayItem) => {
@@ -70,7 +73,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: hasProperty(hasError, id)  && hasError[id],
+                            error: hasProperty(hasError, id) && hasError[id],
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
@@ -84,7 +87,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: !!(hasProperty(hasError, id)  && hasError[id]),
+                            error: !!(hasProperty(hasError, id) && hasError[id]),
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
@@ -107,7 +110,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 </Select>
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
-                            : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
+                            : type === 'rich-text'
+                                ? <Tiptap key={id} content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} />
+                                : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button
                         variant="contained"

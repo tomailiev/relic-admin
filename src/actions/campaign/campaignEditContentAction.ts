@@ -13,6 +13,7 @@ export default async function campaignEditContentAction({ request }: ActionFunct
             return redirect(`/campaigns/${res.id}`)
         }
         const doc = await getMjml({ components: res.components });
+        
         return doc.data;
     } catch (error) {
         console.log('error:' + error);

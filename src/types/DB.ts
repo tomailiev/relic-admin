@@ -141,7 +141,8 @@ export interface Campaign {
     from: string,
     datetime: Timestamp,
     components: AnyMJMLComponent[],
-    id?: string
+    id?: string,
+    attachments?: string[]
 };
 
 interface SubscriberHistoryEvent {

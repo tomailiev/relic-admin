@@ -1,4 +1,4 @@
-import { Email, Group, ShortText, Title } from "@mui/icons-material";
+import { Attachment, Email, Group, ShortText, Title } from "@mui/icons-material";
 import { Button, Container, Grid, List, ListItem, ListItemIcon, ListItemButton, ListItemText, Paper, Stack, ToggleButton, ToggleButtonGroup, Typography, Tooltip } from "@mui/material";
 import { Dispatch, MouseEvent, SetStateAction, useContext, useEffect, useState } from "react";
 import SendDialog from "./SendDialog";
@@ -17,7 +17,7 @@ const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Disp
     const [sendModalOpen, setSendModalOpen] = useState(false);
     const [testModalOpen, setTestModalOpen] = useState(false);
     const [statsModalOpen, setStatsModalOpen] = useState(false);
-    const [statsList, setStatsList] = useState <statListType | SubscriberCampaignStat[]> ([]);
+    const [statsList, setStatsList] = useState<statListType | SubscriberCampaignStat[]>([]);
     const [statsName, setStatsName] = useState('');
     const [query, setQuery] = useState<'desktop' | 'mobile'>('desktop');
     const actionData = useActionData() as AppErrorType;
@@ -160,6 +160,14 @@ const CampaignItem = ({ item, setEditable }: { item: Campaign, setEditable: Disp
                                     </ListItemIcon>
                                     <ListItemText primary={item.from} />
                                 </ListItem>
+                                {item.attachments && item.attachments.length
+                                    ? <ListItem>
+                                        <ListItemIcon>
+                                            <Attachment />
+                                        </ListItemIcon>
+                                        <ListItemText primary={`(${item.attachments.length}) ${decodeURI(item.attachments[0].substring(item.attachments[0].lastIndexOf('/') + 1, item.attachments[0].lastIndexOf('/') + 21))}...`} />
+                                    </ListItem>
+                                    : null}
                             </List>
                         </Container>
                     </Grid>
