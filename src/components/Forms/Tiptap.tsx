@@ -8,6 +8,8 @@ import TextAlign from '@tiptap/extension-text-align'
 import { CustomBold } from '../../utils/tiptap/customBold'
 import Underline from '@tiptap/extension-underline'
 import Link from '@tiptap/extension-link'
+import Color from '@tiptap/extension-color'
+import TextStyle from '@tiptap/extension-text-style'
 
 // define your extension array
 const extensions = [
@@ -25,7 +27,9 @@ const extensions = [
         defaultProtocol: 'https',
         protocols: ['http', 'https'],
         
-    })
+    }),
+    Color,
+    TextStyle
 ]
 
 const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: string, onChange: (e: SimulatedEvent) => void }) => {

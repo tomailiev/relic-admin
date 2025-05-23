@@ -5,7 +5,7 @@ import BlockTypeSelect from "./TipTapBlockTypeSelect";
 import TipTapLinkButtons from "./TipTapLinkButtons";
 import TipTapUndoRedo from "./TipTapUndoRedo";
 import TipTapListsButtons from "./TipTapListsButtons";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { FormatClear, HorizontalRule } from "@mui/icons-material";
 
 const MenuBar = () => {
@@ -33,6 +33,14 @@ const MenuBar = () => {
                 <TipTapUndoRedo />
                 <TipTapLinkButtons />
                 <TipTapAlignmentButtons />
+                <TextField
+                    size="small"
+                    type="color"
+                    onChange={event => editor.chain().setColor(event.target.value).run()}
+                    value={editor.getAttributes('textStyle').color}
+                    data-testid="setColor"
+                    sx={{minWidth: '20px'}}
+                />
             </div>
         </div>
     )
