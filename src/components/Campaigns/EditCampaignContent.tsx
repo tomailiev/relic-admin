@@ -74,7 +74,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     function addComponentToList(comp: AnyMJMLComponent) {
         setComponent(null);
         if (editedComponent) {
-            setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index ? comp.index + 1 : prev.length + 1)))
+            setComponentList(prev => prev.slice(0, comp.index).concat(comp).concat(prev.slice(comp.index || comp.index === 0 ? comp.index + 1 : prev.length + 1)))
             setEditedComponent(null);
         } else {
             setComponentList(prev => prev.concat(comp));
@@ -148,7 +148,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
                         </ButtonGroup>
 
                     </Grid>
-                    <Grid item md={12} lg={4}>
+                    <Grid item xs={12} md={12} lg={4}>
                         {component && <>
                             <Typography variant="h6" mx={4}>{editedComponent ? 'Edit' : 'Add'} {component}</Typography>
                             <AddForm fields={editedComponent || emailContentFields[component]} fieldsArray={emailContentFieldArrays[component]} handleFormCompletion={addComponentToList as (data: object) => void} schema={emailComponentSchemas[component]} />
