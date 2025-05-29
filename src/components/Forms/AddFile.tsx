@@ -1,5 +1,5 @@
 import { Edit } from "@mui/icons-material";
-import { Button, IconButton, List, ListItem, ListItemText, Paper, Stack, } from "@mui/material";
+import { Button, IconButton, List, ListItem, ListItemText, Paper, Stack, useMediaQuery, useTheme, } from "@mui/material";
 import { MuiFileInput } from "mui-file-input";
 import { FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
@@ -18,6 +18,9 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
     const [userFields, setUserFields] = useState(filesFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [shouldSkip, setShouldSkip] = useState(true);
+    const theme = useTheme();
+    const smMatch = useMediaQuery(theme.breakpoints.down('md'));
+
 
     useEffect(() => {
         const submissionStates = {
@@ -58,7 +61,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
         if (filesFieldsArray && filesFields) {
             filesFieldsArray.forEach(({ id }) => {
                 console.log(userFields);
-                
+
                 if (!userFields || !hasProperty(userFields, id)) return;
                 if (hasProperty(filesFields, id)) {
 
@@ -102,7 +105,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
 
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={smMatch ? { mx: 0, my: 2, px: 1.5, py: 3 } : { mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     <List>

@@ -52,9 +52,7 @@ const EditCampaignContent = ({ itemType, fieldsArray, }: ItemWithFields) => {
     const { setError } = useContext(ErrorContext);
     const fSubmit = fetcher.submit;
 
-    useEffect(() => {
-        console.log(componentList);
-        
+    useEffect(() => {        
         fSubmit(JSON.stringify({ components: componentList }), { method: 'post', encType: 'application/json' });
     }, [componentList, fSubmit]);
 

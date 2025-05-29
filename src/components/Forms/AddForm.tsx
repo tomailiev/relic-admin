@@ -1,11 +1,11 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography } from "@mui/material";
+import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 import hasProperty from "../../vars/hasProperty";
-import Tiptap from "./Tiptap";
+import Tiptap from "../TipTap/Tiptap";
 import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
@@ -15,6 +15,8 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(fields);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const theme = useTheme();
+    const smMatch = useMediaQuery(theme.breakpoints.down('md'));
 
     useEffect(() => {
         setUserFields(fields)
@@ -39,7 +41,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     function handleInputChange(e: SelectChangeEvent<unknown>): void;
     function handleInputChange(e: SimulatedEvent): void;
     function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
-        
+
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }
         })
@@ -48,22 +50,22 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
 
     async function submitForm() {
         try {
-                const validated = await schema.validate(userFields, { abortEarly: false });
-                handleFormCompletion(validated);
-            } catch (e) {
-                console.log(e);
-                if (e instanceof ValidationError && e.inner) {
-                    const errors = e.inner?.reduce((p, c) => {
-                        return c.path ? { ...p, [c.path]: c.message, } : p;
-                    }, {});
+            const validated = await schema.validate(userFields, { abortEarly: false });
+            handleFormCompletion(validated);
+        } catch (e) {
+            console.log(e);
+            if (e instanceof ValidationError && e.inner) {
+                const errors = e.inner?.reduce((p, c) => {
+                    return c.path ? { ...p, [c.path]: c.message, } : p;
+                }, {});
 
-                    setHasError(errors);
-                }
+                setHasError(errors);
             }
+        }
     }
 
     return (
-        <Paper sx={{ mx: 2, my: 2, p: 5 }}>
+        <Paper sx={smMatch ? { mx: 0, my: 2, px: 1.5, py: 3 } : { mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     {fieldsArray && fieldsArray.map(({ id, label, type, multiline, options }: FieldsArrayItem) => {
@@ -73,7 +75,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: hasProperty(hasError, id) && hasError[id],
+                            error: !!hasProperty(hasError, id) && hasError[id],
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',
