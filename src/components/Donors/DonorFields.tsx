@@ -40,8 +40,8 @@ const DonorFields = ({ donor }: {donor: Donor}) => {
                     <AutoAwesomeMotion />
                 </ListItemIcon>
                 {donor.lists.map(list => (
-                    <Typography pr={1}>
-                        <Link key={list} to={`/lists/${list}`}>
+                    <Typography key={list} pr={1}>
+                        <Link to={`/lists/${list}`}>
                             {list}
                         </Link>
                     </Typography>

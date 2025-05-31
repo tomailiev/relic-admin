@@ -11,7 +11,7 @@ const donationAcknowledgementFA = [
         ]
     },
     { label: 'Subject', id: 'subject', },
-    { label: 'Content', id: 'content', multiline: true }
+    { label: 'Content', id: 'content', multiline: true, type: 'rich-text' }
 ];
 
 const donationAcknowledgementFields = {
