@@ -4,17 +4,20 @@ import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './TiptapMenu'
 import { SimulatedEvent } from '../../types/SimulatedEvent'
 import TextAlign from '@tiptap/extension-text-align'
+import { HardBreak } from '@tiptap/extension-hard-break'
 import { CustomBold } from '../../utils/tiptap/customBold'
 import Underline from '@tiptap/extension-underline'
 import Link from '@tiptap/extension-link'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { Box } from '@mui/material'
+import { CustomKeymap } from '../../utils/tiptap/customKeyMap'
 
 // define your extension array
 const extensions = [
     StarterKit.configure({
-        'bold': false
+        'bold': false,
+        hardBreak: false
     }),
     TextAlign.configure({
         types: ['heading', 'paragraph'],
@@ -29,7 +32,13 @@ const extensions = [
 
     }),
     Color,
-    TextStyle
+    TextStyle,
+    HardBreak.configure({
+      HTMLAttributes: {
+        class: 'hard-break',
+      },
+    }),
+    CustomKeymap,
 ]
 
 const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: string, onChange: (e: SimulatedEvent) => void }) => {
