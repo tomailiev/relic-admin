@@ -114,7 +114,7 @@ const DonorItem = ({ item }: DonorItemProps) => {
             <ThankDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} donationInfo={donationInfo} />
             <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
                 <Typography variant="h5" textAlign={'center'}>{item.firstName} {item.lastName}</Typography>
-                <Typography variant="body2" textAlign={'center'}>{getTier(reduceDonations(item.donations))}</Typography>
+                <Typography variant="body2" textAlign={'center'}>{getTier(reduceDonations(item.donations)) === item.tier ? item.tier : `NEW TIER: ${getTier(reduceDonations(item.donations))}`}</Typography>
                 <Grid key={item.id} mt={2} container spacing={2} justifyContent="center" sx={{
                     position: 'relative',
                 }}>
