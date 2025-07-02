@@ -38,7 +38,8 @@ const fields = {
     featured: '',
     name: '',
     newTitle: '',
-    pic: ''
+    pic: '',
+    chair: ''
 };
 
 const musicianFA = [
@@ -46,6 +47,7 @@ const musicianFA = [
     { label: 'Name', id: 'name' },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
+    { label: 'Chair', id: 'chair' }
 ];
 
 const musicianFilesFA = [{ label: 'Avatar', id: 'pic', type: 'file', path: `${collections.images}/musicians`, displayName: 'imgSrc' }];
