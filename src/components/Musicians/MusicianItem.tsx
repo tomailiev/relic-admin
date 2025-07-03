@@ -34,6 +34,7 @@ const MusicianItem = ({ item }: { item: Musician }) => {
                     <Typography variant="h6">
                         {item.newTitle}
                     </Typography>
+                    <Typography variant="body2" mb={1}>{item.chair}</Typography>
                     <Typography variant="body1">
                         {item.bio}
                     </Typography>

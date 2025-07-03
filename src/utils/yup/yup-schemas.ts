@@ -33,6 +33,7 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
+    chair: string()
 });
 
 const musicianFileSchema = object({

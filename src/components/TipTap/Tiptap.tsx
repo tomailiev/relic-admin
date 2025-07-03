@@ -3,18 +3,21 @@ import { EditorProvider, Editor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './TiptapMenu'
 import { SimulatedEvent } from '../../types/SimulatedEvent'
-import { Box } from '@mui/material'
 import TextAlign from '@tiptap/extension-text-align'
+import { HardBreak } from '@tiptap/extension-hard-break'
 import { CustomBold } from '../../utils/tiptap/customBold'
 import Underline from '@tiptap/extension-underline'
 import Link from '@tiptap/extension-link'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import { Box } from '@mui/material'
+import { CustomKeymap } from '../../utils/tiptap/customKeyMap'
 
 // define your extension array
 const extensions = [
     StarterKit.configure({
-        'bold': false
+        'bold': false,
+        hardBreak: false
     }),
     TextAlign.configure({
         types: ['heading', 'paragraph'],
@@ -26,10 +29,16 @@ const extensions = [
         autolink: true,
         defaultProtocol: 'https',
         protocols: ['http', 'https'],
-        
+
     }),
     Color,
-    TextStyle
+    TextStyle,
+    HardBreak.configure({
+      HTMLAttributes: {
+        class: 'hard-break',
+      },
+    }),
+    CustomKeymap,
 ]
 
 const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: string, onChange: (e: SimulatedEvent) => void }) => {
@@ -38,33 +47,34 @@ const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: 
         const target = {
             value: editor.getHTML(),
             name: inputName
-        };        
+        };
         onChange({ target });
     }
     return (
-        <EditorProvider onUpdate={handleChange} extensions={extensions} content={content} slotBefore={<MenuBar />}>
-            <Box
-                // sx={{
-                //     '& .ProseMirror': {
-                //         width: '100%',
-                //         padding: '8px',
-                //         borderRadius: '10px',
-                //         border: '1px solid rgba(0, 0, 0, 0.23)',
-                //         fontFamily: 'inherit',
-                //         fontSize: '1rem',
-                //         lineHeight: 1.5,
-                //         minHeight: '100px',
-                //         resize: 'none',
-                //         outline: 'none',
-                //         '&:focus': {
-                //             borderColor: '#3f51b5',
-                //         },
-                //     },
-                // }}
-            >
+        <Box
+            sx={{
+                '& .tiptap': {
+                    width: '100%',
+                    my: '8px',
+                    px: '5px',
+                    borderRadius: '10px',
+                    border: '1px solid rgba(0, 0, 0, 0.23)',
+                    fontFamily: 'inherit',
+                    fontSize: '1rem',
+                    lineHeight: 1.5,
+                    minHeight: '100px',
+                    resize: 'none',
+                    outline: 'none',
+                    '&:focus': {
+                        borderColor: '#3f51b5',
+                    },
+                },
+            }}
+        >
+            <EditorProvider onUpdate={handleChange} extensions={extensions} content={content} slotBefore={<MenuBar />}>
                 <EditorContent editor={null} />
-            </Box>
-        </EditorProvider>
+            </EditorProvider>
+        </Box>
     )
 }
 

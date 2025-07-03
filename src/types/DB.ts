@@ -23,7 +23,8 @@ export interface Musician {
     name: string,
     pic: string,
     id?: string,
-    imgSrc?: File
+    imgSrc?: File,
+    chair?: string
 }
 
 export interface Performance {

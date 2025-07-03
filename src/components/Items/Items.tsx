@@ -9,7 +9,7 @@ import { ItemProps } from "../../types/fnProps";
 
 const Items = <T extends keyof ItemTypeMap>({ itemType, columns, sorting, pageSize, pageSizeOptions, actionBox }: { itemType: T } & ItemProps) => {
 
-    const items = useLoaderData() as ItemTypeMap[T][];
+    const items = useLoaderData() as ItemTypeMap[T][] | null;
 
     return (
         <>
@@ -27,7 +27,8 @@ const Items = <T extends keyof ItemTypeMap>({ itemType, columns, sorting, pageSi
                 {actionBox && actionBox}
                 <Box overflow={'scroll'}>
                     <Box minWidth={'800px'} width={'100%'}>
-                        <DataGrid
+
+                        {items ? <DataGrid
                             rows={items}
                             columns={columns}
                             slots={{ toolbar: CustomGridToolbar }}
@@ -39,6 +40,10 @@ const Items = <T extends keyof ItemTypeMap>({ itemType, columns, sorting, pageSi
                             }}
                             pageSizeOptions={pageSizeOptions}
                         />
+                            : <Box sx={{ p: 2, textAlign: 'center' }}>
+                                <Typography variant="h5" my={4}>No data available</Typography>
+                            </Box>
+                        }
                     </Box>
                 </Box>
             </Container>

@@ -1,4 +1,4 @@
-import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography } from "@mui/material";
+import { Button, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
@@ -13,6 +13,9 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
     const [nestedItems, setNestedItems] = useState(nestedFields as Array<any>);
     const [hasError, setHasError] = useState(Array(nestedLength).fill(blanks));
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const theme = useTheme();
+    const smMatch = useMediaQuery(theme.breakpoints.down('md'));
+
 
 
     useEffect(() => {
@@ -36,33 +39,33 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
 
     async function handleSubmitEvent() {
 
-        
+
         try {
             const validated = await schema.validate(nestedItems, { abortEarly: false });
             console.log(validated);
-            
+
             handleFormCompletion(validated);
         } catch (e) {
-            
+
             if (e instanceof ValidationError) {
 
                 setHasError(e.inner?.reduce((p: { [key: string]: string }[], c) => {
-                    
+
                     const startChar = c.path?.indexOf('[');
                     const endChar = c.path?.indexOf(']');
-                    
-                    
+
+
                     if ((startChar || startChar === 0) && endChar) {
-                        
+
                         const index = Number(c.path?.substring(startChar + 1, endChar));
                         const prop = c.path?.substring(endChar + 2);
-                        
+
                         if (!p[index]) p[index] = {};
                         if (prop) {
                             p[index][prop] = c.message;
                         }
                     }
-                    
+
                     return p;
                 }, []))
             }
@@ -85,7 +88,7 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
     }
 
     return (
-        <Paper sx={{ mx: 4, my: 2, p: 5 }}>
+        <Paper sx={smMatch ? { mx: 0, my: 2, px: 1.5, py: 3 } : { mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     <Button onClick={addNestedItem}>

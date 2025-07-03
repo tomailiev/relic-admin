@@ -6,7 +6,6 @@ import collections from "../../vars/collections";
 
 export default async function campaignEditAction({ request }: ActionFunctionArgs) {
     const doc = await request.json();
-    console.log(doc);
     
     try {
         const { id: _, datetime: __, status: ___, ...rest } = doc;
