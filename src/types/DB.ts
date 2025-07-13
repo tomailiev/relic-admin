@@ -27,6 +27,16 @@ export interface Musician {
     chair?: string
 }
 
+export interface Photo {
+    title: string,
+    caption: string,
+    pc: string,
+    path: string,
+    thumb: string,
+    imgSrc?: File,
+    id?: string
+}
+
 export interface Performance {
     date: string,
     day: string,
@@ -193,7 +203,7 @@ export interface CSVItem {
     id: string;
 }
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem;
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
     'videos': Video;
@@ -209,7 +219,8 @@ export type ItemTypeMap = {
     'deschematifiedSubscribers': DeschematifiedSubscriber;
     'CSVs': CSV;
     'CSVItems': CSVItem
-    'textContent': Text
+    'textContent': Text,
+    'photos': Photo
 };
 
 export type DeschematifiedItemTypeMap = {

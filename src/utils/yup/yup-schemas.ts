@@ -38,7 +38,19 @@ const musicianSchema = object({
 
 const musicianFileSchema = object({
     pic: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
-        return value && value instanceof File &&  ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    })
+});
+
+const photoSchema = object({
+    title: string().required('title required'),
+    caption: string().required('caption required'),
+    pc: string()
+});
+
+const photoFileSchema = object({
+    path: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
     })
 })
 
@@ -295,5 +307,7 @@ export {
     donationAcknowledgementSchema,
     operationSchema,
     listSchema,
-    publicFileSchema
+    publicFileSchema,
+    photoSchema,
+    photoFileSchema
 };

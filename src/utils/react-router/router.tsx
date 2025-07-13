@@ -21,6 +21,7 @@ import csvRouter from './csvRouter';
 import subscriberRouter from './subscriberRouter';
 import campaignRouter from './campaignRouter';
 import listRouter from './listRouter';
+import photoRouter from './photoRouter';
 
 const routes: RouteObject[] = [
   {
@@ -68,7 +69,8 @@ const routes: RouteObject[] = [
       ...csvRouter,
       ...subscriberRouter,
       ...campaignRouter,
-      ...listRouter
+      ...listRouter,
+      ...photoRouter
     ]
   }
 ]

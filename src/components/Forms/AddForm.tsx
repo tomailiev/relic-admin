@@ -41,7 +41,6 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     function handleInputChange(e: SelectChangeEvent<unknown>): void;
     function handleInputChange(e: SimulatedEvent): void;
     function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
-        console.log(e.target.value);
         
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }
@@ -76,7 +75,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             type: type || 'text',
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
-                            error: !!hasProperty(hasError, id) && hasError[id],
+                            error: !!(hasProperty(hasError, id) && hasError[id]),
                             onFocus: (e) => removeError(e, id),
                             label: label,
                             size: 'small',

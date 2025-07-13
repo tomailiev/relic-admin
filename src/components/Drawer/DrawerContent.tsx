@@ -4,7 +4,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, Filter, Image, } from '@mui/icons-material';
 import { MenuType } from "../../types/menu";
 // import StorageIcon from '@mui/icons-material/Storage';
 
@@ -18,7 +18,8 @@ const DrawerContent = () => {
         { title: 'Videos', path: 'videos', iconActive: <FolderOpen />, iconInactive: <Folder /> },
         { title: 'Musicians', path: 'musicians', iconActive: <FolderOpen />, iconInactive: <Folder /> },
         { title: 'TextContent', path: 'texts', iconActive: <FolderOpen />, iconInactive: <Folder /> },
-        { title: 'Events', path: 'events', iconActive: <FolderOpen />, iconInactive: <Folder /> }
+        { title: 'Events', path: 'events', iconActive: <FolderOpen />, iconInactive: <Folder /> },
+        { title: 'Photos', path: 'photos', iconActive: <Filter />, iconInactive: <Image /> }
     ];
 
     const developmentMenu: MenuType[] = [
