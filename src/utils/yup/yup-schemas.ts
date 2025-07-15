@@ -49,10 +49,14 @@ const photoSchema = object({
 });
 
 const photoFileSchema = object({
-    path: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
-        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
-    })
-})
+    path: mixed().required('Image file upload required')
+        .test('is-valid-type', 'Not a valid image file', (value) => {
+            return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        })
+        .test('file-size', 'Image too large (Max 4Mb)', (value) => {
+            return value && value instanceof File && value.size <= 4 * 1024 * 1024;
+        })
+});
 
 const userSchema = object({
     email: string().required().email(),

@@ -16,6 +16,7 @@ const videoColumns: GridColDef[] = [
     },
     { field: 'title', headerName: 'Title', flex: 5 },
     { field: 'featured', headerName: 'Priority', flex: 1 },
+    { field: 'category', headerName: 'Category', flex: 2 },
     {
         field: 'select',
         headerName: 'Select',
