@@ -33,7 +33,12 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
-    chair: string()
+    chair: string(),
+    firstName: string().required(),
+    lastName: string().required(),
+    email: string().email(),
+    phone: string(),
+    isCurrent: number().required().oneOf([0, 1])
 });
 
 const musicianFileSchema = object({
@@ -106,7 +111,7 @@ const donorSchema = object({
     email: string().email(),
     address: string(),
     location: string(),
-    phone: string()
+    phone: string(),
 });
 
 const grantSchema = object({

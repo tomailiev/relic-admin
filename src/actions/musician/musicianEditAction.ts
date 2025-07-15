@@ -1,13 +1,16 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
+import normalizePhoneNumber from "../../vars/normalizePhoneNumber";
 
 export default async function musicianEditAction({ request, params }: ActionFunctionArgs) {
     try {
         const doc = await request.json();
-        const { id: _, ...rest } = doc;
+        const { id: _, imgSrc: __, ...rest } = doc;
+        
         const featured = Number(doc.featured);
-        await uploadDoc({ ...rest, featured }, collections.musicians, doc.id, true);
+        const phone = normalizePhoneNumber(doc.phone || '');
+        await uploadDoc({ ...rest, featured, phone }, collections.musicians, doc.id, true);
         return redirect(`/musicians`);
     } catch (e) {
         if (e instanceof Error) {

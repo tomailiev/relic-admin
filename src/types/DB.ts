@@ -22,6 +22,11 @@ export interface Musician {
     newTitle: string,
     name: string,
     pic: string,
+    firstName: string,
+    lastName: string,
+    isCurrent: number
+    email?: string,
+    phone?: string,
     id?: string,
     imgSrc?: File,
     chair?: string

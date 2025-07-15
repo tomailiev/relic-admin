@@ -39,12 +39,22 @@ const fields = {
     name: '',
     newTitle: '',
     pic: '',
-    chair: ''
+    chair: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    isCurrent: false
 };
 
 const musicianFA = [
     { label: 'Bio', id: 'bio', multiline: true },
     { label: 'Name', id: 'name' },
+    { label: 'First name', id: 'firstName' },
+    { label: 'Last name', id: 'lastName' },
+    { label: 'Email', id: 'email' },
+    { label: 'Phone #', id: 'phone' },
+    { label: 'Is in current season', id: 'isCurrent', type: 'select', options: [{ value: 1, display: 'Yes' }, { value: 0, display: 'No' }] },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
     { label: 'Chair', id: 'chair' }
