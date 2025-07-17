@@ -17,7 +17,7 @@ const musicianColumns: GridColDef[] = [
     // { field: 'id', headerName: 'ID', flex: 2 },
     { field: 'name', headerName: 'Name', flex: 2 },
     { field: 'newTitle', headerName: 'Instrument', flex: 2 },
-    { field: 'featured', headerName: 'Season', flex: 1 },
+    { field: 'isCurrent', headerName: 'In current season', flex: 1, valueGetter: ({row}) => row.isCurrent ? 'Yes' : 'No' },
     {
         field: 'select',
         headerName: 'Select',
@@ -66,7 +66,7 @@ const musicianProps: ItemWithFields & ItemWithFileFields = {
     itemType: 'musicians',
     name: 'name',
     columns: musicianColumns,
-    sorting: { field: 'newTitle', sort: 'asc' },
+    sorting: { field: 'isCurrent', sort: 'desc' },
     pageSize: 15,
     pageSizeOptions: [5, 15, 30],
     fields: fields,
