@@ -8,7 +8,7 @@ export default async function listItemLoader({ params }: LoaderFunctionArgs) {
         return { error: true, severity: 'error', message: 'No ID' };
     }
     const item: List = await downloadOneDoc('lists', docId);
-    const members = await downloadDocsV2(item.source === 'donors' ? 'donors' : 'subscribers', [{ type: 'condition', value: ['lists', 'array-contains', params.listId] }]) || []
-    
+    const members = await downloadDocsV2(item.source, [{ type: 'condition', value: ['lists', 'array-contains', params.listId] }]) || []
+
     return { ...item, newMembers: members };
 }

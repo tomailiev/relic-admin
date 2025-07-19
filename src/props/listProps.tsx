@@ -6,6 +6,7 @@ import donorProps from "./donorProps";
 import subscriberProps from "./subscriberProps";
 import { GridColDef } from "@mui/x-data-grid";
 import { ItemWithDataColumns, ItemWithInitialFields } from "../types/fnProps";
+import musicianProps from "./musicianProps";
 
 const listColumns: GridColDef[] = [
     {
@@ -41,7 +42,7 @@ const listColumns: GridColDef[] = [
 
 const initialListFieldsArray = [
     { label: 'Name', id: 'name' },
-    { label: 'Source', id: 'source', type: 'select', options: [{ value: 'donors' }, { value: 'subscribers' }] }
+    { label: 'Source', id: 'source', type: 'select', options: [{ value: 'donors' }, { value: 'subscribers' }, { value: 'musicians' }] }
 ]
 
 const initialFields = {
@@ -54,9 +55,9 @@ const listProps: ItemWithDataColumns & ItemWithInitialFields = {
     name: 'name',
     columns: listColumns,
     sorting: { field: 'dateTime', sort: 'desc' },
-    pageSize: 10,
-    pageSizeOptions: [5, 10, 20],
-    dataFilterColumns: { donors: donorProps.columns, subscribers: subscriberProps.columns },
+    pageSize: 20,
+    pageSizeOptions: [10, 20, 50],
+    dataFilterColumns: { donors: donorProps.columns, subscribers: subscriberProps.columns, musicians: musicianProps.columns },
     initialFieldsArray: initialListFieldsArray,
     initialFields: initialFields,
     steps: ['initialFieldsArray', 'dataFilter', 'preview'],

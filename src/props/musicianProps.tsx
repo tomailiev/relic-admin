@@ -11,7 +11,9 @@ const musicianColumns: GridColDef[] = [
         headerName: 'Avatar',
         sortable: false, flex: 0,
         renderCell: (params) => {
-            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
+            return params.row?.imgSrc instanceof File
+            ? <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
+            : <Avatar>{params.row?.name?.substring(0, 1)}</Avatar>
         }
     },
     // { field: 'id', headerName: 'ID', flex: 2 },
