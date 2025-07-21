@@ -11,5 +11,6 @@ export default async function eventItemLoader({ params }: LoaderFunctionArgs) {
     if (!doc) return null;
     const imgSrc = new File([await getLink(doc.imageUrl)], doc.imageUrl.substring(doc.imageUrl.lastIndexOf('/') + 1));
     const programBook = doc.program && new File([await getLink(doc.program)], doc.program.substring(doc.program.lastIndexOf('/') + 1));
-    return Object.assign(deschematifyEvent(doc), { imgSrc, programBook })
+    const eventBanner = doc.banner && new File ([await getLink(doc.banner)], doc.banner.substring(doc.banner.lastIndexOf('/') + 1));
+    return Object.assign(deschematifyEvent(doc), { imgSrc, programBook, eventBanner })
 }

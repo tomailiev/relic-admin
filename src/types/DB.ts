@@ -50,7 +50,9 @@ export interface Performance {
     location: string,
     time: string,
     url: string,
-    venue: string
+    venue: string,
+    presenter?: string,
+    caption?: string
 };
 
 export interface DePerformance extends Omit<Performance, 'geocode'> {
@@ -64,7 +66,11 @@ export interface Event {
     imageUrl: string,
     title: string,
     performances: Performance[],
-    program: string,
+    banner: string,
+    program?: string,
+    music?: string,
+    subtitle?: string,
+    intro?: string,
     id?: string,
     imgSrc?: File
 };

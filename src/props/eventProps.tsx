@@ -47,6 +47,9 @@ const eventFields = {
     // imageUrl: '',
     title: '',
     // performances: []
+    music: '',
+    subtitle: '',
+    intro: ''
 };
 
 const performanceFields = {
@@ -58,6 +61,8 @@ const performanceFields = {
     venue: '',
     lat: '',
     lng: '',
+    presenter: '',
+    caption: ''
 };
 
 const eventFA = [
@@ -65,6 +70,9 @@ const eventFA = [
     { label: 'Description', id: 'description', multiline: true },
     // { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
     { label: 'Title', id: 'title' },
+    { label: 'Music', id: 'music' },
+    { label: 'Subtitle', id: 'subtitle' },
+    { label: 'Intro', id: 'intro' }
 ];
 
 const performanceFA = [
@@ -76,16 +84,20 @@ const performanceFA = [
     { label: 'Venue', id: 'venue' },
     { label: 'Latitude', id: 'lat', },
     { label: 'Longitude', id: 'lng', },
+    { label: 'Presenter', id: 'presenter' },
+    { label: 'Caption', id: 'caption' }
 ];
 
 const fileFields = {
     imageUrl: '',
-    program: ''
+    program: '',
+    banner: ''
 }
 
 const fileFA = [
     { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' },
-    { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' }
+    { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' },
+    { label: 'Banner', id: 'banner', type: 'file', path: `${collections.images}/banners`, displayName: 'eventBanner' }
 ]
 
 const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields = {

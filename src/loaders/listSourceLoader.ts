@@ -2,7 +2,6 @@ import { List } from "../types/DB";
 import { downloadDocsV2, downloadOneDoc } from "../utils/firebase/firebase-functions";
 
 export default async function listSourceLoader({ source, name, id }: List) {
-    console.log(id);
 
     try {
         if (id) {

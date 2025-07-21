@@ -9,7 +9,9 @@ const performanceSchema = array().of(object({
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
     lat: number(),
-    lng: number()
+    lng: number(),
+    presenter: string(),
+    caption: string()
 })).min(1);
 
 const eventFileSchema = object({
@@ -18,13 +20,19 @@ const eventFileSchema = object({
     }),
     program: mixed().test('is-valid-type', 'Not a valid pdf file', (value) => {
         return value && value instanceof File ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
-    })
+    }),
+    banner: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    }),
 })
 
 const eventSchema = object({
     dateDone: string().required('date required'),
     description: string().required('description required'),
     title: string().required('title required'),
+    music: string(),
+    subtitle: string(),
+    intro: string(),
     // performances: array().of(performanceSchema).min(1)
 });
 
