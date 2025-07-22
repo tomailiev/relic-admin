@@ -82,7 +82,8 @@ export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'>
     imgSrc?: File,
     programBook?: File,
     eventBanner?: File,
-    newMusicians?: any[]
+    newMusicians?: any[],
+    source?: string
 }
 
 export interface Grant {
