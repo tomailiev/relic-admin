@@ -60,7 +60,6 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
         let skippable = true;
         if (filesFieldsArray && filesFields) {
             filesFieldsArray.forEach(({ id }) => {
-                console.log(userFields);
 
                 if (!userFields || !hasProperty(userFields, id)) return;
                 if (hasProperty(filesFields, id)) {
@@ -86,7 +85,6 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
         if (shouldSkip) return handleFormCompletion(null);
 
         try {
-            console.log(userFields);
 
             const validated = await schema.validate(userFields, { abortEarly: false });
             handleFormCompletion(validated);

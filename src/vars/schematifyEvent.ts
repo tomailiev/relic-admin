@@ -22,7 +22,7 @@ function schematifyEvent(event: DeEvent): Event {
         ...updatedEvent,
         performances,
         dateDone: Timestamp.fromDate(new Date(event.dateDone)),
-        musicians: event.newMusicians?.map(({ id, name, newTitle, isCurrent }) => ({ id, name, newTitle, isCurrent }))
+        musicians: event.newMusicians?.map(({ id, name, newTitle, isCurrent }) => ({ id, name, newTitle, isCurrent: isCurrent ? 1 : 0 }))
     };
 }
 

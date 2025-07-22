@@ -4,7 +4,7 @@ import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
 import { ItemTypeMap } from "../../types/DB";
 
-function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
+function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {    
     return id
         ? setDoc(doc(db, col, id), data, { merge })
         : addDoc(collection(db, col), data)

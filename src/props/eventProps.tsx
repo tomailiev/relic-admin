@@ -50,7 +50,8 @@ const eventFields = {
     // performances: []
     music: '',
     subtitle: '',
-    intro: ''
+    intro: '',
+    source: 'musicians'
 };
 
 const performanceFields = {
@@ -64,7 +65,6 @@ const performanceFields = {
     lng: '',
     presenter: '',
     caption: '',
-    source: 'musicians'
 };
 
 const eventFA = [
