@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import collections from "../vars/collections";
 import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
+import { ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
+import musicianProps from "./musicianProps";
 
 const eventColumns: GridColDef[] = [
     {
@@ -62,7 +63,8 @@ const performanceFields = {
     lat: '',
     lng: '',
     presenter: '',
-    caption: ''
+    caption: '',
+    source: 'musicians'
 };
 
 const eventFA = [
@@ -100,7 +102,7 @@ const fileFA = [
     { label: 'Banner', id: 'banner', type: 'file', path: `${collections.images}/banners`, displayName: 'eventBanner' }
 ]
 
-const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields = {
+const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns = {
     itemType: 'events',
     name: 'title',
     columns: eventColumns,
@@ -114,9 +116,13 @@ const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields = {
     filesFields: fileFields,
     filesFieldsArray: fileFA,
     nestedName: 'performances',
+    dataFilterColumns: {musicians: musicianProps.columns},
+    sourceCollectionField: 'source',
+    destinationCollectionField: 'musicians',
+    tempDestinationField: 'newMusicians',
     schematifyFn: schematifyEvent,
     deschematifyFn: deschematifyEvent,
-    steps: ['files', 'fieldsArray', 'nestedArray', 'preview'],
+    steps: ['files', 'fieldsArray', 'nestedArray', 'dataFilter', 'preview'],
     filesSchema: eventFileSchema,
     fieldsArraySchema: eventSchema,
     nestedArraySchema: performanceSchema

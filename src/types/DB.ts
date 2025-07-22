@@ -72,14 +72,17 @@ export interface Event {
     subtitle?: string,
     intro?: string,
     id?: string,
-    imgSrc?: File
+    imgSrc?: File,
+    musicians?: { name: string, newTitle: string, id: string }[]
 };
 
 export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'> {
     dateDone: string,
     performances: DePerformance[],
     imgSrc?: File,
-    programBook?: File
+    programBook?: File,
+    eventBanner?: File,
+    newMusicians?: any[]
 }
 
 export interface Grant {

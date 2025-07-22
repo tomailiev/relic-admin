@@ -4,7 +4,7 @@ import { DeEvent, Event } from "../types/DB";
 
 
 function schematifyEvent(event: DeEvent): Event {
-    
+
     const performances = event.performances.map((p) => {
         const fullDate = new Date(p.date);
         const day = daysOfWeek[fullDate.getUTCDay()];
@@ -17,11 +17,12 @@ function schematifyEvent(event: DeEvent): Event {
         let rest = (({ lng, lat, date, time, ...object }) => object)(p);
         return Object.assign(rest, { time, geocode, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });
     });
-    const { imgSrc: _, programBook: __, ...updatedEvent } = event;
+    const { imgSrc: _, programBook: __, eventBanner: ___, musicians: ____, newMusicians: _____, ...updatedEvent } = event;
     return {
         ...updatedEvent,
         performances,
-        dateDone: Timestamp.fromDate(new Date(event.dateDone))
+        dateDone: Timestamp.fromDate(new Date(event.dateDone)),
+        musicians: event.newMusicians?.map(({ id, name, newTitle, isCurrent }) => ({ id, name, newTitle, isCurrent }))
     };
 }
 
