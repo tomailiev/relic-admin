@@ -31,7 +31,7 @@ const eventSchema = object({
     description: string().required('description required'),
     title: string().required('title required'),
     music: string(),
-    subtitle: string(),
+    subtitle: string().required(),
     intro: string(),
     // performances: array().of(performanceSchema).min(1)
 });
