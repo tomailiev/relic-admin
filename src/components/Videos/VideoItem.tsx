@@ -19,6 +19,7 @@ const VideoItem = ({ item }: VideoItemProps) => {
                     <Typography variant="h6">
                         {item.title}
                     </Typography>
+                    {item.category && <Typography variant="body1">Category: {item.category}</Typography>}
                     <Typography variant="body1">
                         Priority: {item.featured}
                     </Typography>

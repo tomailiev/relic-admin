@@ -40,7 +40,7 @@ const EmailListItem = ({ item }: { item: ListWithNewMembers }) => {
                                 // },
                                 pagination: { paginationModel: { pageSize: 10 } }
                             }}
-                            pageSizeOptions={[10, 25, 50]}
+                            pageSizeOptions={[10, 20, 50]}
                         />}
                     </Box>
                 </Box>

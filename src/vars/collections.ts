@@ -2,6 +2,7 @@ const collections = {
     videos: 'videos',
     events: 'events',
     musicians:  'musicians',
+    photos: 'photos',
     texts: 'textContent',
     donors: 'donors',
     grants: 'grants',

@@ -35,6 +35,9 @@ const MusicianItem = ({ item }: { item: Musician }) => {
                         {item.newTitle}
                     </Typography>
                     <Typography variant="body2" mb={1}>{item.chair}</Typography>
+                    <Typography variant="body1" mb={1}>{item.email}</Typography>
+                    <Typography variant="body1" mb={1}>{item.phone}</Typography>
+                    <Typography variant="body1" mb={1}>In current season: {item.isCurrent ? 'Yes' : 'No'}</Typography>
                     <Typography variant="body1">
                         {item.bio}
                     </Typography>

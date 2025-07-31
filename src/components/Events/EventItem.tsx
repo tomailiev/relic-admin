@@ -10,7 +10,7 @@ import { Event } from "../../types/DB";
 
 const EventItem = ({ item }: { item: Event }) => {
     const { setError } = useContext(ErrorContext);
-
+    
     function handleCopyText() {
         navigator.clipboard.writeText(`https://relicensemble.org/?dialog=programBook&eventId=${item.id}`)
             .then(() => {

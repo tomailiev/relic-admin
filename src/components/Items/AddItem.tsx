@@ -10,7 +10,7 @@ import AddDynamic from "../Forms/AddDynamic";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import LoadingContext from "../../context/LoadingContext";
 import FilterData from "../Forms/FilterData";
-import { ItemWithAllProps} from "../../types/fnProps";
+import { ItemWithAllProps } from "../../types/fnProps";
 import { AnyItemType } from "../../types/DB";
 import { SubmitTarget } from "react-router-dom/dist/dom";
 import hasProperty from "../../vars/hasProperty";
@@ -51,7 +51,6 @@ const AddItem = (itemProps: ItemWithAllProps) => {
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
     function finishSubmission() {
-
         submit(submission as SubmitTarget, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
     }
 

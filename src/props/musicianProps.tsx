@@ -11,13 +11,15 @@ const musicianColumns: GridColDef[] = [
         headerName: 'Avatar',
         sortable: false, flex: 0,
         renderCell: (params) => {
-            return <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
+            return params.row?.imgSrc instanceof File
+            ? <Avatar src={URL.createObjectURL(params.row?.imgSrc)} alt={params.row?.name} />
+            : <Avatar>{params.row?.name?.substring(0, 1)}</Avatar>
         }
     },
     // { field: 'id', headerName: 'ID', flex: 2 },
     { field: 'name', headerName: 'Name', flex: 2 },
     { field: 'newTitle', headerName: 'Instrument', flex: 2 },
-    { field: 'featured', headerName: 'Season', flex: 1 },
+    { field: 'isCurrent', headerName: 'In current season', flex: 1, valueGetter: ({row}) => row.isCurrent ? 'Yes' : 'No' },
     {
         field: 'select',
         headerName: 'Select',
@@ -39,12 +41,22 @@ const fields = {
     name: '',
     newTitle: '',
     pic: '',
-    chair: ''
+    chair: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    isCurrent: false
 };
 
 const musicianFA = [
     { label: 'Bio', id: 'bio', multiline: true },
     { label: 'Name', id: 'name' },
+    { label: 'First name', id: 'firstName' },
+    { label: 'Last name', id: 'lastName' },
+    { label: 'Email', id: 'email' },
+    { label: 'Phone #', id: 'phone' },
+    { label: 'Is in current season', id: 'isCurrent', type: 'select', options: [{ value: 1, display: 'Yes' }, { value: 0, display: 'No' }] },
     { label: 'Featured in season', id: 'featured', type: 'number' },
     { label: 'Title/Instrument', id: 'newTitle' },
     { label: 'Chair', id: 'chair' }
@@ -56,7 +68,7 @@ const musicianProps: ItemWithFields & ItemWithFileFields = {
     itemType: 'musicians',
     name: 'name',
     columns: musicianColumns,
-    sorting: { field: 'newTitle', sort: 'asc' },
+    sorting: { field: 'isCurrent', sort: 'desc' },
     pageSize: 15,
     pageSizeOptions: [5, 15, 30],
     fields: fields,

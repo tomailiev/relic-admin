@@ -1,17 +1,15 @@
 import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
-import normalizePhoneNumber from "../../vars/normalizePhoneNumber";
 
-export default async function musicianAddAction({ request }: ActionFunctionArgs) {
+export default async function photoAddAction({ request }: ActionFunctionArgs) {
 
     try {
         const updates = await request.json();
-        const { imgSrc: _, ...updatedMusician } = updates;
-        const phone = normalizePhoneNumber(updates.phone || '');
-        const upload = await uploadDoc({ ...updatedMusician, phone }, collections.musicians);
+        const { imgSrc: _, ...updatedphoto } = updates;
+        const upload = await uploadDoc(updatedphoto, collections.photos);
         console.log(upload);
-        return redirect('/musicians')
+        return redirect('/photos')
     } catch (e) {
         if (e instanceof Error) {
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });

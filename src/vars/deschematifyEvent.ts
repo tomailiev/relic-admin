@@ -34,6 +34,6 @@ export function deschematifyEvent(item: Event): DeEvent {
 
     const performances: DePerformance[] = item.performances.map(deschematifyPerformance);
 
-    return { ...item, performances, dateDone };
+    return { ...item, performances, dateDone, banner: item.banner || '', program: item.program || '' };
 }
 

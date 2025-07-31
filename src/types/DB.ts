@@ -22,9 +22,24 @@ export interface Musician {
     newTitle: string,
     name: string,
     pic: string,
+    firstName: string,
+    lastName: string,
+    isCurrent: number
+    email?: string,
+    phone?: string,
     id?: string,
     imgSrc?: File,
     chair?: string
+}
+
+export interface Photo {
+    title: string,
+    caption: string,
+    pc: string,
+    path: string,
+    thumb: string,
+    imgSrc?: File,
+    id?: string
 }
 
 export interface Performance {
@@ -35,7 +50,9 @@ export interface Performance {
     location: string,
     time: string,
     url: string,
-    venue: string
+    venue: string,
+    presenter?: string,
+    caption?: string
 };
 
 export interface DePerformance extends Omit<Performance, 'geocode'> {
@@ -49,16 +66,24 @@ export interface Event {
     imageUrl: string,
     title: string,
     performances: Performance[],
-    program: string,
+    banner: string,
+    program?: string,
+    music?: string,
+    subtitle?: string,
+    intro?: string,
     id?: string,
-    imgSrc?: File
+    imgSrc?: File,
+    musicians?: { name: string, newTitle: string, id: string }[]
 };
 
 export interface DeEvent extends Omit<Event, 'id' | 'dateDone' | 'performances'> {
     dateDone: string,
     performances: DePerformance[],
     imgSrc?: File,
-    programBook?: File
+    programBook?: File,
+    eventBanner?: File,
+    newMusicians?: any[],
+    source?: string
 }
 
 export interface Grant {
@@ -193,7 +218,7 @@ export interface CSVItem {
     id: string;
 }
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem;
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
     'videos': Video;
@@ -209,7 +234,8 @@ export type ItemTypeMap = {
     'deschematifiedSubscribers': DeschematifiedSubscriber;
     'CSVs': CSV;
     'CSVItems': CSVItem
-    'textContent': Text
+    'textContent': Text,
+    'photos': Photo
 };
 
 export type DeschematifiedItemTypeMap = {

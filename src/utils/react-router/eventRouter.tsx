@@ -3,7 +3,7 @@ import eventDeleteAction from "../../actions/event/eventDeleteAction";
 import eventEditAction from "../../actions/event/eventEditAction";
 import FetchError from "../../components/Common/FetchError";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
-import AddItem from "../../components/Items/AddItem";
+// import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
@@ -12,6 +12,7 @@ import eventLoader from "../../loaders/eventLoader";
 import eventProps from "../../props/eventProps";
 import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
+import eventSourceLoader from "../../loaders/eventSourceLoader";
 
 const eventRouter: RouteObject[] = [
   {
@@ -21,7 +22,8 @@ const eventRouter: RouteObject[] = [
   },
   {
     path: 'events/add',
-    element: <LoggedIn component={<AddItem {...eventProps as ItemWithAllProps} />} />,
+    element: <LoggedIn component={<EditItem {...eventProps as ItemWithAllProps} />} />,
+    loader: eventSourceLoader,
     action: eventAddAction
   },
   {

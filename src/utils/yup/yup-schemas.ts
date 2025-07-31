@@ -9,7 +9,9 @@ const performanceSchema = array().of(object({
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
     lat: number(),
-    lng: number()
+    lng: number(),
+    presenter: string(),
+    caption: string()
 })).min(1);
 
 const eventFileSchema = object({
@@ -18,13 +20,19 @@ const eventFileSchema = object({
     }),
     program: mixed().test('is-valid-type', 'Not a valid pdf file', (value) => {
         return value && value instanceof File ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
-    })
+    }),
+    banner: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+    }),
 })
 
 const eventSchema = object({
     dateDone: string().required('date required'),
     description: string().required('description required'),
     title: string().required('title required'),
+    music: string(),
+    subtitle: string().required(),
+    intro: string(),
     // performances: array().of(performanceSchema).min(1)
 });
 
@@ -33,14 +41,35 @@ const musicianSchema = object({
     featured: number().min(0).required('featured required'),
     name: string().required('name required'),
     newTitle: string().required('instrument required'),
-    chair: string()
+    chair: string(),
+    firstName: string().required(),
+    lastName: string().required(),
+    email: string().email(),
+    phone: string(),
+    isCurrent: number().required().oneOf([0, 1])
 });
 
 const musicianFileSchema = object({
     pic: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
-        return value && value instanceof File &&  ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
     })
-})
+});
+
+const photoSchema = object({
+    title: string().required('title required'),
+    caption: string().required('caption required'),
+    pc: string()
+});
+
+const photoFileSchema = object({
+    path: mixed().required('Image file upload required')
+        .test('is-valid-type', 'Not a valid image file', (value) => {
+            return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
+        })
+        .test('file-size', 'Image too large (Max 4Mb)', (value) => {
+            return value && value instanceof File && value.size <= 4 * 1024 * 1024;
+        })
+});
 
 const userSchema = object({
     email: string().required().email(),
@@ -90,7 +119,7 @@ const donorSchema = object({
     email: string().email(),
     address: string(),
     location: string(),
-    phone: string()
+    phone: string(),
 });
 
 const grantSchema = object({
@@ -266,7 +295,7 @@ const operationSchema = object({
 });
 
 const listSchema = object({
-    source: string().required().oneOf(['donors', 'subscribers']),
+    source: string().required().oneOf(['donors', 'subscribers', 'musicians']),
     name: string().required()
 });
 
@@ -295,5 +324,7 @@ export {
     donationAcknowledgementSchema,
     operationSchema,
     listSchema,
-    publicFileSchema
+    publicFileSchema,
+    photoSchema,
+    photoFileSchema
 };
