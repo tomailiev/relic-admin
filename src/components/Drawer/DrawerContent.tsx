@@ -17,7 +17,7 @@ const DrawerContent = () => {
     const databaseMenu: MenuType[] = [
         { title: 'Videos', path: 'videos', iconActive: <FolderOpen />, iconInactive: <Folder /> },
         { title: 'Musicians', path: 'musicians', iconActive: <FolderOpen />, iconInactive: <Folder /> },
-        { title: 'TextContent', path: 'texts', iconActive: <FolderOpen />, iconInactive: <Folder /> },
+        { title: 'Texts', path: 'texts', iconActive: <FolderOpen />, iconInactive: <Folder /> },
         { title: 'Events', path: 'events', iconActive: <FolderOpen />, iconInactive: <Folder /> },
         { title: 'Photos', path: 'photos', iconActive: <Filter />, iconInactive: <Image /> }
     ];

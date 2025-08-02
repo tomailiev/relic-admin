@@ -20,7 +20,7 @@ const textRouter: RouteObject[] = [
         loader: textLoader,
       },
       {
-        path: 'textContent/add',
+        path: 'texts/add',
         element: <LoggedIn component={<AddItem {...textProps as ItemWithAllProps} />} />,
         action: textAddAction
       },

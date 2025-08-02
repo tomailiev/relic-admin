@@ -234,6 +234,7 @@ export type ItemTypeMap = {
     'deschematifiedSubscribers': DeschematifiedSubscriber;
     'CSVs': CSV;
     'CSVItems': CSVItem
+    'texts': Text,
     'textContent': Text,
     'photos': Photo
 };
