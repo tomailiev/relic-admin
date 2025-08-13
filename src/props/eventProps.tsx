@@ -93,13 +93,13 @@ const performanceFA = [
 const fileFields = {
     imageUrl: '',
     program: '',
-    banner: ''
+    bannerHome: ''
 }
 
 const fileFA = [
     { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' },
     { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' },
-    { label: 'Banner', id: 'banner', type: 'file', path: `${collections.images}/banners`, displayName: 'eventBanner' }
+    { label: 'Banner /1920*1080', id: 'bannerHome', type: 'file', path: `${collections.images}/banners/home`, displayName: 'eventBanner' }
 ]
 
 const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns = {

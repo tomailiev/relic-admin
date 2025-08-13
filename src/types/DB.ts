@@ -66,7 +66,7 @@ export interface Event {
     imageUrl: string,
     title: string,
     performances: Performance[],
-    banner: string,
+    bannerHome: string,
     program?: string,
     music?: string,
     subtitle?: string,
