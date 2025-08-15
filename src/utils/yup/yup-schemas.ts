@@ -21,9 +21,24 @@ const eventFileSchema = object({
     program: mixed().test('is-valid-type', 'Not a valid pdf file', (value) => {
         return value && value instanceof File ? ((value.name?.toLowerCase())?.endsWith('.pdf')) : true;
     }),
-    banner: mixed().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
+    bannerHome: mixed<File>().required('Image file upload required').test('is-valid-type', 'Not a valid image file', (value) => {
         return value && value instanceof File && ((value.name?.toLowerCase())?.endsWith('.png') || (value.name?.toLowerCase())?.endsWith('.jpg') || (value.name?.toLowerCase())?.endsWith('.jpeg') || (value.name?.toLowerCase())?.endsWith('.webp'))
-    }),
+    }).test(
+        "fileDimensions",
+        `Image must be exactly ${1920}x${1080}px`,
+        (file) => {
+            if (!file) return true; // skip if no file
+
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    resolve(img.width === 1920 && img.height === 1080);
+                };
+                img.onerror = () => resolve(false);
+                img.src = URL.createObjectURL(file);
+            });
+        }
+    ),
 })
 
 const eventSchema = object({
