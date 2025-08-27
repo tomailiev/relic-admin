@@ -1,5 +1,5 @@
 export const getTier = (amount: number) => {
-    return amount < 250
+    return amount > 0 && amount < 250
             ? 'Muse $0+'
             : amount >= 250 && amount < 500
                 ? 'Dionysus $250+'
