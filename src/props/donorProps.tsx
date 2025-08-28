@@ -9,6 +9,7 @@ import { ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 
 
 function numExtractor(str = '') {
+    if (str === '') return -1;
     return Number(Array.from(str).filter(char => char >= '0' && char <= '9').join(''));
 }
 
