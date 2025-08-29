@@ -7,7 +7,8 @@ type DonationProps = {
 };
 
 export default function schematifyDonor(item: Donor) {
-
+    console.log(item);
+    
     const lastDonation: DonationProps = { lastDonationAmount: '', lastDonationDate: '' }
     const donations = item.donations.map((donation: Donation) => {
         if (!lastDonation.lastDonationDate || new Date(donation.date) > new Date(lastDonation.lastDonationDate)) {
