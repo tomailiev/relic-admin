@@ -8,6 +8,8 @@ export default async function donorEditAction({ request }: ActionFunctionArgs) {
     try {
         const doc = await request.json();
         const { id: _, ...rest } = doc;
+        console.log(schematifyDonor(rest));
+        
         await uploadDoc(schematifyDonor(rest), collections.donors, doc.id, true);
         return redirect(`/donors`);
     } catch (e) {
