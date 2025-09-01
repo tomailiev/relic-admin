@@ -1,4 +1,4 @@
-export default function normalizePhoneNumber(numberStr: string) {
+export default function normalizePhoneNumber(numberStr = '') {
     let normalizedNum = '';
     Array.from(numberStr).forEach((char) => {
         if (char !== ' ' && Number(char) <= 9) {
