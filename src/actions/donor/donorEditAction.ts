@@ -8,10 +8,13 @@ export default async function donorEditAction({ request }: ActionFunctionArgs) {
     try {
         const doc = await request.json();
         const { id: _, ...rest } = doc;
+        console.log(schematifyDonor(rest));
+        
         await uploadDoc(schematifyDonor(rest), collections.donors, doc.id, true);
         return redirect(`/donors`);
     } catch (e) {
         if (e instanceof Error) {
+            
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });
         }
         return { error: true, severity: 'error', message: 'Unknown error' };
