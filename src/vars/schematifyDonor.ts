@@ -22,7 +22,6 @@ export default function schematifyDonor(item: Donor) {
             recognitionName: donation.recognitionName || `${item.firstName} ${item.lastName}`,
         }
     });
-    console.log(lastDonation);
     
     return {
         ...item,
