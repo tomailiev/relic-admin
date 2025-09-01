@@ -9,14 +9,12 @@ type DonationProps = {
 export default function schematifyDonor(item: Donor) {
     
     const lastDonation: DonationProps = { lastDonationAmount: '', lastDonationDate: '' }
-    console.log(item.donations);
     
     const donations = item.donations.map((donation: Donation) => {
         if (!lastDonation.lastDonationDate || new Date(donation.date) > new Date(lastDonation.lastDonationDate)) {
             lastDonation.lastDonationDate = donation.date;
             lastDonation.lastDonationAmount = Number(donation.amount);
         }
-        console.log(donation);
         
         return {
             ...donation,
@@ -24,6 +22,8 @@ export default function schematifyDonor(item: Donor) {
             recognitionName: donation.recognitionName || `${item.firstName} ${item.lastName}`,
         }
     });
+    console.log(lastDonation);
+    
     return {
         ...item,
         email: item.email?.toLowerCase() || '',

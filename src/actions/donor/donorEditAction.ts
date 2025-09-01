@@ -14,6 +14,8 @@ export default async function donorEditAction({ request }: ActionFunctionArgs) {
         return redirect(`/donors`);
     } catch (e) {
         if (e instanceof Error) {
+            console.log(e);
+            
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });
         }
         return { error: true, severity: 'error', message: 'Unknown error' };
