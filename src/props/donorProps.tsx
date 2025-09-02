@@ -21,7 +21,7 @@ const donorColumns: GridColDef[] = [
     { field: 'firstName', headerName: 'First name', flex: 1 },
     { field: 'lastName', headerName: 'Last name', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },
-    // { field: 'address', headerName: 'Address', flex: 1.5 },
+    { field: 'address', headerName: 'Address', flex: 1.5 },
     { field: 'location', headerName: 'Location', flex: 1.5 },
     {
         field: 'lastDonationDate',
