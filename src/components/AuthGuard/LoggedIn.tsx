@@ -1,11 +1,19 @@
-import { ReactElement, useContext } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import UserContext from "../../context/UserContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import LocationContext from "../../context/LocationContext";
 
 
-const LoggedIn = ({ component }: {component: ReactElement}) => {
-    
+const LoggedIn = ({ component }: { component: ReactElement }) => {
+
     const { currentUser } = useContext(UserContext);
+    const { setLocation } = useContext(LocationContext)
+    const currentLocation = useLocation();
+    useEffect(() => {
+        console.log(currentLocation.pathname);
+        
+        setLocation(currentLocation.pathname);
+    }, [currentLocation.pathname, setLocation])
 
     return (
         <>

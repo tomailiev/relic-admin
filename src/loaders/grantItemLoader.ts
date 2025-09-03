@@ -8,5 +8,6 @@ export default async function grantItemLoader({ params }: LoaderFunctionArgs) {
         return { error: true, severity: 'error', message: 'No ID' };
     }
     return await downloadOneDoc('grants', docId)
-        .then(item => item && deschematifyGrant(item))
+        .then(item => item ? deschematifyGrant(item) : null)
+        .catch(console.log);
 }

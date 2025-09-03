@@ -6,5 +6,7 @@ export default function campaignItemLoader({ params }: LoaderFunctionArgs) {
     if (!docId) {
         return { error: true, severity: 'error', message: 'No ID' };
     }
-    return downloadOneDoc('campaigns', docId);
+    return downloadOneDoc('campaigns', docId)
+            .then(item => item ? item : null)
+            .catch(console.log);
 }
