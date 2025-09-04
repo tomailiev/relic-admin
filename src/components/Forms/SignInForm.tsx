@@ -1,25 +1,23 @@
 import { Alert, Box, Button, Collapse, IconButton, Paper, Stack, TextField } from "@mui/material";
-import { useEffect, useState, ReactElement, ChangeEvent, useContext } from "react";
-import { Form, NavLink, useActionData, useNavigation, useSubmit } from "react-router-dom";
+import { useEffect, useState, ReactElement, ChangeEvent } from "react";
+import { Form, NavLink, useActionData, useNavigation, useSearchParams, useSubmit } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import userProps from "../../props/userProps";
 import { ValidationError } from "yup";
 import { userSchema } from "../../utils/yup/yup-schemas";
 import hasProperty from "../../vars/hasProperty";
-import LocationContext from "../../context/LocationContext";
 
 
 const SignInForm = () => {
     const errorData = useActionData() as { result?: string, code?: string };
     const navigation = useNavigation();
     const submit = useSubmit();
-    const { location } = useContext(LocationContext);
-
+    const [searchParams] = useSearchParams();
     const [hasError, setHasError] = useState({});
     const [userFields, setUserFields] = useState(userProps.loginFields);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alertMessage, setAlertMessage] = useState<string | ReactElement>('');
-
+    
     useEffect(() => {
         if (errorData) {
             console.log(errorData);
@@ -52,7 +50,7 @@ const SignInForm = () => {
     async function submitForm() {
         try {
             const validated = await userSchema.validate(userFields, { abortEarly: false });
-            submit({...validated, location}, { encType: 'application/json', method: 'post' });
+            submit({...validated, redirectTo: searchParams.get("redirectTo") || "/"}, { encType: 'application/json', method: 'post' });
         } catch (e) {
             console.log(e);
             if (e instanceof ValidationError && e.inner) {

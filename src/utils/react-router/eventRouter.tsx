@@ -16,31 +16,37 @@ import eventSourceLoader from "../../loaders/eventSourceLoader";
 
 const eventRouter: RouteObject[] = [
   {
-    path: 'events',
-    element: <LoggedIn component={<Items {...eventProps} />} />,
-    loader: eventLoader,
-  },
-  {
-    path: 'events/add',
-    element: <LoggedIn component={<EditItem {...eventProps as ItemWithAllProps} />} />,
-    loader: eventSourceLoader,
-    action: eventAddAction
-  },
-  {
-    path: 'events/:eventId',
-    element: <LoggedIn component={<ItemRoute {...eventProps} />} />,
-    loader: eventItemLoader,
-  },
-  {
-    path: 'events/:eventId/delete',
-    element: <LoggedIn component={<FetchError />} />,
-    action: eventDeleteAction
-  },
-  {
-    path: 'events/:eventId/edit',
-    element: <LoggedIn component={<EditItem {...eventProps as ItemWithAllProps} />} />,
-    loader: eventItemLoader,
-    action: eventEditAction
+    path: "events",
+    element: <LoggedIn />, // guard applies to all children
+    children: [
+      {
+        index: true, // matches "/events"
+        element: <Items {...eventProps} />,
+        loader: eventLoader,
+      },
+      {
+        path: "add",
+        element: <EditItem {...(eventProps as ItemWithAllProps)} />,
+        loader: eventSourceLoader,
+        action: eventAddAction,
+      },
+      {
+        path: ":eventId",
+        element: <ItemRoute {...eventProps} />,
+        loader: eventItemLoader,
+      },
+      {
+        path: ":eventId/delete",
+        element: <FetchError />,
+        action: eventDeleteAction,
+      },
+      {
+        path: ":eventId/edit",
+        element: <EditItem {...(eventProps as ItemWithAllProps)} />,
+        loader: eventItemLoader,
+        action: eventEditAction,
+      },
+    ],
   },
 ];
 

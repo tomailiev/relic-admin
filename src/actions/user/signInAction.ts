@@ -6,17 +6,17 @@ import { checkEmailVerificationStatus } from "../../utils/firebase/firebase-func
 export default async function signInAction({ request, params,  }: ActionFunctionArgs) {
     try {
         
-        const { email, password, location } = await request.json();
+        const { email, password, redirectTo } = await request.json();
         
         const { data } = await checkEmailVerificationStatus({ email }) as { data: { verified: boolean } };
         if (data.verified) {
             await signInWithEmailAndPassword(auth, email, password);
-            console.log(location);
-            return redirect(location || '/');
+            return redirect(redirectTo.startsWith("/") ? redirectTo : `/${redirectTo}`);
         }
         throw new Error('verify');
     } catch (e) {
         console.log(e);
+        if (e instanceof Response) throw e;
         return e;
     }
 }

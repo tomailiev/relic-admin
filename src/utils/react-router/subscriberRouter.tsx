@@ -18,36 +18,42 @@ import { ItemWithAllProps } from "../../types/fnProps";
 
 const subscriberRouter: RouteObject[] = [
   {
-    path: 'subscribers',
-    element: <LoggedIn component={<Items {...subscriberProps} />} />,
-    loader: subscriberLoader
-  },
-  {
-    path: 'subscribers/add',
-    element: <LoggedIn component={<AddItem {...subscriberProps as ItemWithAllProps} />} />,
-    action: subscriberAddAction
-  },
-  {
-    path: 'subscribers/:subscriberId',
-    element: <LoggedIn component={<ItemRoute {...subscriberProps} />} />,
-    loader: subscriberItemLoader,
-  },
-  {
-    path: 'subscribers/:subscriberId/delete',
-    element: <LoggedIn component={<FetchError />} />,
-    action: subscriberDeleteAction
-  },
-  {
-    path: 'subscribers/:subscriberId/edit',
-    element: <LoggedIn component={<EditItem {...subscriberProps as ItemWithAllProps} />} />,
-    loader: subscriberItemLoader,
-    action: subscriberEditAction
-  },
-  {
-    path: 'subscribers/import-donors',
-    element: <LoggedIn component={<ImportDonor />} />,
-    loader: subscriberDonorLoader,
-    action: subscriberImportDonorsAction
+    path: "subscribers",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/subscribers"
+        element: <Items {...subscriberProps} />,
+        loader: subscriberLoader,
+      },
+      {
+        path: "add",
+        element: <AddItem {...(subscriberProps as ItemWithAllProps)} />,
+        action: subscriberAddAction,
+      },
+      {
+        path: ":subscriberId",
+        element: <ItemRoute {...subscriberProps} />,
+        loader: subscriberItemLoader,
+      },
+      {
+        path: ":subscriberId/delete",
+        element: <FetchError />,
+        action: subscriberDeleteAction,
+      },
+      {
+        path: ":subscriberId/edit",
+        element: <EditItem {...(subscriberProps as ItemWithAllProps)} />,
+        loader: subscriberItemLoader,
+        action: subscriberEditAction,
+      },
+      {
+        path: "import-donors",
+        element: <ImportDonor />,
+        loader: subscriberDonorLoader,
+        action: subscriberImportDonorsAction,
+      },
+    ],
   },
 ];
 

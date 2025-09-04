@@ -14,32 +14,38 @@ import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
 
 const listRouter: RouteObject[] = [
-    {
-        path: 'lists',
-        element: <LoggedIn component={<Items {...listProps} />} />,
+  {
+    path: "lists",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/lists"
+        element: <Items {...listProps} />,
         loader: listLoader,
-    },
-    {
-        path: 'lists/add',
-        element: <LoggedIn component={<AddItem {...listProps as ItemWithAllProps} />} />,
+      },
+      {
+        path: "add",
+        element: <AddItem {...(listProps as ItemWithAllProps)} />,
         action: listAddAction,
-    },
-    {
-        path: 'lists/:listId',
-        element: <LoggedIn component={<ItemRoute {...listProps} />} />,
-        loader: listItemLoader
-    },
-    {
-        path: 'lists/:listId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: listDeleteAction
-    },
-    {
-        path: 'lists/:listId/edit',
-        element: <LoggedIn component={<EditItem {...listProps as ItemWithAllProps} />} />,
+      },
+      {
+        path: ":listId",
+        element: <ItemRoute {...listProps} />,
         loader: listItemLoader,
-        action: listEditAction
-    },
+      },
+      {
+        path: ":listId/delete",
+        element: <FetchError />,
+        action: listDeleteAction,
+      },
+      {
+        path: ":listId/edit",
+        element: <EditItem {...(listProps as ItemWithAllProps)} />,
+        loader: listItemLoader,
+        action: listEditAction,
+      },
+    ],
+  },
 ];
 
 export default listRouter;
