@@ -14,32 +14,38 @@ import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
 
 const musicianRouter: RouteObject[] = [
-    {
-        path: 'musicians',
-        element: <LoggedIn component={<Items {...musicianProps} />} />,
+  {
+    path: "musicians",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/musicians"
+        element: <Items {...musicianProps} />,
         loader: musicianLoader,
       },
       {
-        path: 'musicians/add',
-        element: <LoggedIn component={<AddItem {...musicianProps as ItemWithAllProps} />} />,
+        path: "add",
+        element: <AddItem {...(musicianProps as ItemWithAllProps)} />,
         action: musicianAddAction,
       },
       {
-        path: 'musicians/:musicianId',
-        element: <LoggedIn component={<ItemRoute {...musicianProps} />} />,
-        loader: musicianItemLoader
-      },
-      {
-        path: 'musicians/:musicianId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: musicianDeleteAction
-      },
-      {
-        path: 'musicians/:musicianId/edit',
-        element: <LoggedIn component={<EditItem {...musicianProps as ItemWithAllProps} />} />,
+        path: ":musicianId",
+        element: <ItemRoute {...musicianProps} />,
         loader: musicianItemLoader,
-        action: musicianEditAction
       },
+      {
+        path: ":musicianId/delete",
+        element: <FetchError />,
+        action: musicianDeleteAction,
+      },
+      {
+        path: ":musicianId/edit",
+        element: <EditItem {...(musicianProps as ItemWithAllProps)} />,
+        loader: musicianItemLoader,
+        action: musicianEditAction,
+      },
+    ],
+  },
 ];
 
 export default musicianRouter;

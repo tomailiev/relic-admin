@@ -27,38 +27,41 @@ const routes: RouteObject[] = [
   {
     path: "/",
     element: <Home />,
-    errorElement: <ErrorPage />, children: [
+    errorElement: <ErrorPage />,
+    children: [
       {
         index: true,
         element: <Index />,
       },
       {
-        path: 'login',
-        element: <LoggedOut component={< LogIn />} />,
-        action: signInAction
+        element: <LoggedOut />, // guard wrapper
+        children: [
+          {
+            path: "login",
+            element: <LogIn />,
+            action: signInAction,
+          },
+          {
+            path: "register",
+            element: <Register />,
+            action: registerAction,
+          },
+          {
+            path: "verify",
+            element: <VerifyReset />,
+            action: verifyResetAction,
+          },
+          {
+            path: "reset",
+            element: <VerifyReset />,
+            action: verifyResetAction,
+          },
+        ],
       },
       {
-        path: 'register',
-        element: <LoggedOut component={
-          <Register />} />,
-        action: registerAction
-      },
-      {
-        path: 'logout',
+        path: "logout",
         element: <FetchError />,
-        action: signOutAction
-      },
-      {
-        path: 'verify',
-        element: <LoggedOut component={
-          <VerifyReset />} />,
-        action: verifyResetAction
-      },
-      {
-        path: 'reset',
-        element: <LoggedOut component={
-          <VerifyReset />} />,
-        action: verifyResetAction
+        action: signOutAction,
       },
       ...videoRouter,
       ...musicianRouter,

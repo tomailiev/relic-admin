@@ -1,20 +1,16 @@
-import { ReactElement, useContext } from "react";
+import { useContext } from "react";
 import UserContext from "../../context/UserContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, useSearchParams } from "react-router-dom";
 
+const LoggedOut = () => {
+  const { currentUser } = useContext(UserContext);
+  const [searchParams] = useSearchParams();
 
-const LoggedOut = ({ component }: { component: ReactElement }): ReactElement => {
-    const { currentUser } = useContext(UserContext);
+  if (currentUser) {
+    return <Navigate to={searchParams.get("redirectTo") || "/"} />;
+  }
 
-    return (
-        <>
-            {
-                !currentUser
-                    ? <> {component} </>
-                    : <Navigate to={'/'} />
-            }
-        </>
-    );
+  return <Outlet />;
 };
 
 export default LoggedOut;

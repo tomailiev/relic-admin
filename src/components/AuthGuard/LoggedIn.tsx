@@ -1,21 +1,16 @@
-import { ReactElement, useContext } from "react";
+import { useContext } from "react";
 import UserContext from "../../context/UserContext";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 
-
-const LoggedIn = ({ component }: {component: ReactElement}) => {
-    
+const LoggedIn = () => {
     const { currentUser } = useContext(UserContext);
+    const currentLocation = useLocation();
 
-    return (
-        <>
-            {
-                currentUser
-                    ? <> {component} </>
-                    : <Navigate to={'/login'} />
-            }
-        </>
-    );
+    if (!currentUser) {
+        return <Navigate to={`/login?redirectTo=${currentLocation.pathname}`} replace />;
+    }
+
+    return <Outlet />;
 };
 
 export default LoggedIn;

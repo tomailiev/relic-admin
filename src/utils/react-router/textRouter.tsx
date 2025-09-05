@@ -14,32 +14,38 @@ import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
 
 const textRouter: RouteObject[] = [
-    {
-        path: 'texts',
-        element: <LoggedIn component={<Items {...textProps} />} />,
+  {
+    path: "texts",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/texts"
+        element: <Items {...textProps} />,
         loader: textLoader,
       },
       {
-        path: 'texts/add',
-        element: <LoggedIn component={<AddItem {...textProps as ItemWithAllProps} />} />,
-        action: textAddAction
+        path: "add",
+        element: <AddItem {...(textProps as ItemWithAllProps)} />,
+        action: textAddAction,
       },
       {
-        path: 'texts/:textId',
-        element: <LoggedIn component={<ItemRoute {...textProps} />} />,
+        path: ":textId",
+        element: <ItemRoute {...textProps} />,
         loader: textItemLoader,
       },
       {
-        path: 'texts/:textId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: textDeleteAction
+        path: ":textId/delete",
+        element: <FetchError />,
+        action: textDeleteAction,
       },
       {
-        path: 'texts/:textId/edit',
-        element: <LoggedIn component={<EditItem {...textProps as ItemWithAllProps} />} />,
+        path: ":textId/edit",
+        element: <EditItem {...(textProps as ItemWithAllProps)} />,
         loader: textItemLoader,
-        action: textEditAction
+        action: textEditAction,
       },
+    ],
+  },
 ];
 
 export default textRouter;

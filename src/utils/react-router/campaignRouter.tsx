@@ -18,40 +18,45 @@ import campaignLoader from "../../loaders/campaignLoader";
 import campaignProps from "../../props/campaignProps";
 
 const campaignRouter: RouteObject[] = [
-    {
-        path: 'campaigns',
-        element: <LoggedIn component={<Items {...campaignProps} />} />,
+  {
+    path: "campaigns",
+    element: <LoggedIn />, // guard wrapper
+    children: [
+      {
+        index: true, // matches "/campaigns"
+        element: <Items {...campaignProps} />,
         loader: campaignLoader,
-    },
-    {
-        path: 'campaigns/add',
-        element: <LoggedIn component={<NewCampaign {...campaignProps} />} />,
+      },
+      {
+        path: "add",
+        element: <NewCampaign {...campaignProps} />,
         action: campaignAddAction,
-        loader: campaignAddLoader
-    },
-    {
-        path: 'campaigns/:campaignId',
-        element: <LoggedIn component={<ItemRoute {...campaignProps} />} />,
+        loader: campaignAddLoader,
+      },
+      {
+        path: ":campaignId",
+        element: <ItemRoute {...campaignProps} />,
         loader: campaignItemLoader,
-        action: campaignSendAction
+        action: campaignSendAction,
       },
       {
-        path: 'campaigns/:campaignId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: campaignDeleteAction
+        path: ":campaignId/delete",
+        element: <FetchError />,
+        action: campaignDeleteAction,
       },
       {
-        path: 'campaigns/:campaignId/edit',
-        element: <LoggedIn component={<EditCampaign {...campaignProps} />} />,
+        path: ":campaignId/edit",
+        element: <EditCampaign {...campaignProps} />,
         loader: campaignEditLoader,
-        action: campaignEditAction
+        action: campaignEditAction,
       },
       {
-        path: 'campaigns/:campaignId/edit/content',
-        element: <LoggedIn component={<EditCampaignContent {...campaignProps} />} />,
+        path: ":campaignId/edit/content",
+        element: <EditCampaignContent {...campaignProps} />,
         loader: campaignEditLoader,
-        action: campaignEditContentAction
+        action: campaignEditContentAction,
       },
+    ],
+  },
 ];
-
 export default campaignRouter;

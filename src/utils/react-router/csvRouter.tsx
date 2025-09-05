@@ -16,33 +16,39 @@ import CSVProps from "../../props/CSVProps";
 import { ItemWithAllProps } from "../../types/fnProps";
 
 const csvRouter: RouteObject[] = [
-    {
-        path: 'CSVs',
-        element: <LoggedIn component={<Items {...CSVProps} />} />,
+  {
+    path: "CSVs",
+    element: <LoggedIn />, // guard wrapper
+    children: [
+      {
+        index: true, // matches "/CSVs"
+        element: <Items {...CSVProps} />,
         loader: csvLoader,
-    },
-    {
-        path: 'CSVs/add',
-        element: <LoggedIn component={<AddItem {...CSVProps as ItemWithAllProps} />} />,
+      },
+      {
+        path: "add",
+        element: <AddItem {...(CSVProps as ItemWithAllProps)} />,
         action: CSVAddAction,
-        loader: subscriberLoader
-    },
-    {
-        path: 'CSVs/:CSVId',
-        element: <LoggedIn component={<ItemRoute {...CSVProps} />} />,
+        loader: subscriberLoader,
+      },
+      {
+        path: ":CSVId",
+        element: <ItemRoute {...CSVProps} />,
         loader: csvItemLoader,
       },
       {
-        path: 'CSVs/:CSVId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: CSVDeleteAction
+        path: ":CSVId/delete",
+        element: <FetchError />,
+        action: CSVDeleteAction,
       },
       {
-        path: 'CSVs/:CSVId/edit',
-        element: <LoggedIn component={<EditCSV {...CSVProps} />} />,
+        path: ":CSVId/edit",
+        element: <EditCSV {...CSVProps} />,
         loader: csvEditItemLoader,
-        action: CSVAddAction
+        action: CSVAddAction,
       },
+    ],
+  },
 ];
 
 export default csvRouter;

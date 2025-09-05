@@ -14,32 +14,38 @@ import photoDeleteAction from "../../actions/photo/photoDeleteAction";
 import photoEditAction from "../../actions/photo/photoEditAction";
 
 const photoRouter: RouteObject[] = [
-    {
-        path: 'photos',
-        element: <LoggedIn component={<Items {...photoProps} />} />,
+  {
+    path: "photos",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/photos"
+        element: <Items {...photoProps} />,
         loader: photoLoader,
       },
       {
-        path: 'photos/add',
-        element: <LoggedIn component={<AddItem {...photoProps as ItemWithAllProps} />} />,
+        path: "add",
+        element: <AddItem {...(photoProps as ItemWithAllProps)} />,
         action: photoAddAction,
       },
       {
-        path: 'photos/:photoId',
-        element: <LoggedIn component={<ItemRoute {...photoProps} />} />,
-        loader: photoItemLoader
-      },
-      {
-        path: 'photos/:photoId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: photoDeleteAction
-      },
-      {
-        path: 'photos/:photoId/edit',
-        element: <LoggedIn component={<EditItem {...photoProps as ItemWithAllProps} />} />,
+        path: ":photoId",
+        element: <ItemRoute {...photoProps} />,
         loader: photoItemLoader,
-        action: photoEditAction
       },
+      {
+        path: ":photoId/delete",
+        element: <FetchError />,
+        action: photoDeleteAction,
+      },
+      {
+        path: ":photoId/edit",
+        element: <EditItem {...(photoProps as ItemWithAllProps)} />,
+        loader: photoItemLoader,
+        action: photoEditAction,
+      },
+    ],
+  },
 ];
 
 export default photoRouter;

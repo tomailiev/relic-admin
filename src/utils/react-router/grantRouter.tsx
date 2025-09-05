@@ -14,32 +14,38 @@ import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
 
 const grantRouter: RouteObject[] = [
-    {
-        path: 'grants',
-        element: <LoggedIn component={<Items {...grantProps} />} />,
-        loader: grantLoader
+  {
+    path: "grants",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/grants"
+        element: <Items {...grantProps} />,
+        loader: grantLoader,
       },
       {
-        path: 'grants/add',
-        element: <LoggedIn component={<AddItem {...grantProps as ItemWithAllProps} />} />,
-        action: grantAddAction
+        path: "add",
+        element: <AddItem {...(grantProps as ItemWithAllProps)} />,
+        action: grantAddAction,
       },
       {
-        path: 'grants/:grantId',
-        element: <LoggedIn component={<ItemRoute {...grantProps} />} />,
+        path: ":grantId",
+        element: <ItemRoute {...grantProps} />,
         loader: grantItemLoader,
       },
       {
-        path: 'grants/:grantId/delete',
-        element: <LoggedIn component={<FetchError />} />,
-        action: grantDeleteAction
+        path: ":grantId/delete",
+        element: <FetchError />,
+        action: grantDeleteAction,
       },
       {
-        path: 'grants/:grantId/edit',
-        element: <LoggedIn component={<EditItem {...grantProps as ItemWithAllProps} />} />,
+        path: ":grantId/edit",
+        element: <EditItem {...(grantProps as ItemWithAllProps)} />,
         loader: grantItemLoader,
-        action: grantEditAction
+        action: grantEditAction,
       },
+    ],
+  },
 ];
 
 export default grantRouter;

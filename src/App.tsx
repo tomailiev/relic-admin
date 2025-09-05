@@ -25,9 +25,9 @@ const App = (): ReactElement => {
 
   return (
     <CssBaseline>
-        <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+      <UserContext.Provider value={{ currentUser, setCurrentUser }} >
           <RouterProvider router={router} />
-        </UserContext.Provider>
+      </UserContext.Provider>
     </CssBaseline>
   );
 }

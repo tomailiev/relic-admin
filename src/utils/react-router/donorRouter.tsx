@@ -23,41 +23,47 @@ import { ItemWithAllProps } from "../../types/fnProps";
 
 const donorRouter: RouteObject[] = [
   {
-    path: 'donors',
-    element: <LoggedIn component={<Donors />} />,
-    loader: donorLoader
+    path: "donors",
+    element: <LoggedIn />,
+    children: [
+      {
+        index: true, // matches "/donors"
+        element: <Donors />,
+        loader: donorLoader,
+      },
+      {
+        path: "new-donation",
+        element: <AddDonation />,
+        // action: donationAddAction
+      },
+      {
+        path: "add",
+        element: <AddItem {...(donorProps as ItemWithAllProps)} />,
+        action: donorAddAction,
+      },
+      {
+        path: ":donorId",
+        element: <DonorItemRoute />,
+        loader: donorItemLoader,
+        action: donorThankAction,
+      },
+      {
+        path: ":donorId/delete",
+        element: <FetchError />,
+        action: donorDeleteAction,
+      },
+      {
+        path: ":donorId/edit",
+        element: <EditItem {...(donorProps as ItemWithAllProps)} />,
+        loader: donorItemLoader,
+        action: donorEditAction,
+      },
+      {
+        path: "text",
+        loader: donorTextLoader,
+      },
+    ],
   },
-  {
-    path: 'donors/new-donation',
-    element: <LoggedIn component={<AddDonation />} />,
-    // action: donationAddAction
-  },
-  {
-    path: 'donors/add',
-    element: <LoggedIn component={<AddItem {...donorProps as ItemWithAllProps} />} />,
-    action: donorAddAction
-  },
-  {
-    path: 'donors/:donorId',
-    element: <LoggedIn component={<DonorItemRoute />} />,
-    loader: donorItemLoader,
-    action: donorThankAction
-  },
-  {
-    path: 'donors/:donorId/delete',
-    element: <LoggedIn component={<FetchError />} />,
-    action: donorDeleteAction
-  },
-  {
-    path: 'donors/:donorId/edit',
-    element: <LoggedIn component={<EditItem {...donorProps as ItemWithAllProps} />} />,
-    loader: donorItemLoader,
-    action: donorEditAction
-  },
-  {
-    path: 'donors/text',
-    loader: donorTextLoader
-  }
 ];
 
 export default donorRouter;

@@ -45,7 +45,7 @@ const campaignFields = {
 const campaignsFA = [
     { label: 'Subject', id: 'subject', },
     {
-        label: 'To', id: 'to', type: 'select', options: [{ value: 'All subscribers' }, { type: 'label', value: 'Donor Tiers' }, { value: 'Zeus & Hera $10,000+' }, { value: 'Apollo $5000+' }, { value: 'Athena $2500+' }, { value: 'Hermes $1000+' }, { value: 'Artemis $500+' }, { value: 'Dionysus $200+' }, { value: 'Muse $50+' }, { type: 'label', value: 'Custom Lists' }
+        label: 'To', id: 'to', type: 'select', options: [{ value: 'All subscribers' }, { type: 'label', value: 'Donor Tiers' }, { value: 'Zeus & Hera $10,000+' }, { value: 'Apollo $5000+' }, { value: 'Hermes $1000+' }, { value: 'Artemis $500+' }, { value: 'Dionysus $250+' }, { value: 'Muse $0+' }, { type: 'label', value: 'Custom Lists' }
         ]
     },
     {
