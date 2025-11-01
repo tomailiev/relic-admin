@@ -4,54 +4,66 @@ import AddForm from "../Forms/AddForm";
 import { donationAcknowledgementSchema } from "../../utils/yup/yup-schemas";
 import { donationAcknowledgementProps } from "../../props/donationAcknowledgementProps";
 import { CommonDialog, DonationInfo } from "../../types/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo | null, handleSend: (data: object) => void }) => {
-    const [draftContent, setDraftContent] = useState((donationInfo?.tier && ['Dionysus $250+', 'Artemis $500+', 'Hermes $1000+', 'Apollo $5000+',].includes(donationInfo?.tier)) ? donationInfo?.tier : 'generic');
+
+    const [draftContent, setDraftContent] = useState('generic');
     const [shouldUpdate, setShouldUpdate] = useState(false);
+    const [content, setContent] = useState('');
 
     const fields = {
         email: donationInfo?.email,
         from: 'toma@relicensemble.org',
         subject: donationInfo?.subject,
-        content: getThankYouContent(draftContent || '')
+        // content: getThankYouContent(draftContent)
     };
 
-    function getThankYouContent(tier: string) {
-        switch (tier) {
-            case 'Dionysus $250+':
-                return donationInfo?.content['Dionysus']
-                    .replaceAll('\\n', '\n')
-                    .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
-                    .replaceAll('{amount}', donationInfo?.amount.toString() || '')
-                    .replaceAll('{email}', donationInfo?.email || '');
-            case 'Artemis $500+':
-                return donationInfo?.content['Artemis']
-                    .replaceAll('\\n', '\n')
-                    .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
-                    .replaceAll('{amount}', donationInfo?.amount.toString() || '')
-                    .replaceAll('{email}', donationInfo?.email || '');
-            case 'Hermes $1000+':
-                return donationInfo?.content['Hermes']
-                    .replaceAll('\\n', '\n')
-                    .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
-                    .replaceAll('{amount}', donationInfo?.amount.toString() || '')
-                    .replaceAll('{email}', donationInfo?.email || '');
-            case 'Apollo $5000+':
-                return donationInfo?.content['Apollo']
-                    .replaceAll('\\n', '\n')
-                    .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
-                    .replaceAll('{amount}', donationInfo?.amount.toString() || '')
-                    .replaceAll('{email}', donationInfo?.email || '');
-            default:
-                return donationInfo?.content['generic']
-                    .replaceAll('\\n', '\n')
-                    .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
-                    .replaceAll('{amount}', donationInfo?.amount.toString() || '')
-                    .replaceAll('{email}', donationInfo?.email || '');
+    useEffect(() => {
+        if (donationInfo && donationInfo.tier) {
+            setDraftContent(['Dionysus $250+', 'Artemis $500+', 'Hermes $1000+', 'Apollo $5000+',].includes(donationInfo.tier) ? donationInfo.tier : 'generic');
         }
-    }
+    }, [donationInfo]);
+
+    useEffect(() => {
+        function getThankYouContent(tier: string) {
+            switch (tier) {
+                case 'Dionysus $250+':
+                    return donationInfo?.content['Dionysus']
+                        .replaceAll('\\n', '\n')
+                        .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
+                        .replaceAll('{amount}', donationInfo?.amount.toString() || '')
+                        .replaceAll('{email}', donationInfo?.email || '');
+                case 'Artemis $500+':
+                    return donationInfo?.content['Artemis']
+                        .replaceAll('\\n', '\n')
+                        .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
+                        .replaceAll('{amount}', donationInfo?.amount.toString() || '')
+                        .replaceAll('{email}', donationInfo?.email || '');
+                case 'Hermes $1000+':
+                    return donationInfo?.content['Hermes']
+                        .replaceAll('\\n', '\n')
+                        .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
+                        .replaceAll('{amount}', donationInfo?.amount.toString() || '')
+                        .replaceAll('{email}', donationInfo?.email || '');
+                case 'Apollo $5000+':
+                    return donationInfo?.content['Apollo']
+                        .replaceAll('\\n', '\n')
+                        .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
+                        .replaceAll('{amount}', donationInfo?.amount.toString() || '')
+                        .replaceAll('{email}', donationInfo?.email || '');
+                default:
+                    return donationInfo?.content['generic']
+                        .replaceAll('\\n', '\n')
+                        .replaceAll('{recognitionName}', donationInfo?.recognitionName || '')
+                        .replaceAll('{amount}', donationInfo?.amount.toString() || '')
+                        .replaceAll('{email}', donationInfo?.email || '');
+            }
+        }
+        setContent(getThankYouContent(draftContent) || '');
+    }, [draftContent, donationInfo]);
+
 
     function handleDraftSelectChange(e: SelectChangeEvent<string>) {
         setShouldUpdate(true);
@@ -94,7 +106,7 @@ const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog 
                                 })
                             }
                         </Select>
-                        {!shouldUpdate && <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={{ ...fields, content: getThankYouContent(draftContent || '') }} />}
+                        {!shouldUpdate && <AddForm fieldsArray={donationAcknowledgementProps.fieldsArray} handleFormCompletion={handleSend} schema={donationAcknowledgementSchema} fields={{ ...fields, content }} />}
                     </>}
             </DialogContent>
             <DialogActions>
