@@ -13,7 +13,8 @@ export interface DonationInfo {
     index: number;
     email: string;
     subject: string;
-    content: string;
+    content: { [key: string]: string; };
+    tier: string;
     recognitionName: string;
     amount: number;
     acknowledged?: {

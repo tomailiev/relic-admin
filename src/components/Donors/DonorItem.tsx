@@ -90,6 +90,7 @@ const DonorItem = ({ item }: DonorItemProps) => {
         setDonationInfo({
             ...item.donations[i],
             email: item.email,
+            tier: getTier(reduceDonations(item.donations)),
             index: i,
             recognitionName,
             content: fetcher.data?.content,
