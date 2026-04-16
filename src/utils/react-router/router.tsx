@@ -22,6 +22,7 @@ import subscriberRouter from './subscriberRouter';
 import campaignRouter from './campaignRouter';
 import listRouter from './listRouter';
 import photoRouter from './photoRouter';
+import logRouter from './logRouter';
 
 const routes: RouteObject[] = [
   {
@@ -73,7 +74,8 @@ const routes: RouteObject[] = [
       ...subscriberRouter,
       ...campaignRouter,
       ...listRouter,
-      ...photoRouter
+      ...photoRouter,
+      ...logRouter
     ]
   }
 ]
