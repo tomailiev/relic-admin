@@ -2,16 +2,19 @@ import { GridCsvExportMenuItem, GridToolbarColumnsButton, GridToolbarContainer, 
 import DocxExportMenuItem from "./DocxExportMenuItem";
 import TxtExportMenuItem from "./TxtExportMenuItem";
 import { useLocation } from "react-router-dom";
+import { auth } from "../../utils/firebase/firebase-init";
 
 const CustomGridToolbar = () => {
     const location = useLocation();
+    const userEmail = auth.currentUser?.email;
+    console.log(location.pathname);
     
     return (
         <GridToolbarContainer>
             <GridToolbarColumnsButton />
             <GridToolbarFilterButton />
             <GridToolbarExportContainer>
-                <GridCsvExportMenuItem options={{fileName: `Relic${location.pathname}_${new Date().toISOString()}`}} />
+                <GridCsvExportMenuItem options={{fileName: location.pathname === '/logs' ? `${userEmail}_logs_${new Date().toLocaleDateString()}` : `Relic${location.pathname}_${new Date().toISOString()}`}} />
                 <DocxExportMenuItem />
                 <TxtExportMenuItem />
             </GridToolbarExportContainer>

@@ -314,6 +314,12 @@ const listSchema = object({
     name: string().required()
 });
 
+const logSchema = object({
+    date: string().required(),
+    hours: number().required(),
+    category: string().required()
+})
+
 export {
     eventSchema,
     musicianSchema,
@@ -341,5 +347,6 @@ export {
     listSchema,
     publicFileSchema,
     photoSchema,
-    photoFileSchema
+    photoFileSchema,
+    logSchema
 };

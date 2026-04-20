@@ -218,6 +218,12 @@ export interface CSVItem {
     id: string;
 }
 
+export interface Log {
+    date: string,
+    hours: number,
+    category: string
+}
+
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
@@ -236,7 +242,8 @@ export type ItemTypeMap = {
     'CSVItems': CSVItem
     'texts': Text,
     'textContent': Text,
-    'photos': Photo
+    'photos': Photo,
+    'logs': Log
 };
 
 export type DeschematifiedItemTypeMap = {

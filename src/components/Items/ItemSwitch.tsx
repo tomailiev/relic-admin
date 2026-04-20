@@ -12,6 +12,7 @@ import { ItemTypeMap } from "../../types/DB";
 import { Dispatch, SetStateAction } from "react";
 import hasProperty from "../../vars/hasProperty";
 import PhotoItem from "../Photos/PhotoItem";
+import LogItem from "../Logs/LogItem";
 
 
 const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, setEditable }: { itemType: T; item: ItemTypeMap[T] | null; setEditable?: Dispatch<SetStateAction<boolean>>, mutateItem?: Dispatch<SetStateAction<object | null>> }) => {
@@ -27,7 +28,8 @@ const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, s
         subscribers: <SubscriberItem item={item as ItemTypeMap['deschematifiedSubscribers']} />,
         campaigns: setEditable && <CampaignItem item={item as ItemTypeMap['campaigns']} setEditable={setEditable} />,
         lists: <EmailListItem item={item as ItemTypeMap['listsWithNewMembers']} />,
-        photos: <PhotoItem item={item as ItemTypeMap['photos']} />
+        photos: <PhotoItem item={item as ItemTypeMap['photos']} />,
+        logs: <LogItem item={item as ItemTypeMap['logs']} />
     }
     return hasProperty(itemComponents, itemType) && itemComponents[itemType];
 };
