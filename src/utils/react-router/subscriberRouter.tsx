@@ -15,6 +15,9 @@ import subscriberImportDonorsAction from "../../actions/subscriber/subscriberImp
 import subscriberDonorLoader from "../../loaders/subscriberDonorLoader";
 import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
+import ImportOperation from "../../components/Subscribers/ImportOperation";
+import operationsLoader from "../../loaders/operationLoader";
+import subscriberImportOperationAction from "../../actions/subscriber/subscriberImportOperationAction";
 
 const subscriberRouter: RouteObject[] = [
   {
@@ -53,6 +56,12 @@ const subscriberRouter: RouteObject[] = [
         loader: subscriberDonorLoader,
         action: subscriberImportDonorsAction,
       },
+      {
+        path: "import-operation",
+        element: <ImportOperation />,
+        loader: operationsLoader,
+        action: subscriberImportOperationAction
+      }
     ],
   },
 ];
