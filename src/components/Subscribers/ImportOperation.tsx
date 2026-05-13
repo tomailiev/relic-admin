@@ -1,16 +1,28 @@
 import { Avatar, Box, Button, Container, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useLoaderData, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import { Operation } from "../../types/DB";
+import { useContext, useEffect } from "react";
+import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 
 const ImportOperation = () => {
 
+    const { setError } = useContext(ErrorContext);
+
     const submit = useSubmit();
     const operations = useLoaderData() as Operation[];
+    const actionData = useActionData() as AppErrorType;
+
+    useEffect(() => {
+        if (actionData) {
+            setError(actionData);
+        }
+    }, [actionData, setError]);
+
 
     function handleSubmit(row: Operation) {
         console.log(row.eventbriteId);
-        
+
         submit({ eventbriteId: row.eventbriteId }, { encType: 'application/json', method: 'post' });
     }
 
