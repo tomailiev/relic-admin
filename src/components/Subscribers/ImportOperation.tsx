@@ -36,7 +36,7 @@ const ImportOperation = () => {
             }
         },
         { field: 'title', headerName: 'Title', flex: 2 },
-        { field: 'eventDate', headerName: 'Date', flex: 2, valueGetter: ({ row }) => new Date(row.eventDate).toLocaleString() },
+        { field: 'eventDate', headerName: 'Date', flex: 2, valueFormatter: ({value}) => new Date(value).toLocaleString() },
         {
             field: 'venueName',
             headerName: 'Venue',
