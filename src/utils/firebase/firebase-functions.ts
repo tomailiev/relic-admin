@@ -4,7 +4,7 @@ import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
 import { ItemTypeMap } from "../../types/DB";
 
-function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {    
+function uploadDoc(data: object, col: string, id?: string, merge?: boolean) {
     return id
         ? setDoc(doc(db, col, id), data, { merge })
         : addDoc(collection(db, col), data)
@@ -55,9 +55,9 @@ interface LimitOption {
 
 
 function downloadDocsV2<K extends keyof ItemTypeMap>(
-    col: K, 
+    col: K,
     options?: (ConditionOption | SortingOption | LimitOption)[]
-): Promise<ItemTypeMap[K][] | null> 
+): Promise<ItemTypeMap[K][] | null>
 
 function downloadDocsV2(col: string, options?: (ConditionOption | SortingOption | LimitOption)[]) {
     const queryConditions = options?.map(c => (
@@ -136,7 +136,7 @@ const verifyOrReset = httpsCallable(functions, 'verifyOrResetV2');
 const getMjml = httpsCallable(functions, 'getMjmlV2');
 const sendCampaign = httpsCallable(functions, process.env.NODE_ENV === 'development' ? 'sendMockCampaignV2' : 'sendCampaignV2');
 const acknowledgeDonor = httpsCallable(functions, process.env.NODE_ENV === 'development' ? 'acknowledgeMockDonor' : 'acknowledgeDonor');
-
+const subscribeEventAttendees = httpsCallable(functions, 'subscribeEventAttendees');
 // function analyze(eventType, eventParams) {
 //     logEvent(analytics, eventType, eventParams);
 // }
@@ -160,5 +160,6 @@ export {
     verifyOrReset,
     getMjml,
     sendCampaign,
-    acknowledgeDonor
+    acknowledgeDonor,
+    subscribeEventAttendees
 };

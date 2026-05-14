@@ -224,6 +224,17 @@ export interface Log {
     category: string
 }
 
+export interface Operation {
+    avatar: string,
+    eventDate: string,
+    eventUrl: string,
+    eventbriteId: string,
+    ticketRevenue: number,
+    title: string,
+    venueAddress: string,
+    venueName: string
+}
+
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
@@ -243,7 +254,8 @@ export type ItemTypeMap = {
     'texts': Text,
     'textContent': Text,
     'photos': Photo,
-    'logs': Log
+    'logs': Log,
+    'operations': Operation
 };
 
 export type DeschematifiedItemTypeMap = {
