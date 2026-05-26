@@ -1,14 +1,14 @@
-import { AppBar, Box, Drawer, IconButton, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
+import { AppBar, Avatar, Box, Drawer, IconButton, LinearProgress, List, ListItem, ListItemIcon, ListItemText, Toolbar } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
 import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
-import { NavLink, useNavigation, useSubmit } from "react-router-dom";
+import { Link, NavLink, useNavigation, useSubmit } from "react-router-dom";
 
 const Header = ({ handler }: { handler: () => void }) => {
 
-    const { currentUser } = useContext(UserContext);
+    const { currentUser, profile } = useContext(UserContext);
     const navigation = useNavigation();
     const submit = useSubmit();
     const [open, setOpen] = useState(false);
@@ -47,7 +47,11 @@ const Header = ({ handler }: { handler: () => void }) => {
                 </IconButton>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <IconButton onClick={handleClick}>
-                    <AccountCircleIcon fontSize="large" />
+                    {
+                        profile?.avatar
+                            ? <Avatar src={profile.avatar} />
+                            : <AccountCircleIcon fontSize="large" />
+                    }
                 </IconButton>
                 <Drawer
                     anchor={'right'}
@@ -55,14 +59,22 @@ const Header = ({ handler }: { handler: () => void }) => {
                     onClose={handleClose}
                 >
                     <List>
-                        {currentUser && <ListItem onClick={handleClick}>
-                            <ListItemIcon>
-                                <Email />
-                            </ListItemIcon>
-                            <ListItemText>
-                                {currentUser.email}
-                            </ListItemText>
-                        </ListItem>}
+                        {currentUser &&
+                            <Link to={'/user'}>
+                                <ListItem onClick={handleClick}>
+                                    <ListItemIcon>
+                                        {
+                                            profile?.avatar
+                                                ? <Avatar src={profile.avatar} />
+                                                : <Email />
+                                        }
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        {profile?.displayName || currentUser.email}
+                                    </ListItemText>
+                                </ListItem>
+                            </Link>
+                        }
                         {currentUser && <ListItem onClick={logout} sx={{ cursor: 'pointer', textDecoration: 'underline', color: '-webkit-link' }}>
                             <ListItemIcon>
                                 <Logout />

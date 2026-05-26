@@ -235,6 +235,12 @@ export interface Operation {
     venueName: string
 }
 
+export interface UserData {
+    avatar: string,
+    displayName: string,
+    role: string
+}
+
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
@@ -255,7 +261,8 @@ export type ItemTypeMap = {
     'textContent': Text,
     'photos': Photo,
     'logs': Log,
-    'operations': Operation
+    'operations': Operation,
+    'users': UserData
 };
 
 export type DeschematifiedItemTypeMap = {
