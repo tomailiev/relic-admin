@@ -7,7 +7,6 @@ import { auth } from "../../utils/firebase/firebase-init";
 const CustomGridToolbar = () => {
     const location = useLocation();
     const userEmail = auth.currentUser?.email;
-    console.log(location.pathname);
     
     return (
         <GridToolbarContainer>

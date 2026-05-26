@@ -11,7 +11,7 @@ import Link from '@tiptap/extension-link'
 import Color from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { Box } from '@mui/material'
-import { CustomKeymap } from '../../utils/tiptap/customKeyMap'
+// import { CustomKeymap } from '../../utils/tiptap/customKeyMap'
 
 // define your extension array
 const extensions = [
@@ -38,7 +38,7 @@ const extensions = [
         class: 'hard-break',
       },
     }),
-    CustomKeymap,
+    // CustomKeymap,
 ]
 
 const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: string, onChange: (e: SimulatedEvent) => void }) => {
