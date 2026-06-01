@@ -241,6 +241,20 @@ export interface UserData {
     role: string
 }
 
+export interface Status {
+    entry: string,
+    datetime: Timestamp,
+    author: string
+}
+
+export interface Task {
+    name: string,
+    description: string,
+    deadline?: string,
+    reminder?: string,
+    status: Status[]
+}
+
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
 
 export type ItemTypeMap = {
@@ -262,7 +276,8 @@ export type ItemTypeMap = {
     'photos': Photo,
     'logs': Log,
     'operations': Operation,
-    'users': UserData
+    'users': UserData,
+    'tasks': Task
 };
 
 export type DeschematifiedItemTypeMap = {

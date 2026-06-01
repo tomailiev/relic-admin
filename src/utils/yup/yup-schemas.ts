@@ -97,6 +97,7 @@ const emailSchema = object({
 
 const newUserSchema = object({
     email: string().required().email(),
+    displayName: string().required(),
     password: string().required('Password is required').min(6, 'Password must be at least 6 characters long'),
     passwordConfirmation: string().oneOf([ref('password'), undefined], 'Passwords must match')
 });

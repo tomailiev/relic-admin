@@ -10,12 +10,14 @@ const loginFA = [
 
 const registerFields = {
     email: '',
+    displayName: '',
     password: '',
     passwordConfirmation: ''
 };
 
 const registerFA = [
     { label: 'Email', id: 'email' },
+    { label: 'Name', id: 'displayName' },
     { label: 'Password', id: 'password', type: 'password' },
     { label: 'Password Confirmation', id: 'passwordConfirmation', type: 'password' }
 ];

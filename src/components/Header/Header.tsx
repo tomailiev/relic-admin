@@ -2,7 +2,7 @@ import { AppBar, Avatar, Box, Drawer, IconButton, LinearProgress, List, ListItem
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useContext, useState } from "react";
-import { Email, Login, Logout, ExitToApp } from "@mui/icons-material";
+import { Login, Logout, ExitToApp } from "@mui/icons-material";
 import UserContext from "../../context/UserContext";
 import { Link, NavLink, useNavigation, useSubmit } from "react-router-dom";
 
@@ -63,14 +63,10 @@ const Header = ({ handler }: { handler: () => void }) => {
                             <Link to={'/user'}>
                                 <ListItem onClick={handleClick}>
                                     <ListItemIcon>
-                                        {
-                                            profile?.avatar
-                                                ? <Avatar src={profile.avatar} />
-                                                : <Email />
-                                        }
+                                        <AccountCircleIcon />
                                     </ListItemIcon>
                                     <ListItemText>
-                                        {profile?.displayName || currentUser.email}
+                                        Profile
                                     </ListItemText>
                                 </ListItem>
                             </Link>

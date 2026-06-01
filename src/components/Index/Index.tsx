@@ -18,11 +18,13 @@ const HomeAlert = () => {
 
 const Index = () => {
 
+    const {profile} = useContext(UserContext);
+
     return (
         <>
             <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
-                    Welcome to Relic admin
+                    Welcome, {profile?.displayName || 'User'}
                 </Typography>
                 <HomeAlert />
                 {/* <Container maxWidth="sm">
