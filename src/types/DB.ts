@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore"
-import { ListWithNewMembers } from "./itemProps"
+import { ListWithNewMembers, TaskWithNewUsers } from "./itemProps"
 import { AnyMJMLComponent } from "./campaignComponents"
 
 export interface WithId {
@@ -280,7 +280,8 @@ export type ItemTypeMap = {
     'logs': Log,
     'operations': Operation,
     'users': UserData,
-    'tasks': Task
+    'tasks': Task,
+    'tasksWithNewUsers': TaskWithNewUsers
 };
 
 export type DeschematifiedItemTypeMap = {

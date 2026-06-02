@@ -40,7 +40,7 @@ const DrawerContent = () => {
     ]
     return (
         <>
-            <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'center', height: '64px' }}>
                 <NavLink to={'/'} >
                     <IconButton onClick={() => setMobileOpen(false)}>
                         {/* <HomeIcon fontSize="large" /> */}

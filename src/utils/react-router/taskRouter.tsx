@@ -14,6 +14,7 @@ import logDeleteAction from "../../actions/log/logDeleteAction";
 import logEditAction from "../../actions/log/logEditAction";
 import taskProps from "../../props/taskProps";
 import taskLoader from "../../loaders/taskLoader";
+import taskItemLoader from "../../loaders/taskItemLoader";
 
 const taskRouter: RouteObject[] = [
   {
@@ -30,11 +31,11 @@ const taskRouter: RouteObject[] = [
     //     element: <AddItem {...(logProps as ItemWithAllProps)} />,
     //     action: logAddAction,
     //   },
-    //   {
-    //     path: ":logId",
-    //     element: <ItemRoute {...logProps} />,
-    //     loader: logItemLoader,
-    //   },
+      {
+        path: ":taskId",
+        element: <ItemRoute {...taskProps} />,
+        loader: taskItemLoader,
+      },
     //   {
     //     path: ":logId/delete",
     //     element: <FetchError />,

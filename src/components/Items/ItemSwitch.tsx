@@ -13,6 +13,7 @@ import { Dispatch, SetStateAction } from "react";
 import hasProperty from "../../vars/hasProperty";
 import PhotoItem from "../Photos/PhotoItem";
 import LogItem from "../Logs/LogItem";
+import TaskItem from "../Tasks/TaskItem";
 
 
 const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, setEditable }: { itemType: T; item: ItemTypeMap[T] | null; setEditable?: Dispatch<SetStateAction<boolean>>, mutateItem?: Dispatch<SetStateAction<object | null>> }) => {
@@ -29,7 +30,8 @@ const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, s
         campaigns: setEditable && <CampaignItem item={item as ItemTypeMap['campaigns']} setEditable={setEditable} />,
         lists: <EmailListItem item={item as ItemTypeMap['listsWithNewMembers']} />,
         photos: <PhotoItem item={item as ItemTypeMap['photos']} />,
-        logs: <LogItem item={item as ItemTypeMap['logs']} />
+        logs: <LogItem item={item as ItemTypeMap['logs']} />,
+        tasks: <TaskItem item={item as ItemTypeMap['tasksWithNewUsers']} />
     }
     return hasProperty(itemComponents, itemType) && itemComponents[itemType];
 };

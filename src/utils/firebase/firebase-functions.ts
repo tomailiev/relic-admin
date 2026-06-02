@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit, WhereFilterOp, OrderByDirection } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit, WhereFilterOp, OrderByDirection, FieldPath } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
@@ -40,7 +40,7 @@ function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string, bucket 
 
 interface ConditionOption {
     type: 'condition',
-    value: [string, WhereFilterOp, unknown]
+    value: [string | FieldPath, WhereFilterOp, unknown]
 };
 
 interface SortingOption {

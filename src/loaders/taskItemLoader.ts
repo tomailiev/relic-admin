@@ -1,6 +1,7 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { Task } from "../types/DB";
 import { downloadDocsV2, downloadOneDoc } from "../utils/firebase/firebase-functions";
+import { documentId } from "firebase/firestore";
 
 export default async function taskItemLoader({ params }: LoaderFunctionArgs) {
     const docId = params.taskId
@@ -8,7 +9,7 @@ export default async function taskItemLoader({ params }: LoaderFunctionArgs) {
         return { error: true, severity: 'error', message: 'No ID' };
     }
     const item: Task = await downloadOneDoc('tasks', docId);
-    const users = await downloadDocsV2('users', [{ type: 'condition', value: ['lists', 'array-contains', params.taskId] }]) || []
+    const users = await downloadDocsV2('users', [{ type: 'condition', value: [documentId(), 'in', item.users] }]) || []
 
     return { ...item, newUsers: users };
 }
