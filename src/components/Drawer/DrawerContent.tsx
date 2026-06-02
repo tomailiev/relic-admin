@@ -1,11 +1,12 @@
-import { Divider, IconButton, List, Toolbar } from "@mui/material";
+import { Box, Divider, IconButton, List, Toolbar } from "@mui/material";
 import ExpandableLI from "./ExpandableLI";
-import HomeIcon from '@mui/icons-material/Home';
+// import HomeIcon from '@mui/icons-material/Home';
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, Filter, Image, AccessTime, AccessTimeFilled, Work, } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, Filter, Image, AccessTime, AccessTimeFilled, Work, TaskOutlined, Task, } from '@mui/icons-material';
 import { MenuType } from "../../types/menu";
+import homeIcon from "../../assets/admin_icon_512.png"
 // import StorageIcon from '@mui/icons-material/Storage';
 
 
@@ -34,14 +35,18 @@ const DrawerContent = () => {
     ]
 
     const workflowMenu: MenuType[] = [
-        {title: 'Logs', path: 'logs', iconActive: <AccessTime />, iconInactive: <AccessTimeFilled />}
+        { title: 'Logs', path: 'logs', iconActive: <AccessTime />, iconInactive: <AccessTimeFilled /> },
+        { title: 'Tasks', path: 'tasks', iconActive: <TaskOutlined />, iconInactive: <Task /> }
     ]
     return (
         <>
             <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
-                <NavLink to={'/'}>
+                <NavLink to={'/'} >
                     <IconButton onClick={() => setMobileOpen(false)}>
-                        <HomeIcon fontSize="large" />
+                        {/* <HomeIcon fontSize="large" /> */}
+                        <Box overflow={'hidden'} height={'60px'} width={'60px'} display={'flex'} flexDirection={'column'} justifyContent={'center'}>
+                            <img src={homeIcon} alt="home icon" aria-label="home" width={'100%'} height={'auto'} />
+                        </Box>
                     </IconButton>
                 </NavLink>
             </Toolbar>
