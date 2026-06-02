@@ -24,6 +24,7 @@ import listRouter from './listRouter';
 import photoRouter from './photoRouter';
 import logRouter from './logRouter';
 import userRouter from './userRouter';
+import taskRouter from './taskRouter';
 
 const routes: RouteObject[] = [
   {
@@ -77,7 +78,8 @@ const routes: RouteObject[] = [
       ...listRouter,
       ...photoRouter,
       ...logRouter,
-      ...userRouter
+      ...userRouter,
+      ...taskRouter
     ]
   }
 ]

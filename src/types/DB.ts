@@ -221,7 +221,8 @@ export interface CSVItem {
 export interface Log {
     date: string,
     hours: number,
-    category: string
+    category: string,
+    id?: string
 }
 
 export interface Operation {
@@ -252,10 +253,12 @@ export interface Task {
     description: string,
     deadline?: string,
     reminder?: string,
-    status: Status[]
+    status: Status[],
+    id?: string,
+    users: string[]
 }
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task;
 
 export type ItemTypeMap = {
     'videos': Video;
