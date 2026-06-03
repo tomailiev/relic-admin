@@ -244,7 +244,7 @@ export interface UserData {
 
 export interface Status {
     entry: string,
-    datetime: Timestamp,
+    datetime: Timestamp | { nanoseconds: number, seconds: number },
     author: string
 }
 

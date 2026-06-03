@@ -1,20 +1,18 @@
 import FetchError from "../../components/Common/FetchError";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
-import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
 import { RouteObject } from "react-router-dom";
 import { ItemWithAllProps } from "../../types/fnProps";
-import logProps from "../../props/logProps";
-import logLoader from "../../loaders/logLoader";
-import logAddAction from "../../actions/log/logAddAction";
-import logItemLoader from "../../loaders/logItemLoader";
-import logDeleteAction from "../../actions/log/logDeleteAction";
-import logEditAction from "../../actions/log/logEditAction";
 import taskProps from "../../props/taskProps";
 import taskLoader from "../../loaders/taskLoader";
 import taskItemLoader from "../../loaders/taskItemLoader";
+import taskStatusUpdateAction from "../../actions/task/taskStatusUpdateAction";
+import taskAddAction from "../../actions/task/taskAddAction";
+import taskSourceLoader from "../../loaders/taskSourceLoader";
+import taskDeleteAction from "../../actions/task/taskDeleteAction";
+import taskEditAction from "../../actions/task/taskEditAction";
 
 const taskRouter: RouteObject[] = [
   {
@@ -26,27 +24,29 @@ const taskRouter: RouteObject[] = [
         element: <Items {...taskProps} />,
         loader: taskLoader,
       },
-    //   {
-    //     path: "add",
-    //     element: <AddItem {...(logProps as ItemWithAllProps)} />,
-    //     action: logAddAction,
-    //   },
+      {
+        path: "add",
+        element: <EditItem {...(taskProps as ItemWithAllProps)} />,
+        action: taskAddAction,
+        loader: taskSourceLoader
+      },
       {
         path: ":taskId",
         element: <ItemRoute {...taskProps} />,
         loader: taskItemLoader,
+        action: taskStatusUpdateAction
       },
-    //   {
-    //     path: ":logId/delete",
-    //     element: <FetchError />,
-    //     action: logDeleteAction,
-    //   },
-    //   {
-    //     path: ":logId/edit",
-    //     element: <EditItem {...(logProps as ItemWithAllProps)} />,
-    //     loader: logItemLoader,
-    //     action: logEditAction,
-    //   },
+      {
+        path: ":taskId/delete",
+        element: <FetchError />,
+        action: taskDeleteAction,
+      },
+      {
+        path: ":taskId/edit",
+        element: <EditItem {...(taskProps as ItemWithAllProps)} />,
+        loader: taskItemLoader,
+        action: taskEditAction,
+      },
     ],
   },
 ];

@@ -319,7 +319,22 @@ const logSchema = object({
     date: string().required(),
     hours: number().required(),
     category: string().required()
-})
+});
+
+const taskSchema = object({
+    name: string().required(),
+    description: string().required(),
+    deadline: string(),
+    reminder: string(),
+});
+
+const taskStatusSchema = array().of(object({
+    entry: string().required()
+}));
+
+const taskStatusUpdateSchema = object({
+    entry: string().required()
+});
 
 export {
     eventSchema,
@@ -349,5 +364,8 @@ export {
     publicFileSchema,
     photoSchema,
     photoFileSchema,
-    logSchema
+    logSchema,
+    taskSchema,
+    taskStatusUpdateSchema,
+    taskStatusSchema
 };

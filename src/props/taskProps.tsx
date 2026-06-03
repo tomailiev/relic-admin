@@ -3,18 +3,24 @@ import { deschematifyEvent } from "../vars/deschematifyEvent";
 import schematifyEvent from "../vars/schematifyEvent";
 import { Link } from "react-router-dom";
 import collections from "../vars/collections";
-import { eventFileSchema, eventSchema, performanceSchema } from "../utils/yup/yup-schemas";
+import { eventFileSchema, eventSchema, performanceSchema, taskSchema, taskStatusSchema, taskStatusUpdateSchema } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
 import { ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
 import musicianProps from "./musicianProps";
 import { Status } from "../types/DB";
+import userProps from "./userProps";
+import { Timestamp } from "firebase/firestore";
 
 const taskColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 2 },
     { field: 'description', headerName: 'Description', flex: 3 },
     {
         field: 'status', headerName: 'Status', flex: 4, valueGetter: (params) => {
-            const latest = params.row.status.sort((entryA: Status, entryB: Status) => entryA.datetime.toDate().getMilliseconds() - entryB.datetime.toDate().getMilliseconds())[0];
+            const latest = params.row.status.sort((entryA: Status, entryB: Status) => {
+                if (entryA.datetime instanceof Timestamp && entryB.datetime instanceof Timestamp) {
+                    return entryB.datetime.toDate().getMilliseconds() - entryA.datetime.toDate().getMilliseconds();
+                }
+        })[0];
             return latest.entry;
         }
     },
@@ -73,7 +79,7 @@ const taskProps: ItemWithFields & ItemWithNestedFields & ItemWithDataColumns = {
     itemType: 'tasks',
     name: 'name',
     columns: taskColumns,
-    sorting: { field: 'season', sort: 'desc' },
+    sorting: { field: 'created', sort: 'desc' },
     pageSize: 10,
     pageSizeOptions: [10, 20, 30],
     fields: taskFields,
@@ -83,7 +89,7 @@ const taskProps: ItemWithFields & ItemWithNestedFields & ItemWithDataColumns = {
     // filesFields: fileFields,
     // filesFieldsArray: fileFA,
     nestedName: 'status',
-    dataFilterColumns: { users: musicianProps.columns },
+    dataFilterColumns: { users: userProps.columns },
     sourceCollectionField: 'source',
     destinationCollectionField: 'users',
     tempDestinationField: 'newUsers',
@@ -91,8 +97,8 @@ const taskProps: ItemWithFields & ItemWithNestedFields & ItemWithDataColumns = {
     // deschematifyFn: deschematifyEvent,
     steps: ['fieldsArray', 'nestedArray', 'dataFilter', 'preview'],
     // filesSchema: eventFileSchema,
-    fieldsArraySchema: eventSchema,
-    nestedArraySchema: performanceSchema
+    fieldsArraySchema: taskSchema,
+    nestedArraySchema: taskStatusSchema
 };
 
 export default taskProps;

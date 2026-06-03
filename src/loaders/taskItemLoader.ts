@@ -10,6 +10,10 @@ export default async function taskItemLoader({ params }: LoaderFunctionArgs) {
     }
     const item: Task = await downloadOneDoc('tasks', docId);
     const users = await downloadDocsV2('users', [{ type: 'condition', value: [documentId(), 'in', item.users] }]) || []
-
-    return { ...item, newUsers: users };
+    const newUsers = item.users?.length
+        ? item.users
+        : null;
+    return newUsers
+        ? { ...item, users, newUsers, source: 'users' }
+        : { ...item, users, source: 'users' };
 }
