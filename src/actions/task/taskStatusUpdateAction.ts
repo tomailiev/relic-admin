@@ -1,7 +1,6 @@
-import { ActionFunctionArgs, redirect } from "react-router-dom";
+import { ActionFunctionArgs } from "react-router-dom";
 import { Timestamp, uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
-import { TaskItemProps, } from "../../types/itemProps";
 import { arrayUnion } from "firebase/firestore";
 
 export default async function taskStatusUpdateAction({ request }: ActionFunctionArgs) {

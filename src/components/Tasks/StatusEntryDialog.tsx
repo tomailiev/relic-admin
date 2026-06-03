@@ -1,10 +1,8 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, MenuItem, Paper, Select, SelectChangeEvent, Typography, } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import AddForm from "../Forms/AddForm";
-import { donationAcknowledgementSchema, taskStatusUpdateSchema } from "../../utils/yup/yup-schemas";
-import { donationAcknowledgementProps } from "../../props/donationAcknowledgementProps";
-import { CommonDialog, DonationInfo } from "../../types/dialog";
-import { useEffect, useState } from "react";
+import { CommonDialog, } from "../../types/dialog";
+import { taskStatusUpdateSchema } from "../../utils/yup/yup-schemas";
 
 
 const StatusEntryDialog = ({ open, setOpen, handleSend, }: CommonDialog & { handleSend: (data: object) => void }) => {

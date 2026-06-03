@@ -28,7 +28,7 @@ export type CampaignItemProps = {
     item: Campaign
 };
 
-export type TaskWithNewUsers = Omit<Task, 'users'> & { newUsers: { avatar: string, displayName: string, id: string, role: string }[] }
+export type TaskWithNewUsers = Task & { newUsers: { avatar: string, displayName: string, id: string, role: string }[], }
 
 export type TaskItemProps = {
     item: TaskWithNewUsers

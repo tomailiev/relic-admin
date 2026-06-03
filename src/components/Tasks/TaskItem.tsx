@@ -101,7 +101,7 @@ const TaskItem = ({ item }: TaskItemProps) => {
                                 <ListItemIcon>
                                     <People />
                                 </ListItemIcon>
-                                <ListItemText primary={item.newUsers.map(u => u.displayName).join(', ')} />
+                                <ListItemText primary={item.users.map(u => u.displayName).join(', ')} />
                             </ListItem>}
                             {item.reminder && <ListItem>
                                 <ListItemIcon>

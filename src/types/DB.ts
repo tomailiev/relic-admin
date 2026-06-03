@@ -255,7 +255,7 @@ export interface Task {
     reminder?: string,
     status: Status[],
     id?: string,
-    users: string[]
+    users: { avatar: string, displayName: string, id: string, role: string }[]
 }
 
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task;

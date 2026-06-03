@@ -1,12 +1,8 @@
-import { Avatar, Button } from "@mui/material";
-import { deschematifyEvent } from "../vars/deschematifyEvent";
-import schematifyEvent from "../vars/schematifyEvent";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import collections from "../vars/collections";
-import { eventFileSchema, eventSchema, performanceSchema, taskSchema, taskStatusSchema, taskStatusUpdateSchema } from "../utils/yup/yup-schemas";
+import { taskSchema, taskStatusSchema, } from "../utils/yup/yup-schemas";
 import { GridColDef } from "@mui/x-data-grid";
-import { ItemWithDataColumns, ItemWithFields, ItemWithFileFields, ItemWithNestedFields } from "../types/fnProps";
-import musicianProps from "./musicianProps";
+import { ItemWithDataColumns, ItemWithFields, ItemWithNestedFields } from "../types/fnProps";
 import { Status } from "../types/DB";
 import userProps from "./userProps";
 import { Timestamp } from "firebase/firestore";
@@ -20,7 +16,8 @@ const taskColumns: GridColDef[] = [
                 if (entryA.datetime instanceof Timestamp && entryB.datetime instanceof Timestamp) {
                     return entryB.datetime.toDate().getMilliseconds() - entryA.datetime.toDate().getMilliseconds();
                 }
-        })[0];
+                return entryB.datetime?.seconds - entryA.datetime?.seconds
+            })[0];
             return latest.entry;
         }
     },
