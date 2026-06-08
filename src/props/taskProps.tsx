@@ -9,7 +9,7 @@ import { Timestamp } from "firebase/firestore";
 
 const taskColumns: GridColDef[] = [
     { field: 'name', headerName: 'Name', flex: 2 },
-    { field: 'description', headerName: 'Description', flex: 3 },
+    { field: 'deadline', headerName: 'Deadline', flex: 3 },
     {
         field: 'status', headerName: 'Status', flex: 4, valueGetter: (params) => {
             const latest = params.row.status.sort((entryA: Status, entryB: Status) => {
@@ -50,7 +50,7 @@ const statusFields = {
 
 const taskFA = [
     { label: 'Name', id: 'name', },
-    { label: 'Description', id: 'description', multiline: true },
+    { label: 'Description', id: 'description', multiline: true, type: 'rich-text' },
     // { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
     { label: 'Deadline', id: 'deadline', type: 'date' },
     { label: 'Reminder', id: 'reminder' },

@@ -5,6 +5,7 @@ import { donationAcknowledgementSchema } from "../../utils/yup/yup-schemas";
 import { donationAcknowledgementProps } from "../../props/donationAcknowledgementProps";
 import { CommonDialog, DonationInfo } from "../../types/dialog";
 import { useEffect, useState } from "react";
+import Tiptap from "../TipTap/Tiptap";
 
 
 const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog & { donationInfo: DonationInfo | null, handleSend: (data: object) => void }) => {
@@ -92,11 +93,12 @@ const ThankDialog = ({ open, setOpen, donationInfo, handleSend, }: CommonDialog 
             <DialogContent>
                 {donationInfo?.acknowledged
                     ? <Paper sx={{ p: 2 }}>
-                        <Typography py={1}>Sent: {donationInfo.acknowledged.sent}</Typography>
-                        <Typography py={1}>From: {donationInfo.acknowledged.from}</Typography>
-                        <Typography py={1}>To: {donationInfo.acknowledged.to}</Typography>
-                        <Typography py={1}>Subject: {donationInfo.acknowledged.subject}</Typography>
-                        <Typography py={1}>Content: {donationInfo.acknowledged.content}</Typography>
+                        <Typography py={1}><b>Sent:</b> {donationInfo.acknowledged.sent}</Typography>
+                        <Typography py={1}><b>From:</b> {donationInfo.acknowledged.from}</Typography>
+                        <Typography py={1}><b>To:</b> {donationInfo.acknowledged.to}</Typography>
+                        <Typography py={1}><b>Subject:</b> {donationInfo.acknowledged.subject}</Typography>
+                        <Typography pt={1} fontWeight={'bold'}>Content:</Typography>
+                        <Tiptap content={donationInfo.acknowledged.content} inputName="Content" readOnly={true} onChange={(e => { })} />
                     </Paper>
                     : <>
                         <Select id="Draft-Select" name={"Draft-Select"} value={draftContent} onChange={handleDraftSelectChange} >

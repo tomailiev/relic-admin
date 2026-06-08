@@ -1,5 +1,5 @@
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Paper, Select, SelectChangeEvent, SelectProps, Stack, TextField, TextFieldProps, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import LoadingContext from "../../context/LoadingContext";
 import { FieldsArrayItem, ItemWithFields } from "../../types/fnProps";
@@ -32,7 +32,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     }, [navigation.state]);
 
 
-    function removeError(_e: FocusEvent<HTMLTextAreaElement | HTMLInputElement, Element>, id: string) {
+    function removeError(id: string) {
 
         setHasError(prev => ({ ...prev, [id]: '' }))
     }
@@ -41,7 +41,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
     function handleInputChange(e: SelectChangeEvent<unknown>): void;
     function handleInputChange(e: SimulatedEvent): void;
     function handleInputChange(e: ChangeEvent<HTMLInputElement> | SelectChangeEvent<unknown> | SimulatedEvent) {
-        
+
         setUserFields(prev => {
             return { ...prev, [e.target.name]: e.target.value }
         })
@@ -76,7 +76,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
                             error: !!(hasProperty(hasError, id) && hasError[id]),
-                            onFocus: (e) => removeError(e, id),
+                            onFocus: (e) => removeError(id),
                             label: label,
                             size: 'small',
                             multiline: multiline,
@@ -90,7 +90,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                             value: (userFields && hasProperty(userFields, id)) ? userFields[id] : '',
                             onChange: handleInputChange,
                             error: !!(hasProperty(hasError, id) && hasError[id]),
-                            onFocus: (e) => removeError(e, id),
+                            onFocus: (e) => removeError(id),
                             label: label,
                             size: 'small',
                             multiline: multiline,
@@ -113,7 +113,11 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
                             : type === 'rich-text'
-                                ? <Tiptap key={id} content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} />
+                                ? <FormControl error={!!(hasProperty(hasError, id) && hasError[id])}>
+                                    <InputLabel shrink>{label}</InputLabel>
+                                    <Tiptap key={id} content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} onFocus={() => removeError(id)} />
+                                    <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
+                                </FormControl>
                                 : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
                     })}
                     <Button

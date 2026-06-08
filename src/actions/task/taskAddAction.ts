@@ -10,7 +10,7 @@ export default async function taskAddAction({ request, params }: ActionFunctionA
 
     try {
         const updates: TaskWithNewUsers = await request.json();
-        const { newUsers: _, status: __, ...rest } = updates;
+        const { newUsers: _, status: __, source: ___, ...rest } = updates;
         const userId = auth.currentUser?.uid || '';
         const userName = auth.currentUser?.displayName || '';
         const status = updates.status.map(({ entry }) => ({ datetime: Timestamp.fromDate(new Date()), entry, author: userName || userId }));

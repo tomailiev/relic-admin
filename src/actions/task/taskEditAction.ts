@@ -12,7 +12,7 @@ export default async function taskEditAction({ request }: ActionFunctionArgs) {
     const userName = auth.currentUser?.displayName || '';
 
     try {
-        const { id: _, status: __, newUsers: ___, ...rest } = doc;
+        const { id: _, status: __, newUsers: ___, source: ____, ...rest } = doc;
         const status = doc.status.map((entry: Status) => {
             const updatedEntry = entry;
             console.log(entry);

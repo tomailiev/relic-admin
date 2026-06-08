@@ -13,7 +13,6 @@ import TextStyle from '@tiptap/extension-text-style'
 import { Box } from '@mui/material'
 // import { CustomKeymap } from '../../utils/tiptap/customKeyMap'
 
-// define your extension array
 const extensions = [
     StarterKit.configure({
         'bold': false,
@@ -34,16 +33,17 @@ const extensions = [
     Color,
     TextStyle,
     HardBreak.configure({
-      HTMLAttributes: {
-        class: 'hard-break',
-      },
+        HTMLAttributes: {
+            class: 'hard-break',
+        },
     }),
     // CustomKeymap,
 ]
 
-const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: string, onChange: (e: SimulatedEvent) => void }) => {
+const Tiptap = ({ content, inputName, onChange, readOnly, onFocus }: { content: string, inputName: string, readOnly?: boolean, onChange: (e: SimulatedEvent) => void, onFocus?: () => void }) => {
 
     function handleChange({ editor }: { editor: Editor }) {
+        if (readOnly) return;
         const target = {
             value: editor.getHTML(),
             name: inputName
@@ -71,7 +71,7 @@ const Tiptap = ({ content, inputName, onChange }: { content: string, inputName: 
                 },
             }}
         >
-            <EditorProvider onUpdate={handleChange} extensions={extensions} content={content} slotBefore={<MenuBar />}>
+            <EditorProvider onFocus={onFocus ? onFocus : () => { }} editable={!readOnly} onUpdate={handleChange} extensions={extensions} content={content} slotBefore={readOnly ? null : <MenuBar />}>
                 <EditorContent editor={null} />
             </EditorProvider>
         </Box>

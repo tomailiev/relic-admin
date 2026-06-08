@@ -9,10 +9,13 @@ import UserContext from "../../context/UserContext";
 import { AlarmOn, NotificationsActive, People } from "@mui/icons-material";
 import StatusEntryDialog from "./StatusEntryDialog";
 import { Timestamp } from "firebase/firestore";
+import Tiptap from "../TipTap/Tiptap";
+import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
 const TaskItem = ({ item }: TaskItemProps) => {
 
+    console.log(item);
 
     const { profile } = useContext(UserContext);
 
@@ -82,7 +85,8 @@ const TaskItem = ({ item }: TaskItemProps) => {
             <StatusEntryDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} />
             <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
                 <Typography variant="h5" textAlign={'center'}>{item.name}</Typography>
-                <Typography variant="body2" textAlign={'center'}>{item.description}</Typography>
+                <Typography variant="body2" textAlign={'center'}>Description:</Typography>
+                <Tiptap readOnly={true} content={item.description} inputName="description" onChange={(e: SimulatedEvent) => { }} />
                 <Grid key={item.id} mt={2} container spacing={2} justifyContent="center" sx={{
                     position: 'relative',
                 }}>
@@ -97,11 +101,11 @@ const TaskItem = ({ item }: TaskItemProps) => {
                                     <ListItemText primary={item.deadline} />
                                 </ListItem>
                             }
-                            {item.newUsers && <ListItem>
+                            {(item.newUsers || item.users) && <ListItem>
                                 <ListItemIcon>
                                     <People />
                                 </ListItemIcon>
-                                <ListItemText primary={item.users.map(u => u.displayName).join(', ')} />
+                                <ListItemText primary={item.newUsers ? item.newUsers.map(u => u.displayName).join(', ') : item.users.map(u => u).join(', ')} />
                             </ListItem>}
                             {item.reminder && <ListItem>
                                 <ListItemIcon>

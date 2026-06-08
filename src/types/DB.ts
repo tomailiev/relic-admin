@@ -239,7 +239,8 @@ export interface Operation {
 export interface UserData {
     avatar: string,
     displayName: string,
-    role: string
+    role: string,
+    id: string
 }
 
 export interface Status {
@@ -255,7 +256,8 @@ export interface Task {
     reminder?: string,
     status: Status[],
     id?: string,
-    users: { avatar: string, displayName: string, id: string, role: string }[]
+    source?: string,
+    users: string[]
 }
 
 export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task;
