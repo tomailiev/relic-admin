@@ -1,10 +1,10 @@
 import { FormatAlignCenter, FormatAlignJustify, FormatAlignLeft, FormatAlignRight } from "@mui/icons-material";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useCurrentEditor } from "@tiptap/react";
+import { useEditorContext } from "../../context/EditorContext";
 
 const TipTapAlignmentButtons = () => {
 
-    const { editor } = useCurrentEditor()
+    const editor = useEditorContext();
 
     if (!editor) {
         return null

@@ -1,4 +1,3 @@
-import { useCurrentEditor } from "@tiptap/react"
 import TipTapAlignmentButtons from "./TipTapAlignmentButtons";
 import TipTapFontButtons from "./TipTapFontButtons";
 import BlockTypeSelect from "./TipTapBlockTypeSelect";
@@ -7,9 +6,10 @@ import TipTapUndoRedo from "./TipTapUndoRedo";
 import TipTapListsButtons from "./TipTapListsButtons";
 import { TextField, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { FormatClear, HorizontalRule } from "@mui/icons-material";
+import { useEditorContext } from "../../context/EditorContext";
 
 const MenuBar = () => {
-    const { editor } = useCurrentEditor()
+    const editor = useEditorContext();
 
     if (!editor) {
         return null
@@ -39,7 +39,7 @@ const MenuBar = () => {
                     onChange={event => editor.chain().setColor(event.target.value).run()}
                     value={editor.getAttributes('textStyle').color}
                     data-testid="setColor"
-                    sx={{minWidth: '20px'}}
+                    sx={{ minWidth: '20px' }}
                 />
             </div>
         </div>

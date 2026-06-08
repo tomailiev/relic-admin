@@ -1,9 +1,9 @@
 import React from 'react';
 import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
-import { useCurrentEditor } from '@tiptap/react';
+import { useEditorContext } from '../../context/EditorContext';
 
 const BlockTypeSelect: React.FC = () => {
-    const { editor } = useCurrentEditor();
+    const editor = useEditorContext();
 
     if (!editor) return null;
 
