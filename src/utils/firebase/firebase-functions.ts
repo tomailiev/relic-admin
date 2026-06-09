@@ -17,8 +17,16 @@ function getLink(url: string, bucket = storage) {
 function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string, bucket = storage) {
     const pathRef = ref(bucket, path)
     return uploadBytes(pathRef, file)
-        .then(_snap => {
-            return pathRef.fullPath;
+        .then(snap => {
+            const bucket = snap.ref.bucket;          
+            const fullPath = snap.ref.fullPath;
+
+            // Encode ONLY the path, not the bucket
+            const encodedPath = encodeURIComponent(fullPath);
+
+            const publicUrl = `${bucket}/${encodedPath}`;
+
+            return publicUrl;
         })
 }
 

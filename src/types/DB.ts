@@ -237,10 +237,10 @@ export interface Operation {
 }
 
 export interface UserData {
-    avatar: string,
-    displayName: string,
-    role: string,
-    id: string
+    avatar?: string,
+    displayName?: string,
+    role?: string,
+    id?: string
 }
 
 export interface Status {

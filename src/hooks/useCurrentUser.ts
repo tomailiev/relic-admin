@@ -21,5 +21,5 @@ export function useCurrentUser() {
     });
   }, []);
 
-  return { authUser, setAuthUser, profile };
+  return { authUser, setAuthUser, profile, setProfile };
 }

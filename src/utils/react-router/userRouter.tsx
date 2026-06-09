@@ -1,6 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import UserProfile from "../../components/User/UserProfile";
+import updateProfileAction from "../../actions/user/updateProfileAction";
 
 const userRouter: RouteObject[] = [
     {
@@ -8,9 +9,10 @@ const userRouter: RouteObject[] = [
         element: <LoggedIn />,
         children: [
             {
-                index: true, // matches "/videos"
+                index: true,
                 element: <UserProfile />,
                 // loader: videoLoader,
+                action: updateProfileAction
             },
 
         ],

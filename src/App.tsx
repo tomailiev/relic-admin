@@ -12,7 +12,7 @@ import { useCurrentUser } from './hooks/useCurrentUser';
 const App = (): ReactElement => {
 
 
-  const { authUser, setAuthUser, profile } = useCurrentUser();
+  const { authUser, setAuthUser, profile, setProfile } = useCurrentUser();
   const theme = createTheme({
     palette: {
       primary: {
@@ -29,7 +29,7 @@ const App = (): ReactElement => {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <UserContext.Provider value={{ currentUser: authUser, setCurrentUser: setAuthUser, profile: profile }} >
+        <UserContext.Provider value={{ currentUser: authUser, setCurrentUser: setAuthUser, profile: profile, setProfile }} >
           <RouterProvider router={router} />
         </UserContext.Provider>
       </ThemeProvider>

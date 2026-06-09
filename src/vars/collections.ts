@@ -14,7 +14,8 @@ const collections = {
     tags: 'tags',
     lists: 'lists',
     logs: 'logs',
-    tasks: 'tasks'
+    tasks: 'tasks',
+    users: 'users'
 };
 
 export default collections;
