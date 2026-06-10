@@ -240,7 +240,8 @@ export interface UserData {
     avatar?: string,
     displayName?: string,
     role?: string,
-    id?: string
+    id?: string,
+    email?: string
 }
 
 export interface Status {

@@ -1,20 +1,45 @@
 import { Avatar, Box, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import AddAvatarDialog from "./AddAvatarDialog";
 import { Edit } from "@mui/icons-material";
+import { useActionData, useSubmit } from "react-router-dom";
+import ErrorContext from "../../context/ErrorContext";
+import UpdateProfileDialog from "./UpdateProfileDialog";
 
 const UserProfile = () => {
   const { profile, currentUser } = useContext(UserContext);
+  const { setError } = useContext(ErrorContext);
   const [fileUploadOpen, setFileUploadOpen] = useState(false);
+  const [profileUpdateOpen, setProfileUpdateOpen] = useState(false);
+
+  const submit = useSubmit();
+  const actionData = useActionData() as { code: string };
 
   const displayName = profile?.displayName ?? "Unnamed User";
   const photoURL = profile?.avatar ?? "";
 
+  function handleResetPassword() {
+    submit({ reason: 'reset', email: currentUser?.email || '' }, { encType: 'application/json', method: 'post' });
+  }
+
+  useEffect(() => {
+    if (!actionData) return;
+
+    if (actionData.code === 'Success') {
+      setError({ severity: 'success', message: 'Reset link sent.', error: true })
+    } else {
+      setError({ severity: 'error', message: 'Something went wrong', error: true })
+    }
+
+  }, [actionData, setError,]);
+
+
+
   return (
     <>
       <AddAvatarDialog open={fileUploadOpen} setOpen={setFileUploadOpen} />
-
+      <UpdateProfileDialog open={profileUpdateOpen} setOpen={setProfileUpdateOpen} />
       <Box
         display="flex"
         flexDirection="column"
@@ -161,7 +186,7 @@ const UserProfile = () => {
                   "&:hover": { opacity: 0.7 },
                 }}
                 onClick={() => {
-                  /* you'll handle this later */
+                  setProfileUpdateOpen(true);
                 }}
               >
                 Edit profile
@@ -177,9 +202,7 @@ const UserProfile = () => {
                   transition: "opacity 0.2s ease",
                   "&:hover": { opacity: 0.7 },
                 }}
-                onClick={() => {
-                  /* you'll handle this later */
-                }}
+                onClick={handleResetPassword}
               >
                 Reset password
               </Typography>

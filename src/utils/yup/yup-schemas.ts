@@ -102,6 +102,11 @@ const newUserSchema = object({
     passwordConfirmation: string().oneOf([ref('password'), undefined], 'Passwords must match')
 });
 
+const userProfileSchema = object({
+    email: string().required().email(),
+    displayName: string().required(),
+})
+
 
 const newTextSchema = object({
     key: string().required('title/key required'),
@@ -367,5 +372,6 @@ export {
     logSchema,
     taskSchema,
     taskStatusUpdateSchema,
-    taskStatusSchema
+    taskStatusSchema,
+    userProfileSchema
 };

@@ -1,13 +1,24 @@
 import { ActionFunctionArgs } from "react-router-dom";
-import { uploadDoc } from "../../utils/firebase/firebase-functions";
+import { uploadDoc, verifyOrReset } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 
 export default async function updateProfileAction({ request, params }: ActionFunctionArgs) {
     try {
         const doc = await request.json();
         const { id: _, ...rest } = doc;
+        if (!doc.id) {
+            return { code: 'error' };
+        }
+        if (doc.reason && doc.reason === 'reset') {
+            const email = doc.email;
+            if (!email) {
+                return { code: 'error' };
+            }
+            const { data } = await verifyOrReset({ email, reason: doc.reason }) as { data: { code: string } };
+            return data;
+        }
         await uploadDoc(rest, collections.users, doc.id, true);
-        return { code: 'success' };
+        return { code: 'Success' };
     } catch (e) {
         if (e instanceof Error) {
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });

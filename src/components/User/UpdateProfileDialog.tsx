@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useContext, useEffect, useState } from "react";
 import { CommonDialog } from "../../types/dialog";
 import AddFile from "../Forms/AddFile";
-import { photoFileSchema } from "../../utils/yup/yup-schemas";
+import { photoFileSchema, userProfileSchema } from "../../utils/yup/yup-schemas";
 import LoadingContext from "../../context/LoadingContext";
 import { uploadFile } from "../../utils/firebase/firebase-functions";
 import { publicStorage } from "../../utils/firebase/firebase-init";
@@ -11,31 +11,27 @@ import hasProperty from "../../vars/hasProperty";
 import UserContext from "../../context/UserContext";
 import { useActionData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
+import AddForm from "../Forms/AddForm";
 
 
-const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
+const UpdateProfileDialog = ({ open, setOpen, }: CommonDialog) => {
 
     const { setError } = useContext(ErrorContext);
     const { setIsLoading } = useContext(LoadingContext);
     const { profile, setProfile, currentUser } = useContext(UserContext);
-    const [newValue, setNewValue] = useState('');
+    const [newValue, setNewValue] = useState<object | null>(null);
     const actionData = useActionData() as { code: string, };
     const submit = useSubmit();
 
-    async function handleFileSubmission(data: object | null) {
-        // if (!profile || !profile.id) return;
+    async function handleValueSubmission(data: object | null) {
 
         try {
-            const file = 'path'
             setIsLoading(true);
 
-            if (data && hasProperty(data, file) && data[file]) {
-                const filePath = await uploadFile(data[file] as File, `/static/profiles/${profile?.id}/${(data[file] as File).name}`, publicStorage);
-                console.log(filePath);
-                setNewValue(`https://storage.googleapis.com/${filePath}`);
-                submit({ avatar: `https://storage.googleapis.com/${filePath}`, id: profile?.id || currentUser?.uid || '' }, { encType: 'application/json', method: 'post' });
+            if (data) {
+                submit({ ...data, id: profile?.id || currentUser?.uid || '' }, { encType: 'application/json', method: 'post' });
+                setNewValue(data);
                 setIsLoading(false);
-                // setTextValue('Upload successful');
             }
 
         } catch (error) {
@@ -47,10 +43,10 @@ const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
 
     useEffect(() => {
         if (actionData) {
-            if (actionData.code === 'success') {
+            if (actionData.code === 'Success') {
                 setOpen(false);
-                setProfile(prev => ({ ...prev, avatar: newValue }))
-                setError({ severity: 'success', message: 'Upload successful', error: true })
+                setProfile(prev => ({ ...prev, ...newValue }))
+                setError({ severity: 'success', message: 'Profile update successful', error: true })
             } else {
                 setError({ severity: 'error', message: 'Something went wrong', error: true })
             }
@@ -67,7 +63,7 @@ const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
     return (
         <Dialog open={open} maxWidth={'sm'} fullWidth={true}>
             <DialogTitle>
-                File Upload
+                Profile Update
                 <IconButton
                     aria-label="close"
                     onClick={closeDialog}
@@ -81,10 +77,10 @@ const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <AddFile schema={photoFileSchema} handleFormCompletion={handleFileSubmission} filesFields={{ path: '' }} filesFieldsArray={[{ label: 'Avatar', id: 'path', type: 'file', path: `undefined`, displayName: 'file' }]} />
+                <AddForm schema={userProfileSchema} handleFormCompletion={handleValueSubmission} fields={{ displayName: profile?.displayName || '', email: profile?.email || '' }} fieldsArray={[{ label: 'Name', id: 'displayName', }, { label: 'Email', id: 'email' }]} />
             </DialogContent>
         </Dialog>
     );
 };
 
-export default AddAvatarDialog;
+export default UpdateProfileDialog;
