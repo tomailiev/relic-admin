@@ -1,11 +1,11 @@
-import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import AddAvatarDialog from "./AddAvatarDialog";
 import { Edit } from "@mui/icons-material";
 
 const UserProfile = () => {
-  const { profile } = useContext(UserContext);
+  const { profile, currentUser } = useContext(UserContext);
   const [fileUploadOpen, setFileUploadOpen] = useState(false);
 
   const displayName = profile?.displayName ?? "Unnamed User";
@@ -30,9 +30,10 @@ const UserProfile = () => {
             height: 96,
             cursor: "pointer",
             transition: "all 0.25s ease",
+            borderRadius: '50%',
+            overflow: 'hidden',
             "&:hover": {
               // border: '2px solid black',
-              borderRadius: '2px',
               background: 'rgba(161, 161, 161, 0.7)'
             },
             "&:hover .avatar-overlay": {
@@ -81,29 +82,111 @@ const UserProfile = () => {
           display="flex"
           alignItems="center"
           gap={1}
-          sx={{ mt: 1, pl: '30px' }}
+          sx={{ mt: 1 }}
         >
           <Typography variant="h6" fontWeight={600}>
             {displayName}
           </Typography>
+        </Box>
+        {/* Personal Information Section */}
+        <Box
+          sx={{
+            mt: 4,
+            width: "100%",
+            maxWidth: 360,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography
+            variant="subtitle1"
+            fontWeight={600}
+            sx={{ mb: 1 }}
+          >
+            Personal information
+          </Typography>
 
-          <IconButton
-            size="small"
+          <Box
             sx={{
-              opacity: 0.4,
-              transition: "opacity 0.2s ease, transform 0.2s ease",
-              "&:hover": {
-                opacity: 1,
-                transform: "scale(1.15)",
-              },
-            }}
-            onClick={() => {
-              /* you'll handle this later */
+              width: "100%",
+              p: 2,
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+              backgroundColor: "background.paper",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
             }}
           >
-            <Edit fontSize="small" />
-          </IconButton>
+            <Box>
+              <Typography variant="body2" color="text.secondary">
+                Name
+              </Typography>
+
+              <Typography variant="body1">
+                {profile?.displayName}
+              </Typography>
+
+            </Box>
+            <Box>
+              <Typography variant="body2" color="text.secondary">
+                Email
+              </Typography>
+
+              <Typography variant="body1">
+                {currentUser?.email}
+              </Typography>
+
+            </Box>
+
+            <Box>
+              <Typography variant="body2" color="text.secondary">
+                Role
+              </Typography>
+              <Typography variant="body1">
+                {profile?.role}
+              </Typography>
+            </Box>
+            <Box sx={{ mt: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "primary.main",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  transition: "opacity 0.2s ease",
+                  "&:hover": { opacity: 0.7 },
+                }}
+                onClick={() => {
+                  /* you'll handle this later */
+                }}
+              >
+                Edit profile
+              </Typography>
+            </Box>
+            <Box>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "primary.main",
+                  cursor: "pointer",
+                  fontWeight: 500,
+                  transition: "opacity 0.2s ease",
+                  "&:hover": { opacity: 0.7 },
+                }}
+                onClick={() => {
+                  /* you'll handle this later */
+                }}
+              >
+                Reset password
+              </Typography>
+            </Box>
+          </Box>
         </Box>
+
       </Box>
     </>
   );
