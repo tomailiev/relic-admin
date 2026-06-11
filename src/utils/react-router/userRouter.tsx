@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
 import UserProfile from "../../components/User/UserProfile";
 import updateProfileAction from "../../actions/user/updateProfileAction";
+import userProfileLoader from "../../loaders/userProfileLoader";
 
 const userRouter: RouteObject[] = [
     {
@@ -11,7 +12,7 @@ const userRouter: RouteObject[] = [
             {
                 index: true,
                 element: <UserProfile />,
-                // loader: videoLoader,
+                loader: userProfileLoader,
                 action: updateProfileAction
             },
 

@@ -5,21 +5,23 @@ import collections from "../../vars/collections";
 export default async function updateProfileAction({ request, params }: ActionFunctionArgs) {
     try {
         const doc = await request.json();
-        const { id: _, ...rest } = doc;
-        if (!doc.id) {
-            return { code: 'error' };
-        }
+        
         if (doc.reason && doc.reason === 'reset') {
             const email = doc.email;
             if (!email) {
                 return { code: 'error' };
             }
             const { data } = await verifyOrReset({ email, reason: doc.reason }) as { data: { code: string } };
-            return data;
+            return {...data, message: 'Reset link sent. Check your email.'};
+        }
+
+        const { id: _, ...rest } = doc;
+        if (!doc.id) {
+            return { code: 'error' };
         }
         await uploadDoc(rest, collections.users, doc.id, true);
-        return { code: 'Success' };
-    } catch (e) {
+        return { code: 'Success', message: 'Profile update successful' };
+    } catch (e) {        
         if (e instanceof Error) {
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });
         }

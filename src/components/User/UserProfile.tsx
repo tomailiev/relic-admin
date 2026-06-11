@@ -3,31 +3,39 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import AddAvatarDialog from "./AddAvatarDialog";
 import { Edit } from "@mui/icons-material";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useLoaderData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import UpdateProfileDialog from "./UpdateProfileDialog";
+import { UserData } from "../../types/DB";
 
 const UserProfile = () => {
-  const { profile, currentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const { setError } = useContext(ErrorContext);
   const [fileUploadOpen, setFileUploadOpen] = useState(false);
   const [profileUpdateOpen, setProfileUpdateOpen] = useState(false);
 
   const submit = useSubmit();
-  const actionData = useActionData() as { code: string };
+  const actionData = useActionData() as { code: string, message: string };
+  const userData = useLoaderData() as UserData;
 
-  const displayName = profile?.displayName ?? "Unnamed User";
-  const photoURL = profile?.avatar ?? "";
+  const displayName = userData.displayName ?? "Unnamed User";
+  const photoURL = userData.avatar ?? "";
 
   function handleResetPassword() {
     submit({ reason: 'reset', email: currentUser?.email || '' }, { encType: 'application/json', method: 'post' });
+  }
+
+  function handleSubmission(data: Partial<UserData>) {
+    submit({ ...data, id: userData.id || currentUser?.uid || '' }, { encType: 'application/json', method: 'post' })
+    setFileUploadOpen(false);
+    setProfileUpdateOpen(false);
   }
 
   useEffect(() => {
     if (!actionData) return;
 
     if (actionData.code === 'Success') {
-      setError({ severity: 'success', message: 'Reset link sent.', error: true })
+      setError({ severity: 'success', message: actionData.message, error: true })
     } else {
       setError({ severity: 'error', message: 'Something went wrong', error: true })
     }
@@ -38,8 +46,8 @@ const UserProfile = () => {
 
   return (
     <>
-      <AddAvatarDialog open={fileUploadOpen} setOpen={setFileUploadOpen} />
-      <UpdateProfileDialog open={profileUpdateOpen} setOpen={setProfileUpdateOpen} />
+      <AddAvatarDialog open={fileUploadOpen} setOpen={setFileUploadOpen} userData={userData} handleSubmission={handleSubmission} />
+      <UpdateProfileDialog open={profileUpdateOpen} setOpen={setProfileUpdateOpen} userData={userData} handleSubmission={handleSubmission} />
       <Box
         display="flex"
         flexDirection="column"
@@ -152,7 +160,7 @@ const UserProfile = () => {
               </Typography>
 
               <Typography variant="body1">
-                {profile?.displayName}
+                {userData.displayName}
               </Typography>
 
             </Box>
@@ -162,7 +170,7 @@ const UserProfile = () => {
               </Typography>
 
               <Typography variant="body1">
-                {currentUser?.email}
+                {userData.email}
               </Typography>
 
             </Box>
@@ -172,7 +180,7 @@ const UserProfile = () => {
                 Role
               </Typography>
               <Typography variant="body1">
-                {profile?.role}
+                {userData.role}
               </Typography>
             </Box>
             <Box sx={{ mt: 1 }}>

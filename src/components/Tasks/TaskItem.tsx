@@ -17,7 +17,7 @@ const TaskItem = ({ item }: TaskItemProps) => {
 
     console.log(item);
 
-    const { profile } = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
 
     const columns: GridColDef[] = [
         {
@@ -67,7 +67,7 @@ const TaskItem = ({ item }: TaskItemProps) => {
     function handleSend(data: { entry: string }) {
         // to, from, content, donorId, donationIndex
         const update = {
-            author: profile?.displayName,
+            author: currentUser?.displayName,
             entry: data.entry,
             id: item.id
         }

@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { useContext, useEffect, useState } from "react";
+import { useContext, } from "react";
 import { CommonDialog } from "../../types/dialog";
 import AddFile from "../Forms/AddFile";
 import { photoFileSchema } from "../../utils/yup/yup-schemas";
@@ -9,32 +9,27 @@ import { uploadFile } from "../../utils/firebase/firebase-functions";
 import { publicStorage } from "../../utils/firebase/firebase-init";
 import hasProperty from "../../vars/hasProperty";
 import UserContext from "../../context/UserContext";
-import { useActionData, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
+import { UserData } from "../../types/DB";
 
 
-const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
+const AddAvatarDialog = ({ open, setOpen, userData, handleSubmission }: CommonDialog & { userData: UserData } & { handleSubmission: (data: Partial<UserData>) => void }) => {
 
     const { setError } = useContext(ErrorContext);
     const { setIsLoading } = useContext(LoadingContext);
-    const { profile, setProfile, currentUser } = useContext(UserContext);
-    const [newValue, setNewValue] = useState('');
-    const actionData = useActionData() as { code: string, };
-    const submit = useSubmit();
+    const { currentUser } = useContext(UserContext);
 
     async function handleFileSubmission(data: object | null) {
-        // if (!profile || !profile.id) return;
 
         try {
             const file = 'path'
             setIsLoading(true);
 
             if (data && hasProperty(data, file) && data[file]) {
-                const filePath = await uploadFile(data[file] as File, `/static/profiles/${profile?.id}/${(data[file] as File).name}`, publicStorage);
+                const filePath = await uploadFile(data[file] as File, `/static/profiles/${currentUser?.uid}/${(data[file] as File).name}`, publicStorage);
                 console.log(filePath);
-                setNewValue(`https://storage.googleapis.com/${filePath}`);
-                submit({ avatar: `https://storage.googleapis.com/${filePath}`, id: profile?.id || currentUser?.uid || '' }, { encType: 'application/json', method: 'post' });
                 setIsLoading(false);
+                handleSubmission({ avatar: `https://storage.googleapis.com/${filePath}` });
                 // setTextValue('Upload successful');
             }
 
@@ -45,17 +40,6 @@ const AddAvatarDialog = ({ open, setOpen, }: CommonDialog) => {
         }
     }
 
-    useEffect(() => {
-        if (actionData) {
-            if (actionData.code === 'success') {
-                setOpen(false);
-                setProfile(prev => ({ ...prev, avatar: newValue }))
-                setError({ severity: 'success', message: 'Upload successful', error: true })
-            } else {
-                setError({ severity: 'error', message: 'Something went wrong', error: true })
-            }
-        }
-    }, [actionData, setError, setOpen, setProfile, newValue]);
 
     function closeDialog() {
         setOpen(false);

@@ -8,7 +8,7 @@ import { Link, NavLink, useNavigation, useSubmit } from "react-router-dom";
 
 const Header = ({ handler }: { handler: () => void }) => {
 
-    const { currentUser, profile } = useContext(UserContext);
+    const { currentUser, } = useContext(UserContext);
     const navigation = useNavigation();
     const submit = useSubmit();
     const [open, setOpen] = useState(false);
@@ -48,8 +48,8 @@ const Header = ({ handler }: { handler: () => void }) => {
                 <Box sx={{ flex: '1 1 auto' }} />
                 <IconButton onClick={handleClick}>
                     {
-                        profile?.avatar
-                            ? <Avatar src={profile.avatar} />
+                        currentUser?.photoURL
+                            ? <Avatar src={currentUser.photoURL} />
                             : <AccountCircleIcon fontSize="large" />
                     }
                 </IconButton>

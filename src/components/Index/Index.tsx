@@ -18,13 +18,13 @@ const HomeAlert = () => {
 
 const Index = () => {
 
-    const {profile} = useContext(UserContext);
+    const { currentUser } = useContext(UserContext);
 
     return (
         <>
             <Container maxWidth="lg">
                 <Typography variant="h3" my={5}>
-                    Welcome, {profile?.displayName || 'User'}
+                    Welcome, {currentUser?.displayName || 'User'}
                 </Typography>
                 <HomeAlert />
                 {/* <Container maxWidth="sm">
