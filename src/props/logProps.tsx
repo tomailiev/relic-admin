@@ -7,7 +7,8 @@ import { ItemWithFields } from "../types/fnProps";
 const logColumns: GridColDef[] = [
     { field: 'date', headerName: 'Date', flex: 2 },
     { field: 'hours', headerName: 'Number of Hours', flex: 2 },
-    { field: 'category', headerName: 'Category', flex: 4 },
+    { field: 'category', headerName: 'Category', flex: 2 },
+    { field: 'userName', headerName: 'User Name', flex: 2 },
     {
         field: 'select',
         headerName: 'Select',

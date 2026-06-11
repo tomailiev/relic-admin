@@ -1,6 +1,6 @@
 import Home from '../../components/Home/Home';
 import ErrorPage from '../../components/Common/ErrorPage';
-import Index from '../../components/Index/Index';
+// import Index from '../../components/Index/Index';
 import LogIn from '../../components/LogIn/LogIn';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import Register from '../../components/Register/Register';
@@ -25,6 +25,9 @@ import photoRouter from './photoRouter';
 import logRouter from './logRouter';
 import userRouter from './userRouter';
 import taskRouter from './taskRouter';
+import indexLoader from '../../loaders/indexLoader';
+import IndexPage from '../../components/Index/IndexPage';
+import taskStatusUpdateAction from '../../actions/task/taskStatusUpdateAction';
 
 const routes: RouteObject[] = [
   {
@@ -34,7 +37,9 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Index />,
+        element: <IndexPage />,
+        loader: indexLoader,
+        action: taskStatusUpdateAction
       },
       {
         element: <LoggedOut />, // guard wrapper

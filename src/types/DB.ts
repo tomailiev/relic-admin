@@ -222,6 +222,8 @@ export interface Log {
     date: string,
     hours: number,
     category: string,
+    userId: string,
+    userName?: string,
     id?: string
 }
 
