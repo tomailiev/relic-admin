@@ -1,10 +1,15 @@
 import { downloadDocsV2 } from "../utils/firebase/firebase-functions";
-import { auth } from "../utils/firebase/firebase-init";
+// import { auth } from "../utils/firebase/firebase-init";
 
-export default function logLoader() {
-    const userId = auth.currentUser?.uid;
-    return downloadDocsV2('logs', [{ type: 'condition', value: ['userId', '==', userId] }])
-        .catch(e => {
-            return [{ name: 'Error', link: e.code, id: e.code, error: true }];
-        })
+export default async function logLoader() {
+    try {
+        const users = await downloadDocsV2('users');
+        const logs = await downloadDocsV2('logs');
+        return logs?.map(log => ({ ...log, userName: users?.find((user) => user.id === log.userId)?.displayName || '' }))
+    } catch (e) {
+        console.log(e);
+
+        return [];
+
+    }
 }

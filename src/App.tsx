@@ -1,33 +1,38 @@
 // import logo from './logo.svg';
-import { CssBaseline } from '@mui/material';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import './App.css';
 import { RouterProvider } from 'react-router-dom';
-import { ReactElement, useState } from 'react';
-import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from './utils/firebase/firebase-init';
+import { ReactElement } from 'react';
 import UserContext from './context/UserContext';
 import router from './utils/react-router/router';
+import { useCurrentUser } from './hooks/useCurrentUser';
 
 
 
 const App = (): ReactElement => {
 
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setCurrentUser(user);
-    } else {
-      setCurrentUser(null);
-    }
+  const { authUser, setAuthUser, profile, setProfile } = useCurrentUser();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#09455a',
+      },
+      secondary: {
+        main: '#efd498',
+        dark: '#cfaa55',
+        light: '#f9ebb3'
+      },
+    },
   })
-
 
   return (
     <CssBaseline>
-      <UserContext.Provider value={{ currentUser, setCurrentUser }} >
+      <ThemeProvider theme={theme}>
+        <UserContext.Provider value={{ currentUser: authUser, setCurrentUser: setAuthUser, profile: profile, setProfile }} >
           <RouterProvider router={router} />
-      </UserContext.Provider>
+        </UserContext.Provider>
+      </ThemeProvider>
     </CssBaseline>
   );
 }

@@ -97,9 +97,15 @@ const emailSchema = object({
 
 const newUserSchema = object({
     email: string().required().email(),
+    displayName: string().required(),
     password: string().required('Password is required').min(6, 'Password must be at least 6 characters long'),
     passwordConfirmation: string().oneOf([ref('password'), undefined], 'Passwords must match')
 });
+
+const userProfileSchema = object({
+    email: string().required().email(),
+    displayName: string().required(),
+})
 
 
 const newTextSchema = object({
@@ -317,8 +323,23 @@ const listSchema = object({
 const logSchema = object({
     date: string().required(),
     hours: number().required(),
-    category: string().required()
-})
+    description: string().required()
+});
+
+const taskSchema = object({
+    name: string().required(),
+    description: string().required(),
+    deadline: string(),
+    reminder: string(),
+});
+
+const taskStatusSchema = array().of(object({
+    entry: string().required()
+}));
+
+const taskStatusUpdateSchema = object({
+    entry: string().required()
+});
 
 export {
     eventSchema,
@@ -348,5 +369,9 @@ export {
     publicFileSchema,
     photoSchema,
     photoFileSchema,
-    logSchema
+    logSchema,
+    taskSchema,
+    taskStatusUpdateSchema,
+    taskStatusSchema,
+    userProfileSchema
 };

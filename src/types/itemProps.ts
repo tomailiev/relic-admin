@@ -1,4 +1,4 @@
-import { Campaign, Donor, Event, List, Subscriber, Video, WithId } from "./DB"
+import { Campaign, Donor, Event, List, Log, Subscriber, Task, Video, WithId } from "./DB"
 
 type SubscriberWithTags = Omit<Subscriber, 'tags'> & { tags: [{ tag: string }] }
 
@@ -27,4 +27,16 @@ export type DonorItemProps = {
 export type CampaignItemProps = {
     item: Campaign
 };
+
+export type TaskWithNewUsers = Task & { newUsers: { avatar: string, displayName: string, id: string, role: string }[], }
+
+export type TaskItemProps = {
+    item: TaskWithNewUsers
+}
+
+export type LogWithNewTasks = Log & { newTasks: Task[] };
+
+export type LogItemProps = {
+    item: LogWithNewTasks
+}
 

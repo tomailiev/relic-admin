@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit, WhereFilterOp, OrderByDirection } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, where, orderBy, getDoc, doc, Timestamp, setDoc, deleteDoc, updateDoc, deleteField, writeBatch, limit, WhereFilterOp, OrderByDirection, FieldPath } from "firebase/firestore";
 import { ref, uploadBytes, deleteObject, getBlob, listAll } from "firebase/storage";
 import { db, functions, storage } from './firebase-init';
 import { httpsCallable } from "firebase/functions";
@@ -17,8 +17,16 @@ function getLink(url: string, bucket = storage) {
 function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string, bucket = storage) {
     const pathRef = ref(bucket, path)
     return uploadBytes(pathRef, file)
-        .then(_snap => {
-            return pathRef.fullPath;
+        .then(snap => {
+            const bucket = snap.ref.bucket;          
+            const fullPath = snap.ref.fullPath;
+
+            // Encode ONLY the path, not the bucket
+            const encodedPath = encodeURIComponent(fullPath);
+
+            const publicUrl = `${bucket}/${encodedPath}`;
+
+            return publicUrl;
         })
 }
 
@@ -40,7 +48,7 @@ function uploadFile(file: Blob | Uint8Array | ArrayBuffer, path: string, bucket 
 
 interface ConditionOption {
     type: 'condition',
-    value: [string, WhereFilterOp, unknown]
+    value: [string | FieldPath, WhereFilterOp, unknown]
 };
 
 interface SortingOption {

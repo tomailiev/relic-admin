@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore"
-import { ListWithNewMembers } from "./itemProps"
+import { ListWithNewMembers, LogWithNewTasks, TaskWithNewUsers } from "./itemProps"
 import { AnyMJMLComponent } from "./campaignComponents"
 
 export interface WithId {
@@ -221,7 +221,13 @@ export interface CSVItem {
 export interface Log {
     date: string,
     hours: number,
-    category: string
+    description?: string,
+    category?: string,
+    userId: string,
+    userName?: string,
+    id?: string,
+    source?: string,
+    tasks: { id: string, name: string }[]
 }
 
 export interface Operation {
@@ -235,7 +241,32 @@ export interface Operation {
     venueName: string
 }
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo;
+export interface UserData {
+    avatar: string,
+    displayName: string,
+    role: string,
+    id?: string,
+    email: string
+}
+
+export interface Status {
+    entry: string,
+    datetime: Timestamp | { nanoseconds: number, seconds: number },
+    author: string
+}
+
+export interface Task {
+    name: string,
+    description: string,
+    deadline?: string,
+    reminder?: string,
+    status: Status[],
+    id?: string,
+    source?: string,
+    users: string[]
+}
+
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task;
 
 export type ItemTypeMap = {
     'videos': Video;
@@ -255,7 +286,11 @@ export type ItemTypeMap = {
     'textContent': Text,
     'photos': Photo,
     'logs': Log,
-    'operations': Operation
+    'logsWithNewTasks': LogWithNewTasks,
+    'operations': Operation,
+    'users': UserData,
+    'tasks': Task,
+    'tasksWithNewUsers': TaskWithNewUsers
 };
 
 export type DeschematifiedItemTypeMap = {
