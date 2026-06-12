@@ -30,7 +30,7 @@ const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, s
         campaigns: setEditable && <CampaignItem item={item as ItemTypeMap['campaigns']} setEditable={setEditable} />,
         lists: <EmailListItem item={item as ItemTypeMap['listsWithNewMembers']} />,
         photos: <PhotoItem item={item as ItemTypeMap['photos']} />,
-        logs: <LogItem item={item as ItemTypeMap['logs']} />,
+        logs: <LogItem item={item as ItemTypeMap['logsWithNewTasks']} />,
         tasks: <TaskItem item={item as ItemTypeMap['tasksWithNewUsers']} />
     }
     return hasProperty(itemComponents, itemType) && itemComponents[itemType];

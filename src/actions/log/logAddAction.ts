@@ -2,15 +2,17 @@ import { ActionFunctionArgs, redirect } from "react-router-dom";
 import { uploadDoc } from "../../utils/firebase/firebase-functions";
 import collections from "../../vars/collections";
 import { auth } from "../../utils/firebase/firebase-init";
+import { LogWithNewTasks } from "../../types/itemProps";
 
 
 
 export default async function logAddAction({ request, params }: ActionFunctionArgs) {
 
     try {
-        const updates = await request.json();
+        const updates: LogWithNewTasks = await request.json();
+        const { newTasks: _, source: __, ...rest } = updates;
         const userId = auth.currentUser?.uid || '';
-        const upload = await uploadDoc({ ...updates, userId }, collections.logs);
+        const upload = await uploadDoc({ ...rest, userId, tasks: updates.newTasks.map(({ name, id }) => ({ name, id })) }, collections.logs);
         console.log(upload);
         return redirect('/logs')
     } catch (e) {

@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore"
-import { ListWithNewMembers, TaskWithNewUsers } from "./itemProps"
+import { ListWithNewMembers, LogWithNewTasks, TaskWithNewUsers } from "./itemProps"
 import { AnyMJMLComponent } from "./campaignComponents"
 
 export interface WithId {
@@ -221,10 +221,13 @@ export interface CSVItem {
 export interface Log {
     date: string,
     hours: number,
-    category: string,
+    description?: string,
+    category?: string,
     userId: string,
     userName?: string,
-    id?: string
+    id?: string,
+    source?: string,
+    tasks: { id: string, name: string }[]
 }
 
 export interface Operation {
@@ -239,11 +242,11 @@ export interface Operation {
 }
 
 export interface UserData {
-    avatar?: string,
-    displayName?: string,
-    role?: string,
+    avatar: string,
+    displayName: string,
+    role: string,
     id?: string,
-    email?: string
+    email: string
 }
 
 export interface Status {
@@ -283,6 +286,7 @@ export type ItemTypeMap = {
     'textContent': Text,
     'photos': Photo,
     'logs': Log,
+    'logsWithNewTasks': LogWithNewTasks,
     'operations': Operation,
     'users': UserData,
     'tasks': Task,

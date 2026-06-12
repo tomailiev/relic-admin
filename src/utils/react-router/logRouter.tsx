@@ -1,6 +1,6 @@
 import FetchError from "../../components/Common/FetchError";
 import LoggedIn from "../../components/AuthGuard/LoggedIn";
-import AddItem from "../../components/Items/AddItem";
+// import AddItem from "../../components/Items/AddItem";
 import EditItem from "../../components/Items/EditItem";
 import ItemRoute from "../../components/Items/ItemRoute";
 import Items from "../../components/Items/Items";
@@ -12,6 +12,7 @@ import logAddAction from "../../actions/log/logAddAction";
 import logItemLoader from "../../loaders/logItemLoader";
 import logDeleteAction from "../../actions/log/logDeleteAction";
 import logEditAction from "../../actions/log/logEditAction";
+import logSourceLoader from "../../loaders/logSourceLoader";
 
 const logRouter: RouteObject[] = [
   {
@@ -25,7 +26,8 @@ const logRouter: RouteObject[] = [
       },
       {
         path: "add",
-        element: <AddItem {...(logProps as ItemWithAllProps)} />,
+        element: <EditItem {...(logProps as ItemWithAllProps)} />,
+        loader: logSourceLoader,
         action: logAddAction,
       },
       {

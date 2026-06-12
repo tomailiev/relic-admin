@@ -323,7 +323,7 @@ const listSchema = object({
 const logSchema = object({
     date: string().required(),
     hours: number().required(),
-    category: string().required()
+    description: string().required()
 });
 
 const taskSchema = object({

@@ -166,7 +166,7 @@ const IndexPage = () => {
                     >
                         <Box>
                             <Typography variant="body1" fontWeight={600}>
-                                {log.category}
+                                {log.tasks && log.tasks.length ? log.tasks.map(({ name }) => name).join(' | ') : log.description || log.category}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 {log.date}
