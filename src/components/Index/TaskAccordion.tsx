@@ -10,8 +10,11 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Task } from "../../types/DB";
 import Tiptap from "../TipTap/Tiptap";
+import { useNavigate } from "react-router-dom";
 
-const TaskAccordion = ({ task, onNewEntry }: { task: Task, onNewEntry: (task: Task) => void }) => {
+const TaskAccordion = ({ task, onNewEntry, onArchive }: { task: Task, onNewEntry: (task: Task) => void, onArchive: (id: string | undefined) => void }) => {
+
+    const navigate = useNavigate();
     // Get latest status entry
     const latest = task.status?.[task.status.length - 1] ?? null;
 
@@ -100,6 +103,33 @@ const TaskAccordion = ({ task, onNewEntry }: { task: Task, onNewEntry: (task: Ta
                             New entry
                         </Button>
                     </Box>
+                    {/* Task Actions */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "flex-end",
+                            gap: 1.5,
+                            mt: 2,
+                        }}
+                    >
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                        >
+                            Update task
+                        </Button>
+
+                        <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            onClick={() => onArchive(task.id)}
+                        >
+                            Archive task
+                        </Button>
+                    </Box>
+
                 </Box>
             </AccordionDetails>
         </Accordion>

@@ -22,6 +22,11 @@ const taskColumns: GridColDef[] = [
         }
     },
     {
+        field: 'archived',
+        headerName: 'Archived?',
+        valueGetter: (params) => params.row.archived === 1 ? 'Yes' : 'No'
+    },
+    {
         field: 'select',
         headerName: 'Select',
         sortable: false,
@@ -76,7 +81,7 @@ const taskProps: ItemWithFields & ItemWithNestedFields & ItemWithDataColumns = {
     itemType: 'tasks',
     name: 'name',
     columns: taskColumns,
-    sorting: { field: 'created', sort: 'desc' },
+    sorting: { field: 'archived', sort: 'asc' },
     pageSize: 10,
     pageSizeOptions: [10, 20, 30],
     fields: taskFields,

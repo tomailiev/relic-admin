@@ -14,7 +14,7 @@ export default async function taskAddAction({ request, params }: ActionFunctionA
         const userId = auth.currentUser?.uid || '';
         const userName = auth.currentUser?.displayName || '';
         const status = updates.status.map(({ entry }) => ({ datetime: Timestamp.fromDate(new Date()), entry, author: userName || userId }));
-        const upload = await uploadDoc({ ...rest, users: updates.newUsers.map(({ id }) => id), status }, collections.tasks);
+        const upload = await uploadDoc({ ...rest, users: updates.newUsers.map(({ id }) => id), status, archived: 0 }, collections.tasks);
         console.log(upload);
         return redirect('/tasks')
     } catch (e) {
