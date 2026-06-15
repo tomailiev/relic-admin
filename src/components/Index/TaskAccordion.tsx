@@ -115,7 +115,7 @@ const TaskAccordion = ({ task, onNewEntry, onArchive }: { task: Task, onNewEntry
                         <Button
                             variant="outlined"
                             size="small"
-                            onClick={() => navigate(`/tasks/${task.id}/edit`)}
+                            onClick={() => navigate(`/tasks/${task.id}/edit`, { state: { redirectTo: '/' } })}
                         >
                             Update task
                         </Button>

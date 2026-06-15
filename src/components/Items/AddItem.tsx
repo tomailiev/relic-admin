@@ -1,6 +1,6 @@
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useLocation, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
 import AddForm from "../Forms/AddForm";
@@ -24,6 +24,9 @@ const AddItem = (itemProps: ItemWithAllProps) => {
     const { setIsLoading } = useContext(LoadingContext);
     const [submission, setSubmission] = useState<object | null>(null);
     const actionData = useActionData() as AppErrorType | null;
+    const location = useLocation();
+
+    const redirectTo = location.state?.redirectTo ?? null;
 
     const labels = {
         files: 'Upload files',
@@ -51,7 +54,8 @@ const AddItem = (itemProps: ItemWithAllProps) => {
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
     function finishSubmission() {
-        submit(submission as SubmitTarget, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
+        const url = `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}${redirectTo ? `?redirectTo=${redirectTo}` : ''}`
+        submit(submission as SubmitTarget, { method: 'POST', action: url, encType: 'application/json', })
     }
 
     async function handleFileSubmission(data: object | null) {

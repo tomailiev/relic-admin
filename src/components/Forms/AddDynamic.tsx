@@ -42,7 +42,6 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
 
         try {
             const validated = await schema.validate(nestedItems, { abortEarly: false });
-            console.log(validated);
 
             handleFormCompletion(validated);
         } catch (e) {

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Box, Typography, Paper, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
+import { Box, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { useNavigate, useLoaderData, useSubmit } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import { Log, Task } from "../../types/DB";
@@ -99,7 +99,7 @@ const IndexPage = () => {
 
                 <Button
                     variant="contained"
-                    onClick={() => navigate("/tasks/add")}
+                    onClick={() => navigate("/tasks/add", { state: { redirectTo: '/' } })}
                 >
                     New Task
                 </Button>
@@ -145,7 +145,7 @@ const IndexPage = () => {
 
                 <Button
                     variant="contained"
-                    onClick={() => navigate("/logs/add")}
+                    onClick={() => navigate("/logs/add", { state: { redirectTo: '/' } })}
                 >
                     New Log
                 </Button>
