@@ -7,7 +7,6 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Paper,
     Typography,
     Divider
 } from "@mui/material";
@@ -17,7 +16,7 @@ import ErrorContext from "../../context/ErrorContext";
 import UserContext from "../../context/UserContext";
 import { AlarmOn, NotificationsActive, People } from "@mui/icons-material";
 import StatusEntryDialog from "./StatusEntryDialog";
-import { Timestamp } from "firebase/firestore";
+// import { Timestamp } from "firebase/firestore";
 import Tiptap from "../TipTap/Tiptap";
 import { SimulatedEvent } from "../../types/SimulatedEvent";
 import { TaskItemProps } from "../../types/itemProps";
@@ -173,13 +172,13 @@ const TaskItem = ({ item }: TaskItemProps) => {
                         >
                             <Typography variant="h6">Status Updates:</Typography>
 
-                            <Button
+                            {item.id && location.pathname.endsWith(item.id) && <Button
                                 size="small"
                                 variant="contained"
                                 onClick={() => setModalOpen(true)}
                             >
                                 New entry
-                            </Button>
+                            </Button>}
                         </Box>
                         <Divider sx={{ my: 1 }} />
 
@@ -195,11 +194,11 @@ const TaskItem = ({ item }: TaskItemProps) => {
                                         <Typography variant="body2" fontWeight={600}>
                                             {entry.author}
                                         </Typography>
-                                        <Typography variant="caption" color="text.secondary">
+                                        {entry.datetime && <Typography variant="caption" color="text.secondary">
                                             {new Date(
                                                 entry.datetime.seconds * 1000
                                             ).toLocaleString()}
-                                        </Typography>
+                                        </Typography>}
                                         <Typography variant="body2">{entry.entry}</Typography>
                                     </Box>
                                 ))}

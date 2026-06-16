@@ -1,6 +1,6 @@
 import React from 'react';
-import { Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import { useEditorContext } from '../../context/EditorContext';
+import { ToolbarSelect } from './TipTapToolbarSelect';
 
 const BlockTypeSelect: React.FC = () => {
     const editor = useEditorContext();
@@ -15,8 +15,8 @@ const BlockTypeSelect: React.FC = () => {
         return '';
     };
 
-    const handleChange = (event: SelectChangeEvent<string>) => {
-        const value = event.target.value;
+    const handleChange = (value: string) => {
+        // const value = event.target.value;
 
 
         if (value === 'p') {
@@ -32,20 +32,44 @@ const BlockTypeSelect: React.FC = () => {
     const value = getCurrentBlockType();
 
     return (
-        <Select
+        <ToolbarSelect
             value={value}
             onChange={handleChange}
-            displayEmpty
-            size="small"
-            sx={{ minWidth: 160 }}
-        >
-            <MenuItem value="p">Paragraph</MenuItem>
-            {[1, 2, 3, 4, 5, 6].map((level) => (
-                <MenuItem key={level} value={`h${level}`}>
-                    Heading {level}
-                </MenuItem>
-            ))}
-        </Select>
+            options={[
+                { value: 'p', label: 'Paragraph' },
+                ...[1, 2, 3, 4, 5, 6].map(level => ({
+                    value: `h${level}`,
+                    label: `Heading ${level}`,
+                })),
+            ]}
+        />
+
+        // <Select
+        //     value={value}
+        //     onChange={handleChange}
+        //     displayEmpty
+        //     size="small"
+        //     sx={{
+        //         minWidth: 160,
+        //         height: 40,
+        //         fontSize: 'large',
+        //         position: 'relative',
+        //         // top: { xs: 0, sm: -6.5 },
+        //         '& .MuiSelect-select': {
+        //             // paddingTop: 0,
+        //             // paddingBottom: '4px',
+        //             display: 'flex',
+        //             alignItems: 'center',
+        //         },
+        //     }}
+        // >
+        //     <MenuItem value="p">Paragraph</MenuItem>
+        //     {[1, 2, 3, 4, 5, 6].map((level) => (
+        //         <MenuItem key={level} value={`h${level}`}>
+        //             Heading {level}
+        //         </MenuItem>
+        //     ))}
+        // </Select>
     );
 };
 

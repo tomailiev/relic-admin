@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 // import { Log } from "../../types/DB";
 import { LogItemProps } from "../../types/itemProps";
 
@@ -25,6 +25,9 @@ const LogItem = ({ item }: LogItemProps) => {
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                         {item.date}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {item.description}
                     </Typography>
                 </Box>
 

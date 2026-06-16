@@ -1,4 +1,4 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, Paper, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
 import { useActionData, useLocation, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
@@ -171,11 +171,11 @@ const AddItem = (itemProps: ItemWithAllProps) => {
             itemProps={itemProps}
             handleFormCompletion={handleDataFilterSubmission}
         />,
-        preview: <ItemSwitch
+        preview: <Paper elevation={1} sx={{ background: '#fafafa', p: 1, mt: 1 }}><ItemSwitch
             item={submission as AnyItemType}
             itemType={itemProps.itemType}
             mutateItem={setSubmission}
-        />
+        /></Paper>
     }
 
     return (

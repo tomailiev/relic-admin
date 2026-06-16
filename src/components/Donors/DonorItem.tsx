@@ -4,7 +4,7 @@ import { getMap } from "../../utils/google-maps/getMap";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import DonorFields from "./DonorFields";
 import ThankDialog from "./ThankDialog";
-import { useActionData, useFetcher, useSubmit } from "react-router-dom";
+import { useActionData, useFetcher, useLocation, useSubmit } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
 import { getTier } from "../../vars/getTier";
 import { reduceDonations } from "../../vars/reduceDonations";
@@ -48,7 +48,7 @@ const DonorItem = ({ item }: DonorItemProps) => {
     const [donationInfo, setDonationInfo] = useState<DonationInfo | null>(null);
     const submit = useSubmit();
     const actionData = useActionData() as { code: string };
-
+    const location = useLocation();
     const fetcher = useFetcher();
 
     useEffect(() => {
@@ -133,7 +133,7 @@ const DonorItem = ({ item }: DonorItemProps) => {
                     <Box overflow={'scroll'}>
                         <Box minWidth={'800px'} width={'100%'}>
                             <DataGrid
-                                rows={item.donations?.map((donation, i) => ({ ...donation, id: i, thanksDisabled: !item.email }))}
+                                rows={item.donations?.map((donation, i) => ({ ...donation, id: i, thanksDisabled: !item.email || !item.id || !location.pathname.endsWith(item.id) }))}
                                 columns={columns}
                                 initialState={{
                                     sorting: {
