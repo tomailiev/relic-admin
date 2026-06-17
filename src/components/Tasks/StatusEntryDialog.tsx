@@ -12,7 +12,7 @@ const StatusEntryDialog = ({ open, setOpen, handleSend, }: CommonDialog & { hand
     };
 
     return (
-        <Dialog open={open} maxWidth={'lg'} fullWidth={true}>
+        <Dialog open={open} maxWidth={'md'} fullWidth={true}>
             <DialogTitle>
                 Add Entry
                 <IconButton

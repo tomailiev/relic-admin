@@ -9,7 +9,7 @@ import Tiptap from "../TipTap/Tiptap";
 import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, buttonText }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object>, buttonText?: string }) => {
     const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
@@ -128,7 +128,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                         value="preflight"
                         onClick={submitForm}
                     >
-                        Submit
+                        {buttonText || 'Submit'}
                     </Button>
                 </Stack>
             </Form>

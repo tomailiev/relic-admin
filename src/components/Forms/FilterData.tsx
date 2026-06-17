@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ItemWithDataColumns } from "../../types/fnProps";
 import hasProperty from "../../vars/hasProperty";
 
-const FilterData = ({ item, itemProps, handleFormCompletion }: { item: object, itemProps: ItemWithDataColumns, handleFormCompletion: (data: object) => void }) => {
+const FilterData = ({ item, itemProps, handleFormCompletion, buttonText }: { item: object, itemProps: ItemWithDataColumns, handleFormCompletion: (data: object) => void, buttonText?: string }) => {
 
     const [dataItems, setDataItems] = useState<any[]>([]);
     const [rowSelectionModel, setRowSelectionModel] = useState<GridRowId[]>([]);
@@ -45,7 +45,7 @@ const FilterData = ({ item, itemProps, handleFormCompletion }: { item: object, i
             </Box>
             <Box textAlign={'center'} mt={2}>
 
-                <Button variant={'contained'} onClick={() => handleFormCompletion(dataItems)}>Submit</Button>
+                <Button variant={'contained'} onClick={() => handleFormCompletion(dataItems)}>{buttonText || 'Submit'}</Button>
             </Box>
         </Container>
     );

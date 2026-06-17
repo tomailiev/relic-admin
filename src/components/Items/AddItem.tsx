@@ -144,18 +144,21 @@ const AddItem = (itemProps: ItemWithAllProps) => {
             filesFieldsArray={itemProps.filesFieldsArray}
             schema={itemProps.filesSchema}
             handleFormCompletion={handleFileSubmission}
+            buttonText="Next"
         />,
         initialFieldsArray: <AddForm
             fields={submission || itemProps.initialFields}
             fieldsArray={itemProps.initialFieldsArray}
             schema={itemProps.initialFieldsArraySchema}
             handleFormCompletion={handleInitialSubmission}
+            buttonText="Next"
         />,
         fieldsArray: <AddForm
             fields={submission || itemProps.fields}
             fieldsArray={itemProps.fieldsArray}
             handleFormCompletion={handleObjectSubmission}
             schema={itemProps.fieldsArraySchema}
+            buttonText="Next"
         />,
         nestedArray: <AddDynamic
             nestedFields={submission && hasProperty(submission, itemProps.nestedName) ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
@@ -165,11 +168,13 @@ const AddItem = (itemProps: ItemWithAllProps) => {
             nestedLength={1}
             schema={itemProps.nestedArraySchema}
             blanks={itemProps.nestedFields}
+            buttonText="Next"
         />,
         dataFilter: <FilterData
             item={submission || {}}
             itemProps={itemProps}
             handleFormCompletion={handleDataFilterSubmission}
+            buttonText="Next"
         />,
         preview: <Paper elevation={1} sx={{ background: '#fafafa', p: 1, mt: 1 }}><ItemSwitch
             item={submission as AnyItemType}

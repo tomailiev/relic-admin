@@ -5,7 +5,7 @@ import LoadingContext from "../../context/LoadingContext";
 import { ItemWithNestedFields } from "../../types/fnProps";
 import { Schema, ValidationError } from "yup";
 
-const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks }: Partial<ItemWithNestedFields> & { handleFormCompletion: (data: object) => void, schema: Schema, nestedLength: number, blanks: object }) => {
+const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletion, nestedLength, schema, blanks, buttonText }: Partial<ItemWithNestedFields> & { handleFormCompletion: (data: object) => void, schema: Schema, nestedLength: number, blanks: object, buttonText?: string }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
@@ -161,7 +161,7 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
                         value="preflight"
                         onClick={handleSubmitEvent}
                     >
-                        Submit
+                        {buttonText || 'Submit'}
                     </Button>
                 </Stack>
             </Form>
