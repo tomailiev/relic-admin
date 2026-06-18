@@ -9,7 +9,7 @@ import Tiptap from "../TipTap/Tiptap";
 import { SimulatedEvent } from "../../types/SimulatedEvent";
 
 
-const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object> }) => {
+const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, buttonText }: Partial<ItemWithFields> & { handleFormCompletion: (data: object) => void, schema: Schema<object>, buttonText?: string }) => {
     const { isLoading } = useContext(LoadingContext);
     const navigation = useNavigation();
     const [hasError, setHasError] = useState({});
@@ -113,9 +113,9 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                                 <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                             </FormControl>
                             : type === 'rich-text'
-                                ? <FormControl error={!!(hasProperty(hasError, id) && hasError[id])}>
+                                ? <FormControl key={id} error={!!(hasProperty(hasError, id) && hasError[id])}>
                                     <InputLabel shrink>{label}</InputLabel>
-                                    <Tiptap key={id} content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} onFocus={() => removeError(id)} />
+                                    <Tiptap content={(userFields && hasProperty(userFields, id)) ? userFields[id] : ''} onChange={handleInputChange} inputName={id} onFocus={() => removeError(id)} />
                                     <FormHelperText>{hasProperty(hasError, id) ? hasError[id] : ''}</FormHelperText>
                                 </FormControl>
                                 : <TextField {...props} helperText={hasProperty(hasError, id) ? hasError[id] : ''} InputLabelProps={{ shrink: true }} key={id} />
@@ -128,7 +128,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, }: Partial
                         value="preflight"
                         onClick={submitForm}
                     >
-                        Submit
+                        {buttonText || 'Submit'}
                     </Button>
                 </Stack>
             </Form>

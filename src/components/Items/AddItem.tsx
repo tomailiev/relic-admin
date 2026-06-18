@@ -1,6 +1,6 @@
-import { Box, Button, Step, StepLabel, Stepper } from "@mui/material"
+import { Box, Button, Paper, Step, StepLabel, Stepper } from "@mui/material"
 import { useContext, useEffect, useState } from "react";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useLocation, useSubmit } from "react-router-dom";
 import ErrorContext, { AppErrorType } from "../../context/ErrorContext";
 import ItemSwitch from "./ItemSwitch";
 import AddForm from "../Forms/AddForm";
@@ -24,6 +24,9 @@ const AddItem = (itemProps: ItemWithAllProps) => {
     const { setIsLoading } = useContext(LoadingContext);
     const [submission, setSubmission] = useState<object | null>(null);
     const actionData = useActionData() as AppErrorType | null;
+    const location = useLocation();
+
+    const redirectTo = location.state?.redirectTo ?? null;
 
     const labels = {
         files: 'Upload files',
@@ -51,7 +54,8 @@ const AddItem = (itemProps: ItemWithAllProps) => {
     useEffect(() => () => setSubmission(null), [setSubmission]);
 
     function finishSubmission() {
-        submit(submission as SubmitTarget, { method: 'POST', action: `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}`, encType: 'application/json' })
+        const url = `/${itemProps.itemType}/${itemProps.item?.id ? itemProps.item.id + '/edit' : 'add'}${redirectTo ? `?redirectTo=${redirectTo}` : ''}`
+        submit(submission as SubmitTarget, { method: 'POST', action: url, encType: 'application/json', })
     }
 
     async function handleFileSubmission(data: object | null) {
@@ -140,18 +144,21 @@ const AddItem = (itemProps: ItemWithAllProps) => {
             filesFieldsArray={itemProps.filesFieldsArray}
             schema={itemProps.filesSchema}
             handleFormCompletion={handleFileSubmission}
+            buttonText="Next"
         />,
         initialFieldsArray: <AddForm
             fields={submission || itemProps.initialFields}
             fieldsArray={itemProps.initialFieldsArray}
             schema={itemProps.initialFieldsArraySchema}
             handleFormCompletion={handleInitialSubmission}
+            buttonText="Next"
         />,
         fieldsArray: <AddForm
             fields={submission || itemProps.fields}
             fieldsArray={itemProps.fieldsArray}
             handleFormCompletion={handleObjectSubmission}
             schema={itemProps.fieldsArraySchema}
+            buttonText="Next"
         />,
         nestedArray: <AddDynamic
             nestedFields={submission && hasProperty(submission, itemProps.nestedName) ? submission[itemProps.nestedName] : [itemProps.nestedFields]}
@@ -161,17 +168,19 @@ const AddItem = (itemProps: ItemWithAllProps) => {
             nestedLength={1}
             schema={itemProps.nestedArraySchema}
             blanks={itemProps.nestedFields}
+            buttonText="Next"
         />,
         dataFilter: <FilterData
             item={submission || {}}
             itemProps={itemProps}
             handleFormCompletion={handleDataFilterSubmission}
+            buttonText="Next"
         />,
-        preview: <ItemSwitch
+        preview: <Paper elevation={1} sx={{ background: '#fafafa', p: 1, mt: 1 }}><ItemSwitch
             item={submission as AnyItemType}
             itemType={itemProps.itemType}
             mutateItem={setSubmission}
-        />
+        /></Paper>
     }
 
     return (

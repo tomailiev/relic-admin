@@ -1,147 +1,211 @@
-import { Box, Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Typography,
+    Divider
+} from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useActionData, useFetcher, useLocation, useSubmit } from "react-router-dom";
+import { useActionData, useSubmit, useLocation } from "react-router-dom";
 import ErrorContext from "../../context/ErrorContext";
-import { TaskItemProps } from "../../types/itemProps";
-import { SubmitTarget } from "react-router-dom/dist/dom";
 import UserContext from "../../context/UserContext";
 import { AlarmOn, NotificationsActive, People } from "@mui/icons-material";
 import StatusEntryDialog from "./StatusEntryDialog";
-import { Timestamp } from "firebase/firestore";
+// import { Timestamp } from "firebase/firestore";
 import Tiptap from "../TipTap/Tiptap";
 import { SimulatedEvent } from "../../types/SimulatedEvent";
-
+import { TaskItemProps } from "../../types/itemProps";
 
 const TaskItem = ({ item }: TaskItemProps) => {
-
-    console.log(item);
-
     const { currentUser } = useContext(UserContext);
-
-    const columns: GridColDef[] = [
-        {
-            field: 'datetime', headerName: 'Datetime', flex: 1, valueGetter: ({ row }) => {
-                if (!row.datetime) return '';
-                return row.datetime instanceof Timestamp
-                    ? row.datetime.toDate()
-                    : new Timestamp(row.datetime.seconds, row.datetime.nanoseconds).toDate()
-            }
-        },
-        {
-            field: 'author',
-            headerName: 'Author',
-            flex: 1
-        },
-        { field: 'entry', headerName: 'Entry', flex: 5 },
-
-    ];
-
     const { setError } = useContext(ErrorContext);
+
     const [modalOpen, setModalOpen] = useState(false);
-    // const [donationInfo, setDonationInfo] = useState<DonationInfo | null>(null);
     const submit = useSubmit();
     const actionData = useActionData() as { code: string };
-
-    const fetcher = useFetcher();
     const location = useLocation();
 
-    // useEffect(() => {
-    //     if (fetcher.state === "idle" && !fetcher.data) {
-    //         fetcher.load("/donors/text");
-    //     }
-    // }, [fetcher]);
+    // Latest status entry
+    const latest = item.status?.[item.status.length - 1] ?? null;
 
+    // Handle action response
     useEffect(() => {
         if (actionData) {
-            if (actionData.code === 'Success') {
+            if (actionData.code === "Success") {
                 setModalOpen(false);
-                setError({ severity: 'success', message: 'Updated task status', error: true });
-                // fetcher.load(location.pathname);
+                setError({
+                    severity: "success",
+                    message: "Updated task status",
+                    error: true,
+                });
             } else {
-                setError({ severity: 'error', message: actionData.code, error: true })
+                setError({
+                    severity: "error",
+                    message: actionData.code,
+                    error: true,
+                });
             }
         }
-    }, [actionData, setError, fetcher, location.pathname]);
+    }, [actionData, setError, location.pathname]);
 
+    // Submit new entry
     function handleSend(data: { entry: string }) {
-        // to, from, content, donorId, donationIndex
         const update = {
             author: currentUser?.displayName,
             entry: data.entry,
-            id: item.id
-        }
+            id: item.id,
+        };
 
-        submit(update as SubmitTarget, { method: 'POST', encType: 'application/json', action: `/tasks/${item.id}` });
+        submit(update as any, {
+            method: "POST",
+            encType: "application/json",
+            action: `/tasks/${item.id}`,
+        });
     }
-
-    function handleAddClick() {
-        setModalOpen(true);
-    }
-
 
     return (
         <>
-            <StatusEntryDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} />
-            <Paper sx={{ mx: 1, my: 2, py: 5, px: 2 }}>
-                <Typography variant="h5" textAlign={'center'}>{item.name}</Typography>
-                <Typography variant="body2" textAlign={'center'}>Description:</Typography>
-                <Tiptap readOnly={true} content={item.description} inputName="description" onChange={(e: SimulatedEvent) => { }} />
-                <Grid key={item.id} mt={2} container spacing={2} justifyContent="center" sx={{
-                    position: 'relative',
-                }}>
+            <StatusEntryDialog
+                open={modalOpen}
+                setOpen={setModalOpen}
+                handleSend={handleSend as (data: object) => void}
+            />
 
+            <Box
+                sx={{
+                    mx: 1,
+                    my: 2,
+                    p: 3,
+                    borderRadius: 2,
+                    // boxShadow: 3,
+                }}
+            >
+                {/* HEADER (Accordion-style) */}
+                <Box
+                    sx={{
+                        textAlign: "center",
+                        mb: 2,
+                    }}
+                >
+                    <Typography variant="h5" fontWeight={700}>
+                        {item.name}
+                    </Typography>
+
+                    {latest ? (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                            <strong>{latest.author}</strong>: {latest.entry}
+                        </Typography>
+                    ) : (
+                        <Typography variant="body2" color="text.secondary">
+                            No updates yet
+                        </Typography>
+                    )}
+                </Box>
+
+                <Divider sx={{ my: 2 }} />
+
+                {/* DESCRIPTION */}
+                <Typography variant="body2" fontWeight={600} textAlign="center">
+                    Description:
+                </Typography>
+
+                <Tiptap
+                    readOnly={true}
+                    content={item.description}
+                    inputName="description"
+                    onChange={(e: SimulatedEvent) => { }}
+                />
+
+                {/* METADATA */}
+                <Grid container spacing={2} mt={2} justifyContent="center">
                     <Grid item md={6}>
                         <List>
-                            {item.deadline &&
+                            {item.deadline && (
                                 <ListItem>
                                     <ListItemIcon>
                                         <AlarmOn />
                                     </ListItemIcon>
                                     <ListItemText primary={item.deadline} />
                                 </ListItem>
-                            }
-                            {(item.newUsers || item.users) && <ListItem>
-                                <ListItemIcon>
-                                    <People />
-                                </ListItemIcon>
-                                <ListItemText primary={item.newUsers ? item.newUsers.map(u => u.displayName).join(', ') : item.users.map(u => u).join(', ')} />
-                            </ListItem>}
-                            {item.reminder && <ListItem>
-                                <ListItemIcon>
-                                    <NotificationsActive />
-                                </ListItemIcon>
-                                <ListItemText primary={item.reminder} />
-                            </ListItem>}
+                            )}
+
+                            {(item.newUsers || item.users) && (
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <People />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={
+                                            item.newUsers
+                                                ? item.newUsers.map((u) => u.displayName).join(", ")
+                                                : item.users.join(", ")
+                                        }
+                                    />
+                                </ListItem>
+                            )}
+
+                            {item.reminder && (
+                                <ListItem>
+                                    <ListItemIcon>
+                                        <NotificationsActive />
+                                    </ListItemIcon>
+                                    <ListItemText primary={item.reminder} />
+                                </ListItem>
+                            )}
                         </List>
                     </Grid>
                 </Grid>
-                {item.status && <Container maxWidth={false} disableGutters>
-                    <Grid display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-                        <Grid item >
-                            <Typography variant="h6" mt={2}>
-                                Status Updates:
-                            </Typography>
-                        </Grid>
-                        <Grid item>
-                            <Button size="small" variant="contained" onClick={handleAddClick}>New entry</Button>
-                        </Grid>
-                    </Grid>
-                    <Box overflow={'scroll'}>
-                        <Box minWidth={'800px'} width={'100%'}>
-                            <DataGrid
-                                rows={item.status.map((row, i) => ({ ...row, id: i }))}
-                                columns={columns}
-                                initialState={{
-                                    sorting: {
-                                        sortModel: [{ field: 'datetime', sort: 'desc' }],
-                                    }
-                                }}
-                            />
+
+                {/* STATUS UPDATES (TaskAccordion-style) */}
+                {item.status && (
+                    <Container disableGutters sx={{ mt: 3 }}>
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={1}
+                        >
+                            <Typography variant="h6">Status Updates:</Typography>
+
+                            {item.id && location.pathname.endsWith(item.id) && <Button
+                                size="small"
+                                variant="contained"
+                                onClick={() => setModalOpen(true)}
+                            >
+                                New entry
+                            </Button>}
                         </Box>
-                    </Box>
-                </Container>}
-            </Paper>
+                        <Divider sx={{ my: 1 }} />
+
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                            {item.status
+                                .slice()
+                                .sort(
+                                    (a, b) =>
+                                        (b.datetime?.seconds ?? 0) - (a.datetime?.seconds ?? 0)
+                                )
+                                .map((entry, idx) => (
+                                    <Box key={idx}>
+                                        <Typography variant="body2" fontWeight={600}>
+                                            {entry.author}
+                                        </Typography>
+                                        {entry.datetime && <Typography variant="caption" color="text.secondary">
+                                            {new Date(
+                                                entry.datetime.seconds * 1000
+                                            ).toLocaleString()}
+                                        </Typography>}
+                                        <Typography variant="body2">{entry.entry}</Typography>
+                                    </Box>
+                                ))}
+                        </Box>
+                    </Container>
+                )}
+            </Box>
         </>
     );
 };

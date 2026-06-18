@@ -1,16 +1,29 @@
 import { useContext, useEffect, useState } from "react";
-import { Box, Typography, Paper, Button } from "@mui/material";
+import { Box, Typography, Button, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { useNavigate, useLoaderData, useSubmit } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import { Log, Task } from "../../types/DB";
 import TaskAccordion from "./TaskAccordion";
 import StatusEntryDialog from "../Tasks/StatusEntryDialog";
 import { SubmitTarget } from "react-router-dom/dist/dom";
+import sortLogs from "../../vars/sortLogs";
+import sortTasks from "../../vars/sortTasks";
+import IndexLog from "./IndexLog";
+import { getLast12Months, today } from "../../vars/dateObjects";
+import ArchiveConfirmDialog from "./ArchiveConfirmDialog";
 
 const IndexPage = () => {
     const { currentUser } = useContext(UserContext);
     const [modalOpen, setModalOpen] = useState(false);
     const [editedTask, setEditedTask] = useState('');
+    const [archivedTask, setArchivedTask] = useState<string>('');
+    const [confirmOpen, setConfirmOpen] = useState(false);
+    const [selectedMonth, setSelectedMonth] = useState(() => {
+        const now = today;
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+    });
+
+
 
     const navigate = useNavigate();
     const submit = useSubmit();
@@ -28,36 +41,36 @@ const IndexPage = () => {
 
     if (!currentUser) return null; // prevent flash
 
-    // Sort tasks by latest status datetime
-    const today = new Date().toISOString().slice(0, 10); // yyyy-mm-dd
+    const months = getLast12Months();
 
-    const sortedTasks = [...tasks].sort((a, b) => {
-        const aDeadline = a.deadline ?? null;
-        const bDeadline = b.deadline ?? null;
+    function handleMonthChange(e: SelectChangeEvent<string>) {
+        const month = e.target.value;
+        setSelectedMonth(month);
 
-        const aOverdue = aDeadline && aDeadline < today;
-        const bOverdue = bDeadline && bDeadline < today;
+        // Navigate to same page but with ?month=yyyy-mm
+        navigate(`/?month=${month}`);
+    }
 
-        // Overdue tasks first
-        if (aOverdue && !bOverdue) return -1;
-        if (!aOverdue && bOverdue) return 1;
+    const sortedTasks = sortTasks(tasks);
 
-        // Otherwise sort by latest status datetime
-        const aLatest = a.status?.[a.status.length - 1]?.datetime?.seconds ?? 0;
-        const bLatest = b.status?.[b.status.length - 1]?.datetime?.seconds ?? 0;
-
-        return bLatest - aLatest;
-    });
-
-
-    // Sort logs by date (yyyy-mm-dd)
-    const sortedLogs = [...logs].sort((a, b) =>
-        b.date.localeCompare(a.date)
-    );
+    const sortedLogs = sortLogs(logs);
 
     function onNewEntry(task: Task) {
         setEditedTask(task.id || '');
         setModalOpen(true);
+    }
+
+    function onArchive(id: string | undefined) {
+        if (!id) return;
+        setArchivedTask(id);
+        setConfirmOpen(true);
+    }
+
+    function handleArchiveTask(id: string) {
+        if (!id) return;
+        setConfirmOpen(false);
+        submit({ id, archived: 1 }, { method: 'POST', encType: 'application/json' });
+        setArchivedTask('');
     }
 
     function handleSend(data: { entry: string }) {
@@ -75,7 +88,7 @@ const IndexPage = () => {
     return (
         <Box sx={{ p: 4, maxWidth: 900, mx: "auto" }}>
             <StatusEntryDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} />
-
+            <ArchiveConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} handleConfirm={handleArchiveTask} id={archivedTask} />
             {/* Welcome */}
             <Typography variant="h4" fontWeight={700} sx={{ mb: 3, textAlign: "center" }}>
                 Welcome, {currentUser.displayName}
@@ -97,12 +110,11 @@ const IndexPage = () => {
 
                 <Button
                     variant="contained"
-                    onClick={() => navigate("/tasks/add")}
+                    onClick={() => navigate("/tasks/add", { state: { redirectTo: '/' } })}
                 >
                     New Task
                 </Button>
             </Box>
-
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {sortedTasks.map((task) => (
@@ -110,9 +122,9 @@ const IndexPage = () => {
                         key={task.id}
                         task={task}
                         onNewEntry={onNewEntry}
+                        onArchive={onArchive}
                     />
                 ))}
-
 
                 {sortedTasks.length === 0 && (
                     <Typography color="text.secondary">No tasks available.</Typography>
@@ -144,45 +156,44 @@ const IndexPage = () => {
 
                 <Button
                     variant="contained"
-                    onClick={() => navigate("/logs/add")}
+                    onClick={() => navigate("/logs/add", { state: { redirectTo: '/' } })}
                 >
                     New Log
                 </Button>
+            </Box>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    mb: 2,
+                    mt: 1
+                }}
+            >
+                <FormControl size="small" sx={{ minWidth: 180 }}>
+                    <InputLabel>Month</InputLabel>
+                    <Select
+                        label="Month"
+                        value={selectedMonth}
+                        onChange={handleMonthChange}
+                    >
+                        {months.map((m) => (
+                            <MenuItem key={m.value} value={m.value}>
+                                {m.label}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
             </Box>
 
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {sortedLogs.map((log) => (
-                    <Paper
-                        key={log.id}
-                        elevation={1}
-                        sx={{
-                            p: 2,
-                            borderRadius: 2,
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Box>
-                            <Typography variant="body1" fontWeight={600}>
-                                {log.tasks && log.tasks.length ? log.tasks.map(({ name }) => name).join(' | ') : log.description || log.category}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {log.date}
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="body1" fontWeight={600}>
-                            {log.hours} hrs
-                        </Typography>
-                    </Paper>
+                    <IndexLog key={log.id} log={log} />
                 ))}
 
                 {sortedLogs.length === 0 && (
                     <Typography color="text.secondary">No logs available.</Typography>
                 )}
-
 
             </Box>
             <Box sx={{ textAlign: "center", mt: 2 }}>

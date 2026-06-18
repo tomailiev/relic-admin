@@ -5,7 +5,11 @@ import { arrayUnion } from "firebase/firestore";
 
 export default async function taskStatusUpdateAction({ request }: ActionFunctionArgs) {
     try {
-        const doc: { id: string, author: string, entry: string } = await request.json();
+        const doc: { id: string, author: string, entry: string, archived: string | undefined } = await request.json();
+        if (doc.archived) {
+            await uploadDoc({ archived: 1 }, collections.tasks, doc.id, true);
+            return { code: 'Success' };
+        }
         const datetime = Timestamp.fromDate(new Date());
         await uploadDoc({ status: arrayUnion({ author: doc.author, entry: doc.entry, datetime }) }, collections.tasks, doc.id, true);
         return { code: 'Success' };

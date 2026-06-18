@@ -9,7 +9,7 @@ import { ItemWithFileFields } from "../../types/fnProps";
 import hasProperty from "../../vars/hasProperty";
 
 
-const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, }: Partial<ItemWithFileFields> & { handleFormCompletion: (data: object | null) => void, schema: Schema<object> }) => {
+const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, buttonText }: Partial<ItemWithFileFields> & { handleFormCompletion: (data: object | null) => void, schema: Schema<object>, buttonText?: string }) => {
     const { isLoading } = useContext(LoadingContext);
 
     const navigation = useNavigation();
@@ -145,7 +145,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                         value="preflight"
                         onClick={submitForm}
                     >
-                        {shouldSkip ? 'Skip' : 'Submit'}
+                        {shouldSkip ? 'Skip' : buttonText ? buttonText : 'Submit'}
                     </Button>
                 </Stack>
             </Form>

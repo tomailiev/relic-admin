@@ -11,11 +11,14 @@ export default async function taskEditAction({ request }: ActionFunctionArgs) {
     const userId = auth.currentUser?.uid || '';
     const userName = auth.currentUser?.displayName || '';
 
+    
+    const url = new URL(request.url);
+    const redirectTo = url.searchParams.get('redirectTo');
+    
     try {
         const { id: _, status: __, newUsers: ___, source: ____, ...rest } = doc;
         const status = doc.status.map((entry: Status) => {
             const updatedEntry = entry;
-            console.log(entry);
 
             if (!entry.author) {
                 updatedEntry.author = userName || userId;
@@ -29,7 +32,8 @@ export default async function taskEditAction({ request }: ActionFunctionArgs) {
             return updatedEntry;
         })
         await uploadDoc({ ...rest, status, users: doc.newUsers.map(({ id }: { id: string }) => id) }, collections.tasks, doc.id, true);
-        return redirect(`/tasks`);
+        return redirect(redirectTo ?? `/tasks`);
+
     } catch (e) {
         console.error(e)
         if (e instanceof Error) {

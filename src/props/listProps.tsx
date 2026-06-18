@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { listSchema, } from "../utils/yup/yup-schemas";
 import listSourceLoader from "../loaders/listSourceLoader";
@@ -9,14 +9,6 @@ import { ItemWithDataColumns, ItemWithInitialFields } from "../types/fnProps";
 import musicianProps from "./musicianProps";
 
 const listColumns: GridColDef[] = [
-    {
-        field: 'icon',
-        headerName: 'Avatar',
-        sortable: false, flex: 1,
-        renderCell: (params) => {
-            return <Avatar alt={params.row?.source} >{params.row?.source === 'donors' ? 'D' : 'S'}</Avatar>
-        }
-    },
     { field: 'name', headerName: 'Name', flex: 3 },
     { field: 'source', headerName: 'Source', flex: 1 },
     { field: 'datetime', headerName: 'Date', flex: 1, valueGetter: ({ row }) => row.datetime?.toDate().toLocaleString() },

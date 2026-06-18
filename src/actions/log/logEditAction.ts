@@ -7,11 +7,13 @@ import { LogWithNewTasks } from "../../types/itemProps";
 
 export default async function logEditAction({ request }: ActionFunctionArgs) {
     const doc: LogWithNewTasks = await request.json();
+    const url = new URL(request.url);
+    const redirectTo = url.searchParams.get('redirectTo');
 
     try {
         const { id: _, newTasks: __, source: ___, ...rest } = doc;
         await uploadDoc({ ...rest, tasks: doc.newTasks.map(({ id, name }) => ({ id, name })) }, collections.logs, doc.id, true);
-        return redirect(`/logs`);
+        return redirect(redirectTo ?? `/logs`);
     } catch (e) {
         console.error(e)
         if (e instanceof Error) {

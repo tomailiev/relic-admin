@@ -7,6 +7,8 @@ import { LogWithNewTasks } from "../../types/itemProps";
 
 
 export default async function logAddAction({ request, params }: ActionFunctionArgs) {
+    const url = new URL(request.url);
+    const redirectTo = url.searchParams.get('redirectTo');
 
     try {
         const updates: LogWithNewTasks = await request.json();
@@ -14,7 +16,7 @@ export default async function logAddAction({ request, params }: ActionFunctionAr
         const userId = auth.currentUser?.uid || '';
         const upload = await uploadDoc({ ...rest, userId, tasks: updates.newTasks.map(({ name, id }) => ({ name, id })) }, collections.logs);
         console.log(upload);
-        return redirect('/logs')
+        return redirect(redirectTo ?? '/logs')
     } catch (e) {
         if (e instanceof Error) {
             return Object.assign({ message: e.message }, { error: true, severity: 'error' });
