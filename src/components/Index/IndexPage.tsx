@@ -10,11 +10,14 @@ import sortLogs from "../../vars/sortLogs";
 import sortTasks from "../../vars/sortTasks";
 import IndexLog from "./IndexLog";
 import { getLast12Months, today } from "../../vars/dateObjects";
+import ArchiveConfirmDialog from "./ArchiveConfirmDialog";
 
 const IndexPage = () => {
     const { currentUser } = useContext(UserContext);
     const [modalOpen, setModalOpen] = useState(false);
     const [editedTask, setEditedTask] = useState('');
+    const [archivedTask, setArchivedTask] = useState<string>('');
+    const [confirmOpen, setConfirmOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(() => {
         const now = today;
         return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
@@ -59,7 +62,15 @@ const IndexPage = () => {
 
     function onArchive(id: string | undefined) {
         if (!id) return;
+        setArchivedTask(id);
+        setConfirmOpen(true);
+    }
+
+    function handleArchiveTask(id: string) {
+        if (!id) return;
+        setConfirmOpen(false);
         submit({ id, archived: 1 }, { method: 'POST', encType: 'application/json' });
+        setArchivedTask('');
     }
 
     function handleSend(data: { entry: string }) {
@@ -77,7 +88,7 @@ const IndexPage = () => {
     return (
         <Box sx={{ p: 4, maxWidth: 900, mx: "auto" }}>
             <StatusEntryDialog open={modalOpen} setOpen={setModalOpen} handleSend={handleSend as (data: object) => void} />
-
+            <ArchiveConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} handleConfirm={handleArchiveTask} id={archivedTask} />
             {/* Welcome */}
             <Typography variant="h4" fontWeight={700} sx={{ mb: 3, textAlign: "center" }}>
                 Welcome, {currentUser.displayName}

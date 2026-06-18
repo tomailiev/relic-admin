@@ -23,6 +23,8 @@ export const daysOfWeek = [
     'Saturday'
 ];
 
+export const now = Date.now();
+
 export const today = new Date();
 
 export const currentMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
