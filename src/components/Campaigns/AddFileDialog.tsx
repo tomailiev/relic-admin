@@ -21,8 +21,8 @@ const AddFileDialog = ({ open, setOpen, id }: CommonDialog & { id: string }) => 
             const file = 'file'
             setIsLoading(true);
             if (data && hasProperty(data, file) && data[file]) {
-                const filePath = await uploadFile(data[file] as File, `/static/campaigns/${id}/${(data[file] as File).name}`, publicStorage);
-                console.log(filePath);
+                const { fullPath } = await uploadFile(data[file] as File, `/static/campaigns/${id}/${(data[file] as File).name}`, publicStorage);
+                console.log(fullPath);
                 setIsLoading(false);
                 setTextValue('Upload successful');
             }
