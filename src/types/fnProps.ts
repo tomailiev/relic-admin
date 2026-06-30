@@ -9,6 +9,8 @@ export interface FieldsArrayItem {
     type?: string,
     options?: { value: string | number, label?: string, type?: string, display?: string }[],
     multiline?: boolean,
+    placeholder?: string,
+    required?: boolean
 }
 
 export interface FileFieldsArrayItem extends FieldsArrayItem {
