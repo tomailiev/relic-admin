@@ -46,6 +46,7 @@ const taskFields = {
     description: '',
     deadline: '',
     reminder: '',
+    channelId: '',
     source: 'users'
 };
 
@@ -54,11 +55,12 @@ const statusFields = {
 };
 
 const taskFA = [
-    { label: 'Name', id: 'name', },
-    { label: 'Description', id: 'description', multiline: true, type: 'rich-text' },
+    { label: 'Name', id: 'name', required: true },
+    { label: 'Description', id: 'description', multiline: true, type: 'rich-text', required: true },
     // { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
     { label: 'Deadline', id: 'deadline', type: 'date' },
-    { label: 'Reminder', id: 'reminder' },
+    { label: 'Reminder (Slack natural‑language time)', id: 'reminder', placeholder: 'tomorrow at 9am, in 2 hours, next Friday 3pm' },
+    { label: 'Slack Channel ID', id: 'channelId', }
 ];
 
 const statusFA = [
