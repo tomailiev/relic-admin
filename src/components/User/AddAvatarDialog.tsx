@@ -26,10 +26,10 @@ const AddAvatarDialog = ({ open, setOpen, userData, handleSubmission }: CommonDi
             setIsLoading(true);
 
             if (data && hasProperty(data, file) && data[file]) {
-                const filePath = await uploadFile(data[file] as File, `/static/profiles/${currentUser?.uid}/${(data[file] as File).name}`, publicStorage);
-                console.log(filePath);
+                const { publicUrl } = await uploadFile(data[file] as File, `/static/profiles/${currentUser?.uid}/${(data[file] as File).name}`, publicStorage);
+                console.log(publicUrl);
                 setIsLoading(false);
-                handleSubmission({ avatar: `https://storage.googleapis.com/${filePath}` });
+                handleSubmission({ avatar: `https://storage.googleapis.com/${publicUrl}` });
                 // setTextValue('Upload successful');
             }
 

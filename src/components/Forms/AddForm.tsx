@@ -68,7 +68,7 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, buttonText
         <Paper sx={smMatch ? { mx: 0, my: 2, px: 1.5, py: 3 } : { mx: 2, my: 2, p: 5 }}>
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
-                    {fieldsArray && fieldsArray.map(({ id, label, type, multiline, options }: FieldsArrayItem) => {
+                    {fieldsArray && fieldsArray.map(({ id, label, type, multiline, placeholder, required, options }: FieldsArrayItem) => {
                         const props: TextFieldProps = {
                             id: id,
                             name: id,
@@ -81,6 +81,8 @@ const AddForm = ({ fields, fieldsArray, handleFormCompletion, schema, buttonText
                             size: 'small',
                             multiline: multiline,
                             variant: 'outlined',
+                            placeholder,
+                            required
                             // rows: 4
                         }
                         const selectProps: SelectProps = {

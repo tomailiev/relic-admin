@@ -33,7 +33,7 @@ const videoColumns: GridColDef[] = [
 ];
 
 const initialVideoFA = [
-    { label: 'YouTube link', id: 'url' },
+    { label: 'YouTube link', id: 'url', required: true },
 ]
 
 const videoFA = [

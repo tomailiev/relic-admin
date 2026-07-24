@@ -263,6 +263,7 @@ export interface Task {
     status: Status[],
     id?: string,
     source?: string,
+    channelId?: string,
     users: string[]
 }
 

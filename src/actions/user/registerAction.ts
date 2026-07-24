@@ -3,8 +3,8 @@ import { ActionFunctionArgs } from "react-router-dom";
 
 export default function registerAction({ request, params }: ActionFunctionArgs) {
     return request.json()
-        .then(({ email, password }) => {
-            return registerUser({ email, password })
+        .then(({ email, password, displayName }) => {
+            return registerUser({ email, password, displayName })
         })
         .then(({ data }) => {
             console.log(data);

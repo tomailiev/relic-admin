@@ -331,6 +331,7 @@ const taskSchema = object({
     description: string().required(),
     deadline: string(),
     reminder: string(),
+    channelId: string()
 });
 
 const taskStatusSchema = array().of(object({
