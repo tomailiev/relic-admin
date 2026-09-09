@@ -1,5 +1,5 @@
 import { firebaseConfig } from "../firebase/firebase-init";
-import loader from "./maps-init";
+// import loader from "./maps-init";
 
 // export default function getCoordinates(address: string, location: string) {
 //     return loader.importLibrary('geocoding')
