@@ -102,8 +102,9 @@ const DonorItem = ({ item }: DonorItemProps) => {
     const mapRef = createRef<HTMLDivElement>();
     useEffect(() => {
         if (mapRef.current) {
-            getMap(mapRef.current, item.address, item.location)
+            getMap(mapRef.current, item.coordinates)
                 .then(infoWindow => {
+                    if (!infoWindow) return;
                     infoWindow.setContent(`${item.address || ''} ${item.location || ''}`)
                 })
                 .catch(e => console.log(e))
