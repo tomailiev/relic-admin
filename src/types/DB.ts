@@ -135,7 +135,11 @@ export interface Donor {
     phone: string,
     tier: string,
     donations: Donation[],
-    id?: string
+    id?: string,
+    coordinates?: {
+        lat: number,
+        lng: number
+    }
 }
 
 interface CampaignAnalyticsEvent {
