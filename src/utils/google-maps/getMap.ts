@@ -1,6 +1,6 @@
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
-import getCoordinates from "./getCoordinates";
+// import getCoordinates from "./getCoordinates";
 import loader from "./maps-init";
 import { DonorItemProps } from "../../types/itemProps";
 
