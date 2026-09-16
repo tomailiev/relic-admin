@@ -1,12 +1,13 @@
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
-import getCoordinates from "./getCoordinates";
+// import getCoordinates from "./getCoordinates";
 import loader from "./maps-init";
 import { DonorItemProps } from "../../types/itemProps";
 
 
-async function getMap(mapRef: HTMLDivElement, address: string, location: string) {
-    const position = await getCoordinates(address, location);
+async function getMap(mapRef: HTMLDivElement, position?: { lat: number, lng: number }) {
+    if (!position) return null;
+    // const position = await getCoordinates(address, location);
     const { Map, InfoWindow } = await loader.importLibrary('maps');
     const { AdvancedMarkerElement } = await loader.importLibrary('marker');
     const map = new Map(mapRef, {
@@ -48,8 +49,8 @@ async function getMultiMap(mapRef: HTMLDivElement, items: DonorItemProps['item']
         mapId: 'multi_donor'
     });
 
-    const gmapMarkers = await Promise.all(items.filter(({address, location}) => !!address || !!location).map(async ({ address, location, firstName, lastName, donations }) => {
-        const position = await getCoordinates(address, location);
+    const gmapMarkers = await Promise.all(items.filter(({ coordinates }) => !!coordinates).map(async ({ firstName, lastName, donations, coordinates }) => {
+        const position = coordinates;
         const marker = new AdvancedMarkerElement({
             position: position,
             // map: map,

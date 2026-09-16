@@ -102,8 +102,9 @@ const DonorItem = ({ item }: DonorItemProps) => {
     const mapRef = createRef<HTMLDivElement>();
     useEffect(() => {
         if (mapRef.current) {
-            getMap(mapRef.current, item.address, item.location)
+            getMap(mapRef.current, item.coordinates)
                 .then(infoWindow => {
+                    if (!infoWindow) return;
                     infoWindow.setContent(`${item.address || ''} ${item.location || ''}`)
                 })
                 .catch(e => console.log(e))
@@ -120,7 +121,12 @@ const DonorItem = ({ item }: DonorItemProps) => {
                     position: 'relative',
                 }}>
                     <Grid item md={6} sm={8} xs={12} p={6}>
-                        <Container disableGutters ref={mapRef} sx={{ width: '100%', height: '300px', borderRadius: '4px' }} />
+                        {item.coordinates
+                            ? <Container disableGutters ref={mapRef} sx={{ width: '100%', height: '300px', borderRadius: '4px' }} />
+                            : <Container disableGutters sx={{ width: '100%', height: '300px', borderRadius: '4px' }} >
+                                <Typography>No map data available</Typography>
+                            </Container>
+                    }
                     </Grid>
                     <Grid item md={6}>
                         <DonorFields donor={item} />
