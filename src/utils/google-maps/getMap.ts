@@ -49,7 +49,7 @@ async function getMultiMap(mapRef: HTMLDivElement, items: DonorItemProps['item']
         mapId: 'multi_donor'
     });
 
-    const gmapMarkers = await Promise.all(items.filter(({ coordinates }) => !!coordinates).map(async ({ address, location, firstName, lastName, donations, coordinates }) => {
+    const gmapMarkers = await Promise.all(items.filter(({ coordinates }) => !!coordinates).map(async ({ firstName, lastName, donations, coordinates }) => {
         const position = coordinates;
         const marker = new AdvancedMarkerElement({
             position: position,
