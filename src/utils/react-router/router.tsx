@@ -28,6 +28,7 @@ import taskRouter from './taskRouter';
 import indexLoader from '../../loaders/indexLoader';
 import IndexPage from '../../components/Index/IndexPage';
 import taskStatusUpdateAction from '../../actions/task/taskStatusUpdateAction';
+import stripeChargeRouter from './stripeChargeRouter';
 
 const routes: RouteObject[] = [
   {
@@ -84,7 +85,8 @@ const routes: RouteObject[] = [
       ...photoRouter,
       ...logRouter,
       ...userRouter,
-      ...taskRouter
+      ...taskRouter,
+      ...stripeChargeRouter
     ]
   }
 ]
