@@ -61,31 +61,31 @@ const performanceFields = {
     location: '',
     url: '',
     venue: '',
-    lat: '',
-    lng: '',
+    // lat: '',
+    // lng: '',
     presenter: '',
     caption: '',
 };
 
 const eventFA = [
-    { label: 'Date done', id: 'dateDone', type: 'date' },
-    { label: 'Description', id: 'description', multiline: true },
+    { label: 'Date done', id: 'dateDone', type: 'date', required: true },
+    { label: 'Description', id: 'description', multiline: true, required: true, placeholder: 'Long blurb...' },
     // { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events` },
-    { label: 'Title', id: 'title' },
-    { label: 'Music', id: 'music' },
-    { label: 'Subtitle', id: 'subtitle' },
-    { label: 'Intro', id: 'intro' }
+    { label: 'Title', id: 'title', required: true, placeholder: 'e.g. The Odyssey' },
+    { label: 'Music', id: 'music', placeholder: 'e.g. Handel, Bach, Vivaldi' },
+    { label: 'Subtitle', id: 'subtitle', required: true, placeholder: 'e.g. New York and DC' },
+    { label: 'Intro', id: 'intro', placeholder: 'Short blurb' }
 ];
 
 const performanceFA = [
-    { label: 'Date', id: 'date', type: 'date' },
-    { label: 'Time', id: 'time', type: 'time' },
-    { label: 'Order #', id: 'id', },
-    { label: 'City & State', id: 'location' },
-    { label: 'Url', id: 'url' },
-    { label: 'Venue', id: 'venue' },
-    { label: 'Latitude', id: 'lat', },
-    { label: 'Longitude', id: 'lng', },
+    { label: 'Date', id: 'date', type: 'date', required: true },
+    { label: 'Time', id: 'time', type: 'time', required: true },
+    { label: 'Order #', id: 'id', required: true, placeholder: 'Performance order' },
+    { label: 'Venue', id: 'venue', required: true },
+    { label: 'City & State', id: 'location', required: true },
+    { label: 'Url', id: 'url', placeholder: 'Tickets url' },
+    // { label: 'Latitude', id: 'lat', },
+    // { label: 'Longitude', id: 'lng', },
     { label: 'Presenter', id: 'presenter' },
     { label: 'Caption', id: 'caption' }
 ];
@@ -97,9 +97,9 @@ const fileFields = {
 }
 
 const fileFA = [
-    { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc' },
+    { label: 'Image Url', id: 'imageUrl', type: 'file', path: `${collections.images}/events`, displayName: 'imgSrc', required: true },
+    { label: 'Banner /1920*1080', id: 'bannerHome', type: 'file', path: `${collections.images}/banners/home`, displayName: 'eventBanner', required: true },
     { label: 'Program book', id: 'program', type: 'file', path: 'pdfs/program-books', displayName: 'programBook' },
-    { label: 'Banner /1920*1080', id: 'bannerHome', type: 'file', path: `${collections.images}/banners/home`, displayName: 'eventBanner' }
 ]
 
 const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields & ItemWithDataColumns = {
@@ -116,7 +116,7 @@ const eventProps: ItemWithFields & ItemWithFileFields & ItemWithNestedFields & I
     filesFields: fileFields,
     filesFieldsArray: fileFA,
     nestedName: 'performances',
-    dataFilterColumns: {musicians: musicianProps.columns},
+    dataFilterColumns: { musicians: musicianProps.columns },
     sourceCollectionField: 'source',
     destinationCollectionField: 'musicians',
     tempDestinationField: 'newMusicians',

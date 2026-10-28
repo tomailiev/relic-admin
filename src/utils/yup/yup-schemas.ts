@@ -8,8 +8,8 @@ const performanceSchema = array().of(object({
     location: string().required('location required'),
     url: string().url('valid url needed'),
     venue: string().required('venue required'),
-    lat: number(),
-    lng: number(),
+    // lat: number(),
+    // lng: number(),
     presenter: string(),
     caption: string()
 })).min(1);
