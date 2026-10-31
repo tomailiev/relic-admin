@@ -16,7 +16,7 @@ const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
             <Box sx={{
                 position: 'relative',
                 display: 'flex',
-                justifyContent: 'center'
+                justifyContent: { xs: 'start', md: 'center' }
             }}>
                 <List>
                     {item.email && <ListItem>
@@ -42,15 +42,13 @@ const SubscriberItem = ({ item }: { item: DeschematifiedSubscriber }) => {
                             <AutoAwesomeMotion />
                         </ListItemIcon>
                         <List>
-                            {item.lists?.map(list => (
-                                <ListItem>
-                                    <Typography >
-                                        <Link key={list} to={`/lists/${list}`}>
-                                            {list}
-                                        </Link>
-                                    </Typography>
-                                </ListItem>
-                            ))}
+                            <Typography flexWrap={'wrap'} maxWidth={'90%'}>
+                                {item.lists?.map(list => (
+                                    <Link key={list} to={`/lists/${list}`}>
+                                        {`${list}, `} 
+                                    </Link>
+                                ))}
+                            </Typography>
 
                         </List>
                     </ListItem>}

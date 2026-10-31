@@ -14,11 +14,12 @@ import hasProperty from "../../vars/hasProperty";
 import PhotoItem from "../Photos/PhotoItem";
 import LogItem from "../Logs/LogItem";
 import TaskItem from "../Tasks/TaskItem";
+import StripeChargeItem from "../StripeCharge/StripeChargeItem";
 
 
 const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, setEditable }: { itemType: T; item: ItemTypeMap[T] | null; setEditable?: Dispatch<SetStateAction<boolean>>, mutateItem?: Dispatch<SetStateAction<object | null>> }) => {
 
-    const itemComponents= {
+    const itemComponents = {
         musicians: <MusicianItem item={item as ItemTypeMap['musicians']} />,
         events: <EventItem item={item as ItemTypeMap['events']} />,
         texts: <TextItem item={item as ItemTypeMap['texts']} />,
@@ -32,7 +33,7 @@ const ItemSwitch = <T extends keyof ItemTypeMap>({ item, itemType, mutateItem, s
         photos: <PhotoItem item={item as ItemTypeMap['photos']} />,
         logs: <LogItem item={item as ItemTypeMap['logsWithNewTasks']} />,
         tasks: <TaskItem item={item as ItemTypeMap['tasksWithNewUsers']} />,
-        
+        stripeCharges: <StripeChargeItem item={item as ItemTypeMap['stripeCharges']} />,
     }
     return hasProperty(itemComponents, itemType) && itemComponents[itemType];
 };
