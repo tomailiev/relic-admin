@@ -18,11 +18,8 @@ export function deschematifyPerformance(p: Performance): DePerformance {
         hours = (Number(hours) + 12).toString();
     }
     const time = hours.length > 1 ? `${hours}:${mins}` : `0${hours}:${mins}`;
-    let rest = (({ date, time, geocode, ...object }) => object)(p) as DePerformance;
-    if (p.geocode) {
-        rest.lng = p.geocode.lng;
-        rest.lat = p.geocode.lat;
-    }
+    let rest = (({ date, time, ...object }) => object)(p) as DePerformance;
+    
     return Object.assign(rest, { time, date: completeDate, });
 }
 

@@ -107,7 +107,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
             <Form method="post" id="contact-form">
                 <Stack spacing={2}>
                     <List>
-                        {filesFieldsArray?.map(({ id, label, type, multiline }) => {
+                        {filesFieldsArray?.map(({ id, label, type, multiline, required }) => {
                             const props = {
                                 id: id,
                                 name: id,
@@ -121,6 +121,7 @@ const AddFile = ({ filesFields, filesFieldsArray, handleFormCompletion, schema, 
                                 size: 'small' as 'small' | 'medium',
                                 multiline: multiline,
                                 variant: 'outlined' as "outlined" | "filled" | "standard",
+                                required
                                 // rows: 4
                             }
 

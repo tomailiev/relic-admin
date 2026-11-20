@@ -271,7 +271,19 @@ export interface Task {
     users: string[]
 }
 
-export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task;
+export interface StripeCharge {
+    createdAt: Timestamp,
+    donationDate: string,
+    donorEmail: string,
+    donorId: string,
+    paymentIntentId: string,
+    processedAt: Timestamp,
+    status: string,
+    stripeChargeId: string,
+    id?: string
+}
+
+export type AnyItemType = Video | Musician | Event | Grant | List | Donor | Campaign | Subscriber | CSV | CSVItem | Photo | Log | Task | StripeCharge;
 
 export type ItemTypeMap = {
     'videos': Video;
@@ -295,7 +307,8 @@ export type ItemTypeMap = {
     'operations': Operation,
     'users': UserData,
     'tasks': Task,
-    'tasksWithNewUsers': TaskWithNewUsers
+    'tasksWithNewUsers': TaskWithNewUsers,
+    'stripeCharges': StripeCharge
 };
 
 export type DeschematifiedItemTypeMap = {

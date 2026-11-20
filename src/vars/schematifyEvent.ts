@@ -13,9 +13,9 @@ function schematifyEvent(event: DeEvent): Event {
         const [hours, minutes] = p.time.split(':');
         const timeSuffix = Number(hours) > 11 ? 'pm' : 'am';
         const time = `${hours === '12' ? 12 : Number(hours) % 12}:${minutes}${timeSuffix}`;
-        const geocode = { lng: Number(p.lng), lat: Number(p.lat) };
-        let rest = (({ lng, lat, date, time, ...object }) => object)(p);
-        return Object.assign(rest, { time, geocode, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });
+        // const geocode = { lng: Number(p.lng), lat: Number(p.lat) };
+        let rest = (({ date, time, ...object }) => object)(p);
+        return Object.assign(rest, { time, day, date: `${month} ${date}, ${fullDate.getFullYear()}` });
     });
     const { imgSrc: _, programBook: __, eventBanner: ___, newMusicians: ____, source: _____, ...updatedEvent } = event;
     return {

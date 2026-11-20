@@ -99,7 +99,7 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
                             return <Grid item key={index} sm={12} lg={4} xl={3} p={3}>
                                 <Typography variant="h6" py={1}>{nestedName} {index}</Typography>
                                 <Stack spacing={2}>
-                                    {nestedArray?.map(({ id, label, type, multiline, options }) => {
+                                    {nestedArray?.map(({ id, label, type, multiline, options, required, placeholder }) => {
                                         // const itemId = `[${index}].${id}`;
 
                                         const props: TextFieldProps = {
@@ -115,6 +115,8 @@ const AddDynamic = ({ nestedFields, nestedArray, nestedName, handleFormCompletio
                                             multiline: multiline,
                                             variant: 'outlined',
                                             rows: 4,
+                                            required,
+                                            placeholder
                                         }
                                         const selectProps: SelectProps = {
                                             value: arr[index][id],

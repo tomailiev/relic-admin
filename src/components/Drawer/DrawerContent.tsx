@@ -4,7 +4,7 @@ import ExpandableLI from "./ExpandableLI";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import MenuContext from "../../context/MenuContext";
-import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, Filter, Image, AccessTime, AccessTimeFilled, Work, TaskOutlined, Task, } from '@mui/icons-material';
+import { Savings, Storage, Diversity1, Diversity3, AccountBalanceWallet, AccountBalanceWalletOutlined, Mail, RecentActors, RecentActorsOutlined, SendOutlined, Send, AutoAwesomeMotionOutlined, AutoAwesomeMotion, FolderOpen, Folder, Filter, Image, AccessTime, AccessTimeFilled, Work, TaskOutlined, Task, PaidOutlined, Paid, AccountBalance, } from '@mui/icons-material';
 import { MenuType } from "../../types/menu";
 import homeIcon from "../../assets/admin_icon_512.png"
 // import StorageIcon from '@mui/icons-material/Storage';
@@ -32,11 +32,15 @@ const DrawerContent = () => {
         { title: 'Subscribers', path: 'subscribers', iconActive: <RecentActorsOutlined />, iconInactive: <RecentActors /> },
         { title: 'Campaigns', path: 'campaigns', iconActive: <SendOutlined />, iconInactive: <Send /> },
         { title: 'Lists', path: 'lists', iconActive: <AutoAwesomeMotionOutlined />, iconInactive: <AutoAwesomeMotion /> }
-    ]
+    ];
 
     const workflowMenu: MenuType[] = [
         { title: 'Logs', path: 'logs', iconActive: <AccessTime />, iconInactive: <AccessTimeFilled /> },
         { title: 'Tasks', path: 'tasks', iconActive: <TaskOutlined />, iconInactive: <Task /> }
+    ];
+
+    const accountingMenu: MenuType[] = [
+        { title: 'Stripe Charges', path: 'stripeCharges', iconActive: <PaidOutlined />, iconInactive: <Paid /> }
     ]
     return (
         <>
@@ -88,6 +92,16 @@ const DrawerContent = () => {
                 {
                     ['Workflow'].map((text, index) => (
                         <ExpandableLI key={text} menuTitle={text} subMenu={workflowMenu} icon={<Work />} />
+                    ))
+                }
+            </List>
+            <List
+                component="nav"
+                aria-labelledby="nested-list-subheader"
+            >
+                {
+                    ['Accounting'].map((text, index) => (
+                        <ExpandableLI key={text} menuTitle={text} subMenu={accountingMenu} icon={<AccountBalance />} />
                     ))
                 }
             </List>
