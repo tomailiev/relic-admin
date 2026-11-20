@@ -50,6 +50,11 @@ const donorColumns: GridColDef[] = [
         sortComparator: (v1, v2) => Number(v1.substring(1)) - Number(v2.substring(1)),
     },
     {
+        field: 'lastDonationAmount',
+        headerName: 'Last donation',
+        flex: 1
+    },
+    {
         field: 'yearEndStatus',
         headerName: 'Tier',
         valueGetter: ({ row }) => getTier(reduceDonations(row.donations)),
